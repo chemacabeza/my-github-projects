@@ -187,9 +187,9 @@ The last thing we are going to show about the “`date`” command is that you c
 
 We are going to use the “`date`” command as follows.
 
-<div style="text-align:center">
+<p style="text-align: center;">
 <img src="./chapters/0008-Time-and-date-commands/images/DateCommandFormat.png" width="400px"/>
-</div>
+</p>
 
 With this way of using the command we can provide two different arguments. The first argument is the “`--date`” option where we provide the date we are operating on. The second argument is a string with the format we want to extract from the date provided which, in our case, is the Unix time<a id="footnote-3-ref" href="#footnote-3" style="font-size:x-small">[3]</a> (also known as epoch time).
 
