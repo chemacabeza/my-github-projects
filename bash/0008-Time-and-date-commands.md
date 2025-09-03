@@ -1,17 +1,4 @@
----
-layout: chapter
-title: "Chapter 8: time and date commands"
----
-
 # Chapter 8: `time` and `date` commands
-
-## Index
-* [The `time` command]({{ site.url }}//bash-in-depth/0008-Time-and-date-commands.html#the-time-command)
-* [The `date` command]({{ site.url }}//bash-in-depth/0008-Time-and-date-commands.html#the-date-command)
-* [Summary]({{ site.url }}//bash-in-depth/0008-Time-and-date-commands.html#summary)
-* [References]({{ site.url }}//bash-in-depth/0008-Time-and-date-commands.html#references)
-
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px">
 
 The “`time`” and “`date`” commands in Bash are essential utilities that provide valuable information about time, date, and the execution time of commands and scripts. They play crucial roles in scripting, system administration, and various automation tasks, helping users manage time-related data and track the performance of processes.
 
@@ -201,7 +188,7 @@ The last thing we are going to show about the “`date`” command is that you c
 We are going to use the “`date`” command as follows.
 
 <div style="text-align:center">
-<img src="/assets/bash-in-depth/0008-Time-and-date-commands/DateCommandFormat.png" width="400px"/>
+<img src="./chapters/0008-Time-and-date-commands/images/DateCommandFormat.png" width="400px"/>
 </div>
 
 With this way of using the command we can provide two different arguments. The first argument is the “`--date`” option where we provide the date we are operating on. The second argument is a string with the format we want to extract from the date provided which, in our case, is the Unix time<a id="footnote-3-ref" href="#footnote-3" style="font-size:x-small">[3]</a> (also known as epoch time).

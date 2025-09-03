@@ -1,29 +1,4 @@
----
-layout: chapter
-title: "Chapter 5: Working with Strings"
----
 # Chapter 5: Working with Strings
-
-## Index
-* [How to declare a String?]({{ site.url }}//bash-in-depth/0005-Working-with-Strings.html#how-to-declare-a-string)
-* [String length]({{ site.url }}//bash-in-depth/0005-Working-with-Strings.html#string-length)
-* [Substrings]({{ site.url }}//bash-in-depth/0005-Working-with-Strings.html#substrings)
-* [Remove some parts of a string]({{ site.url }}//bash-in-depth/0005-Working-with-Strings.html#remove-some-parts-of-a-string)
-    * [Remove shortest substring starting from the front]({{ site.url }}//bash-in-depth/0005-Working-with-Strings.html#remove-shortest-substring-starting-from-the-front)
-    * [Remove longest substring starting from the front]({{ site.url }}//bash-in-depth/0005-Working-with-Strings.html#remove-longest-substring-starting-from-the-front)
-    * [Remove shortest substring starting from the back]({{ site.url }}//bash-in-depth/0005-Working-with-Strings.html#remove-shortest-substring-starting-from-the-back)
-    * [Remove longest substring starting from the back]({{ site.url }}//bash-in-depth/0005-Working-with-Strings.html#remove-longest-substring-starting-from-the-back)
-    * [Example]({{ site.url }}//bash-in-depth/0005-Working-with-Strings.html#example)
-* [Substring Replacement]({{ site.url }}//bash-in-depth/0005-Working-with-Strings.html#substring-replacement)
-    * [Replace the first match]({{ site.url }}//bash-in-depth/0005-Working-with-Strings.html#replace-the-first-match)
-    * [Replace all matches]({{ site.url }}//bash-in-depth/0005-Working-with-Strings.html#replace-all-matches)
-    * [Another Example]({{ site.url }}//bash-in-depth/0005-Working-with-Strings.html#another-example)
-* [Uppercase / Lowercase]({{ site.url }}//bash-in-depth/0005-Working-with-Strings.html#uppercase--lowercase)
-* [Concatenation]({{ site.url }}//bash-in-depth/0005-Working-with-Strings.html#concatenation)
-* [Summary]({{ site.url }}//bash-in-depth/0005-Working-with-Strings.html#summary)
-* [References]({{ site.url }}//bash-in-depth/0005-Working-with-Strings.html#references)
-
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px">
 
 In software engineering, we use the term "*strings*" to talk about a sequence of characters, like letters, numbers, or symbols, that are grouped together. Think of a string as a word or a sentence, just like the ones you use when texting your friends.
 
@@ -223,7 +198,7 @@ Substring: Value
 In the previous execution the script prints as output the substring “Value”. Why is that? In the following diagram we give a visualization of why this is happening.
 
 <div style="text-align:center">
-    <img src="/assets/bash-in-depth/0005-Working-with-Strings/substring_with_index.png"/>
+    <img src="chapters/0005-Working-with-Strings/substring_with_index.png"/>
 </div>
 
 As you can see in the previous diagram, the operator “`${myVariable:3}`” retrieves the substring starting from the 4th character (the one that has index 3).

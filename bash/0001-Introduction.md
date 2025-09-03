@@ -1,7 +1,5 @@
 # Chapter 1: Introduction
 
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px">
-
 If you go into the Internet and ask around you will see that several terms appear when asking about Bash. Some of them are:
 * Terminal
 * Terminal Window
@@ -14,7 +12,7 @@ In this section we are going to learn the important terms for us and how they ar
 Back in the days before personal computers, there were time-sharing systems (computers so big that occupied complete rooms). Users needed to connect to them via special dedicated devices. These devices were typically composed of a keyboard (that allowed the user to input instructions to the computer) and a text-only display monitor (that would show the input coming from the user and the output coming from the computer).
 
 <div style="text-align:center">
-    <img src="./chapters/0001-Introduction/Terminal.png" width="400px"/>
+    <img src="./chapters/0001-Introduction/images/Terminal.png" width="400px"/>
 </div>
 
 This kind of device received a couple of names that were inspired by electronics and furniture. These terms are “*terminal*” and “*console*”.

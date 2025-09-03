@@ -44,4 +44,7 @@ This book is also about **thinking like a systems engineer**: understanding not 
 * [Chapter 1: Introduction](./0001-Introduction.md)
 * [Chapter 2: Pre-Scripting Basics](./0002-Pre-Scripting-Basics.md)
 * [Chapter 3: Basics](./0003-Basics.md)
-
+* [Chapter 4: Variables](./0004-Variables.md)
+* [Chapter 5: Working with Strings](./0005-Working-with-Strings.md)
+* [Chapter 6: Working with Numbers Integers](./0006-Working-with-Integers.md)
+* [Chapter 7: Working with Numbers Floating](./0007-Working-with-Floating.md)

@@ -1,17 +1,4 @@
----
-layout: chapter
-title: "Chapter 7: Working with Numbers - Floating-point numbers"
----
-
 # Chapter 7: Working with Numbers - Floating-point numbers
-
-## Index
-* [`printf` command]({{ site.url }}//bash-in-depth/0007-Working-with-Numbers-Floating.html#printf-command)
-* [`bc` command]({{ site.url }}//bash-in-depth/0007-Working-with-Numbers-Floating.html#bc-command)
-* [Summary]({{ site.url }}//bash-in-depth/0007-Working-with-Numbers-Floating.html#summary)
-* [References]({{ site.url }}//bash-in-depth/0007-Working-with-Numbers-Floating.html#references)
-
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px">
 
 In Bash, working with floating-point numbers can be a bit tricky because Bash’s built-in arithmetic only supports **integer operations**. This means that directly performing calculations involving decimals or fractions is not possible using the default arithmetic capabilities of Bash (`$((...))` or `let`), which are limited to whole numbers.
 

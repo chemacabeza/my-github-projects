@@ -1,7 +1,3 @@
----
-layout: chapter
-title: "Chapter 2: Pre-Scripting Basics"
----
 # Chapter 2: Pre-Scripting Basics
 
 If you noticed, the "Hello World!" script that we wrote in the previous chapter the very first line looks like this.

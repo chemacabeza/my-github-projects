@@ -1,7 +1,5 @@
 # Chapter 0: Motivation and Disclaimer
 
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px">
-
 ## Motivation
 
 This book didn't just "happen"—it was forged in the fires of frustration! I’ve spent what feels like a lifetime battling with Bash, right from my days tinkering in the Networks Lab back in university (circa 2007). Bash and I have a love-hate relationship, mostly hate when I’d ask Google for the millionth time, “*How do I write an IF statement again?*”
