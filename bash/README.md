@@ -40,8 +40,8 @@ This book is also about **thinking like a systems engineer**: understanding not 
 
 ## Chapters
 
-* [Chapter 0: Motivation and Disclaimer](0000-Motivation-and-Disclaimer.md)
-* [Chapter 1: Introduction](Introduction.md)
-* [Chapter 2: Pre-Scripting Basics](0002-Pre-Scripting-Basics.md)
-* [Chapter 3: Basics](0003-Basics.md)
+* [Chapter 0: Motivation and Disclaimer](./0000-Motivation-and-Disclaimer.md)
+* [Chapter 1: Introduction](./Introduction.md)
+* [Chapter 2: Pre-Scripting Basics](./0002-Pre-Scripting-Basics.md)
+* [Chapter 3: Basics](./0003-Basics.md)
 
