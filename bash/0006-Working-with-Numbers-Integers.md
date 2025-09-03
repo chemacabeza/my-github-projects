@@ -309,8 +309,8 @@ This builtin command supports a wide variety of operators, which are as follows:
 | `==`, `!=` | Equality, inequality. Equality returns true if its operands are equal, false otherwise. Inequality returns true if its operands are not equal, false otherwise. |
 | `&` | Bitwise AND. The corresponding binary digits of both operands are multiplied to produce a result. For any given digit, the resulting digit is 1 only if the corresponding digit in both operands is also 1. |
 | `^` | Bitwise XOR (eXclusive OR). A binary digit of the result is 1 if and only if the corresponding digits of the operands differ. For instance, if the first binary digit of the first operand is 1, and the second operand's first digit is 0, the result's first digit is 1. |
-| `|` | Bitwise OR. If either of the corresponding digits in the operands is 1, that digit in the result is also 1. |
 | `&&` | Logical AND. Returns true if both of the operands are true. |
+| `|` | Bitwise OR. If either of the corresponding digits in the operands is 1, that digit in the result is also 1. |
 | `||` | Logical OR. Returns true if either of the operands is true. |
 | `expr1 ? expr2 : expr3` | Conditional (ternary) operator. If “`expr1`” is true, return “`expr2`”. If “`expr1`” is false, return “`expr3`”. |
 | `=`, `*=`, `/=`, `%=`, `+=`, `-=`, `<<=`, `>>=`, `&=`, `^=`, `|=` | Assignment. Assign the value of the expression that follows the operator, to the variable that precedes it. If an operator prefixes the equals sign, that operation is performed before assignment. For example `let "var += 5"` is equivalent to `let "var = var + 5"`. The assignment operation itself evaluates to the value assigned. |
