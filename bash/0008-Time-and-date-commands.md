@@ -187,7 +187,7 @@ The last thing we are going to show about the “`date`” command is that you c
 
 We are going to use the “`date`” command as follows.
 
-<p style="text-align: center;">
+<p align="center">
 <img src="./chapters/0008-Time-and-date-commands/images/DateCommandFormat.png" width="400px" style="display: block; margin: 0 auto;"/>
 </p>
 
