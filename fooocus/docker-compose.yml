@@ -1,0 +1,25 @@
+services:
+  fooocus:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "7860:7860"
+    volumes:
+      # mount *onto* Fooocus' internal paths
+      - ./models:/opt/Fooocus/models/checkpoints
+      - ./LoRAs:/opt/Fooocus/models/loras
+      - ./outputs:/opt/Fooocus/outputs
+      - ./cache/huggingface:/cache/huggingface
+    environment:
+      - HF_HOME=/cache/huggingface
+      - NVIDIA_VISIBLE_DEVICES=all
+      - GRADIO_SERVER_NAME=0.0.0.0
+      - GRADIO_SERVER_PORT=7860
+    gpus: all
+    command: ["python", "entry_with_update.py",
+              "--listen", "--port", "7860",
+              "--always-high-vram",
+              "--debug-mode",
+              "--external-working-path", "/opt/Fooocus/models/checkpoints", "/opt/Fooocus/models/loras",
+              "--rebuild-hash-cache", "8"]
