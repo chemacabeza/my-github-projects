@@ -48,3 +48,5 @@ This book is also about **thinking like a systems engineer**: understanding not 
 * [Chapter 5: Working with Strings](./0005-Working-with-Strings.md)
 * [Chapter 6: Working with Numbers Integers](./0006-Working-with-Numbers-Integers.md)
 * [Chapter 7: Working with Numbers Floating](./0007-Working-with-Numbers-Floating.md)
+* [Chapter 8: Time and date commands](./0008-Time-and-date-commands.md)
+* [Chapter 9: Environment Variables](./0009-Environment-Variables.md)
