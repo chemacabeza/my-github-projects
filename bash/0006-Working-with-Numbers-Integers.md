@@ -1,34 +1,4 @@
----
-layout: chapter
-title: "Chapter 6: Working with Numbers - Integers"
----
-
 # Chapter 6: Working with Numbers - Integers
-
-## Index
-* [Working with the “`expr`” command line]({{ site.url }}//bash-in-depth/0006-Working-with-Numbers-Integers.html#working-with-the-expr-command-line)
-    * [Addition]({{ site.url }}//bash-in-depth/0006-Working-with-Numbers-Integers.html#addition)
-    * [Substraction]({{ site.url }}//bash-in-depth/0006-Working-with-Numbers-Integers.html#substraction)
-    * [Division]({{ site.url }}//bash-in-depth/0006-Working-with-Numbers-Integers.html#division)
-    * [Multiplication]({{ site.url }}//bash-in-depth/0006-Working-with-Numbers-Integers.html#multiplication)
-    * [Modulo]({{ site.url }}//bash-in-depth/0006-Working-with-Numbers-Integers.html#modulo)
-    * [Comparison]({{ site.url }}//bash-in-depth/0006-Working-with-Numbers-Integers.html#comparison)
-    * [Boolean]({{ site.url }}//bash-in-depth/0006-Working-with-Numbers-Integers.html#boolean)
-* [Working with the “`let`/`declare`” builtin commands]({{ site.url }}//bash-in-depth/0006-Working-with-Numbers-Integers.html#working-with-the-letdeclare-builtin-commands)
-    * ["`declare`" command]({{ site.url }}//bash-in-depth/0006-Working-with-Numbers-Integers.html#declare-command)
-    * ["`let`" command]({{ site.url }}//bash-in-depth/0006-Working-with-Numbers-Integers.html#let-command)
-* [Other Integer Numbers]({{ site.url }}//bash-in-depth/0006-Working-with-Numbers-Integers.html#other-integer-numbers)
-    * [Octal numbers]({{ site.url }}//bash-in-depth/0006-Working-with-Numbers-Integers.html#octal-numbers3)
-    * [Hexadecimal numbers]({{ site.url }}//bash-in-depth/0006-Working-with-Numbers-Integers.html#hexadecimal-numbers4)
-    * [Other bases]({{ site.url }}//bash-in-depth/0006-Working-with-Numbers-Integers.html#other-bases)
-* [Working with Bash Arithmetic Expansion and Compound Command]({{ site.url }}//bash-in-depth/0006-Working-with-Numbers-Integers.html#working-with-bash-arithmetic-expansion-and-compound-command)
-    * [Bash Arithmetic Expansion `$((...))`]({{ site.url }}//bash-in-depth/0006-Working-with-Numbers-Integers.html#bash-arithmetic-expansion-)
-    * [Compound Command `((...))`]({{ site.url }}//bash-in-depth/0006-Working-with-Numbers-Integers.html#compound-command-)
-* [Operators Order]({{ site.url }}//bash-in-depth/0006-Working-with-Numbers-Integers.html#operators-order)
-* [Summary]({{ site.url }}//bash-in-depth/0006-Working-with-Numbers-Integers.html#summary)
-* [References]({{ site.url }}//bash-in-depth/0006-Working-with-Numbers-Integers.html#references)
-
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px">
 
 Bash, by default, primarily operates on integer numerical values. It can perform various arithmetic operations like addition, subtraction, multiplication, and division with integer numbers. These operations are particularly useful for tasks like counting, indexing, and basic mathematical calculations in scripting and automation. Bash's support for integer arithmetic makes it a handy tool for many system-level operations and scripting tasks.
 
