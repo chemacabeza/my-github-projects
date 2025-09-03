@@ -1,0 +1,12 @@
+/* Number of decimals */
+scale=10
+/* Arc whose tangent is 1 (a(1)) is 45 degrees, which is pi/4 */
+pi=4*a(1)
+/* Function that will calculate the volume of a sphere according to the radius */
+define volume(radius) {
+    return((radius^3)*pi*4/3)
+}
+/* Call to calculate the volume of a sphere of radius 2 */
+volume(2)
+/* End of script */
+halt
