@@ -1,16 +1,4 @@
----
-layout: chapter
-title: "Chapter 17: The select statement"
----
 # Chapter 17: The select statement
-
-## Index
-* [Syntax]({{ site.url }}//bash-in-depth/0017-Select-Statement.html#syntax)
-* [The `PS3` environment variable]({{ site.url }}//bash-in-depth/0017-Select-Statement.html#the-ps3-environment-variable)
-* [Summary]({{ site.url }}//bash-in-depth/0017-Select-Statement.html#summary)
-* [References]({{ site.url }}//bash-in-depth/0017-Select-Statement.html#references)
-
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px">
 
 The "`select`" statement in Bash is a powerful feature for creating simple interactive menus within scripts. It allows you to present a list of choices to the user, and based on their input, the script can execute different commands. The syntax is similar to a "`for`" loop, but instead of looping through a range of values, it loops through the options you define and waits for user input.
 
@@ -44,25 +32,25 @@ When this script runs, it will present the user with a numbered list of options 
 Let's give it a try with the following example script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: select-0001.sh
- 3 echo "Select a value from the list down here"
- 4 select var in option1 option2 option3; do
- 5    case $var in
- 6        option1)
- 7            echo "You selected option1"
- 8            ;;
- 9        option2)
-10            echo "You selected option2"
-11            ;;
-12        option3)
-13            echo "You selected option3"
-14            ;;
-15        *)
-16            echo "Invalid selection"
-17            ;;
-18    esac
-19 done
+#!/usr/bin/env bash
+#Script: select-0001.sh
+echo "Select a value from the list down here"
+select var in option1 option2 option3; do
+   case $var in
+       option1)
+           echo "You selected option1"
+           ;;
+       option2)
+           echo "You selected option2"
+           ;;
+       option3)
+           echo "You selected option3"
+           ;;
+       *)
+           echo "Invalid selection"
+           ;;
+   esac
+done
 ```
 
 When you execute the previous script you will see something like the following.
@@ -84,39 +72,39 @@ Invalid selection
 #? 
 ```
 
-As you can see you are kind of "*trapped*" in a loop where you need to select an option every single time. As we mentioned before the "`select`" statement works like a loop. This means that you can use the keywords "`continue`" and "`break`" that we learnt [back in Chapter 12]({{ site.url }}/bash-in-depth/0012-Arrays-and-loops.html#continue-and-break).
+As you can see you are kind of "*trapped*" in a loop where you need to select an option every single time. As we mentioned before the "`select`" statement works like a loop. This means that you can use the keywords "`continue`" and "`break`" that we learnt [back in Chapter 12](https://github.com/chemacabeza/my-github-projects/blob/master/bash/0012-Arrays-and-loops.md).
 
 Let's see an example with both of the keywords.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: select-0002.sh
- 3 echo "Select a value from the list down here"
- 4 select var in option1 option2 option3 next getout; do
- 5     case $var in
- 6         option1)
- 7             echo "You selected option1"
- 8             ;;
- 9         option2)
-10             echo "You selected option2"
-11             ;;
-12         option3)
-13             echo "You selected option3"
-14              ;;
-15         next)
-16             echo "You selected next"
-17             continue
-18             ;;
-19         getout)
-20             echo "you selected to get out of the select statement"
-21             break
-22             ;;
-23         *)
-24             echo "Invalid selection"
-25             ;;
-26     esac
-27 done
-28 echo "We got out of the select stament"
+#!/usr/bin/env bash
+#Script: select-0002.sh
+echo "Select a value from the list down here"
+select var in option1 option2 option3 next getout; do
+    case $var in
+        option1)
+            echo "You selected option1"
+            ;;
+        option2)
+            echo "You selected option2"
+            ;;
+        option3)
+            echo "You selected option3"
+             ;;
+        next)
+            echo "You selected next"
+            continue
+            ;;
+        getout)
+            echo "you selected to get out of the select statement"
+            break
+            ;;
+        *)
+            echo "Invalid selection"
+            ;;
+    esac
+done
+echo "We got out of the select stament"
 ```
 
 If you pay attention to the previous script you will notice that on line 4 we added two additional options which are "`next`" and "`getout`". 
@@ -163,31 +151,31 @@ The "`PS3`" environment variable in Bash is used to customize the prompt display
 Let's see an example where we will write a script to select your favorite fruit.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: select-0003.sh
- 3 PS3="Select your favorite fruit from the list: "
- 4 select var in "Apple" "Banana" "Cherry" "Grapes" "Pear"; do
- 5   case $var in
- 6     Apple)
- 7         echo "You picked '$var' as your favorite fruit"
- 8         ;;
- 9     Banana)
-10         echo "You picked '$var' as your favorite fruit"
-11         ;;
-12     Cherry)
-13         echo "You picked '$var' as your favorite fruit"
-14         ;;
-15     Grapes)
-16         echo "You picked '$var' as your favorite fruit"
-17         ;;
-18     Pear)
-19         echo "You picked '$var' as your favorite fruit"
-20         ;;
-21     *)
-22         echo "Invalid choice. Please try again."
-23         ;;
-24   esac
-25 done
+#!/usr/bin/env bash
+#Script: select-0003.sh
+PS3="Select your favorite fruit from the list: "
+select var in "Apple" "Banana" "Cherry" "Grapes" "Pear"; do
+  case $var in
+    Apple)
+        echo "You picked '$var' as your favorite fruit"
+        ;;
+    Banana)
+        echo "You picked '$var' as your favorite fruit"
+        ;;
+    Cherry)
+        echo "You picked '$var' as your favorite fruit"
+        ;;
+    Grapes)
+        echo "You picked '$var' as your favorite fruit"
+        ;;
+    Pear)
+        echo "You picked '$var' as your favorite fruit"
+        ;;
+    *)
+        echo "Invalid choice. Please try again."
+        ;;
+  esac
+done
 ```
 
 When you run the previous script you will see the following in your terminal window.
@@ -229,32 +217,32 @@ The last character that you see in the terminal window is "`^C`" which is the "C
 Something you should know is that you can pass an array so that it contains all the options you can select from. Let's rewrite the script "`select-0003.sh`" so that all the options are in an array. The result is like the following.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: select-0004.sh
- 3 PS3="Select your favorite fruit from the list: "
- 4 OPTIONS=("Apple" "Banana" "Cherry" "Grapes" "Pear")
- 5 select var in "${OPTIONS[@]}"; do
- 6    case $var in
- 7        Apple)
- 8            echo "You picked '$var' as your favorite fruit"
- 9            ;;
-10        Banana)
-11            echo "You picked '$var' as your favorite fruit"
-12            ;;
-13        Cherry)
-14            echo "You picked '$var' as your favorite fruit"
-15            ;;
-16        Grapes)
-17            echo "You picked '$var' as your favorite fruit"
-18            ;;
-19        Pear)
-20            echo "You picked '$var' as your favorite fruit"
-21            ;;
-22        *)
-23            echo "Invalid choice. Please try again."
-24            ;;
-25    esac
-26 done
+#!/usr/bin/env bash
+#Script: select-0004.sh
+PS3="Select your favorite fruit from the list: "
+OPTIONS=("Apple" "Banana" "Cherry" "Grapes" "Pear")
+select var in "${OPTIONS[@]}"; do
+   case $var in
+       Apple)
+           echo "You picked '$var' as your favorite fruit"
+           ;;
+       Banana)
+           echo "You picked '$var' as your favorite fruit"
+           ;;
+       Cherry)
+           echo "You picked '$var' as your favorite fruit"
+           ;;
+       Grapes)
+           echo "You picked '$var' as your favorite fruit"
+           ;;
+       Pear)
+           echo "You picked '$var' as your favorite fruit"
+           ;;
+       *)
+           echo "Invalid choice. Please try again."
+           ;;
+   esac
+done
 ```
 
 If you run the previous "`select-0004.sh`" script you will that it works exactly as the script "`select-0003.sh`".
@@ -279,7 +267,4 @@ Mastery comes from repetition—every time you use the "`select`" statement, you
 6. <https://superuser.com/questions/858086/bash-how-to-use-a-quoted-argument-in-select>
 7. <https://unix.stackexchange.com/questions/20698/using-select-command-to-print-a-menu-in-bash>
 8. <https://www.baeldung.com/linux/shell-script-simple-select-menu>
-
-
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px">
 

@@ -57,3 +57,4 @@ This book is also about **thinking like a systems engineer**: understanding not 
 * [Chapter 14: List Constructs Combining Commands With And and OR](./0014-List-Constructs-Combining-Commands-With-And-and-OR.md)
 * [Chapter 15: Functions](./0015-Functions.md)
 * [Chapter 16: Navigation and file folder related commands](./0016-Navigation-and-file-folder-related-commands.md)
+* [Chapter 17: Select Statement](./0017-Select-Statement.md)
