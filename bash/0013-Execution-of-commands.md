@@ -1,22 +1,4 @@
----
-layout: chapter
-title: "Chapter 13: Execution of commands"
----
-
 # Chapter 13: Execution of commands
-
-## Index
-* [Command Substitution]({{ site.url }}//bash-in-depth/0013-Execution-of-commands.html#command-substitution)
-    * [Backticks]({{ site.url }}//bash-in-depth/0013-Execution-of-commands.html#backticks)
-    * [The “`$(...)`” approach]({{ site.url }}//bash-in-depth/0013-Execution-of-commands.html#the--approach)
-    * [Backticks versus `$(...)`]({{ site.url }}//bash-in-depth/0013-Execution-of-commands.html#backticks-versus-)
-* [`eval` built-in command]({{ site.url }}//bash-in-depth/0013-Execution-of-commands.html#eval-built-in-command)
-    * [Security concerns with `eval`]({{ site.url }}//bash-in-depth/0013-Execution-of-commands.html#security-concerns-with-eval)
-    * [Tips on how to use “`eval`” safely]({{ site.url }}//bash-in-depth/0013-Execution-of-commands.html#tips-on-how-to-use-eval-safely)
-* [Summary]({{ site.url }}//bash-in-depth/0013-Execution-of-commands.html#summary)
-* [References]({{ site.url }}//bash-in-depth/0013-Execution-of-commands.html#references)
-
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px;">
 
 In Bash there are a few ways to execute a command and it depends on the purpose that you have in mind.
 
@@ -61,11 +43,11 @@ This way to execute a command is being deprecated and **is recommended not to us
 For illustration purposes we will show an example script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: command-substitution-0001.sh
- 3 echo "Saving the result of ls"
- 4 RESULT=`ls`
- 5 echo -e "Result is:\n $RESULT"
+#!/usr/bin/env bash
+#Script: command-substitution-0001.sh
+echo "Saving the result of ls"
+RESULT=`ls`
+echo -e "Result is:\n $RESULT"
 ```
 
 When you execute the script you will get something similar<a id="footnote-2-ref" href="#footnote-2" style="font-size:x-small">[2]</a> to the following.
@@ -86,11 +68,11 @@ The next approach to command substitution is easier to use, we will explain why 
 The second approach, which is going to be the one we will use along the rest of the chapters, is “`$(commands)`”. Again, for illustration purposes, we will rewrite the previous “`command-substitution-0001.sh`” script using this approach, giving the following script as result.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: command-substitution-0002.sh
- 3 echo "Saving the result of ls"
- 4 RESULT=$(ls)
- 5 echo -e "Result is:\n $RESULT"
+#!/usr/bin/env bash
+#Script: command-substitution-0002.sh
+echo "Saving the result of ls"
+RESULT=$(ls)
+echo -e "Result is:\n $RESULT"
 ```
 
 When you run this script in the same folder as “`command-substitution-0001.sh`” script you will get something similar to the following.
@@ -107,15 +89,15 @@ execution-of-commands.sh
 The previous script will save the result of the command “`ls`” as a string in the variable “`RESULT`”. We could also save the result of the command inside an array like this.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: command-substitution-0003.sh
- 3 echo "Saving the result of ls"
- 4 RESULT=($(ls))
- 5 echo "Number of file: ${#RESULT[@]}"
- 6 for file in ${RESULT[@]}; do
- 7     echo "File: $file"
- 8 done
- 9 echo "End of script"
+#!/usr/bin/env bash
+#Script: command-substitution-0003.sh
+echo "Saving the result of ls"
+RESULT=($(ls))
+echo "Number of file: ${#RESULT[@]}"
+for file in ${RESULT[@]}; do
+    echo "File: $file"
+done
+echo "End of script"
 ```
 
 When you execute the previous script, you will get a result similar to the following.
@@ -142,12 +124,12 @@ With backticks you need to escape the backtick characters in the nested command.
 Let’s take a look to the following example
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: compare.sh
- 3 # Approach with $(...)
- 4 echo $(echo $(echo $(echo $(uname))))
- 5 # Approach with backticks
- 6 echo `echo \`echo \\\`echo \\\\\\\`uname\\\\\\\`\\\`\``
+#!/usr/bin/env bash
+#Script: compare.sh
+# Approach with $(...)
+echo $(echo $(echo $(echo $(uname))))
+# Approach with backticks
+echo `echo \`echo \\\`echo \\\\\\\`uname\\\\\\\`\\\`\``
 ```
 
 In both approaches we are using the “`uname`”<a id="footnote-3-ref" href="#footnote-3" style="font-size:x-small">[3]</a> command to print the kind of operating system we are working on (“**Linux**” in our case) and will use nested “`echo`” commands to print that value.
@@ -181,17 +163,17 @@ Let’s see an example to better understand how it works, shall we?
 Let's take a look to the following script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: eval-0001.sh
- 3 VAR1='$VAR2'
- 4 VAR2='$VAR3'
- 5 VAR3='Some message'
- 6 # Using the echo command directly
- 7 echo $VAR1
- 8 # Using eval
- 9 eval echo $VAR1
-10 # Using eval eval
-11 eval eval echo $VAR1
+#!/usr/bin/env bash
+#Script: eval-0001.sh
+VAR1='$VAR2'
+VAR2='$VAR3'
+VAR3='Some message'
+# Using the echo command directly
+echo $VAR1
+# Using eval
+eval echo $VAR1
+# Using eval eval
+eval eval echo $VAR1
 ```
 
 When you run the previous script you will see the following in the terminal window.
@@ -224,17 +206,17 @@ As the purpose of “`eval`” is to convert a string of characters into a comma
 Let’s see an example by modifying slightly the previous script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: evil-0001.sh
- 3 VAR1='$VAR2; date'
- 4 VAR2='$VAR3'
- 5 VAR3='Some message'
- 6 # Using echo directly
- 7 echo $VAR1
- 8 # Using eval with echo
- 9 eval echo $VAR1
-10 # Using double eval with echo
-11 eval eval echo $VAR1
+#!/usr/bin/env bash
+#Script: evil-0001.sh
+VAR1='$VAR2; date'
+VAR2='$VAR3'
+VAR3='Some message'
+# Using echo directly
+echo $VAR1
+# Using eval with echo
+eval echo $VAR1
+# Using double eval with echo
+eval eval echo $VAR1
 ```
 
 As you can see, the only change we made was adding “`; date`”<a id="footnote-4-ref" href="#footnote-4" style="font-size:x-small">[4]</a> to the value of the variable “`VAR1`” on line 3.
@@ -259,16 +241,16 @@ Although the previous example is a very simple thing, think about a scenario whe
 Let's take a look to the following script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: evil-0002.sh
- 3 # Code used with privileges
- 4 some_important_function() {
- 5   _array=$1
- 6   # DANGER!
- 7   eval echo "\"The third element is \${$_array[2]}\""
- 8 }
- 9 a=(zero one two three four five)
-10 some_important_function a
+#!/usr/bin/env bash
+#Script: evil-0002.sh
+# Code used with privileges
+some_important_function() {
+  _array=$1
+  # DANGER!
+  eval echo "\"The third element is \${$_array[2]}\""
+}
+a=(zero one two three four five)
+some_important_function a
 ```
 
 When you execute this script you have the following result in the terminal window.
@@ -281,17 +263,17 @@ The third element is two
 What would happen if we invoke that “`some_important_function`” with something that is **not an array**, a string, for example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: evil-0003.sh
- 3 # Code used with privileges
- 4 some_important_function() {
- 5     _array=$1
- 6     # ... some important code ...
- 7     eval echo "\"The third element is \${$_array[2]}\""
- 8 }
- 9 #a=(zero one two three four five)
-10 #some_important_function a
-11 some_important_function 'x}"; date; #'
+#!/usr/bin/env bash
+#Script: evil-0003.sh
+# Code used with privileges
+some_important_function() {
+    _array=$1
+    # ... some important code ...
+    eval echo "\"The third element is \${$_array[2]}\""
+}
+#a=(zero one two three four five)
+#some_important_function a
+some_important_function 'x}"; date; #'
 ```
 
 What will happen when we execute this script? Let’s see it!
@@ -306,9 +288,9 @@ Ok. What happened here?
 
 On line 7, the command generated before being executed was as follows.
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0013-Execution-of-commands/Code-Injection.png" width="500px"/>
-</div>
+<p align="center">
+    <img src="chapters/0013-Execution-of-commands/images/Code-Injection.png" width="500px"/>
+</p>
 
 As you can see in the previous diagram, the variable “`$_array`” is expanded to “`x}"; date; #`” which closes the string with a variable “`${x}`” that expands to nothing, executes the arbitrary command “`date`” and uses “`#`” to ignore the rest of the line.
 
@@ -317,13 +299,13 @@ In the previous example the “`date`” command was used, but it could be the c
 Another thing to know is that “`eval`” could be vulnerable without even calling a script or a function. Let’s say you have the following script that captures the files/folders of the current folder and prints them.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: evil-0004.sh
- 3 eval FILES=($(ls -t))
- 4 # Loop iterating through files
- 5 for ((I=0; I < ${#FILES[@]}; I++)); do
- 6     echo "FILE: ${FILES[I]}";
- 7 done
+#!/usr/bin/env bash
+#Script: evil-0004.sh
+eval FILES=($(ls -t))
+# Loop iterating through files
+for ((I=0; I < ${#FILES[@]}; I++)); do
+    echo "FILE: ${FILES[I]}";
+done
 ```
 
 When you run the previous script you get a line with the format “`FILE: <filename>`” for every single file you have in the current directory. In our case we do have the following.
@@ -369,8 +351,8 @@ What happened here? Remember that the purpose of “`eval`” is to convert a st
 
 In the preparation step it will expand the command substitution “`$(ls -t)`” like follows.
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0013-Execution-of-commands/Code-Injection-2.png"/>
+<p align="center">
+    <img src="chapters/0013-Execution-of-commands/images/Code-Injection-2.png"/>
 </div>
 
 Now imagine that the name of the file contains a more harmful command like “`rm`”<a id="footnote-6-ref" href="#footnote-6" style="font-size:x-small">[6]</a>. This could cause serious trouble.
@@ -388,22 +370,22 @@ The first way is to use literal strings (single quoted) without variables. If th
 The second way is to check the type of the variable before executing the “`eval`” command. To be able to do that we can use the “`declare`” built-in command with the flag “`-p`”. Let’s see an example with the script “evil-0004.sh” that we saw before.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: evil-0004-safe.sh
- 3 # Code used with privileges
- 4 some_important_function() {
- 5     _array=$1
- 6     # DANGER?
- 7     local type_signature=$(declare -p "$_array" 2>/dev/null)
- 8     if [[ $type_signature =~ "declare -a" ]]; then
- 9         eval echo "\"The third element is \${$_array[2]}\""
-10     else
-11         echo "WRONG INPUT TYPE. ARRAY EXPECTED."
-12     fi
-13 }
-14 a=(zero one two three four five)
-15 some_important_function a
-16 some_important_function 'x}"; date; #'
+#!/usr/bin/env bash
+#Script: evil-0004-safe.sh
+# Code used with privileges
+some_important_function() {
+    _array=$1
+    # DANGER?
+    local type_signature=$(declare -p "$_array" 2>/dev/null)
+    if [[ $type_signature =~ "declare -a" ]]; then
+        eval echo "\"The third element is \${$_array[2]}\""
+    else
+        echo "WRONG INPUT TYPE. ARRAY EXPECTED."
+    fi
+}
+a=(zero one two three four five)
+some_important_function a
+some_important_function 'x}"; date; #'
 ```
 
 On line 7 we are using the command substitution that we learnt before to run a command and store the result in a variable (“`type_signature`” in our case).
@@ -426,17 +408,17 @@ The fourth, and last, way that we present here to work safely with “`eval`” 
 Let’s see a reviewed version of the script “`evil-0001.sh`” that we saw before.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: evil-0001-safe.sh
- 3 VAR1='$VAR2; date'
- 4 VAR2='$VAR3'
- 5 VAR3='Some message'
- 6 # Using echo directly
- 7 echo $VAR1
- 8 # Using eval with echo
- 9 eval echo "$(printf "%q " $VAR1)"
-10 # Using double eval with echo
-11 eval eval echo "$( printf "%q " "$(printf "%q " $VAR1)")"
+#!/usr/bin/env bash
+#Script: evil-0001-safe.sh
+VAR1='$VAR2; date'
+VAR2='$VAR3'
+VAR3='Some message'
+# Using echo directly
+echo $VAR1
+# Using eval with echo
+eval echo "$(printf "%q " $VAR1)"
+# Using double eval with echo
+eval eval echo "$( printf "%q " "$(printf "%q " $VAR1)")"
 ```
 
 In the last script we replaced every single appearance of the variable “`$VAR1`” with a command substitution that calls to “`printf “%q “`”, per “`eval`”.
