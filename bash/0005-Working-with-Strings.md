@@ -197,9 +197,9 @@ Substring: Value
 
 In the previous execution the script prints as output the substring “Value”. Why is that? In the following diagram we give a visualization of why this is happening.
 
-<div style="text-align:center">
+<p align="center">
     <img src="chapters/0005-Working-with-Strings/images/substring_with_index.png"/>
-</div>
+</p>
 
 As you can see in the previous diagram, the operator “`${myVariable:3}`” retrieves the substring starting from the 4th character (the one that has index 3).
 
@@ -221,9 +221,9 @@ Substring: Val
 
 Same as with the previous example we include the following diagram to give a more visual explanation of what is happening.
 
-<div style="text-align:center">
+<p align="center">
     <img src="chapters/0005-Working-with-Strings/images/substring_with_index_and_length.png"/>
-</div>
+</p>
 
 In this case it starts as with the previous example, selecting the beginning of the string from the fourth character (character with index 3) and will take a length of 3 characters starting from the character “`V`” included. Resulting in the substring “`Val`”.
 
@@ -245,9 +245,9 @@ ${myVariable#substring}
 
 In the following diagram you will see that Bash will search for the shortest substring that matches the pattern provided (from the beginning of the string) and will generate a substring without the part that matches the pattern to be removed.
 
-<div style="text-align:center">
+<p align="center">
     <img src="chapters/0005-Working-with-Strings/images/remove_shortest_substring_starting_from_the_front.png"/>
-</div>
+</p>
 
 ### Remove longest substring starting from the front
 
@@ -259,9 +259,9 @@ ${myVariable##substring}
 
 In the following diagram you will see that Bash will search for the longest substring that matches the pattern provided (from the beginning of the string) and will generate a substring without the part that matches the pattern to be removed.
 
-<div style="text-align:center">
+<p align="center">
     <img src="chapters/0005-Working-with-Strings/images/remove_longest_substring_starting_from_the_front.png" />
-</div>
+</p>
 
 Please notice in the previous diagram that between the red letters there are two different `K` characters. As we are using the operator to remove the **longest** sequence of characters that matches the given pattern it will remove the longest sequence of characters.
 
@@ -274,9 +274,9 @@ ${string%substring}
 
 In the following diagram you will see that Bash will search for the shortest substring that matches the pattern provided (from the back of the string) and will generate a substring without the part that matches the pattern to be removed.
 
-<div style="text-align:center">
+<p align="center">
     <img src="chapters/0005-Working-with-Strings/images/remove_shortest_substring_starting_from_the_back.png" />
-</div>
+</p>
 
 ### Remove longest substring starting from the back
 Last, but not least, is removing the **longest** substring that matches a pattern **starting from the back** of the string. For that we need to use the following syntax.
@@ -287,9 +287,9 @@ ${string%%substring}
 
 In the following diagram you will see that Bash will search for the longest substring that matches the pattern provided (from the back of the string) and will generate a substring without the part that matches the pattern to be removed.
 
-<div style="text-align:center">
+<p align="center">
     <img src="chapters/0005-Working-with-Strings/images/remove_longest_substring_starting_from_the_back.png"/>
-</div>
+</p>
 
 ### Example
 In the following script we put together an example of every way we talked about in this section.
@@ -334,9 +334,9 @@ ${string/pattern/replacement}
 
 In the following diagram you will see that Bash will search for the longest substring that matches the pattern provided (from the front of the string) and will generate a substring with “`pattern`” replaced by “`replacement`”.
 
-<div style="text-align:center">
+<p align="center">
     <img src="chapters/0005-Working-with-Strings/images/replace_first_instance.png"/>
-</div>
+</p>
 
 ### Replace all matches
 To replace **all the matches** of the patterns provided we need to use the following syntax.
@@ -347,9 +347,9 @@ ${string//pattern/replacement}
 
 In the following diagram you will see that Bash will search for the longest substring that matches the pattern provided (from the front of the string) and will generate a substring with “`pattern`” replaced by “`replacement`” in all instances of the match.
 
-<div style="text-align:center">
+<p align="center">
     <img src="chapters/0005-Working-with-Strings/images/replace_all_instances.png"/>
-</div>
+</p>
 
 ### Another Example
 
