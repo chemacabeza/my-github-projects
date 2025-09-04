@@ -21,10 +21,10 @@ myVariable=myValue
 In this case you see that there are no quotes around “`myValue`”. Let's see a simple example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: declare_string.sh
- 3 myVariable=myValue
- 4 echo "Variable: $myVariable"
+#!/usr/bin/env bash
+#Script: declare_string.sh
+myVariable=myValue
+echo "Variable: $myVariable"
 ```
 
 When you execute the previous script you will get the following output.
@@ -37,10 +37,10 @@ Variable: myValue
 It has to be a single sequence of characters with no space in it. If you add a space in the value of the string, Bash will understand that the string after the space is a command and will try to execute the command. Let's see it with the following example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: declare_string_wrong.sh
- 3 myVariable=myValue otherString
- 4 echo "Variable: $myVariable"
+#!/usr/bin/env bash
+#Script: declare_string_wrong.sh
+myVariable=myValue otherString
+echo "Variable: $myVariable"
 ```
 
 As you can see in the line 3 there is the string `otherString` after the space character. When you execute the previous script you will get the following output.
@@ -69,10 +69,10 @@ Let's see a very simple example with the next script.
 
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: declare_string_with_double_quotes.sh
- 3 myVariable="This is a string that contains 8 space characters"
- 4 echo "Variable: $myVariable"
+#!/usr/bin/env bash
+#Script: declare_string_with_double_quotes.sh
+myVariable="This is a string that contains 8 space characters"
+echo "Variable: $myVariable"
 ```
 
 When you execute the previous script you will get the following result.
@@ -91,11 +91,11 @@ myVariable=”This $value will be replaced”
 Let's see how this works with an example script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: declare_string_that_references_another_variable.sh
- 3 value="a string that contains"
- 4 myVariable="This is $value 8 space characters"
- 5 echo "Variable: '$myVariable'"
+#!/usr/bin/env bash
+#Script: declare_string_that_references_another_variable.sh
+value="a string that contains"
+myVariable="This is $value 8 space characters"
+echo "Variable: '$myVariable'"
 ```
 
 As you can see in the previous script there is a variable named `value` declared in line 3, then the contents of that variable are used in the line 4 to declare the variable named `myVariable`.
@@ -116,11 +116,11 @@ myVariable=’This $value will be replaced’
 The main difference between using single quotes and using double quotes is that if there is any reference to variables inside a single quoted string will never be replaced the contents of the variables will never be added to the string, you will only see the variable reference as it is. Let's see it with the following example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: declare_string_with_single_quotes.sh
- 3 value="string that contains"
- 4 myVariable='This is a $value 8 space characters'
- 5 echo "Variable: $myVariable"
+#!/usr/bin/env bash
+#Script: declare_string_with_single_quotes.sh
+value="string that contains"
+myVariable='This is a $value 8 space characters'
+echo "Variable: $myVariable"
 ```
 
 Depending on the syntax highlighting you are using you might see that the variable referenced in the line 4 of the previous script you might notice that color of the `$value` is no longer highlighted. If you execute the previous script you will have the following output.
@@ -146,10 +146,10 @@ ${#myVariable}
 This operator returns the length of the string contained in the variable called “`myVariable`”. Let’s see it with an example in the following script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: string_length.sh
- 3 myVariable="My Value"
- 4 echo "The content of ‘myVariable’ is '$myVariable' and its length is ${#myVariable}"
+#!/usr/bin/env bash
+#Script: string_length.sh
+myVariable="My Value"
+echo "The content of ‘myVariable’ is '$myVariable' and its length is ${#myVariable}"
 ```
 
 When you execute the previous script you will get the following output in the terminal.
@@ -182,10 +182,10 @@ ${myVariable:index:length}
 The first option generates a substring starting from the character at the position “`index`” until the end of the string. Let’s see what happens with an example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: string_index.sh
- 3 myVariable="My Value"
- 4 echo "Substring: ${myVariable:3}"
+#!/usr/bin/env bash
+#Script: string_index.sh
+myVariable="My Value"
+echo "Substring: ${myVariable:3}"
 ```
 
 When you execute the previous script you will get the following result.
@@ -198,7 +198,7 @@ Substring: Value
 In the previous execution the script prints as output the substring “Value”. Why is that? In the following diagram we give a visualization of why this is happening.
 
 <div style="text-align:center">
-    <img src="chapters/0005-Working-with-Strings/substring_with_index.png"/>
+    <img src="chapters/0005-Working-with-Strings/images/substring_with_index.png"/>
 </div>
 
 As you can see in the previous diagram, the operator “`${myVariable:3}`” retrieves the substring starting from the 4th character (the one that has index 3).
@@ -206,10 +206,10 @@ As you can see in the previous diagram, the operator “`${myVariable:3}`” ret
 In the second form that we mentioned before (`${myVariable:index:length}`), we can use the length of the substring that we want to extract starting from the index. Let’s see an example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: string_index_length.sh
- 3 myVariable="My Value"
- 4 echo "Substring: ${myVariable:3:3}"
+#!/usr/bin/env bash
+#Script: string_index_length.sh
+myVariable="My Value"
+echo "Substring: ${myVariable:3:3}"
 ```
 
 When you execute the previous script you will have the following result.
@@ -222,7 +222,7 @@ Substring: Val
 Same as with the previous example we include the following diagram to give a more visual explanation of what is happening.
 
 <div style="text-align:center">
-    <img src="/assets/bash-in-depth/0005-Working-with-Strings/substring_with_index_and_length.png"/>
+    <img src="chapters/0005-Working-with-Strings/images/substring_with_index_and_length.png"/>
 </div>
 
 In this case it starts as with the previous example, selecting the beginning of the string from the fourth character (character with index 3) and will take a length of 3 characters starting from the character “`V`” included. Resulting in the substring “`Val`”.
@@ -246,7 +246,7 @@ ${myVariable#substring}
 In the following diagram you will see that Bash will search for the shortest substring that matches the pattern provided (from the beginning of the string) and will generate a substring without the part that matches the pattern to be removed.
 
 <div style="text-align:center">
-    <img src="/assets/bash-in-depth/0005-Working-with-Strings/remove_shortest_substring_starting_from_the_front.png"/>
+    <img src="chapters/0005-Working-with-Strings/images/remove_shortest_substring_starting_from_the_front.png"/>
 </div>
 
 ### Remove longest substring starting from the front
@@ -260,7 +260,7 @@ ${myVariable##substring}
 In the following diagram you will see that Bash will search for the longest substring that matches the pattern provided (from the beginning of the string) and will generate a substring without the part that matches the pattern to be removed.
 
 <div style="text-align:center">
-    <img src="/assets/bash-in-depth/0005-Working-with-Strings/remove_longest_substring_starting_from_the_front.png" />
+    <img src="chapters/0005-Working-with-Strings/images/remove_longest_substring_starting_from_the_front.png" />
 </div>
 
 Please notice in the previous diagram that between the red letters there are two different `K` characters. As we are using the operator to remove the **longest** sequence of characters that matches the given pattern it will remove the longest sequence of characters.
@@ -275,7 +275,7 @@ ${string%substring}
 In the following diagram you will see that Bash will search for the shortest substring that matches the pattern provided (from the back of the string) and will generate a substring without the part that matches the pattern to be removed.
 
 <div style="text-align:center">
-    <img src="/assets/bash-in-depth/0005-Working-with-Strings/remove_shortest_substring_starting_from_the_back.png" />
+    <img src="chapters/0005-Working-with-Strings/images/remove_shortest_substring_starting_from_the_back.png" />
 </div>
 
 ### Remove longest substring starting from the back
@@ -288,24 +288,24 @@ ${string%%substring}
 In the following diagram you will see that Bash will search for the longest substring that matches the pattern provided (from the back of the string) and will generate a substring without the part that matches the pattern to be removed.
 
 <div style="text-align:center">
-    <img src="/assets/bash-in-depth/0005-Working-with-Strings/remove_longest_substring_starting_from_the_back.png"/>
+    <img src="chapters/0005-Working-with-Strings/images/remove_longest_substring_starting_from_the_back.png"/>
 </div>
 
 ### Example
 In the following script we put together an example of every way we talked about in this section.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: remove_substring_examples.sh
- 3 myVariable=AbCdEfGhIjKlMnOpQrSKtUvWxYz
- 4 # Remove shortest substring starting from the front
- 5 echo "\${myVariable#A*K}  => ${myVariable#A*K}"
- 6 # Remove longest substring starting from the front
- 7 echo "\${myVariable##A*K} => ${myVariable##A*K}"
- 8 # Remove shortest substring starting from the back
- 9 echo "\${myVariable%K*z}  => ${myVariable%K*z}"
-10 # Remove longest substring starting from the back
-11 echo "\${myVariable%%K*z} => ${myVariable%%K*z}"
+#!/usr/bin/env bash
+#Script: remove_substring_examples.sh
+myVariable=AbCdEfGhIjKlMnOpQrSKtUvWxYz
+# Remove shortest substring starting from the front
+echo "\${myVariable#A*K}  => ${myVariable#A*K}"
+# Remove longest substring starting from the front
+echo "\${myVariable##A*K} => ${myVariable##A*K}"
+# Remove shortest substring starting from the back
+echo "\${myVariable%K*z}  => ${myVariable%K*z}"
+# Remove longest substring starting from the back
+echo "\${myVariable%%K*z} => ${myVariable%%K*z}"
 ```
 
 When you execute the previous script you will get the following output.
@@ -335,7 +335,7 @@ ${string/pattern/replacement}
 In the following diagram you will see that Bash will search for the longest substring that matches the pattern provided (from the front of the string) and will generate a substring with “`pattern`” replaced by “`replacement`”.
 
 <div style="text-align:center">
-    <img src="/assets/bash-in-depth/0005-Working-with-Strings/replace_first_instance.png"/>
+    <img src="chapters/0005-Working-with-Strings/images/replace_first_instance.png"/>
 </div>
 
 ### Replace all matches
@@ -348,7 +348,7 @@ ${string//pattern/replacement}
 In the following diagram you will see that Bash will search for the longest substring that matches the pattern provided (from the front of the string) and will generate a substring with “`pattern`” replaced by “`replacement`” in all instances of the match.
 
 <div style="text-align:center">
-    <img src="/assets/bash-in-depth/0005-Working-with-Strings/replace_all_instances.png"/>
+    <img src="chapters/0005-Working-with-Strings/images/replace_all_instances.png"/>
 </div>
 
 ### Another Example
@@ -356,17 +356,17 @@ In the following diagram you will see that Bash will search for the longest subs
 In the following script you will see a couple of examples for each type of replacement.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: substring_replacement.sh
- 3 myVariable=AbCdEfGhIjKlMnOpQrSKtUvWxYz
- 4 # Replace the first instance
- 5 echo "\${myVariable/A*K/XXXX}  => ${myVariable/A*K/XXXX}"
- 6 # Replace the first instance
- 7 echo "\${myVariable/K*z/XXXX}  => ${myVariable/K*z/XXXX}"
- 8 # Replace all instances
- 9 echo "\${myVariable//A*K/XXXX} => ${myVariable//A*K/XXXX}"
-10 # Replace all instances
-11 echo "\${myVariable//K/XXXX}   => ${myVariable//K/XXXX}"
+#!/usr/bin/env bash
+#Script: substring_replacement.sh
+myVariable=AbCdEfGhIjKlMnOpQrSKtUvWxYz
+# Replace the first instance
+echo "\${myVariable/A*K/XXXX}  => ${myVariable/A*K/XXXX}"
+# Replace the first instance
+echo "\${myVariable/K*z/XXXX}  => ${myVariable/K*z/XXXX}"
+# Replace all instances
+echo "\${myVariable//A*K/XXXX} => ${myVariable//A*K/XXXX}"
+# Replace all instances
+echo "\${myVariable//K/XXXX}   => ${myVariable//K/XXXX}"
 ```
 
 When you execute the previous script you will get the following result.
@@ -403,15 +403,15 @@ In this case the two commas are telling Bash to make the alphabetic characters �
 In the following example you will see how both operators work.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: string_upper_lower.sh
- 3 myStringVariable="This is the message that I want to test"
- 4 # Original String
- 5 echo "Original : $myStringVariable"
- 6 # UPPERCASE STRING
- 7 echo "UPPERCASE: ${myStringVariable^^}"
- 8 # lowercase string
- 9 echo "lowercase: ${myStringVariable,,}"
+#!/usr/bin/env bash
+#Script: string_upper_lower.sh
+myStringVariable="This is the message that I want to test"
+# Original String
+echo "Original : $myStringVariable"
+# UPPERCASE STRING
+echo "UPPERCASE: ${myStringVariable^^}"
+# lowercase string
+echo "lowercase: ${myStringVariable,,}"
 ```
 
 When you execute the previous script you will get the following output.
@@ -433,13 +433,13 @@ If you have tried other programming languages, the operators that you have used 
 Unfortunately the operator “`+`” is of no use for us while the operator “`+=`” does the same as in other programming languages. Out of curiosity, let’s see what happens when we try to use the “`+`” operator to concatenate two different strings. In the following script you will see the example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: string_invalid_concatenation.sh
- 3 firstName="John"
- 4 lastName="Doe"
- 5 # Concatenation
- 6 fullName=$firstName+$lastName
- 7 echo "Concatenation: $fullName"
+#!/usr/bin/env bash
+#Script: string_invalid_concatenation.sh
+firstName="John"
+lastName="Doe"
+# Concatenation
+fullName=$firstName+$lastName
+echo "Concatenation: $fullName"
 ```
 
 In the previous script you see that on lines 3 and 4 there are two strings declared. Then on line 6 you see that we declare a variable that contains the (invalid) concatenation of the previous two strings. According to our logic that we saw in other programming languages the variable “`fullName`” should contain the value “`JohnDoe`”.
@@ -458,12 +458,12 @@ In Bash there are (at least) 3 different ways to concatenate strings. We will se
 The first way to concatenate strings is by using **variable assignment**. With this way you use string interpolation to embed one or more strings into a new string that will be assigned to a variable. Let’s see how it works with the following example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: string_variable_assignment_concat.sh
- 3 firstName="John"
- 4 lastName="Doe"
- 5 fullName="$firstName$lastName"
- 6 echo "Concatenation: $fullName"
+#!/usr/bin/env bash
+#Script: string_variable_assignment_concat.sh
+firstName="John"
+lastName="Doe"
+fullName="$firstName$lastName"
+echo "Concatenation: $fullName"
 ```
 
 In lines 3 and 4 of the previous script you see that two string variables have been declared, same as with the previous example. Now look at line 5. In this line we create a new variable named “`fullName`” whose value is a string that references the previous two variables declared.
@@ -482,16 +482,16 @@ The second way to concatenate strings is by using the **“`+=`” operator**. W
 Let's see how it works with an example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: string_op_concat.sh
- 3 # Declaration of string variable
- 4 myStringVariable="First value. "
- 5 # Appending a second value
- 6 myStringVariable+="Second value. "
- 7 # Appending a third value
- 8 myStringVariable+="Third value. "
- 9 # Result
-10 echo "RESULT: $myStringVariable"
+#!/usr/bin/env bash
+#Script: string_op_concat.sh
+# Declaration of string variable
+myStringVariable="First value. "
+# Appending a second value
+myStringVariable+="Second value. "
+# Appending a third value
+myStringVariable+="Third value. "
+# Result
+echo "RESULT: $myStringVariable"
 ```
 
 In the previous script you will see that on line 4 we do declare the string variable `myStringVariable`  with “First value. “ as content. Then on lines 6 and 8 we use the operator “`+=`” to append other strings to it. Then on line 10 we do print the full content of the variable. When you run the previous script you have the following result.
@@ -504,18 +504,18 @@ RESULT: First value. Second value. Third value.
 The third and last way that we will show in this book is a combination of the “`printf`” command, that we learnt in a previous chapter, and something called “*Command Substitution*”<a id="footnote-1-ref" href="#footnote-1" style="font-size:x-small">[1]</a> that we will tackle in the chapter dedicated to execution of commands. Let’s see an example!
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: string_printf_concat.sh
- 3 # Declare First Name
- 4 firstName="John"
- 5 # Declare Last Name
- 6 lastName="Doe"
- 7 # Declare Age
- 8 age=26
- 9 # Declare summary using printf command and command substitution
-10 summary=$(printf "\nFull name -> %s %s\nAge -> %d" $firstName $lastName $age)
-11 # Print Summary
-12 echo "Summary: $summary"
+#!/usr/bin/env bash
+#Script: string_printf_concat.sh
+# Declare First Name
+firstName="John"
+# Declare Last Name
+lastName="Doe"
+# Declare Age
+age=26
+# Declare summary using printf command and command substitution
+summary=$(printf "\nFull name -> %s %s\nAge -> %d" $firstName $lastName $age)
+# Print Summary
+echo "Summary: $summary"
 ```
 
 In the previous script we declare 3 variables on lines 4, 6 and 8. Then on line 10 we use command substitution with the “`printf`” built-in command to generate a string with the format that we want and store it in a variable called “`summary`” whose content we print on line 12.

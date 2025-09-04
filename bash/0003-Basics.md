@@ -12,12 +12,12 @@ Let’s begin!
 The typical structure of a Bash script is as follows.
 
 ```bash
-1 #!<hashbang>
-2 
-3 # My comment
-4 command1
-5 command2
-6 ...
+#!<hashbang>
+
+# My comment
+command1
+command2
+...
 ```
 
 There is no need to add comments to your script, but it’s a good practice as it will be easier for you to read your script in the future.
@@ -185,16 +185,16 @@ As usual, let’s take a look at a few examples to have a better understanding.
 First we are going to write the following script where you will see several examples of characters being printed:
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: different_formats.sh
- 3 printf "Message with normal characters and numbers (1,2,3...)\n"
- 4 printf "\115\145\163\163\141\147\145\040\167\151\164\150\040\157\143\164\141\154\040\143\150\141\162\141\143\164\145\162\163\n"
- 5 printf "\x4d\x65\x73\x73\x61\x67\x65\x20\x77\x69\x74\x68\x20\x48\x45\x58\x20\x63\x68\x61\x72\x61\x63\x74\x65\x72\x73\n"
- 6 printf "New line character: 12345\n6789\n"
- 7 printf "Backslash character: \\ \n"
- 8 printf "Backspace character: 1\b2 \n"
- 9 printf "Horizontal\ttab\n"
-10 printf "Vertical\vtab\n"
+#!/usr/bin/env bash
+#Script: different_formats.sh
+printf "Message with normal characters and numbers (1,2,3...)\n"
+printf "\115\145\163\163\141\147\145\040\167\151\164\150\040\157\143\164\141\154\040\143\150\141\162\141\143\164\145\162\163\n"
+printf "\x4d\x65\x73\x73\x61\x67\x65\x20\x77\x69\x74\x68\x20\x48\x45\x58\x20\x63\x68\x61\x72\x61\x63\x74\x65\x72\x73\n"
+printf "New line character: 12345\n6789\n"
+printf "Backslash character: \\ \n"
+printf "Backspace character: 1\b2 \n"
+printf "Horizontal\ttab\n"
+printf "Vertical\vtab\n"
 ```
 
 When you run the previous script you will get the following.
@@ -228,11 +228,11 @@ Let’s play with the bell character “`\a`”.
 This special character will make a sound when the script is executed. Let's see a simple example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: alarm.sh
- 3 printf "A little alarm will sound next\n"
- 4 printf "ALARM\a\n" # <<< Bell character used here
- 5 printf "End of alarm\n"
+#!/usr/bin/env bash
+#Script: alarm.sh
+printf "A little alarm will sound next\n"
+printf "ALARM\a\n" # <<< Bell character used here
+printf "End of alarm\n"
 ```
 
 When you run the previous script you will get the following output and a little bell will sound.
@@ -254,11 +254,11 @@ The carriage return is telling the terminal to move the cursor to the beginning 
 In the following script we illustrate with a very simple example what is the behavior of this character.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: carriage_return_1.sh
- 3 printf "Beginning of example\n"
- 4 printf "This part of the line will NOT appear\rThis part of the line WILL BE appearing\n"
- 5 printf "End of example\n"
+#!/usr/bin/env bash
+#Script: carriage_return_1.sh
+printf "Beginning of example\n"
+printf "This part of the line will NOT appear\rThis part of the line WILL BE appearing\n"
+printf "End of example\n"
 ```
 
 When you run the previous script you will have the following output.
@@ -275,11 +275,11 @@ This does not mean that carriage return gets rid of the present line. The cursor
 In the following example we will use different letters to show how the override happens.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: carriage_return_2.sh
- 3 printf "Beginning of example\n"
- 4 printf "WWWWWWWWWWWW\rXXXXXXXXXX\rYYYYYYYY\rZZZZZZ\rVVVV\rUU\n"
- 5 printf "End of example\n"
+#!/usr/bin/env bash
+#Script: carriage_return_2.sh
+printf "Beginning of example\n"
+printf "WWWWWWWWWWWW\rXXXXXXXXXX\rYYYYYYYY\rZZZZZZ\rVVVV\rUU\n"
+printf "End of example\n"
 ```
 
 The output of the previous script is as follows.
@@ -336,11 +336,11 @@ The reason for these different behaviors is because of something we already ment
 The same would happen if we would redirect the output to a file. In the following script we send<a id="footnote-4-ref" href="#footnote-4" style="font-size:x-small">[4]</a> the information to the file called “`output.txt`”.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: carriage_return_3.sh
- 3 printf "Beginning of example\n" >> output.txt
- 4 printf "WWWWWWWWWWWW\rXXXXXXXXXX\rYYYYYYYY\rZZZZZZ\rVVVV\rUU\n" >> output.txt
- 5 printf "End of example\n" >> output.txt
+#!/usr/bin/env bash
+#Script: carriage_return_3.sh
+printf "Beginning of example\n" >> output.txt
+printf "WWWWWWWWWWWW\rXXXXXXXXXX\rYYYYYYYY\rZZZZZZ\rVVVV\rUU\n" >> output.txt
+printf "End of example\n" >> output.txt
 ```
 
 When we execute the script and do a “`cat`”<a id="footnote-5-ref" href="#footnote-5" style="font-size:x-small">[5]</a> of the file generated we will see the following.
@@ -379,15 +379,15 @@ First of all we are going to create a script called “`specifiers.sh`” that w
 We will start by adding to our script a few lines with every value of “*flag*” to see the differences. We are added a vertical bar “`|`” at the beginning and end of every example to be able to see the differences more clearly.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: specifiers.sh
- 3 # Flags
- 4 printf "Examples with Flags\n"
- 5 printf "|%f|\n" 12.345
- 6 printf "|%-f|\n" 12.345
- 7 printf "|%+f|\n" 12.345
- 8 printf "|%0f|\n" 12.345
- 9 printf "|% f|\n" 12.345
+#!/usr/bin/env bash
+#Script: specifiers.sh
+# Flags
+printf "Examples with Flags\n"
+printf "|%f|\n" 12.345
+printf "|%-f|\n" 12.345
+printf "|%+f|\n" 12.345
+printf "|%0f|\n" 12.345
+printf "|% f|\n" 12.345
 ```
 
 When the script is executed it produces the following output.
@@ -405,23 +405,23 @@ Examples with Flags
 With the exception of a space and a plus sign at the beginning, after the first vertical bar, we do not see a lot of difference between the different lines. To be able to see a bit more, we are going to add the a few more lines to the script adding the “width” to each one of the previous lines setting it to 20.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: specifiers_2.sh
- 3 # Flags
- 4 printf "Examples with Flags\n"
- 5 printf "|%f|\n" 12.345
- 6 printf "|%-f|\n" 12.345
- 7 printf "|%+f|\n" 12.345
- 8 printf "|%0f|\n" 12.345
- 9 printf "|% f|\n" 12.345
-10 printf "\n"
-11 # Flags + width
-12 printf "Examples with Flags & Width\n"
-13 printf "|%20f|\n" 12.345
-14 printf "|%-20f|\n" 12.345
-15 printf "|%+20f|\n" 12.345
-16 printf "|%020f|\n" 12.345
-17 printf "|% 20f|\n" 12.345
+#!/usr/bin/env bash
+#Script: specifiers_2.sh
+# Flags
+printf "Examples with Flags\n"
+printf "|%f|\n" 12.345
+printf "|%-f|\n" 12.345
+printf "|%+f|\n" 12.345
+printf "|%0f|\n" 12.345
+printf "|% f|\n" 12.345
+printf "\n"
+# Flags + width
+printf "Examples with Flags & Width\n"
+printf "|%20f|\n" 12.345
+printf "|%-20f|\n" 12.345
+printf "|%+20f|\n" 12.345
+printf "|%020f|\n" 12.345
+printf "|% 20f|\n" 12.345
 ```
 
 When you run the previous script you will get the following output.
@@ -449,31 +449,31 @@ This output gives us more information. Setting the “width” to 20 characters 
 With this last example we can see the effect of “flags” and “width”. Let’s evolve our example to use precision.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: specifiers_3.sh
- 3 # Flags
- 4 printf "Examples with Flags\n"
- 5 printf "|%f|\n" 12.345
- 6 printf "|%-f|\n" 12.345
- 7 printf "|%+f|\n" 12.345
- 8 printf "|%0f|\n" 12.345
- 9 printf "|% f|\n" 12.345
-10 printf "\n"
-11 # Flags + width
-12 printf "Examples with Flags & Width\n"
-13 printf "|%20f|\n" 12.345
-14 printf "|%-20f|\n" 12.345
-15 printf "|%+20f|\n" 12.345
-16 printf "|%020f|\n" 12.345
-17 printf "|% 20f|\n" 12.345
-18 printf "\n"
-19 # Flags + width + precision
-20 printf "Examples with Flags & Width & Precision\n"
-21 printf "|%20.2f|\n" "12.345"
-22 printf "|%-20.2f|\n" "12.345"
-23 printf "|%+20.2f|\n" "12.345"
-24 printf "|%020.2f|\n" "12.345"
-25 printf "|% 20.2f|\n" "12.345"
+#!/usr/bin/env bash
+#Script: specifiers_3.sh
+# Flags
+printf "Examples with Flags\n"
+printf "|%f|\n" 12.345
+printf "|%-f|\n" 12.345
+printf "|%+f|\n" 12.345
+printf "|%0f|\n" 12.345
+printf "|% f|\n" 12.345
+printf "\n"
+# Flags + width
+printf "Examples with Flags & Width\n"
+printf "|%20f|\n" 12.345
+printf "|%-20f|\n" 12.345
+printf "|%+20f|\n" 12.345
+printf "|%020f|\n" 12.345
+printf "|% 20f|\n" 12.345
+printf "\n"
+# Flags + width + precision
+printf "Examples with Flags & Width & Precision\n"
+printf "|%20.2f|\n" "12.345"
+printf "|%-20.2f|\n" "12.345"
+printf "|%+20.2f|\n" "12.345"
+printf "|%020.2f|\n" "12.345"
+printf "|% 20.2f|\n" "12.345"
 ```
 
 When you execute the last version of the script you will get the following.
@@ -526,12 +526,12 @@ The effect of this would be the declaration of a new variable “`VAR`” whose 
 Let's see it with an example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: printf_v_option.sh
- 3 printf "Beginning of example\n"
- 4 printf -v MY_VAR "First line of the variable\nSecond line of the variable\nThird line"
- 5 printf "Content of the variable:\n###\n$MY_VAR\n###\n"
- 6 printf "End of example\n"
+#!/usr/bin/env bash
+#Script: printf_v_option.sh
+printf "Beginning of example\n"
+printf -v MY_VAR "First line of the variable\nSecond line of the variable\nThird line"
+printf "Content of the variable:\n###\n$MY_VAR\n###\n"
+printf "End of example\n"
 ```
 
 When you execute the previous script it will give you the following output.

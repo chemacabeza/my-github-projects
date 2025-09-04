@@ -3,9 +3,9 @@
 If you noticed, the "Hello World!" script that we wrote in the previous chapter the very first line looks like this.
 
 ```bash
- 1 #!/bin/bash  <<<<<<<<<<<<<<<
- 2 #Script: hello_world.sh
- 3 echo "Hello World!"
+#!/bin/bash  <<<<<<<<<<<<<<<
+#Script: hello_world.sh
+echo "Hello World!"
 ```
 
 That very first line is called "`Shebang`" or "`Hashbang`". This line is used by the Linux Kernel (and not the interpreter) to know how to execute it.

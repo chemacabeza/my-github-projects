@@ -93,9 +93,9 @@ In the next section we are going to see the classical example of software engine
 The following script contains 3 lines of code that prints on the screen the message “Hello World!”. Just bear in mind that the numbers that appear at the beginning of each line are not required. Those numbers are added to be able to refer to specific lines inside the script.
 
 ```bash
- 1 #!/bin/bash
- 2 #Script: hello_world.sh
- 3 echo "Hello World!"
+#!/bin/bash
+#Script: hello_world.sh
+echo "Hello World!"
 ```
 
 Once you have the previous script saved to a file named “`hello_world.sh`” you need to give them permissions to be able to execute it without the “bash” command.

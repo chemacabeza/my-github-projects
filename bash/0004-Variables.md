@@ -25,10 +25,10 @@ Once the variable  has a value assigned to it, we can read from the variable by 
 Let’s take a look to an example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: read_variable.sh
- 3 myVariable=1234
- 4 echo "The value of myVariable is $myVariable"
+#!/usr/bin/env bash
+#Script: read_variable.sh
+myVariable=1234
+echo "The value of myVariable is $myVariable"
 ```
 
 Sometimes you will see the variables referenced like “`${myVariable}`”. These two ways (“`$myVariable`” and “`${myVariable}`”) to access the variable are equivalent. The longer form (meaning “`${myVariable}`”) is more powerful as it allows other operations (like length, replacement or substring) as we will see later in another chapter.
@@ -40,17 +40,17 @@ In bash, by default, variables are strings of characters (Something like `“hel
 In Bash Scripting, variables per se are not strongly typed as in other languages (like C, C++, Java, etc). They are basically strings and, depending on the context, some operations are allowed.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: limitation_example.sh
- 3 # Integer variable
- 4 myInteger=123
- 5 echo "Value of myInteger is ${myInteger}"
- 6 # Float variables
- 7 myFloat=10.34
- 8 echo "Value of myFloat is $myFloat"
- 9 # String variable
-10 myString="My String variable"
-11 echo "Value of myString is $myString"
+#!/usr/bin/env bash
+#Script: limitation_example.sh
+# Integer variable
+myInteger=123
+echo "Value of myInteger is ${myInteger}"
+# Float variables
+myFloat=10.34
+echo "Value of myFloat is $myFloat"
+# String variable
+myString="My String variable"
+echo "Value of myString is $myString"
 ```
 
 In the previous script, if you wanted to do some numerical operations with the first two variables (“`myInteger`” and “`myFloat`”) the result of the operation would not be numerical.
@@ -58,11 +58,11 @@ In the previous script, if you wanted to do some numerical operations with the f
 Let’s see it with the following example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: limitation_example_2.sh
- 3 myVariable=123
- 4 myVariable=$myVariable+1
- 5 echo "Value: $myVariable"
+#!/usr/bin/env bash
+#Script: limitation_example_2.sh
+myVariable=123
+myVariable=$myVariable+1
+echo "Value: $myVariable"
 ```
 
 When you execute the previous script you will get the following output.
@@ -105,11 +105,11 @@ Let’s see a couple of examples, shall we?
 The first example is about giving a variable the behavior of an integer. Let’s take a look at the following example script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: declare_i.sh
- 3 declare -i myVariable=123  # <<< Declaration
- 4 myVariable=$myVariable+1
- 5 echo "Value: $myVariable"
+#!/usr/bin/env bash
+#Script: declare_i.sh
+declare -i myVariable=123  # <<< Declaration
+myVariable=$myVariable+1
+echo "Value: $myVariable"
 ```
 
 In this script we are declaring the variable “`myVariable`” as an integer. This means that starting from this point any operation that we will do with it will not be treated as a string operation but as an integer operation.
@@ -129,12 +129,12 @@ In this case we are going to use the “`-l`” flag. The description of the pre
 Let’s see how it works with the following script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: declare_l.sh
- 3 declare -l MY_VAR="This is UPPERCASE"
- 4 MY_VAR_2=$MY_VAR
- 5 echo "MY_VAR  : $MY_VAR"
- 6 echo "MY_VAR_2: $MY_VAR_2"
+#!/usr/bin/env bash
+#Script: declare_l.sh
+declare -l MY_VAR="This is UPPERCASE"
+MY_VAR_2=$MY_VAR
+echo "MY_VAR  : $MY_VAR"
+echo "MY_VAR_2: $MY_VAR_2"
 ```
 
 As you can see, the value of the variable “`MY_VAR`” contains both lowercase and uppercase characters. But as we have declared the variable with the “`-l`” flag this means that every time this variable is read, the values read from it will always be in lowercase.
@@ -162,15 +162,15 @@ By writing “`unset variableName`” it will release the memory associated with
 Let's see how it works with the following example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: unset_variable.sh
- 3 myLargeVariable="abcdefghijklmnopqrstuvwxyz..."
- 4 echo "Variable: '${myLargeVariable}'"
- 5 echo "Unsetting variable"
- 6 unset myLargeVariable
- 7 echo "Variable unset"
- 8 echo "Variable: '${myLargeVariable}'"
- 9 echo "End of Program"
+#!/usr/bin/env bash
+#Script: unset_variable.sh
+myLargeVariable="abcdefghijklmnopqrstuvwxyz..."
+echo "Variable: '${myLargeVariable}'"
+echo "Unsetting variable"
+unset myLargeVariable
+echo "Variable unset"
+echo "Variable: '${myLargeVariable}'"
+echo "End of Program"
 ```
 
 When you execute the previous script you will get the following output.
@@ -206,14 +206,14 @@ As we mentioned before, the “`declare`” (or `readonly`) builtin command is u
 Let's see an example using both ways.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: declare_readonly.sh
- 3 readonly myReadOnlyVariable="Constant Value"
- 4 echo "Value of first constant is: $myReadOnlyVariable"
- 5 myReadOnlyVariable="Another constant value"  # this will fail
- 6 declare -r myOtherReadOnlyVariable="Other Constant Value"
- 7 echo "Value of second constant is: $myOtherReadOnlyVariable"
- 8 myOtherReadOnlyVariable="Another Constant Value" # this will fail as well
+#!/usr/bin/env bash
+#Script: declare_readonly.sh
+readonly myReadOnlyVariable="Constant Value"
+echo "Value of first constant is: $myReadOnlyVariable"
+myReadOnlyVariable="Another constant value"  # this will fail
+declare -r myOtherReadOnlyVariable="Other Constant Value"
+echo "Value of second constant is: $myOtherReadOnlyVariable"
+myOtherReadOnlyVariable="Another Constant Value" # this will fail as well
 ```
 
 When you execute the previous script, you will get the following result.
@@ -260,11 +260,11 @@ What Bash is going to do is to replace “`!VARIABLE`” with the contents of �
 Let's say that we have the following script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: indirect_variable.sh
- 3 VARIABLE_2="Content"
- 4 VARIABLE_1=VARIABLE_2
- 5 echo "Value: ${!VARIABLE_1}"
+#!/usr/bin/env bash
+#Script: indirect_variable.sh
+VARIABLE_2="Content"
+VARIABLE_1=VARIABLE_2
+echo "Value: ${!VARIABLE_1}"
 ```
 
 In the previous simple script we are declaring a variable named “`VARIABLE_2`” with the content `“Content”`. After that we are declaring a variable named “`VARIABLE_1`” with the content “`VARIABLE_2`”.
