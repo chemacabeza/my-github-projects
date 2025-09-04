@@ -1,34 +1,4 @@
----
-layout: chapter
-title: "Chapter 16: Navigation and file/folder related commands"
----
-
 # Chapter 16: Navigation and file/folder related commands
-
-## Index
-* [The `pwd` command and the variables `$PWD` and `$OLDPWD`]({{ site.url }}//bash-in-depth/0016-Navigation-and-file-folder-related-commands.html#the-pwd-command-and-the-variables-pwd-and-oldpwd)
-* [The `cd` command and the `$HOME` environment variable]({{ site.url }}//bash-in-depth/0016-Navigation-and-file-folder-related-commands.html#the-cd-command-and-the-home-environment-variable)
-* [The `ls` command]({{ site.url }}//bash-in-depth/0016-Navigation-and-file-folder-related-commands.html#the-ls-command)
-* [The `pop`, `popd`, `dirs` commands and the `$DIRSTACK` environment variable]({{ site.url }}//bash-in-depth/0016-Navigation-and-file-folder-related-commands.html#the-pop-popd-dirs-commands-and-the-dirstack-environment-variable)
-    * [The `pushd` command]({{ site.url }}//bash-in-depth/0016-Navigation-and-file-folder-related-commands.html#the-pushd-command)
-    * [The `popd` command]({{ site.url }}//bash-in-depth/0016-Navigation-and-file-folder-related-commands.html#the-popd-command)
-    * [The `dirs` command]({{ site.url }}//bash-in-depth/0016-Navigation-and-file-folder-related-commands.html#the-dirs-command)
-* [File/Folder related commands]({{ site.url }}//bash-in-depth/0016-Navigation-and-file-folder-related-commands.html#filefolder-related-commands)
-    * [Creation of files]({{ site.url }}//bash-in-depth/0016-Navigation-and-file-folder-related-commands.html#creation-of-files)
-    * [Creation of directories]({{ site.url }}//bash-in-depth/0016-Navigation-and-file-folder-related-commands.html#creation-of-directories)
-    * [Show content of a file (The `cat` command)]({{ site.url }}//bash-in-depth/0016-Navigation-and-file-folder-related-commands.html#show-content-of-a-file-the-cat-command)
-    * [Moving files and folders (The `mv` command)]({{ site.url }}//bash-in-depth/0016-Navigation-and-file-folder-related-commands.html#moving-files-and-folders-the-mv-command)
-    * [Deletion of files and folders (The commands `rm` and `rmdir`)]({{ site.url }}//bash-in-depth/0016-Navigation-and-file-folder-related-commands.html#deletion-of-files-and-folders-the-commands-rm-and-rmdir)
-    * [Searching (The commands `grep` and `find`)]({{ site.url }}//bash-in-depth/0016-Navigation-and-file-folder-related-commands.html#searching-the-commands-grep-and-find)
-        * [The `find` command]({{ site.url }}//bash-in-depth/0016-Navigation-and-file-folder-related-commands.html#the-find-command)
-        * [The `grep` command]({{ site.url }}//bash-in-depth/0016-Navigation-and-file-folder-related-commands.html#the-grep-command)
-        * [Combining the commands `find` and `grep`]({{ site.url }}//bash-in-depth/0016-Navigation-and-file-folder-related-commands.html#combining-the-commands-find-and-grep)
-* [Summary]({{ site.url }}//bash-in-depth/0016-Navigation-and-file-folder-related-commands.html#summary)
-* [References]({{ site.url }}//bash-in-depth/0016-Navigation-and-file-folder-related-commands.html#references)
-
-
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px;">
-
 
 In Bash, navigating and managing your Linux distribution involves a variety of commands that enable you to explore directories, manipulate files, and search for specific content. At the core of navigating the file system is the `pwd` command, which prints the current working directory, and `cd`, which allows you to move between directories. The `ls` command lists the contents of a directory, helping you view files and subdirectories at your current location. Together, these commands form the basic tools for navigating your Linux system.
 
@@ -157,9 +127,9 @@ The "`pushd`", "`popd`", and "`dirs`" are shell builtins which allow you manipul
 
 How can we visualize the stack of directories?
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0016-Navigation-and-file-folder-related-commands/DIRSTACK.png" width="650px"/>
-</div>
+<p align="center">
+    <img src="chapters/0016-Navigation-and-file-folder-related-commands/images/DIRSTACK.png" width="650px"/>
+</p>
 
 ### The `pushd` command
 
@@ -181,9 +151,9 @@ This command comes as well with other options that modify (or not) the stack in 
 
 Let's see a graphical representation of “`pushd +N`”.
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0016-Navigation-and-file-folder-related-commands/PUSHD-N.png" width="550px"/>
-</div>
+<p align="center">
+    <img src="chapters/0016-Navigation-and-file-folder-related-commands/images/PUSHD-N.png" width="550px"/>
+</p>
 
 So... What is going on in the previous image? The `DIRSTACK` environment variable has 6 directories pushed to it being `DIR0` the first one to be pushed and being `DIR5` the last one to be pushed to the stack `DIRSTACK` (and also is the current working directory).
 
@@ -191,9 +161,9 @@ When the command "`pushd +3`" is executed, the folder on the index 3 ("`DIR2`" i
 
 In the following image you will see a graphical representation of “`pushd -N`”.
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0016-Navigation-and-file-folder-related-commands/PUSHD-negative-N.png" width="550px"/>
-</div>
+<p align="center">
+    <img src="chapters/0016-Navigation-and-file-folder-related-commands/images/PUSHD-negative-N.png" width="550px"/>
+</p>
 
 So... What is going on in the previous image? The `DIRSTACK` environment variable has the same configuration as in the previous example.
 
