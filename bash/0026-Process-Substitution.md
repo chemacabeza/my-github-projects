@@ -1,18 +1,4 @@
----
-layout: chapter
-title: "Chapter 26: Process Substitution"
----
-
 # Chapter 26: Process Substitution
-
-## Index
-* [Introduction]({{ site.url }}//bash-in-depth/0026-Process-Substitution.html#introduction)
-* [Reading from a Process Substitution]({{ site.url }}//bash-in-depth/0026-Process-Substitution.html#reading-from-a-process-substitution)
-* [Writing to a Process Substitution]({{ site.url }}//bash-in-depth/0026-Process-Substitution.html#writing-to-a-process-substitution)
-* [Summary]({{ site.url }}//bash-in-depth/0026-Process-Substitution.html#summary)
-* [References]({{ site.url }}//bash-in-depth/0026-Process-Substitution.html#references)
-
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px">
 
 ## Introduction
 
@@ -73,11 +59,11 @@ By using process substitution, the commands are seamlessly integrated, streamlin
 Let's play with this process substitution in the following Bash script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: process-substitution-0001.sh
- 3 while read line; do
- 4 		echo "Processing: $line"
- 5 done < <(ls /tmp)
+#!/usr/bin/env bash
+#Script: process-substitution-0001.sh
+while read line; do
+		echo "Processing: $line"
+done < <(ls /tmp)
 ```
 
 When you execute the previous script you will have an output like the following.
