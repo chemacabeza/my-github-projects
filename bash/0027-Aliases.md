@@ -1,22 +1,4 @@
----
-layout: chapter
-title: "Chapter 27: Aliases"
----
-
 # Chapter 27: Aliases
-
-## Index
-* [Introduction]({{ site.url }}//bash-in-depth/0027-Aliases.html#introduction)
-* [What is an alias?]({{ site.url }}//bash-in-depth/0027-Aliases.html#what-is-an-alias)
-* [How to create an alias?]({{ site.url }}//bash-in-depth/0027-Aliases.html#how-to-create-an-alias)
-* [How to create an alias that accepts arguments?]({{ site.url }}//bash-in-depth/0027-Aliases.html#how-to-create-an-alias-that-accepts-arguments)
-* [Reusing aliases]({{ site.url }}//bash-in-depth/0027-Aliases.html#reusing-aliases)
-* [How to get the current aliases?]({{ site.url }}//bash-in-depth/0027-Aliases.html#how-to-get-the-current-aliases)
-* [How to remove aliases?]({{ site.url }}//bash-in-depth/0027-Aliases.html#how-to-remove-aliases)
-* [Summary]({{ site.url }}//bash-in-depth/0027-Aliases.html#summary)
-* [References]({{ site.url }}//bash-in-depth/0027-Aliases.html#references)
-
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px">
 
 ## Introduction
 
@@ -38,9 +20,9 @@ Instead of manually re-entering the command every time, you can create an alias 
 
 In order to create an alias you need to use the “`alias`” built-in command with the following syntax:
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0027-Aliases/Alias-syntax.png"/>
-</div>
+<p align="center">
+    <img src="chapters/0027-Aliases/images/Alias-syntax.png"/>
+</p>
 
 Once you execute this command you can start using the “`shortcut`” command as if it was the “`long command to execute`”.
 
@@ -56,11 +38,11 @@ alias llc="ls -l -t -h --color"
 Next, let’s create a script that attempts to use this alias:
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: aliases-0001.sh
- 3 echo -e "Calling new alias\n"
- 4 llc
- 5 echo -e "\nDone calling new alias"
+#!/usr/bin/env bash
+#Script: aliases-0001.sh
+echo -e "Calling new alias\n"
+llc
+echo -e "\nDone calling new alias"
 ```
 
 When we run the script, we encounter the following output:
@@ -93,15 +75,15 @@ This code checks whether the "`.bash_aliases`" file exists in your home director
 To make aliases usable in scripts, you need to explicitly enable their expansion. One way to achieve this is by sourcing the "`.bash_aliases`" file within the script and enabling a special shell option. Here’s how that can be done:
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: aliases-0002.sh
- 3 # Enable alias expansion
- 4 shopt -s expand_aliases
- 5 # Source the aliases
- 6 source ~/.bash_aliases
- 7 echo -e "Calling new alias\n"
- 8 llc
- 9 echo -e "\nDone calling new alias"
+#!/usr/bin/env bash
+#Script: aliases-0002.sh
+# Enable alias expansion
+shopt -s expand_aliases
+# Source the aliases
+source ~/.bash_aliases
+echo -e "Calling new alias\n"
+llc
+echo -e "\nDone calling new alias"
 ```
 
 When you run the previous script you will have the following (or a similar one) output in your terminal window.
@@ -134,11 +116,11 @@ By including the "`-i`" flag in the shebang, the script runs in interactive mode
 To clarify, let's look at an example:
 
 ```bash
- 1 #!/usr/bin/bash -i
- 2 #Script: aliases-0003.sh
- 3 echo -e "Calling new alias\n"
- 4 llc
- 5 echo -e "\nDone calling new alias"
+#!/usr/bin/bash -i
+#Script: aliases-0003.sh
+echo -e "Calling new alias\n"
+llc
+echo -e "\nDone calling new alias"
 ```
 
 In this example, the only modification is the inclusion of the "`-i`" flag in the first line (the shebang). When the script is executed, it will properly recognize and expand aliases, producing the expected output.
@@ -213,9 +195,9 @@ In the previous case we just created a directory named "`eval`" with a few empty
 
 When you pass arguments to an alias, Bash first expands the alias into its underlying command, then appends the arguments you provided to the expanded command. In this case, the process resembles the following:
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0027-Aliases/llc-expansion.png"/>
-</div>
+<p align="center">
+    <img src="chapters/0027-Aliases/images/llc-expansion.png"/>
+</p>
 
 This behavior means that aliases can accept arguments directly, depending on the command they represent. However, certain commands might require more complex handling, necessitating a function instead of a simple alias.
 
@@ -267,9 +249,9 @@ What’s happening here is that Bash expands the alias into the corresponding fu
 
 The diagram below illustrates how Bash processes the alias and executes the underlying logic:
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0027-Aliases/ffwc-expansion.png"/>
-</div>
+<p align="center">
+    <img src="chapters/0027-Aliases/images/ffwc-expansion.png"/>
+</p>
 
 Using an alias tied to a function is an incredibly versatile tool. It allows you to encapsulate complex logic—such as conditional statements, loops, and piped commands—within a function, while mapping it to a simple and intuitive alias. This approach not only keeps your commands concise but also enhances productivity by abstracting away intricate details, making your workflow more efficient and elegant.
 

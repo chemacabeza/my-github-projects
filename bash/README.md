@@ -67,3 +67,4 @@ This book is also about **thinking like a systems engineer**: understanding not 
 * [Chapter 24: I/O Redirections](./0024-IO-Redirections.md)
 * [Chapter 25: Jobs](./0025-Jobs.md)
 * [Chapter 26: Process Substitution](./0026-Process-Substitution.md)
+* [Chapter 27: Aliases](./0027-Aliases.md)
