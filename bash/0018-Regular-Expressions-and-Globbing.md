@@ -1,21 +1,4 @@
----
-layout: chapter
-title: "Chapter 18: Regular Expressions and Globbing"
----
-
 # Chapter 18: Regular Expressions and Globbing
-
-## Index
-* [How to use regular expressions?]({{ site.url }}//bash-in-depth/0018-Regular-Expressions-and-Globbing.html#how-to-use-regular-expressions)
-* [Wildcard Character and Patterns]({{ site.url }}//bash-in-depth/0018-Regular-Expressions-and-Globbing.html#wildcard-character-and-patterns)
-* [Using the "`(..)`" and the "`BASH_REMATCH`" array]({{ site.url }}//bash-in-depth/0018-Regular-Expressions-and-Globbing.html#using-the--and-the-bash_rematch-array)
-* [POSIX Character Classes]({{ site.url }}//bash-in-depth/0018-Regular-Expressions-and-Globbing.html#posix-character-classes)
-* [Globbing]({{ site.url }}//bash-in-depth/0018-Regular-Expressions-and-Globbing.html#globbing)
-    * [GLOBIGNORE]({{ site.url }}//bash-in-depth/0018-Regular-Expressions-and-Globbing.html#globignore)
-* [Summary]({{ site.url }}//bash-in-depth/0018-Regular-Expressions-and-Globbing.html#summary)
-* [References]({{ site.url }}//bash-in-depth/0018-Regular-Expressions-and-Globbing.html#references)
-
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px">
 
 Regular expressions, or regex, in Bash are a powerful tool for pattern matching and string manipulation. They allow you to search, replace, and validate strings based on complex patterns. Learning regex is crucial for any developer working with text processing in Bash, as it enables efficient data extraction and automation of tasks like log parsing, input validation, and file manipulation. With regular expressions, you can define precise patterns to match specific parts of strings, which makes it easier to handle repetitive tasks without writing verbose code.
 
@@ -152,30 +135,30 @@ With the previous wildcard characters we are going to write a few scripts to pra
 The first script is the following.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: regexp-0001.sh
- 3 # Read input
- 4 echo -n "Enter input: "
- 5 read input
- 6 while [[ "$input" != "exit" ]]; do
- 7     echo "Inside the loop. Input was '$input'"
- 8     if [[ "${#input}" > 1 ]]; then
- 9         echo "Please introduce a single character."
-10     else
-11         if [[ "$input" =~ [a..z] ]]; then
-12             echo "The input is a single lowercase character"
-13         elif [[ "$input" =~ [A..Z] ]]; then
-14             echo "The input is a single UPPERCASE character"
-15         elif [[ "$input" =~ [0-9] ]]; then
-16             echo "The input is a single number"
-17         else
-18             echo "None of the previous regular expressions matched"
-19         fi
-20     fi
-21     echo -n "Enter input: "
-22     read input
-23 done
-24 echo "Exiting program"
+#!/usr/bin/env bash
+#Script: regexp-0001.sh
+# Read input
+echo -n "Enter input: "
+read input
+while [[ "$input" != "exit" ]]; do
+    echo "Inside the loop. Input was '$input'"
+    if [[ "${#input}" > 1 ]]; then
+        echo "Please introduce a single character."
+    else
+        if [[ "$input" =~ [a..z] ]]; then
+            echo "The input is a single lowercase character"
+        elif [[ "$input" =~ [A..Z] ]]; then
+            echo "The input is a single UPPERCASE character"
+        elif [[ "$input" =~ [0-9] ]]; then
+            echo "The input is a single number"
+        else
+            echo "None of the previous regular expressions matched"
+        fi
+    fi
+    echo -n "Enter input: "
+    read input
+done
+echo "Exiting program"
 ```
 
 In the previous script we require the user to enter a single character as input. Once the input is introduced the execution will enter a loop (lines 6 to 19) on which it will check different patterns.
@@ -211,26 +194,26 @@ Exiting program
 In the next script we are going to play with repetitions using "`{..}`".
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: regexp-0002.sh
- 3 # Read input
- 4 echo -n "Enter input: "
- 5 read input
- 6 while [[ "$input" != "exit" ]]; do
- 7     echo "Inside the loop. Input was '$input'"
- 8     if [[ "$input" =~ ^a{1}$ ]]; then
- 9         echo "The input was a single 'a'"
-10     elif [[ "$input" =~ ^a{2}$ ]]; then
-11         echo "The input was a double 'a'"
-12     elif [[ "$input" =~ ^a{3}$ ]]; then
-13         echo "The input was a triple 'a'"
-14     else
-15         echo "None of the previous regular expressions matched"
-16     fi
-17     echo -n "Enter input: "
-18     read input
-19 done
-20 echo "Exiting program"
+#!/usr/bin/env bash
+#Script: regexp-0002.sh
+# Read input
+echo -n "Enter input: "
+read input
+while [[ "$input" != "exit" ]]; do
+    echo "Inside the loop. Input was '$input'"
+    if [[ "$input" =~ ^a{1}$ ]]; then
+        echo "The input was a single 'a'"
+    elif [[ "$input" =~ ^a{2}$ ]]; then
+        echo "The input was a double 'a'"
+    elif [[ "$input" =~ ^a{3}$ ]]; then
+        echo "The input was a triple 'a'"
+    else
+        echo "None of the previous regular expressions matched"
+    fi
+    echo -n "Enter input: "
+    read input
+done
+echo "Exiting program"
 ```
 
 In the previous script you will notice that we are matching for either "`a`", "`aa`" or "`aaa`". We needed to use "`^`" and "`$`" to match exact strings. If we don't use "`^`" and "`$`" every match will be the first "`if`" statement (lines 8 and 9).
@@ -268,15 +251,15 @@ In regular expressions, parentheses are used to group parts of a pattern. The ma
 In the next script we will parse a string that contains an email.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: regexp-0003.sh
- 3 email="myuser@mydomain.com"
- 4 if [[ $email =~ ([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+)\.([a-zA-Z]{2,}) ]]; then
- 5     echo "Full match: ${BASH_REMATCH[0]}"  # Full email
- 6     echo "Username: ${BASH_REMATCH[1]}"    # myuser
- 7     echo "Domain: ${BASH_REMATCH[2]}"      # mydomain
- 8     echo "TLD: ${BASH_REMATCH[3]}"         # com
- 9 fi
+#!/usr/bin/env bash
+#Script: regexp-0003.sh
+email="myuser@mydomain.com"
+if [[ $email =~ ([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+)\.([a-zA-Z]{2,}) ]]; then
+    echo "Full match: ${BASH_REMATCH[0]}"  # Full email
+    echo "Username: ${BASH_REMATCH[1]}"    # myuser
+    echo "Domain: ${BASH_REMATCH[2]}"      # mydomain
+    echo "TLD: ${BASH_REMATCH[3]}"         # com
+fi
 ```
 
 When you run the previous script you will get the following output.
@@ -294,15 +277,15 @@ The regex breaks the email into the username, domain, and top-level domain (TLD)
 In the next script we are going to parse a date.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: regexp-0004.sh
- 3 date="2024-10-17"
- 4 if [[ $date =~ ([0-9]{4})-([0-9]{2})-([0-9]{2}) ]]; then
- 5     echo "Full match: ${BASH_REMATCH[0]}"  # Full date
- 6     echo "Year: ${BASH_REMATCH[1]}"    # 2024
- 7     echo "Month: ${BASH_REMATCH[2]}"   # 10
- 8     echo "Day: ${BASH_REMATCH[3]}"     # 17
- 9 fi
+#!/usr/bin/env bash
+#Script: regexp-0004.sh
+date="2024-10-17"
+if [[ $date =~ ([0-9]{4})-([0-9]{2})-([0-9]{2}) ]]; then
+    echo "Full match: ${BASH_REMATCH[0]}"  # Full date
+    echo "Year: ${BASH_REMATCH[1]}"    # 2024
+    echo "Month: ${BASH_REMATCH[2]}"   # 10
+    echo "Day: ${BASH_REMATCH[3]}"     # 17
+fi
 ```
 
 When you run the previous script you will get the following result in your terminal window.
@@ -353,15 +336,15 @@ In Bash, you need to use "`[[:class:]]`" instead of "`[:class:]`" because "`[:cl
 We are going to rewrite the script "`regexp-0004.sh`" to use POSIX character classes instead.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: regexp-0005.sh
- 3 date="2024-10-17"
- 4 if [[ $date =~ ([[:digit:]]{4})-([[:digit:]]{2})-([[:digit:]]{2}) ]]; then
- 5     echo "Full match: ${BASH_REMATCH[0]}"  # Full date
- 6     echo "Year: ${BASH_REMATCH[1]}"    # 2024
- 7     echo "Month: ${BASH_REMATCH[2]}"   # 10
- 8     echo "Day: ${BASH_REMATCH[3]}"     # 17
- 9 fi
+#!/usr/bin/env bash
+#Script: regexp-0005.sh
+date="2024-10-17"
+if [[ $date =~ ([[:digit:]]{4})-([[:digit:]]{2})-([[:digit:]]{2}) ]]; then
+    echo "Full match: ${BASH_REMATCH[0]}"  # Full date
+    echo "Year: ${BASH_REMATCH[1]}"    # 2024
+    echo "Month: ${BASH_REMATCH[2]}"   # 10
+    echo "Day: ${BASH_REMATCH[3]}"     # 17
+fi
 ```
 
 Now, if you run this last script you will get the exact same result as the script "`regexp-0004.sh`".
@@ -393,15 +376,15 @@ When "`GLOBIGNORE`" is set, any patterns or filenames listed within it will be e
 In the following script we are going to print the contents of the current directory and we will setup the "`GLOBIGNORE`" to ignore the files that have the "`.sh`" extension, then we will print again the contents of the current directory.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: regexp-0006.sh
- 3 echo "Printing the files in the current directory"
- 4 ls *
- 5 echo "Setting GLOBIGNORE to ignore '*.sh' files"
- 6 GLOBIGNORE="*.sh"
- 7 echo "Printing the files in the current directory"
- 8 ls *
- 9 echo "End of program"
+#!/usr/bin/env bash
+#Script: regexp-0006.sh
+echo "Printing the files in the current directory"
+ls *
+echo "Setting GLOBIGNORE to ignore '*.sh' files"
+GLOBIGNORE="*.sh"
+echo "Printing the files in the current directory"
+ls *
+echo "End of program"
 ```
 
 When you run the previous script you will get the following output.

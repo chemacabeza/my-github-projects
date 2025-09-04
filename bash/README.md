@@ -50,7 +50,7 @@ This book is also about **thinking like a systems engineer**: understanding not 
 * [Chapter 7: Working with Numbers Floating](./0007-Working-with-Numbers-Floating.md)
 * [Chapter 8: Time and date commands](./0008-Time-and-date-commands.md)
 * [Chapter 9: Environment Variables](./0009-Environment-Variables.md)
-* [Chapter 10: If statement](./0010-If-statement.md)
+* [Chapter 10: If Statement](./0010-If-statement.md)
 * [Chapter 11: Case Statement](./0011-Case-Statement.md)
 * [Chapter 12: Arrays and loops](./0012-Arrays-and-loops.md)
 * [Chapter 13: Execution of commands](./0013-Execution-of-commands.md)
@@ -58,3 +58,4 @@ This book is also about **thinking like a systems engineer**: understanding not 
 * [Chapter 15: Functions](./0015-Functions.md)
 * [Chapter 16: Navigation and file folder related commands](./0016-Navigation-and-file-folder-related-commands.md)
 * [Chapter 17: Select Statement](./0017-Select-Statement.md)
+* [Chapter 18: Regular Expressions and Globbing](./0018-Regular-Expressions-and-Globbing.md)
