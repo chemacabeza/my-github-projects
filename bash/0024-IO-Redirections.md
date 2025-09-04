@@ -1,51 +1,4 @@
----
-layout: chapter
-title: "Chapter 24: I/O Redirections"
----
-
 # Chapter 24: I/O Redirections
-
-## Index
-* [Introduction]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#introduction)
-* [Standard Output Redirection]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#standard-output-redirection)
-* [Standard Error Redirection]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#standard-error-redirection)
-* [Redirecting Both Standard Output and Standard Error]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#redirecting-both-standard-output-and-standard-error)
-* [Standard Input Redirection]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#standard-input-redirection)
-* [Truncate With Redirection And Null Command]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#truncate-with-redirection-and-null-command)
-* [Manipulating File Descriptors (`exec`)]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#manipulating-file-descriptors-exec)
-    * [Redirection Syntax]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#redirection-syntax)
-        * [Redirection of Standard Input]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#redirection-of-standard-input)
-        * [Redirection of Standard Output]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#redirection-of-standard-output)
-        * [Redirection of Standard Error]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#redirection-of-standard-error)
-        * [Redirection of both Standard Output and Standard Error]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#redirection-of-both-standard-output-and-standard-error)
-        * [Opening a new file]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#opening-a-new-file)
-        * [Appending to an existing file]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#appending-to-an-existing-file)
-* [Duplicating file descriptors]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#duplicating-file-descriptors)
-* [Order of redirections]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#order-of-redirections)
-    * [Redirection `exec >output 2>&1`]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#redirection-exec->output-2>&1)
-    * [Redirection `exec 2>&1 >output`]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#redirection-exec-2>&1->output)
-* [Pipes (`|`)]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#pipes-)
-    * [Pipeable functions]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#pipeable-functions)
-    * [PIPESTATUS]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#pipestatus)
-* [`tee` command]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#tee-command)
-* [Combining Pipes and Redirections]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#combining-pipes-and-redirections)
-* [Where to place the redirections?]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#where-to-place-the-redirections)
-* [Block Redirections]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#block-redirections)
-* [Statement Redirections]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#statement-redirections)
-    * ["`while`" loop redirection]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#while-loop-redirection)
-    * ["`until`" loop redirection]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#until-loop-redirection)
-    * ["`for`" loop redirection]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#for-loop-redirection)
-    * ["`if/then`" redirection]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#ifthen-redirection)
-    * ["`if/then/else`" redirection]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#ifthenelse-redirection)
-* [Pipes, Statements and Blocks]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#pipes-statements-and-blocks)
-* [FIFO files]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#fifo-files)
-    * [How to create a FIFO file?]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#how-to-create-a-fifo-file)
-    * [How to use a FIFO file?]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#how-to-use-a-fifo-file)
-    * [Some details]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#some-details)
-* [Summary]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#summary)
-* [References]({{ site.url }}//bash-in-depth/0024-IO-Redirections.html#references)
-
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px">
 
 In a previous chapter, we explored the concept of processes, the file descriptors associated with them, and the intricate relationship between the two. These concepts form the foundation of understanding how data flows within a Bash environment.
 
@@ -72,15 +25,15 @@ Bash processes redirections sequentially, interpreting them **from left to right
 
 To illustrate I/O redirections more visually, we will employ variations of the following diagram to provide a clear and graphical explanation of the concept.
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0024-IO-Redirections/Process-Graphical-Representation.png"/>
-</div>
+<p align="center">
+    <img src="chapters/0024-IO-Redirections/images/Process-Graphical-Representation.png"/>
+</p>
 
 ## Standard Output Redirection
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0024-IO-Redirections/Standard-Output-Redirection.png"/>
-</div>
+<p align="center">
+    <img src="chapters/0024-IO-Redirections/images/Standard-Output-Redirection.png"/>
+</p>
 
 There are two primary ways to redirect standard output in Bash:
 
@@ -99,14 +52,14 @@ In these explicit examples, you’re directly stating that the output from file 
 Let’s delve into a few examples to see these principles in action.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: io-redirections-0001.sh
- 3 OUTPUT_FILE=/tmp/result.csv
- 4 echo "Id,FirstName,FamilyName,Age" > $OUTPUT_FILE
- 5 for i in {1..20}; do
- 6     echo "$i,FirstName$i,FamilyName$i,$(($i+10))" >> $OUTPUT_FILE
- 7 done
- 8 echo "End of script"
+#!/usr/bin/env bash
+#Script: io-redirections-0001.sh
+OUTPUT_FILE=/tmp/result.csv
+echo "Id,FirstName,FamilyName,Age" > $OUTPUT_FILE
+for i in {1..20}; do
+    echo "$i,FirstName$i,FamilyName$i,$(($i+10))" >> $OUTPUT_FILE
+done
+echo "End of script"
 ```
 
 The previous script creates a CSV file<a id="footnote-1-ref" href="#footnote-1" style="font-size:x-small">[1]</a> with 4 columns that are:
@@ -152,9 +105,9 @@ The second redirection, marked by the "`>>`" operator within the "`for`" loop, a
 
 ## Standard Error Redirection
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0024-IO-Redirections/Standard-Error-Redirection.png"/>
-</div>
+<p align="center">
+    <img src="chapters/0024-IO-Redirections/images/Standard-Error-Redirection.png"/>
+</p>
 
 Redirecting standard error in Bash closely resembles the process of redirecting standard output, with one notable distinction: Bash does not have a default shorthand for redirecting standard error, so it must always be specified explicitly.
 
@@ -168,19 +121,19 @@ The difference between the two methods mirrors that of standard output redirecti
 Let's see how it works with the following example script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: io-redirections-0002.sh
- 3 # Define the file to store standard error
- 4 ERROR_FILE="/tmp/error_log.txt"
- 5 echo "Beginning of Error Log file" > $ERROR_FILE
- 6 echo "Demonstrating Standard Error Redirection"
- 7 echo "---------------------------------------"
- 8 # Intentionally cause an error by trying to list a nonexistent directory
- 9 echo "Attempting to list a nonexistent directory..."
-10 ls /nonexistent_directory 2>> "$ERROR_FILE"
-11 # Check the content of the error log
-12 echo "Content of $ERROR_FILE:"
-13 cat "$ERROR_FILE"
+#!/usr/bin/env bash
+#Script: io-redirections-0002.sh
+# Define the file to store standard error
+ERROR_FILE="/tmp/error_log.txt"
+echo "Beginning of Error Log file" > $ERROR_FILE
+echo "Demonstrating Standard Error Redirection"
+echo "---------------------------------------"
+# Intentionally cause an error by trying to list a nonexistent directory
+echo "Attempting to list a nonexistent directory..."
+ls /nonexistent_directory 2>> "$ERROR_FILE"
+# Check the content of the error log
+echo "Content of $ERROR_FILE:"
+cat "$ERROR_FILE"
 ```
 
 In line 4, a variable named "`ERROR_FILE`" is defined to store the path to the file where error messages will be logged. Then, in line 10, the "`ls`" command attempts to list the contents of a non-existent directory, which generates an error. Finally, in line 13, the script reads and displays the contents of "`/tmp/error_log.txt`", showing the captured error message.
@@ -188,9 +141,9 @@ In line 4, a variable named "`ERROR_FILE`" is defined to store the path to the f
 ## Redirecting Both Standard Output and Standard Error
 
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0024-IO-Redirections/Standard-Ouput-and-Error-Redirection.png"/>
-</div>
+<p align="center">
+    <img src="chapters/0024-IO-Redirections/images/Standard-Ouput-and-Error-Redirection.png"/>
+</p>
 
 We’ve already explored how to redirect the standard output and standard error individually. Now, let’s learn how to handle both simultaneously during the execution of a command. This can be achieved using either of the following approaches:
 
@@ -199,9 +152,9 @@ We’ve already explored how to redirect the standard output and standard error 
 
 In both examples, the standard output is redirected to the file named "`output.txt`", while the standard error is redirected to "`errors.txt`". The result is a clean separation of regular output and error messages, making it easier to analyze or process them independently.
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0024-IO-Redirections/Standard-Output-and-Error-Redirection-To-The-Same-File.png"/>
-</div>
+<p align="center">
+    <img src="chapters/0024-IO-Redirections/images/Standard-Output-and-Error-Redirection-To-The-Same-File.png"/>
+</p>
 
 If you want to redirect both the standard output and the standard error streams to the same file, there are several approaches you can take. One method involves explicitly specifying the same file for both streams, as shown here:
 * "`command > output.txt 2> output.txt`"
@@ -220,23 +173,23 @@ Now we are going to see several examples to try out what we learnt in the sectio
 The first example is going to be redirecting the standard output and the standard error to different files.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: io-redirections-0003.sh
- 3 # Define log files
- 4 OUTPUT_FILE="/tmp/output_log.txt"
- 5 ERROR_FILE="/tmp/error_log.txt"
- 6 echo "Beginning of Output file" > $OUTPUT_FILE
- 7 echo "Beginning of Error file" > $ERROR_FILE
- 8 # Attempt to list multiple directories
- 9 for dir in /home /non_existent_dir /tmp /fake_dir; do
-10     ls "$dir" 1>> "$OUTPUT_FILE" 2>> "$ERROR_FILE"
-11 done
-12 # Display the contents of the Output file
-13 echo "Contents of $OUTPUT_FILE (Standard Output):"
-14 cat "$OUTPUT_FILE"
-15 # Display the contents of the Error file
-16 echo -e "\nContents of $ERROR_FILE (Standard Error):"
-17 cat "$ERROR_FILE"
+#!/usr/bin/env bash
+#Script: io-redirections-0003.sh
+# Define log files
+OUTPUT_FILE="/tmp/output_log.txt"
+ERROR_FILE="/tmp/error_log.txt"
+echo "Beginning of Output file" > $OUTPUT_FILE
+echo "Beginning of Error file" > $ERROR_FILE
+# Attempt to list multiple directories
+for dir in /home /non_existent_dir /tmp /fake_dir; do
+    ls "$dir" 1>> "$OUTPUT_FILE" 2>> "$ERROR_FILE"
+done
+# Display the contents of the Output file
+echo "Contents of $OUTPUT_FILE (Standard Output):"
+cat "$OUTPUT_FILE"
+# Display the contents of the Error file
+echo -e "\nContents of $ERROR_FILE (Standard Error):"
+cat "$ERROR_FILE"
 ```
 
 The previous script declares two variables in lines 4 and 5, which store the file paths for the log files used to capture the output and errors generated during execution. Lines 6 and 7 ensure that these log files are initialized by either creating them anew or clearing any existing content.
@@ -288,18 +241,18 @@ ls: cannot access '/fake_dir': No such file or directory
 In the following version of the "`io-redirections-0003.sh`" script we will forward both standard output and standard error to the same file.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: io-redirections-0004.sh
- 3 # Define log file
- 4 COMBINED_FILE="/tmp/combined_log.txt"
- 5 echo "Beginning of Combined file" > $COMBINED_FILE
- 6 # Attempt to list multiple directories
- 7 for dir in /home /non_existent_dir /tmp /fake_dir; do
- 8     ls "$dir" 1>> "$COMBINED_FILE" 2>> "$COMBINED_FILE"
- 9 done
-10 # Display the contents of the Combined file file
-11 echo "Contents of $COMBINED_FILE (Standard Output & Standard Error):"
-12 cat "$COMBINED_FILE"
+#!/usr/bin/env bash
+#Script: io-redirections-0004.sh
+# Define log file
+COMBINED_FILE="/tmp/combined_log.txt"
+echo "Beginning of Combined file" > $COMBINED_FILE
+# Attempt to list multiple directories
+for dir in /home /non_existent_dir /tmp /fake_dir; do
+    ls "$dir" 1>> "$COMBINED_FILE" 2>> "$COMBINED_FILE"
+done
+# Display the contents of the Combined file file
+echo "Contents of $COMBINED_FILE (Standard Output & Standard Error):"
+cat "$COMBINED_FILE"
 ```
 
 If you execute the previous script you will see something like the following output in your terminal window.
@@ -343,18 +296,18 @@ ls: cannot access '/fake_dir': No such file or directory
 In the next variation of the "`io-redirections-0004.sh`" script we will use the "`&>>`" operator to send both standard output and standard error to the same file.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: io-redirections-0005.sh
- 3 # Define log file
- 4 COMBINED_FILE="/tmp/combined_log.txt"
- 5 echo "Beginning of Combined file" > $COMBINED_FILE
- 6 # Attempt to list multiple directories
- 7 for dir in /home /non_existent_dir /tmp /fake_dir; do
- 8     ls "$dir" &>> "$COMBINED_FILE"
- 9 done
-10 # Display the contents of the Combined file file
-11 echo "Contents of $COMBINED_FILE (Standard Output & Standard Error):"
-12 cat "$COMBINED_FILE"
+#!/usr/bin/env bash
+#Script: io-redirections-0005.sh
+# Define log file
+COMBINED_FILE="/tmp/combined_log.txt"
+echo "Beginning of Combined file" > $COMBINED_FILE
+# Attempt to list multiple directories
+for dir in /home /non_existent_dir /tmp /fake_dir; do
+    ls "$dir" &>> "$COMBINED_FILE"
+done
+# Display the contents of the Combined file file
+echo "Contents of $COMBINED_FILE (Standard Output & Standard Error):"
+cat "$COMBINED_FILE"
 ```
 
 When you execute the following script you will have an output like the following in your terminal window.
@@ -399,9 +352,9 @@ In the next section we will learn about the redirection of the standard input.
 
 ## Standard Input Redirection
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0024-IO-Redirections/Standard-Input-Redirection.png"/>
-</div>
+<p align="center">
+    <img src="chapters/0024-IO-Redirections/images/Standard-Input-Redirection.png"/>
+</p>
 
 In the previous sections, we explored how to redirect both standard output and standard error, which are used to capture content produced by a script or program.
 
@@ -426,14 +379,14 @@ Here, the "`cat`" command—when run without parameters—reads from the standar
 Let's write another example script to put in practice what we just learnt.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: io-redirections-0006.sh
- 3 # Define log file
- 4 COMBINED_FILE="/tmp/combined_log.txt"
- 5 echo "Printing the contents of the '$COMBINED_FILE' log"
- 6 cat < $COMBINED_FILE
- 7 echo ""
- 8 echo "End of script"
+#!/usr/bin/env bash
+#Script: io-redirections-0006.sh
+# Define log file
+COMBINED_FILE="/tmp/combined_log.txt"
+echo "Printing the contents of the '$COMBINED_FILE' log"
+cat < $COMBINED_FILE
+echo ""
+echo "End of script"
 ```
 
 When you execute the previous script something like the following will be printed in your terminal window.
@@ -560,16 +513,16 @@ This creates a file named "`input_file`" with 10 lines, each containing the text
 Next, we write a script to read from the file using input redirection:
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: io-redirections-0007.sh
- 3 # Redirect standard input to read from the file
- 4 exec 0<input_file
- 5 # Read from standard input line by line
- 6 while read -r line; do
- 7     printf "I read '%s' from the file\n" "$line"
- 8 done
- 9 # Close the file descriptor
-10 exec 0<&-
+#!/usr/bin/env bash
+#Script: io-redirections-0007.sh
+# Redirect standard input to read from the file
+exec 0<input_file
+# Read from standard input line by line
+while read -r line; do
+    printf "I read '%s' from the file\n" "$line"
+done
+# Close the file descriptor
+exec 0<&-
 ```
 
 In the previous script, line 4 redirects standard input (File Descriptor 0) to the file named "`input_file`", effectively linking the file to the script's input stream. Between lines 6 and 8, the script reads each line of the file and outputs it to the terminal. Finally, in line 10, the script closes File Descriptor 0 to release the resource and ensure proper cleanup.
@@ -597,16 +550,16 @@ I read 'Line_10' from the file
 In this case, we will redirect Standard Output at the start of the script, eliminating the need to manage it throughout the rest of the script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: io-redirections-0008.sh
- 3 # Redirection of stdout to a file
- 4 exec 1>output_file
- 5 # Echoing to standard output
- 6 for (( i = 0 ; i < 10 ; i++ )); do
- 7     echo "Line_$i";
- 8 done
- 9 # Close the file descriptor
-10 exec 1>&-
+#!/usr/bin/env bash
+#Script: io-redirections-0008.sh
+# Redirection of stdout to a file
+exec 1>output_file
+# Echoing to standard output
+for (( i = 0 ; i < 10 ; i++ )); do
+    echo "Line_$i";
+done
+# Close the file descriptor
+exec 1>&-
 ```
 
 On line 4, the Standard Output (File Descriptor 1) is redirected to a file named "`output_file`". From this point onward, anything written to standard output in the script will be saved to "`output_file`" instead of being displayed in the terminal.
@@ -638,16 +591,16 @@ Line_9
 In this case, we will redirect Standard Error at the start of the script, eliminating the need to manage it throughout the rest of the script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: io-redirections-0009.sh
- 3 # Redirection of stderr to a file
- 4 exec 2>error_file
- 5 # Echoing to standard error
- 6 for dir in /fake_1 /fake_2 /fake_3; do
- 7     ls $dir
- 8 done
- 9 # Close the file descriptor
-10 exec 2>&-
+#!/usr/bin/env bash
+#Script: io-redirections-0009.sh
+# Redirection of stderr to a file
+exec 2>error_file
+# Echoing to standard error
+for dir in /fake_1 /fake_2 /fake_3; do
+    ls $dir
+done
+# Close the file descriptor
+exec 2>&-
 ```
 
 In line 4, standard error (File Descriptor 2) is redirected to a file named "`error_file`". From this point forward, any messages sent to standard error by the script will be saved in error_file instead of appearing in the terminal.
@@ -684,22 +637,22 @@ All these examples accomplish the same goal: redirecting both standard output an
 Let's see an example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: io-redirections-0010.sh
- 3 # Redirection of stderr to a file
- 4 exec &>combined_file
- 5 # Echoing to standard output
- 6 for (( i = 0 ; i < 10 ; i++ )); do
- 7     echo "Line_$i";
- 8 done
- 9 # Echoing to standard error
-10 for dir in /fake_1 /fake_2 /fake_3; do
-11     ls $dir
-12 done
-13 # Close the Standard Output file descriptor
-14 exec 1>&-
-15 # Close the Standard Error file descriptor
-16 exec 2>&-
+#!/usr/bin/env bash
+#Script: io-redirections-0010.sh
+# Redirection of stderr to a file
+exec &>combined_file
+# Echoing to standard output
+for (( i = 0 ; i < 10 ; i++ )); do
+    echo "Line_$i";
+done
+# Echoing to standard error
+for dir in /fake_1 /fake_2 /fake_3; do
+    ls $dir
+done
+# Close the Standard Output file descriptor
+exec 1>&-
+# Close the Standard Error file descriptor
+exec 2>&-
 ```
 
 The "`io-redirections-0010.sh`" script combines the functionality of "`io-redirections-0008.sh`" and "`io-redirections-0009.sh`", with the key difference being that both Standard Output (File Descriptor 1) and Standard Error (File Descriptor 2) are redirected to the same file, "`combined_file`".
@@ -736,9 +689,9 @@ ls: cannot access '/fake_3': No such file or directory
 
 #### <b>Opening a new file</b>
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0024-IO-Redirections/Opening-New-File.png"/>
-</div>
+<p align="center">
+    <img src="chapters/0024-IO-Redirections/images/Opening-New-File.png"/>
+</p>
 
 Using the exec command, we can open a file and associate it with a file descriptor other than the standard ones (0, 1, or 2). To do this, we use the syntax "`exec <fd><filename`", where "`<fd>`" is a file descriptor number between 3 and 9.
 
@@ -766,19 +719,19 @@ Sed fringilla luctus tincidunt.
 We are going to write the following Bash script to read the contents of the "`lorem.txt`" file with the file descriptor 3.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: io-redirections-0011.sh
- 3 # FD 3 associated to reading file
- 4 exec 3<lorem.txt
- 5 ((i=0))
- 6 # Read from file descriptor 3
- 7 while read -u 3 line; do
- 8     printf "LINE_CONTENT[$i]: $line\n"
- 9     # Increment counter
-10     ((i++))
-11 done
-12 # Close file descriptor
-13 exec 3<&-
+#!/usr/bin/env bash
+#Script: io-redirections-0011.sh
+# FD 3 associated to reading file
+exec 3<lorem.txt
+((i=0))
+# Read from file descriptor 3
+while read -u 3 line; do
+    printf "LINE_CONTENT[$i]: $line\n"
+    # Increment counter
+    ((i++))
+done
+# Close file descriptor
+exec 3<&-
 ```
 
 In the previous script we are attaching the file descriptor 3 to the file "`lorem.txt`" on line 4.
@@ -811,25 +764,25 @@ LINE_CONTENT[15]: Sed fringilla luctus tincidunt.
 
 #### <b>Appending to an existing file</b>
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0024-IO-Redirections/Appending-to-an-existing-file.png"/>
-</div>
+<p align="center">
+    <img src="chapters/0024-IO-Redirections/images/Appending-to-an-existing-file.png"/>
+</p>
 
 If we want to redirect output to an existing file and append new content rather than overwriting it, we can use an append redirection. This can be done by connecting a file descriptor (in this case, File Descriptor 4) to a file named "`output_file.txt`". The script we create will ensure that each line it generates is appended to "`output_file.txt`", preserving any existing content in the file.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: io-redirections-0012.sh
- 3 # Redirect FD 4. Appending it to file
- 4 exec 4>>output_file.txt
- 5 # Printing to the output file
- 6 for i in {1..5}; do
- 7     # Print line to FD 4
- 8     printf "Line_$i\n" >&4
- 9 done
-10 printf "#######\n" >&4
-11 # Close file descriptor
-12 exec 4>&-
+#!/usr/bin/env bash
+#Script: io-redirections-0012.sh
+# Redirect FD 4. Appending it to file
+exec 4>>output_file.txt
+# Printing to the output file
+for i in {1..5}; do
+    # Print line to FD 4
+    printf "Line_$i\n" >&4
+done
+printf "#######\n" >&4
+# Close file descriptor
+exec 4>&-
 ```
 
 In the "`io-redirections-0012.sh`" script, File Descriptor 4 is connected to the file "`output_file.txt`" on line 4. From lines 6 to 10, the script appends multiple lines to "`output_file.txt`". Notice line 8, where the "`>&4`" redirection is used to send a line of output specifically to File Descriptor 4. Finally, on line 12, File Descriptor 4 is closed to release the associated file.
@@ -877,9 +830,9 @@ The meaning of "`2>&1`" can be understood in two (equivalent) ways:
 
 For example, the command "`exec >output.txt 2>&1`" can be visualized graphically to illustrate how both outputs are unified into the file "`output.txt`".
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0024-IO-Redirections/Exec-Redirect-Both-STDOUT-STDERR.png"/>
-</div>
+<p align="center">
+    <img src="chapters/0024-IO-Redirections/images/Exec-Redirect-Both-STDOUT-STDERR.png"/>
+</p>
 
 ## Order of redirections
 
@@ -893,25 +846,25 @@ What is the difference between these two commands? In the following subsections,
 
 ### Redirection <b>`exec >output 2>&1`</b>
 
-<div style="text-align:center">
-   <img src="/assets/bash-in-depth/0024-IO-Redirections/Process-Graphical-Representation.png"/>
-</div>
+<p align="center">
+   <img src="chapters/0024-IO-Redirections/images/Process-Graphical-Representation.png"/>
+</p>
 
 Before the "`exec`" built-in command is executed, the state of the file descriptors is as shown in the preceding illustration.
 
 The first redirection, "`>output`", is processed. This redirection reassigns the standard output to the file named "`output`", resulting in the following configuration.
 
-<div style="text-align:center">
-   <img src="/assets/bash-in-depth/0024-IO-Redirections/Output-Redirection-Part-1.png"/>
-</div>
+<p align="center">
+   <img src="chapters/0024-IO-Redirections/images/Output-Redirection-Part-1.png"/>
+</p>
 
 Once the first redirection has been successfully processed, Bash proceeds to interpret the next one.
 
 The second redirection, "`2>&1`", instructs Bash to *"Copy the destination currently assigned to file descriptor 1 (standard output) to file descriptor 2 (standard error)."* This results in the following effect.
 
-<div style="text-align:center">
-   <img src="/assets/bash-in-depth/0024-IO-Redirections/Output-Redirection-Part-2.png"/>
-</div>
+<p align="center">
+   <img src="chapters/0024-IO-Redirections/images/Output-Redirection-Part-2.png"/>
+</p>
 
 In this sequence of redirections, the script is configured to direct both standard output and standard error to the file named "`output`".
 
@@ -919,24 +872,24 @@ In this sequence of redirections, the script is configured to direct both standa
 
 Let’s see what happens when we reverse the order of the redirections.
 
-<div style="text-align:center">
-   <img src="/assets/bash-in-depth/0024-IO-Redirections/Process-Graphical-Representation.png"/>
-</div>
+<p align="center">
+   <img src="chapters/0024-IO-Redirections/images/Process-Graphical-Representation.png"/>
+</p>
 
 The script starts with the same initial state, where the default file descriptors are assigned to their standard destinations.
 
 The first redirection, "`2>&1`", *"copies the destination currently assigned to file descriptor 1 (standard output) to file descriptor 2 (standard error),"* resulting in the following effect.
 
-<div style="text-align:center">
-   <img src="/assets/bash-in-depth/0024-IO-Redirections/Redirection-To-Standard-Ouput.png"/>
-</div>
+<p align="center">
+   <img src="chapters/0024-IO-Redirections/images/Redirection-To-Standard-Ouput.png"/>
+</p>
 
 At this point, both the standard output and standard error file descriptors are directed to the original standard output.
 
 The second redirection, "`>output`", then reassigns the standard output to the file output. This change can be visually represented as follows.
 
-<div style="text-align:center">
-   <img src="/assets/bash-in-depth/0024-IO-Redirections/Redirection-To-Output-File.png"/>
+<p align="center">
+   <img src="chapters/0024-IO-Redirections/images/Redirection-To-Output-File.png"/>
 </div>
 
 As a result of processing the second redirection, standard error remains directed to the original standard output ("`/dev/stdout`"), while standard output is now redirected to the file named "`output`".
@@ -962,9 +915,9 @@ This syntax works by linking:
 
 The flow of data through this chain can be illustrated graphically as follows.
 
-<div style="text-align:center">
-   <img src="/assets/bash-in-depth/0024-IO-Redirections/Piping-Commands.png"/>
-</div>
+<p align="center">
+   <img src="chapters/0024-IO-Redirections/images/Piping-Commands.png"/>
+</p>
 
 Let’s explore an example using some familiar commands, such as "`cat`" and "`grep`".
 
@@ -987,25 +940,25 @@ From a technical perspective, a pipe ("`|`") connects the Standard Output (File 
 This implies that any function or script capable of reading from Standard Input and writing to Standard Output should, in theory, work seamlessly in a chain of commands. Let’s test this concept with an example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: io-redirections-0013.sh
- 3 myFunction() {
- 4     local INPUT=()
- 5     local index=0
- 6     local IFS=$'\n'
- 7     # Read from standard input
- 8     while read -r MY_INPUT; do
- 9         INPUT[$index]="$MY_INPUT"
-10         index=$(($index+1))
-11     done
-12     # Echo to standard output
-13     for item in ${INPUT[@]}; do
-14         local length=${#item}
-15         echo "ITEM[$item]: $length"
-16     done
-17 }
-18 # Piping "ls" command to "myFunction"
-19 ls -l | myFunction
+#!/usr/bin/env bash
+#Script: io-redirections-0013.sh
+myFunction() {
+    local INPUT=()
+    local index=0
+    local IFS=$'\n'
+    # Read from standard input
+    while read -r MY_INPUT; do
+        INPUT[$index]="$MY_INPUT"
+        index=$(($index+1))
+    done
+    # Echo to standard output
+    for item in ${INPUT[@]}; do
+        local length=${#item}
+        echo "ITEM[$item]: $length"
+    done
+}
+# Piping "ls" command to "myFunction"
+ls -l | myFunction
 ```
 
 This script performs two main steps. First, it reads all input from the Standard Input and stores each line as an individual element in an array named "`INPUT`". Next, it iterates through the array, printing each line to the Standard Output in the format: "`ITEM[<line>]: <line_length>`".
@@ -1054,28 +1007,28 @@ Once this series of piped commands completes, the PIPESTATUS array will store th
 Let's write an example script to play with the array "`PIPESTATUS`".
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: io-redirections-0014.sh
- 3 myFunction() {
- 4     local INPUT=()
- 5     local index=0
- 6     local IFS=$'\n'
- 7     # Read from standard input
- 8     while read -r MY_INPUT; do
- 9         INPUT[$index]="$MY_INPUT"
-10         index=$(($index+1))
-11     done
-12     # Echo to standard output
-13     for item in ${INPUT[@]}; do
-14         local length=${#item}
-15         echo "ITEM[$item]: $length"
-16     done
-17 }
-18 # Piping "ls -l" command to "grep" command
-19 # Piping "grep" command to "myFunction"
-20 ls -l | grep ".txt" | myFunction
-21 # Echoing the full array of PIPESTATUS
-22 echo "PIPESTATUS: ${PIPESTATUS[@]}"
+#!/usr/bin/env bash
+#Script: io-redirections-0014.sh
+myFunction() {
+    local INPUT=()
+    local index=0
+    local IFS=$'\n'
+    # Read from standard input
+    while read -r MY_INPUT; do
+        INPUT[$index]="$MY_INPUT"
+        index=$(($index+1))
+    done
+    # Echo to standard output
+    for item in ${INPUT[@]}; do
+        local length=${#item}
+        echo "ITEM[$item]: $length"
+    done
+}
+# Piping "ls -l" command to "grep" command
+# Piping "grep" command to "myFunction"
+ls -l | grep ".txt" | myFunction
+# Echoing the full array of PIPESTATUS
+echo "PIPESTATUS: ${PIPESTATUS[@]}"
 ```
 
 The previous "`io-redirections-0014.sh`" script is very similar to the script "`io-redirections-0013.sh`.
@@ -1112,9 +1065,9 @@ This script performs the following steps:
 
 The "`tee`" command is an incredibly versatile tool for managing redirections. Its name is derived from its functionality, which resembles the shape of the letter "T".
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0024-IO-Redirections/Tee-Command.png"/>
-</div>
+<p align="center">
+    <img src="chapters/0024-IO-Redirections/images/Tee-Command.png"/>
+</p>
 
 The "`tee`" command reads data from its standard input and simultaneously writes it to both its standard output and any file(s) specified as arguments. This allows you to redirect the same data to multiple files, scripts, or commands all at once.
 
@@ -1187,12 +1140,12 @@ By combining these two concepts, we can redirect multiple outputs from one comma
 To demonstrate this, we’ll create a simple script that reads data from its standard input and outputs it in a formatted style to its standard output.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: io-redirections-0015.sh
- 3 # Reading from Standard Input
- 4 while read -r INPUT_LINE; do
- 5     printf "Line content: \"$INPUT_LINE\"\n"
- 6 done
+#!/usr/bin/env bash
+#Script: io-redirections-0015.sh
+# Reading from Standard Input
+while read -r INPUT_LINE; do
+    printf "Line content: \"$INPUT_LINE\"\n"
+done
 ```
 
 Then we are going to use the "`ls`" command to print the contents of a file that does not exist and a folder that does exist.
@@ -1245,15 +1198,15 @@ Line content: "vxr8svt"
 
 In this case you can see that the error from the “`ls`” command it’s still printed to the standard error and not redirected to the standard input of our script. We could visualize this situation as follows.
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0024-IO-Redirections/LS-command-without-redirecting-stderr.png"/>
-</div>
+<p align="center">
+    <img src="chapters/0024-IO-Redirections/images/LS-command-without-redirecting-stderr.png"/>
+</p>
 
 In order to be able to redirect the standard error from “`ls`” to the standard input of “io-redirections-0015.sh” we need to add “`2>&1`” to our “`ls`” command (*“Copy the destination pointed by file descriptor 1 to file descriptor 2”*). The effect of adding that redirection before the pipe ("`|`") can be visualized as follows.
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0024-IO-Redirections/LS-command-redirecting-stderr.png"/>
-</div>
+<p align="center">
+    <img src="chapters/0024-IO-Redirections/images/LS-command-redirecting-stderr.png"/>
+</p>
 
 ```txt
 $ ls /tmp/no_bueno /tmp 2>&1 | ./io-redirections-0015.sh
@@ -1315,15 +1268,15 @@ $ 2>&1 ls /tmp/no_bueno /tmp | ./io-redirections-0015.sh
 You might assume that redirections are simply additional arguments passed to the command, but this is not the case. In fact, the script being executed is completely unaware of the redirections—they are handled by the shell itself. To illustrate this, we’ll test a script that processes and displays the arguments passed as input.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: io-redirections-0016.sh
- 3 INPUT_ARGS=($@)
- 4 echo "Number of arguments: ${#INPUT_ARGS[@]}"
- 5 declare -i position=0
- 6 for arg in ${INPUT_ARGS[@]}; do
- 7     echo "Argument[$position]: $arg"
- 8     ((position++))
- 9 done
+#!/usr/bin/env bash
+#Script: io-redirections-0016.sh
+INPUT_ARGS=($@)
+echo "Number of arguments: ${#INPUT_ARGS[@]}"
+declare -i position=0
+for arg in ${INPUT_ARGS[@]}; do
+    echo "Argument[$position]: $arg"
+    ((position++))
+done
 ```
 
 The previous "`io-redirections-0016.sh`" script is only showing the different arguments passed. We are going to use this script to show that redirections are not arguments for the script.
@@ -1372,17 +1325,17 @@ Line_10
 We are going to write a script where we will be assigning redirections to a block statement.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: io-redirections-0017.sh
- 3 INPUT_FILE=input_file
- 4 OUTPUT_FILE=/tmp/output.txt
- 5 echo "Block reading from '$INPUT_FILE'"
- 6 {
- 7     while read line; do
- 8         echo "Line read: '$line'"
- 9     done
-10 } <$INPUT_FILE >$OUTPUT_FILE # <<<<<< Redirections
-11 echo "End of program"
+#!/usr/bin/env bash
+#Script: io-redirections-0017.sh
+INPUT_FILE=input_file
+OUTPUT_FILE=/tmp/output.txt
+echo "Block reading from '$INPUT_FILE'"
+{
+    while read line; do
+        echo "Line read: '$line'"
+    done
+} <$INPUT_FILE >$OUTPUT_FILE # <<<<<< Redirections
+echo "End of program"
 ```
 
 As you will notice on line 10 we are specifying a redirection for Standard Input to read from the file "`input_file`" and another redirection for the Standard Output to print the information to the file "`/tmp/output.txt`".
@@ -1404,14 +1357,14 @@ Just as we applied redirections immediately after a code block enclosed in curly
 Let's see the following example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: io-redirections-0018.sh
- 3 INPUT_FILE=input_file
- 4 OUTPUT_FILE=/tmp/output.txt
- 5 while read line; do
- 6 		echo "[while] LINE READ WAS '$line'"
- 7 done <$INPUT_FILE >$OUTPUT_FILE
- 8 #   ^^^          ^^^
+#!/usr/bin/env bash
+#Script: io-redirections-0018.sh
+INPUT_FILE=input_file
+OUTPUT_FILE=/tmp/output.txt
+while read line; do
+		echo "[while] LINE READ WAS '$line'"
+done <$INPUT_FILE >$OUTPUT_FILE
+#   ^^^          ^^^
 ```
 
 When you execute the previous script and print the contents of the "`/tmp/output.txt`" file you will see something like the following in your terminal window.
@@ -1439,16 +1392,16 @@ Similarly to how redirections were applied after the "`done`" keyword in a "`whi
 Let’s explore how this works with the following example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: io-redirections-0019.sh
- 3 INPUT_FILE=input_file
- 4 OUTPUT_FILE=/tmp/output.txt
- 5 MY_LINE=
- 6 until [ "$MY_LINE" = "Line_10" ]; do
- 7     read MY_LINE
- 8     echo "[until] LINE READ WAS '$MY_LINE'"
- 9 done <$INPUT_FILE >$OUTPUT_FILE
-10 #   ^^^          ^^^
+#!/usr/bin/env bash
+#Script: io-redirections-0019.sh
+INPUT_FILE=input_file
+OUTPUT_FILE=/tmp/output.txt
+MY_LINE=
+until [ "$MY_LINE" = "Line_10" ]; do
+    read MY_LINE
+    echo "[until] LINE READ WAS '$MY_LINE'"
+done <$INPUT_FILE >$OUTPUT_FILE
+#   ^^^          ^^^
 ```
 
 When you execute the previous script and print the contents of the "`/tmp/output.txt`" file you will see something like the following in your terminal window.
@@ -1476,15 +1429,15 @@ As with the other types of loops, redirections for a "`for`" loop are placed imm
 Let’s illustrate this with the following example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: io-redirections-0020.sh
- 3 INPUT_FILE=input_file
- 4 OUTPUT_FILE=/tmp/output.txt
- 5 for i in {1..10}; do
- 6     read MY_LINE
- 7     echo "[for] LINE READ WAS '$MY_LINE'"
- 8 done <$INPUT_FILE >$OUTPUT_FILE
- 9 #   ^^^          ^^^
+#!/usr/bin/env bash
+#Script: io-redirections-0020.sh
+INPUT_FILE=input_file
+OUTPUT_FILE=/tmp/output.txt
+for i in {1..10}; do
+    read MY_LINE
+    echo "[for] LINE READ WAS '$MY_LINE'"
+done <$INPUT_FILE >$OUTPUT_FILE
+#   ^^^          ^^^
 ```
 
 When you execute the previous script and print the contents of the "`/tmp/output.txt`" file you will see something like the following in your terminal window.
@@ -1512,16 +1465,16 @@ In the case of "`if/then`" you need to put the redirections after the "`fi`" key
 Let's see how it works with the following example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: io-redirections-0021.sh
- 3 INPUT_FILE=input_file
- 4 OUTPUT_FILE=/tmp/output.txt
- 5 if [ true ]; then
- 6     while read MY_LINE; do
- 7         echo "[if] LINE READ WAS '$MY_LINE'"
- 8     done
- 9 fi <$INPUT_FILE >$OUTPUT_FILE
-10 # ^^^          ^^^
+#!/usr/bin/env bash
+#Script: io-redirections-0021.sh
+INPUT_FILE=input_file
+OUTPUT_FILE=/tmp/output.txt
+if [ true ]; then
+    while read MY_LINE; do
+        echo "[if] LINE READ WAS '$MY_LINE'"
+    done
+fi <$INPUT_FILE >$OUTPUT_FILE
+# ^^^          ^^^
 ```
 
 When you execute the previous script and print the contents of the "`/tmp/output.txt`" file you will see something like the following in your terminal window.
@@ -1549,19 +1502,19 @@ Similar to the "`if/then`" statement redirection we need to add the redirections
 Let's see how it works with the following example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: io-redirections-0022.sh
- 3 INPUT_FILE=input_file
- 4 OUTPUT_FILE=/tmp/output.txt
- 5 if false; then
- 6     read MY_LINE
- 7 		echo "[if-then] LINE READ WAS '$MY_LINE'"
- 8 else
- 9     while read MY_LINE; do
-10         echo "[else] LINE READ WAS '$MY_LINE'"
-11     done
-12 fi <$INPUT_FILE >$OUTPUT_FILE
-13 # ^^^          ^^^
+#!/usr/bin/env bash
+#Script: io-redirections-0022.sh
+INPUT_FILE=input_file
+OUTPUT_FILE=/tmp/output.txt
+if false; then
+    read MY_LINE
+		echo "[if-then] LINE READ WAS '$MY_LINE'"
+else
+    while read MY_LINE; do
+        echo "[else] LINE READ WAS '$MY_LINE'"
+    done
+fi <$INPUT_FILE >$OUTPUT_FILE
+# ^^^          ^^^
 ```
 
 When you execute the previous script and print the contents of the "`/tmp/output.txt`" file you will see something like the following in your terminal window.
@@ -1604,22 +1557,22 @@ We’ll use the "`ls`" command to generate input for our pipeline. Next, a "`whi
 Here’s the code to achieve this.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: io-redirections-0023.sh
- 3 regex="File_([0-9a-zA-Z])"
- 4 ls test_dir | while read line; do
- 5     if [[ $line =~ $regex ]]; then
- 6         echo ${BASH_REMATCH[1]}
- 7     else
- 8         echo "Error"
- 9     fi
-10 done | {
-11     RESULT="_"
-12     while read line; do
-13         RESULT+="${line}_"
-14     done
-15     echo $RESULT
-16 }
+#!/usr/bin/env bash
+#Script: io-redirections-0023.sh
+regex="File_([0-9a-zA-Z])"
+ls test_dir | while read line; do
+    if [[ $line =~ $regex ]]; then
+        echo ${BASH_REMATCH[1]}
+    else
+        echo "Error"
+    fi
+done | {
+    RESULT="_"
+    while read line; do
+        RESULT+="${line}_"
+    done
+    echo $RESULT
+}
 ```
 
 When this script is executed, Bash spawns three child processes, one for each segment of the pipeline:
@@ -1630,9 +1583,9 @@ When this script is executed, Bash spawns three child processes, one for each se
 
 This structure can be visually represented as follows.
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0024-IO-Redirections/Three-Processes.png"/>
-</div>
+<p align="center">
+    <img src="chapters/0024-IO-Redirections/images/Three-Processes.png"/>
+</p>
 
 The first child process (“`ls`”) will produce as output the list of files of the folder and will send them to its standard output.
 
@@ -1688,38 +1641,38 @@ This pipeline could be decomposed in 3 different scripts and could get connected
 The first script would be as follows.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: command_ls.sh
- 3 ls test_dir
+#!/usr/bin/env bash
+#Script: command_ls.sh
+ls test_dir
 ```
 
 The second script would be as follows.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: command_while.sh
- 3 regex="File_([0-9a-zA-Z])"
- 4 while read line; do
- 5     if [[ $line =~ $regex ]]; then
- 6         echo ${BASH_REMATCH[1]}
- 7     else
- 8         echo "Error"
- 9     fi
-10 done
+#!/usr/bin/env bash
+#Script: command_while.sh
+regex="File_([0-9a-zA-Z])"
+while read line; do
+    if [[ $line =~ $regex ]]; then
+        echo ${BASH_REMATCH[1]}
+    else
+        echo "Error"
+    fi
+done
 ```
 
 Finally, the third script would be as follows.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: command_block.sh
- 3 {
- 4     RESULT="_"
- 5     while read line; do
- 6         RESULT+="${line}_"
- 7     done
- 8     echo $RESULT
- 9 }
+#!/usr/bin/env bash
+#Script: command_block.sh
+{
+    RESULT="_"
+    while read line; do
+        RESULT+="${line}_"
+    done
+    echo $RESULT
+}
 ```
 
 When you combine the previous 3 scripts with pipes you will get the same result as script "`io-redirections-0023.sh`".
@@ -1736,19 +1689,19 @@ The answer is a resounding *YES!*
 Let's dive into a simple script to illustrate how this can be done with both "`if/then`" and "`if/then/else`" constructs.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: io-redirections-0024.sh
- 3 if true; then
- 4     echo "LINE 1"
- 5     echo "LINE 2"
- 6 fi | while read line; do
- 7    echo "Line read is '$line'"
- 8 done
- 9 echo "HOLA" | if [[ "$(read line; echo $line)" == "HOLO" ]]; then
-10     echo "OK"
-11 else
-12     echo "KO"
-13 fi
+#!/usr/bin/env bash
+#Script: io-redirections-0024.sh
+if true; then
+    echo "LINE 1"
+    echo "LINE 2"
+fi | while read line; do
+   echo "Line read is '$line'"
+done
+echo "HOLA" | if [[ "$(read line; echo $line)" == "HOLO" ]]; then
+    echo "OK"
+else
+    echo "KO"
+fi
 ```
 
 The first example is found between lines 3 and 8. This section of code can be understood by dividing it into two parts, separated by the pipe ("`|`"). Before the pipe, there is an "`if-then`" statement that outputs two messages to its standard output. After the pipe, a loop processes this input, reading from its standard input and printing to its standard output.
