@@ -1,18 +1,4 @@
----
-layout: chapter
-title: "Chapter 23: Subshells"
----
-
 # Chapter 23: Subshells
-
-## Index
-* [What is a Subshell?]({{ site.url }}//bash-in-depth/0023-Subshells.html#what-is-a-subshell)
-* [What happens when a subshell is launched?]({{ site.url }}//bash-in-depth/0023-Subshells.html#what-happens-when-a-subshell-is-launched)
-* ["`SHLVL`" and "`BASH_SUBSHELL`" variables]({{ site.url }}//bash-in-depth/0023-Subshells.html#shlvl-and-bash_subshell-variables)
-* [Summary]({{ site.url }}//bash-in-depth/0023-Subshells.html#summary)
-* [References]({{ site.url }}//bash-in-depth/0023-Subshells.html#references)
-
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px">
 
 ## What is a Subshell?
 
@@ -33,19 +19,19 @@ A unique identifier, known as a process ID (PID), distinguishes the subshell fro
 Let's write an example script to test what we know for now.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: subshells-0001.sh
- 3 echo -e "$BASHPID - Before subshell..."
- 4 ( # <= Beginning of the subshell
- 5     echo ""
- 6     echo "Starting subshell..."
- 7     for i in {1..10}; do
- 8         echo -e "$BASHPID - $i";
- 9     done
-10     echo "Ending subshell..."
-11     echo ""
-12 )  # <= Ending of the subshell
-13 echo -e "$BASHPID - After subshell..."
+#!/usr/bin/env bash
+#Script: subshells-0001.sh
+echo -e "$BASHPID - Before subshell..."
+( # <= Beginning of the subshell
+    echo ""
+    echo "Starting subshell..."
+    for i in {1..10}; do
+        echo -e "$BASHPID - $i";
+    done
+    echo "Ending subshell..."
+    echo ""
+)  # <= Ending of the subshell
+echo -e "$BASHPID - After subshell..."
 ```
 
 In the previous script we have a subshell between lines 4 and 12. 
@@ -76,9 +62,9 @@ The subshell code executes *synchronously*, meaning that the original script (in
 
 The following diagram is graphic representation of what is happening in the script.
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0023-Subshells/Diagram-of-subshell.png"/>
-</div><br>
+<p align="center">
+    <img src="chapters/0023-Subshells/images/Diagram-of-subshell.png"/>
+</p><br>
 
 
 
@@ -89,26 +75,26 @@ So, what exactly occurs when a subshell is launched? When a subshell is created,
 Let's see how it works with the following example script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: subshells-0002.sh
- 3 GLOBAL_VAR="GLOBAL_VARIABLE"
- 4 my_test() {
- 5     echo "Testing... Testing..."
- 6 }
- 7 main() {
- 8     local my_var="LOCAL_VARIABLE"
- 9     ( # Beginning of subshell
-10         echo "MY_VAR: $my_var"
-11         echo "Global: $GLOBAL_VAR"
-12         my_test
-13         subshell_var="Only for subshell"
-14         echo "Subshell var: $subshell_var"
-15     ) # Ending of subshell
-16     echo "main - Subshell var: $subshell_var"
-17 }
-18 echo "Begin"
-19 main
-20 echo "End"
+#!/usr/bin/env bash
+#Script: subshells-0002.sh
+GLOBAL_VAR="GLOBAL_VARIABLE"
+my_test() {
+    echo "Testing... Testing..."
+}
+main() {
+    local my_var="LOCAL_VARIABLE"
+    ( # Beginning of subshell
+        echo "MY_VAR: $my_var"
+        echo "Global: $GLOBAL_VAR"
+        my_test
+        subshell_var="Only for subshell"
+        echo "Subshell var: $subshell_var"
+    ) # Ending of subshell
+    echo "main - Subshell var: $subshell_var"
+}
+echo "Begin"
+main
+echo "End"
 ```
 
 In the previous script you will see that there is a variable declared on line 3 named "`GLOBAL_VAR`" then you will see that there are 2 functions declared ("`my_test`" function on line 4 and "`main`" function on line 7). 
@@ -148,34 +134,34 @@ When working with subshells, two Bash variables are particularly useful:
 Let's play with the these two variables in the following script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: subshells-0003.sh
- 3 print_variables() {
- 4     echo ""
- 5     echo "#########"
- 6     echo "### $1"
- 7     echo "#########"
- 8     echo "BASHPID: $BASHPID"
- 9     echo "BASH_SUBSHELL: $BASH_SUBSHELL"
-10     echo "SHLVL: $SHLVL"
-11     echo "#########"
-12     echo "### END - $1"
-13     echo "#########"
-14     echo ""
-15 }
-16 custom() {
-17     print_variables "Custom"
-18 }
-19 print_variables "Main program"
-20 (
-21     print_variables "Subshell"
-22     (
-23        print_variables "Subshell - 2"
-24        custom
-25     )
-26 )
-27 # Sub Bash Process
-28 bash -c 'echo -e "Bash - SHLVL: $SHLVL\nBash - Subshell: $BASH_SUBSHELL\nBash - BASHPID:$BASHPID\n"'
+#!/usr/bin/env bash
+#Script: subshells-0003.sh
+print_variables() {
+    echo ""
+    echo "#########"
+    echo "### $1"
+    echo "#########"
+    echo "BASHPID: $BASHPID"
+    echo "BASH_SUBSHELL: $BASH_SUBSHELL"
+    echo "SHLVL: $SHLVL"
+    echo "#########"
+    echo "### END - $1"
+    echo "#########"
+    echo ""
+}
+custom() {
+    print_variables "Custom"
+}
+print_variables "Main program"
+(
+    print_variables "Subshell"
+    (
+       print_variables "Subshell - 2"
+       custom
+    )
+)
+# Sub Bash Process
+bash -c 'echo -e "Bash - SHLVL: $SHLVL\nBash - Subshell: $BASH_SUBSHELL\nBash - BASHPID:$BASHPID\n"'
 ```
 
 What is happening in this script?

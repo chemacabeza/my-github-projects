@@ -63,3 +63,4 @@ This book is also about **thinking like a systems engineer**: understanding not 
 * [Chapter 20: Brace Expansion](./0020-Brace-Expansion.md)
 * [Chapter 21: Block Statements](./0021-Block-Statements.md)
 * [Chapter 22: Processes](./0022-Processes.md)
+* [Chapter 23: Subshells](./0023-Subshells.md)
