@@ -1,16 +1,4 @@
----
-layout: chapter
-title: "Chapter 21: Block Statements"
----
-
 # Chapter 21: Block Statements
-
-## Index
-* [Types of Block Statements]({{ site.url }}//bash-in-depth/0021-Block-Statements.html#types-of-block-statements)
-* [Summary]({{ site.url }}//bash-in-depth/0021-Block-Statements.html#summary)
-* [References]({{ site.url }}//bash-in-depth/0021-Block-Statements.html#references)
-
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px">
 
 In Bash, block statements enable you to group multiple commands or code structures together for cohesive execution. They serve a range of purposes, such as creating conditional constructs, managing loops, or executing multiple commands as a single unit. Blocks are particularly useful when you want to apply logic like conditionals or loops to more than one command without writing each command individually.
 
@@ -29,15 +17,15 @@ Understanding these block statements is key for writing structured and maintaina
 Let's see an example script using the Curly Braces.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: block-statement-0001.sh
- 3 echo "Block reading from Standard Input"
- 4 {
- 5    while read line; do
- 6 	      echo "Line read: '$line'"
- 7    done
- 8 }
- 9 echo "End of program"
+#!/usr/bin/env bash
+#Script: block-statement-0001.sh
+echo "Block reading from Standard Input"
+{
+   while read line; do
+	      echo "Line read: '$line'"
+   done
+}
+echo "End of program"
 ```
 
 The previous script will read from the standard input<a id="footnote-3-ref" href="#footnote-3" style="font-size:x-small">[3]</a>, stores the text in a variable named "`line`" (line 5 of the previous script) and prints it back to the screen.
