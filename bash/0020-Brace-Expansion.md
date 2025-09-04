@@ -1,19 +1,4 @@
----
-layout: chapter
-title: "Chapter 20: Brace Expansion"
----
-
 # Chapter 20: Brace Expansion
-
-## Index
-* [Basic Brace Expansion]({{ site.url }}//bash-in-depth/0020-Brace-Expansion.html#basic-brace-expansion)
-* [Combining and Nesting]({{ site.url }}//bash-in-depth/0020-Brace-Expansion.html#combining-and-nesting)
-    * [Combining Brace Expansions]({{ site.url }}//bash-in-depth/0020-Brace-Expansion.html#combining-brace-expansions)
-    * [Nesting Brace Expansions]({{ site.url }}//bash-in-depth/0020-Brace-Expansion.html#nesting-brace-expansions)
-* [Summary]({{ site.url }}//bash-in-depth/0020-Brace-Expansion.html#summary)
-* [References]({{ site.url }}//bash-in-depth/0020-Brace-Expansion.html#references)
-
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px">
 
 Brace expansion in Bash is a powerful feature that enables you to generate multiple strings or file paths with minimal typing. By using curly braces "`{}`" and placing a comma-separated list or a sequence inside them, you can create multiple combinations in a single expression, making it a helpful tool for automating repetitive tasks, such as batch renaming files or creating directories.
 
@@ -75,20 +60,20 @@ Brace expansion can also generate prefixed or suffixed strings. For example, "`<
 Let's practice some of the above with an example script<a id="footnote-1-ref" href="#footnote-1" style="font-size:x-small">[1]</a>.
 
 ```bash
- 1 #!/usr/bin/env zsh
- 2 #Script: brace-expansion-0001.sh
- 3 # Numeric range
- 4 echo "Numbers from 1 to 23: "
- 5 echo {1..23}
- 6 # Integer start and Character ending
- 7 echo "Characters from '6' to 'a': "
- 8 echo {6..a}
- 9 # Character start and Integer ending
-10 echo "Characters from '0' to 'Q': "
-11 echo {0..Q}
-12 # Character range
-13 echo "Characters from 'Q' to 'q': "
-14 echo {Q..q}
+#!/usr/bin/env zsh
+#Script: brace-expansion-0001.sh
+# Numeric range
+echo "Numbers from 1 to 23: "
+echo {1..23}
+# Integer start and Character ending
+echo "Characters from '6' to 'a': "
+echo {6..a}
+# Character start and Integer ending
+echo "Characters from '0' to 'Q': "
+echo {0..Q}
+# Character range
+echo "Characters from 'Q' to 'q': "
+echo {Q..q}
 ```
 
 When you execute the previous script you will receive the following output in your terminal window.
@@ -122,11 +107,11 @@ When combining multiple brace expansions in a single expression, every possible 
 The previous command produces every value from "`00`" to "`99`", totaling 100 possible combinations.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: brace-expansion-0002.sh
- 3 # All combinations of [0-9][0-9]
- 4 echo "All combinations of [0-9][0-9]."
- 5 echo {0..9}{0..9}
+#!/usr/bin/env bash
+#Script: brace-expansion-0002.sh
+# All combinations of [0-9][0-9]
+echo "All combinations of [0-9][0-9]."
+echo {0..9}{0..9}
 ```
 
 When you run the previous script you will have the following output in your terminal window.
@@ -151,11 +136,11 @@ The previous command produces every uppercase letter from "`A`" to "`Z`", follow
 
 ```bash
 {% raw %}
- 1 #!/usr/bin/env bash
- 2 #Script: brace-expansion-0003.sh
- 3 # Concatenating 2 lists
- 4 echo "All uppercase letters followed by all single digit numbers"
- 5 echo {{A..Z},{0..9}}
+#!/usr/bin/env bash
+#Script: brace-expansion-0003.sh
+# Concatenating 2 lists
+echo "All uppercase letters followed by all single digit numbers"
+echo {{A..Z},{0..9}}
 {% endraw %}
 ```
 
