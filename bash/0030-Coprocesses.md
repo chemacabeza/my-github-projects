@@ -1,20 +1,4 @@
----
-layout: chapter
-title: "Chapter 30: Coprocesses"
----
-
 # Chapter 30: Coprocesses
-
-## Index
-* [Introduction]({{ site.url }}//bash-in-depth/0030-Coprocesses.html#introduction)
-* [What is a Coprocess?]({{ site.url }}//bash-in-depth/0030-Coprocesses.html#what-is-a-coprocess)
-* [How to create a Coprocess?]({{ site.url }}//bash-in-depth/0030-Coprocesses.html#how-to-create-a-coprocess)
-* [Why is Asynchronous Tricky?]({{ site.url }}//bash-in-depth/0030-Coprocesses.html#why-is-asynchronous-tricky)
-* [Alternatives to Coprocesses]({{ site.url }}//bash-in-depth/0030-Coprocesses.html#alternatives-to-coprocesses)
-* [Summary]({{ site.url }}//bash-in-depth/0030-Coprocesses.html#summary)
-* [References]({{ site.url }}//bash-in-depth/0030-Coprocesses.html#references)
-
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px">
 
 ## Introduction
 
@@ -46,15 +30,15 @@ The second outcome is the creation of an environment variable to store the PID o
 
 Visually, a coprocess links the main script (or calling shell) with the child process via file descriptors. These descriptors enable the script to read data from the coprocess’s output and send data to its input seamlessly. If you use a custom name with "`coproc`", the array and PID variable are adjusted accordingly to reflect the specified name.
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0030-Coprocesses/Coprocess-Default.png"/>
-</div>
+<p align="center">
+    <img src="chapters/0030-Coprocesses/images/Coprocess-Default.png"/>
+</p>
 
 or 
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0030-Coprocesses/Coprocess-With-Name.png"/>
-</div>
+<p align="center">
+    <img src="chapters/0030-Coprocesses/images/Coprocess-With-Name.png"/>
+</p>
 
 in the case of specifying the name for the file descriptor array.
 
@@ -76,21 +60,21 @@ $
 Now let's write a Bash script to practice our Coprocesses skill:
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: coprocess-0001.sh
- 3 # Creating the coprocess
- 4 coproc MY_BASH { bash; }
- 5 echo "ls -l coprocess; echo \"-END-\"" >&"${MY_BASH[1]}"
- 6 is_done=false
- 7 while [[ "$is_done" != "true" ]]; do
- 8     read var <&"${MY_BASH[0]}"
- 9     if [[ "$var" == "-END-" ]]; then
-10         is_done="true"
-11     else
-12         echo $var
-13     fi
-14 done
-15 echo "DONE"
+#!/usr/bin/env bash
+#Script: coprocess-0001.sh
+# Creating the coprocess
+coproc MY_BASH { bash; }
+echo "ls -l coprocess; echo \"-END-\"" >&"${MY_BASH[1]}"
+is_done=false
+while [[ "$is_done" != "true" ]]; do
+    read var <&"${MY_BASH[0]}"
+    if [[ "$var" == "-END-" ]]; then
+        is_done="true"
+    else
+        echo $var
+    fi
+done
+echo "DONE"
 ```
 
 Which produces the following output in your terminal window:
@@ -126,28 +110,28 @@ This example demonstrates a simple but effective way to leverage coprocesses in 
 Let’s see another example where we will interact with a “`python`” coprocess. In the following example we will create a coprocess for python and we will send commands to it:
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: coprocess-0002.sh
- 3 # Creating the coprocess
- 4 coproc MY_PYTHON { python -i; } 2>/dev/null
- 5 # Priting the PID of the coprocess
- 6 echo "Coprocess PID: $MY_PYTHON_PID"
- 7 # Defining functions
- 8 echo $'def my_function():\n    print("Hello from a function")\n' >&"${MY_PYTHON[1]}"
- 9 # Calling the function defined
-10 echo $'my_function()\n' >&"${MY_PYTHON[1]}"
-11 echo $'my_function()\n' >&"${MY_PYTHON[1]}"
-12 echo $'print("-END-")\n' >&"${MY_PYTHON[1]}"
-13 # Loop that processes the output of the coprocess
-14 is_done=false
-15 while [[ "$is_done" != "true" ]]; do
-16   read var <&"${MY_PYTHON[0]}"
-17   if [[ $var == "-END-" ]]; then
-18      is_done="true"
-19   else
-20      echo $var
-21   fi
-22 done
+#!/usr/bin/env bash
+#Script: coprocess-0002.sh
+# Creating the coprocess
+coproc MY_PYTHON { python -i; } 2>/dev/null
+# Priting the PID of the coprocess
+echo "Coprocess PID: $MY_PYTHON_PID"
+# Defining functions
+echo $'def my_function():\n    print("Hello from a function")\n' >&"${MY_PYTHON[1]}"
+# Calling the function defined
+echo $'my_function()\n' >&"${MY_PYTHON[1]}"
+echo $'my_function()\n' >&"${MY_PYTHON[1]}"
+echo $'print("-END-")\n' >&"${MY_PYTHON[1]}"
+# Loop that processes the output of the coprocess
+is_done=false
+while [[ "$is_done" != "true" ]]; do
+  read var <&"${MY_PYTHON[0]}"
+  if [[ $var == "-END-" ]]; then
+     is_done="true"
+  else
+     echo $var
+  fi
+done
 ```
 
 As in previous examples, line 4 demonstrates the creation of a named coprocess. Notably, the "`-i`"<a id="footnote-2-ref" href="#footnote-2" style="font-size:x-small">[2]</a> flag is used here to enable Python's interactive mode, allowing the coprocess to accept and execute commands interactively.
@@ -193,14 +177,14 @@ As discussed in earlier sections, a coprocess is an <u>asynchronous</u> program 
 In those cases, the coprocess remained active and ready to receive additional input. But what happens if the coprocess finishes execution, and we attempt to read from its now-closed standard output? Let’s explore this scenario with a simple example where a coprocess lists the contents of the "coprocess" directory:
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: coprocess-0003.sh
- 3 # Creating the coprocess
- 4 coproc MY_LS { ls -l coprocess; }
- 5 echo "Coprocess PID: $MY_LS_PID"
- 6 while read var <&"${MY_LS[0]}"; do
- 7     echo $var
- 8 done
+#!/usr/bin/env bash
+#Script: coprocess-0003.sh
+# Creating the coprocess
+coproc MY_LS { ls -l coprocess; }
+echo "Coprocess PID: $MY_LS_PID"
+while read var <&"${MY_LS[0]}"; do
+    echo $var
+done
 ```
 
 When this script is executed, the output might look like this:
@@ -223,20 +207,20 @@ What’s going on here? Although the directory contains 10 files, the script onl
 How can this issue be resolved? One effective solution is to duplicate the coprocess’s standard output file descriptor. By creating a copy, we ensure that the file descriptor remains open even after the coprocess terminates, allowing the main script to process the entire output. Here’s an updated version of the script that implements this approach:
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: coprocess-0004.sh
- 3 # Creating the coprocess
- 4 coproc MY_LS { ls -l coprocess; }
- 5 # Copy stdout to file descriptor 5
- 6 exec 5<&${MY_LS[0]}
- 7 # Print Process ID of the coprocess
- 8 echo "Coprocess PID: $MY_LS_PID"
- 9 # Read from file descriptor 5
-10 while read -u 5 var; do
-11     echo $var
-12 done
-13 # Close file descriptor 5
-14 exec 5<&-
+#!/usr/bin/env bash
+#Script: coprocess-0004.sh
+# Creating the coprocess
+coproc MY_LS { ls -l coprocess; }
+# Copy stdout to file descriptor 5
+exec 5<&${MY_LS[0]}
+# Print Process ID of the coprocess
+echo "Coprocess PID: $MY_LS_PID"
+# Read from file descriptor 5
+while read -u 5 var; do
+    echo $var
+done
+# Close file descriptor 5
+exec 5<&-
 ```
 
 In this revised script, we’ve introduced logic on line 6 to duplicate the standard output of the coprocess to a new file descriptor (e.g., file descriptor 5). We also updated line 10 to read from the duplicated file descriptor and added proper resource management by closing it on line 14.
@@ -272,40 +256,40 @@ Essentially, a coprocess creates a child process for a given command and connect
 This behavior can be replicated using FIFO files and subshells. Let’s look at an example where we adapt the script "`coprocess-0002.sh`" to use FIFO files and subshells:
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: coprocess-0005.sh
- 3 INPUT=inputFifo
- 4 OUTPUT=outputFifo
- 5 #Creating fifo files
- 6 mkfifo $INPUT
- 7 mkfifo $OUTPUT
- 8 # Creating subshell with python
- 9 ( python -i ) <inputFifo >outputFifo 2>/dev/null &
-10 #Saving the PID of the python subshell
-11 PID_PYTHON_JOB=$!
-12 # Print Process ID of python subshell
-13 echo "PID Python Job: $PID_PYTHON_JOB"
-14 # Define funxtion
-15 echo $'def my_function():\n    print("Hello from a function")\n' >$INPUT
-16 # Calling the function defined
-17 echo $'my_function()\n' >$INPUT
-18 echo $'my_function()\n' >$INPUT
-19 echo $'print("EOD")\n' >$INPUT
-20 # Lopp taking care of the output of the subshell
-21 is_done=false
-22 while [[ "$is_done" != "true" ]]; do
-23   read var <$OUTPUT
-24   if [[ $var == "EOD" ]]; then
-25      is_done="true"
-26   else
-27      echo $var
-28   fi
-29 done
-30 # Cleaning
-31 exec 2>/dev/null
-32 kill -9 $PID_PYTHON_JOB
-33 rm $INPUT
-34 rm $OUTPUT
+#!/usr/bin/env bash
+#Script: coprocess-0005.sh
+INPUT=inputFifo
+OUTPUT=outputFifo
+#Creating fifo files
+mkfifo $INPUT
+mkfifo $OUTPUT
+# Creating subshell with python
+( python -i ) <inputFifo >outputFifo 2>/dev/null &
+#Saving the PID of the python subshell
+PID_PYTHON_JOB=$!
+# Print Process ID of python subshell
+echo "PID Python Job: $PID_PYTHON_JOB"
+# Define funxtion
+echo $'def my_function():\n    print("Hello from a function")\n' >$INPUT
+# Calling the function defined
+echo $'my_function()\n' >$INPUT
+echo $'my_function()\n' >$INPUT
+echo $'print("EOD")\n' >$INPUT
+# Lopp taking care of the output of the subshell
+is_done=false
+while [[ "$is_done" != "true" ]]; do
+  read var <$OUTPUT
+  if [[ $var == "EOD" ]]; then
+     is_done="true"
+  else
+     echo $var
+  fi
+done
+# Cleaning
+exec 2>/dev/null
+kill -9 $PID_PYTHON_JOB
+rm $INPUT
+rm $OUTPUT
 ```
 
 **What’s Happening in This Script?**

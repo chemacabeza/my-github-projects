@@ -70,3 +70,4 @@ This book is also about **thinking like a systems engineer**: understanding not 
 * [Chapter 27: Aliases](./0027-Aliases.md)
 * [Chapter 28: Here Documents](./0028-Here-Documents.md)
 * [Chapter 29: Here Strings](./0029-Here-Strings.md)
+* [Chapter 30: Coprocesses](./0030-Coprocesses.md)
