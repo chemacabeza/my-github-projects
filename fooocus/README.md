@@ -11,17 +11,17 @@ I’ve preconfigured this project with a curated collection of **SDXL models** a
 
 The following **SDXL models** are available inside the container:
 
-- `juggernautXL_v8Rundiffusion.safetensors`
-- `sdXL_v10VAEFix.safetensors`
-- `SDXLRonghua_v45.safetensors`
-- `sdxlYamersRealistic5_v5Rundiffusion.safetensors`
-- `sdxlUnstableDiffusers_nihilmania.safetensors`
+- `juggernautXL_v8Rundiffusion.safetensors` (<a href="https://civitai.com/models/133005/juggernaut-xl">Link to Civitai</a>)
+- `sdXL_v10VAEFix.safetensors` (<a href="https://civitai.com/models/101055/sd-xl">Link to Civitai</a>)
+- `SDXLRonghua_v45.safetensors` (<a href="https://civitai.com/models/125634/sdxl-ronghua-or-or">Link to Civitai</a>)
+- `sdxlYamersRealistic5_v5Rundiffusion.safetensors` (<a href="https://civitai.com/models/127923/sdxl-yamers-realistic-5">Link to Civitai</a>)
+- `sdxlUnstableDiffusers_nihilmania.safetensors` (<a href="https://civitai.com/models/84040?modelVersionId=395107">Link to Civitai</a>)
 
 And the following **LoRAs** are included:
 
 - `lingerie_loha.safetensors`
 - `pumpsheel.safetensors`
-- `retro_neon_illustriouos.safetensors`
+- `retro_neon_illustriouos.safetensors` (<a href="https://civitai.com/models/569937/retro-neon-style-fluxsdxlillustrious-xlpony">Link to Civitai</a>)
 - `sd_xl_offset_example-lora_1.0.safetensors`
 
 ---
