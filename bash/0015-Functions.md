@@ -1,25 +1,4 @@
----
-layout: chapter
-title: "Chapter 15: Functions"
----
-
 # Chapter 15: Functions
-
-## Index
-* [Declaration]({{ site.url }}//bash-in-depth/0015-Functions.html#declaration)
-* [Declaration vs Call]({{ site.url }}//bash-in-depth/0015-Functions.html#declaration-vs-call)
-* [Local variables]({{ site.url }}//bash-in-depth/0015-Functions.html#local-variables)
-* [Overriding functions and commands]({{ site.url }}//bash-in-depth/0015-Functions.html#overriding-functions-and-commands)
-* [Variable `$FUNCNAME` associated to a function]({{ site.url }}//bash-in-depth/0015-Functions.html#variable-funcname-associated-to-a-function)
-* [Positional parameters]({{ site.url }}//bash-in-depth/0015-Functions.html#positional-parameters)
-* [`shift` built-in command]({{ site.url }}//bash-in-depth/0015-Functions.html#shift-built-in-command)
-* [Return status (`$?`) and `return`]({{ site.url }}//bash-in-depth/0015-Functions.html#return-status--and-return)
-* [Returning non-integer values]({{ site.url }}//bash-in-depth/0015-Functions.html#returning-non-integer-values)
-* [Recursivity]({{ site.url }}//bash-in-depth/0015-Functions.html#recursivity)
-* [Summary]({{ site.url }}//bash-in-depth/0015-Functions.html#summary)
-* [References]({{ site.url }}//bash-in-depth/0015-Functions.html#references)
-
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px;">
 
 Now that we have learnt the basic blocks of Bash we are going to add another layer of abstraction that are… the functions.
 
@@ -33,21 +12,21 @@ Functions in Bash enable the creation of structured and organized scripts by enc
 
 In Bash scripting, declaring a function involves specifying the function's name, defining its behavior or code block, and optionally providing parameters that the function can accept. The syntax for declaring a function is straightforward and can be done using either the “`function`” keyword or a concise shorthand notation.
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0015-Functions/Function-Declaration.png" width="450px"/>
-</div>
+<p align="center">
+    <img src="chapters/0015-Functions/images/Function-Declaration.png" width="450px"/>
+</p>
 
 Let’s see next a couple of examples of how to declare a function.
 
 The first example is by using the “`function`” keyword.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 # Script: function-0001.sh
- 3 function my_function() {
- 4     echo "Hello from inside the function"
- 5 }
- 6 my_function
+#!/usr/bin/env bash
+# Script: function-0001.sh
+function my_function() {
+    echo "Hello from inside the function"
+}
+my_function
 ```
 
 When you run the previous script you get the following output.
@@ -60,12 +39,12 @@ Hello from inside the function
 And the second example is by declaring the function without the “`function`” keyword, like the following script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 # Script: function-0002.sh
- 3 my_function() {
- 4     echo "Hello from inside the function"
- 5 }
- 6 my_function
+#!/usr/bin/env bash
+# Script: function-0002.sh
+my_function() {
+    echo "Hello from inside the function"
+}
+my_function
 ```
 
 If you run the last script you will see that it produces the same output as the "`function-0002.sh`" script.
@@ -75,13 +54,13 @@ Although both approaches are equivalent, the second one (without the “`functio
 Something to notice is that a function **can NEVER have an empty body**. For example, if we try to execute the following script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 # Script: function-0003.sh
- 3 error_fn_1() {
- 4 }
- 5 error_fn_2() {
- 6     echo "Some commands"
- 7 }
+#!/usr/bin/env bash
+# Script: function-0003.sh
+error_fn_1() {
+}
+error_fn_2() {
+    echo "Some commands"
+}
 ```
 
 If you try to run the previous script you will get the following error.
@@ -103,12 +82,12 @@ In Bash scripting you cannot call a function unless it has been previously decla
 Let’s see what happens when you try to invoke a function that has not been declared before the call.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 # Script: function-0004.sh
- 3 my_function # not declared before execution
- 4 my_function() {
- 5     echo "My function"
- 6 }
+#!/usr/bin/env bash
+# Script: function-0004.sh
+my_function # not declared before execution
+my_function() {
+    echo "My function"
+}
 ```
 
 When you run the previous script you will receive the following error.
@@ -121,12 +100,12 @@ $ ./function-0004.sh
 Now if you swap the order having the function declared before the call of the function, everything works.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 # Script: function-0005.sh
- 3 my_function() {
- 4     echo "My function"
- 5 }
- 6 my_function
+#!/usr/bin/env bash
+# Script: function-0005.sh
+my_function() {
+    echo "My function"
+}
+my_function
 ```
 
 When you execute the last script you will get a successful execution.
@@ -139,16 +118,16 @@ My function
 In the following example you will see that there are two functions being declared which are “`my_function_1`” and “`my_function_2`”. You will also notice that “`my_function_1`” invokes “`my_function_2`”, which is declared **after** “`my_function_1`”.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 # Script: function-0006.sh
- 3 my_function_1() {
- 4     echo "Inside my_function_1"
- 5     my_function_2
- 6 }
- 7 my_function_2() {
- 8     echo "Inside my_function_2"
- 9 }
-10 my_function_1
+#!/usr/bin/env bash
+# Script: function-0006.sh
+my_function_1() {
+    echo "Inside my_function_1"
+    my_function_2
+}
+my_function_2() {
+    echo "Inside my_function_2"
+}
+my_function_1
 ```
 
 This is OK because by the time Bash executes “`my_function_1`” all the information needed by it to execute successfully (in our case, declaration of “`my_function_2`”) is available in memory/context.
@@ -173,19 +152,19 @@ Before a function is called, all variables declared within the function **are in
 Let's see how it works with the following example script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 # Script: function-0007.sh
- 3 custom1() {
- 4     local localVar=324
- 5     globalVar=123
- 6     echo "localVar: $localVar"
- 7     echo "Done with $FUNCNAME"
- 8 }
- 9 echo "Local variable before function: $localVar"
-10 echo "Global variable before function: $globalVar"
-11 custom1
-12 echo "Local variable after function: $localVar"
-13 echo "Global variable after function: $globalVar"
+#!/usr/bin/env bash
+# Script: function-0007.sh
+custom1() {
+    local localVar=324
+    globalVar=123
+    echo "localVar: $localVar"
+    echo "Done with $FUNCNAME"
+}
+echo "Local variable before function: $localVar"
+echo "Global variable before function: $globalVar"
+custom1
+echo "Local variable after function: $localVar"
+echo "Global variable after function: $globalVar"
 ```
 
 When you execute the previous script you will have the following output in the terminal window.
@@ -217,15 +196,15 @@ To summarize, **the latest declaration wins**.
 Let’s see how it works with a couple of examples to show how we can override functions (or commands).
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 # Script: function-0008.sh
- 3 my_function_1() {
- 4     echo "Inside my_function_1 - 1"
- 5 }
- 6 my_function_1() { # Will override the previous declaration
- 7     echo "Inside the override of my_function_1"
- 8 }
- 9 my_function_1
+#!/usr/bin/env bash
+# Script: function-0008.sh
+my_function_1() {
+    echo "Inside my_function_1 - 1"
+}
+my_function_1() { # Will override the previous declaration
+    echo "Inside the override of my_function_1"
+}
+my_function_1
 ```
 
 As you can see in the previous script the function is declared twice, as we mentioned before the second declaration (the latest one) will be the one that will be used.
@@ -243,19 +222,19 @@ Now that we know how to override functions, let’s try to do the same with comm
 In the following example we are going to override the command “`ls`”<a id="footnote-1-ref" href="#footnote-1" style="font-size:x-small">[1]</a>.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: function-0009.sh
- 3 echo "Before overriding"
- 4 echo "##########"
- 5 ls  # standard command 'ls'. Will print directory content
- 6 echo ""
- 7 ls() { # Overriding command 'ls'
- 8     echo "Nothing to see here"
- 9 }
-10 echo "After overriding"
-11 echo "##########"
-12 ls   # Will print "Nothing to see here"
-13 echo ""
+#!/usr/bin/env bash
+#Script: function-0009.sh
+echo "Before overriding"
+echo "##########"
+ls  # standard command 'ls'. Will print directory content
+echo ""
+ls() { # Overriding command 'ls'
+    echo "Nothing to see here"
+}
+echo "After overriding"
+echo "##########"
+ls   # Will print "Nothing to see here"
+echo ""
 ```
 
 In the previous script, on line 5, the actual “`ls`” command is used to list the contents of the current folder. Later between lines 7 and 9 we do declare a function with the name “`ls`” to be able to override the command “`ls`”.
@@ -283,22 +262,22 @@ The variable “`FUNCNAME`” is an array containing the names of all shell func
 Let's see how it works with the following example script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: function-0010.sh
- 3 my_custom_function() {
- 4     echo "We are inside the function '$FUNCNAME'"
- 5     echo "Array: ${FUNCNAME[@]}"
- 6     my_custom_function_2
- 7 }
- 8 my_custom_function_2() {
- 9     echo "Array: ${FUNCNAME[@]}"
-10     my_custom_function_3
-11 }
-12 my_custom_function_3() {
-13     echo "Array: ${FUNCNAME[@]}"
-14 }
-15 my_custom_function
-16 echo "End"
+#!/usr/bin/env bash
+#Script: function-0010.sh
+my_custom_function() {
+    echo "We are inside the function '$FUNCNAME'"
+    echo "Array: ${FUNCNAME[@]}"
+    my_custom_function_2
+}
+my_custom_function_2() {
+    echo "Array: ${FUNCNAME[@]}"
+    my_custom_function_3
+}
+my_custom_function_3() {
+    echo "Array: ${FUNCNAME[@]}"
+}
+my_custom_function
+echo "End"
 ```
 
 If you run the previous script you will see the following output in the terminal window.
@@ -344,19 +323,19 @@ If `N` is zero or greater than `$#`, the positional parameters are not changed a
 Let's see how the “`shift`” command works with the following example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: function-0011.sh
- 3 args=($@)
- 4 echo "Printing original list of arguments"
- 5 for((index=0; index <= ${#args[@]}; index++)) {
- 6     echo "Arg[$index]: ${!index}"
- 7 }
- 8 shift 4
- 9 args=($@)
-10 echo "Printing list after shifting"
-11 for((index=0; index <= ${#args[@]}; index++)) {
-12     echo "Arg[$index]: ${!index}"
-13 }
+#!/usr/bin/env bash
+#Script: function-0011.sh
+args=($@)
+echo "Printing original list of arguments"
+for((index=0; index <= ${#args[@]}; index++)) {
+    echo "Arg[$index]: ${!index}"
+}
+shift 4
+args=($@)
+echo "Printing list after shifting"
+for((index=0; index <= ${#args[@]}; index++)) {
+    echo "Arg[$index]: ${!index}"
+}
 ```
 
 When you execute the previous script with the numbers from 1 to 9 you will get the following output.
@@ -397,17 +376,17 @@ Once the result is returned from the function and the scope of the function is o
 Let's see how it works with an example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: function-0012.sh
- 3 # Declaring a function
- 4 my_ok_function() {
- 5     echo "This function returns zero"
- 6     return 0 
- 7 }
- 8 # Invoking the function
- 9 my_ok_function
-10 # Printing the result of the function
-11 echo "Result: $?"
+#!/usr/bin/env bash
+#Script: function-0012.sh
+# Declaring a function
+my_ok_function() {
+    echo "This function returns zero"
+    return 0 
+}
+# Invoking the function
+my_ok_function
+# Printing the result of the function
+echo "Result: $?"
 ```
 
 When you run the previous script you will have the following output in the terminal window.
@@ -451,25 +430,25 @@ In computer science, recursion is a programming technique using a function or an
 Let's see how it works with the following example script that implements the Fibonacci<a id="footnote-4-ref" href="#footnote-4" style="font-size:x-small">[4]</a> function.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: function-0014.sh
- 3 # Declaring the Fibonacci function
- 4 fibonacci() {
- 5     nthTerm=$1
- 6     if [ $nthTerm -eq 0 ]; then # F(0)
- 7         echo 0
- 8     elif [ $nthTerm -eq 1 ]; then # F(1)
- 9         echo 1
-10     else # F(N-1) + F(N-2)
-11         local n1=$(($nthTerm - 1))
-12         local fn1=$(fibonacci $n1)
-13         local n2=$(($nthTerm - 2))
-14         local fn2=$(fibonacci $n2)
-15         echo $(($fn1 + $fn2))
-16     fi
-17 }
-18 # Calling the Fibonacci function with the number 10
-19 fibonacci 10
+#!/usr/bin/env bash
+#Script: function-0014.sh
+# Declaring the Fibonacci function
+fibonacci() {
+    nthTerm=$1
+    if [ $nthTerm -eq 0 ]; then # F(0)
+        echo 0
+    elif [ $nthTerm -eq 1 ]; then # F(1)
+        echo 1
+    else # F(N-1) + F(N-2)
+        local n1=$(($nthTerm - 1))
+        local fn1=$(fibonacci $n1)
+        local n2=$(($nthTerm - 2))
+        local fn2=$(fibonacci $n2)
+        echo $(($fn1 + $fn2))
+    fi
+}
+# Calling the Fibonacci function with the number 10
+fibonacci 10
 ```
 
 When you run the previous script you will see the following the terminal window.
@@ -484,20 +463,20 @@ Just for the record, recursivity is not only specific to functions. It’s a con
 The previous function could be written as the following so that the recursion is applied to the script itself.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: function-0015.sh
- 3 nthTerm=$1
- 4 if [ $nthTerm -eq 0 ]; then # F(0)
- 5     echo 0
- 6 elif [ $nthTerm -eq 1 ]; then # F(1)
- 7     echo 1
- 8 else # F(N-1) + F(N-2)
- 9     n1=$(($nthTerm - 1))
-10     fn1=$($0 $n1) # script calling itself
-11     n2=$(($nthTerm - 2))
-12     fn2=$($0 $n2) # script calling itself
-13     echo $(($fn1 + $fn2))
-14 fi
+#!/usr/bin/env bash
+#Script: function-0015.sh
+nthTerm=$1
+if [ $nthTerm -eq 0 ]; then # F(0)
+    echo 0
+elif [ $nthTerm -eq 1 ]; then # F(1)
+    echo 1
+else # F(N-1) + F(N-2)
+    n1=$(($nthTerm - 1))
+    fn1=$($0 $n1) # script calling itself
+    n2=$(($nthTerm - 2))
+    fn2=$($0 $n2) # script calling itself
+    echo $(($fn1 + $fn2))
+fi
 ```
 
 When you run the previous script providing 10 as input it will generate the same output as the previous script.
