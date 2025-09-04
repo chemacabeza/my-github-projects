@@ -65,3 +65,4 @@ This book is also about **thinking like a systems engineer**: understanding not 
 * [Chapter 22: Processes](./0022-Processes.md)
 * [Chapter 23: Subshells](./0023-Subshells.md)
 * [Chapter 24: I/O Redirections](./0024-IO-Redirections.md)
+* [Chapter 25: Jobs](./0025-Jobs.md)
