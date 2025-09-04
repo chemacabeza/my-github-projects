@@ -53,15 +53,15 @@ For all of these cases, if a command is provided it will be executed with the en
 But first we are going to write a script that prints a few variables (with the “`echo`” command) and to print the full list of environment variables (with the “`env`” command).
 
 ```bash
- 1 #!/bin/bash
- 2 #Script: env_command.sh
- 3 echo "User name : $USER"
- 4 echo "Home : $HOME"
- 5 echo "Path : $PATH"
- 6 echo "These are the environment variables"
- 7 echo "#####################"
- 8 env
- 9 echo "#####################"
+#!/bin/bash
+#Script: env_command.sh
+echo "User name : $USER"
+echo "Home : $HOME"
+echo "Path : $PATH"
+echo "These are the environment variables"
+echo "#####################"
+env
+echo "#####################"
 ```
 
 In the previous script you will see that on line 3, 4 and 5 the values of the environment variables “`USER`”, “`HOME`” and “`PATH`” are printed. Then on lines 7 to 9 the environment variables available to your script are printed.
@@ -239,23 +239,23 @@ The first script will just use the “`export`” command with a variable called
 The first script is as follows.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: export_command.sh
- 3 # Declare new environment variable
- 4 export MY_VAR="My Value"
- 5 # Invoke secondary script
- 6 ./secondary.sh
+#!/usr/bin/env bash
+#Script: export_command.sh
+# Declare new environment variable
+export MY_VAR="My Value"
+# Invoke secondary script
+./secondary.sh
 ```
 
 As you can see in the previous script it just exports a variable and calls the “`secondary.sh`” script, which looks as follows.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: secondary.sh
- 3
- 4 echo "##########"
- 5 env
- 6 echo "##########"
+#!/usr/bin/env bash
+#Script: secondary.sh
+
+echo "##########"
+env
+echo "##########"
 ```
 
 Now, if you execute the “`export_command.sh`” script you will see something like the following.
@@ -316,10 +316,10 @@ When invoked in this way it will have the same effect as the “`export`” comm
 Let’s see how it works with the following script as an example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: declare_export.sh
- 3 declare -x MY_VAR="My Value"
- 4 ./secondary.sh
+#!/usr/bin/env bash
+#Script: declare_export.sh
+declare -x MY_VAR="My Value"
+./secondary.sh
 ```
 
 The previous script is similar to the “`export_command.sh`” script that we saw before. On line 3 the variable “`MY_VAR`” is declared with the command “`declare -x`” to have it exported so that the “`secondary.sh`” script is able to see it.
