@@ -1,48 +1,4 @@
----
-layout: chapter
-title: "Chapter 12: Arrays and loops"
----
-
 # Chapter 12: Arrays and loops
-
-## Index
-* [Introduction]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#introduction)
-* [Indexed Arrays]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#indexed-arrays)
-    * [How do you access items of an indexed array?]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#how-do-you-access-items-of-an-indexed-array)
-* [Associative Arrays (a.k.a. Hashes/Maps)]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#associative-arrays-aka-hashesmaps)
-    * [How do you access items of an associative array?]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#how-do-you-access-items-of-an-associative-array)
-* [Associative Arrays as Sets]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#associative-arrays-as-sets)
-* [Operations with arrays]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#operations-with-arrays)
-    * [First element of the array]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#first-element-of-the-array)
-    * [Get the whole content of the array]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#get-the-whole-content-of-the-array)
-    * [Get the list of indices]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#get-the-list-of-indices)
-    * [Get the length of the array]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#get-the-length-of-the-array)
-    * [Adding an element to an array]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#adding-an-element-to-an-array)
-    * [Delete element from a given index]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#delete-element-from-a-given-index)
-    * [Delete element from a given pattern]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#delete-element-from-a-given-pattern)
-        * [Shortest match from the front of the string]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#shortest-match-from-the-front-of-the-string)
-        * [Longest match from the front of the string]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#longest-match-from-the-front-of-the-string)
-        * [Shortest match from the back of the string]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#shortest-match-from-the-back-of-the-string)
-        * [Longest match from the back of the string]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#longest-match-from-the-back-of-the-string)
-    * [Substring replacement with regular expressions]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#substring-replacement-with-regular-expressions)
-        * [Replace first occurrence]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#replace-first-occurrence)
-        * [Replace all occurrences]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#replace-all-occurrences)
-        * [Replace beginning occurrences of string]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#replace-beginning-occurrences-of-string)
-        * [Replace ending occurrences of string]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#replace-ending-occurrences-of-string)
-    * [Delete an entire array]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#delete-an-entire-array)
-    * [Consult the length of the i-th element of the array]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#consult-the-length-of-the-i-th-element-of-the-array)
-    * [How to copy an array]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#how-to-copy-an-array)
-    * [Slice of an array]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#slice-of-an-array)
-    * [Concatenate arrays]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#concatenate-arrays)
-* [For-Loop]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#for-loop)
-* [For-Loop (C-style)]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#for-loop-c-style)
-* [While loop]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#while-loop)
-* [Until loop]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#until-loop)
-* [`continue` and `break`]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#continue-and-break)
-* [Summary]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#summary)
-* [References]({{ site.url }}//bash-in-depth/0012-Arrays-and-loops.html#references)
-
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px;">
 
 ## Introduction
 
@@ -61,9 +17,9 @@ An **Indexed Array** is a data structure that associates values to indices (0, 1
 
 Let’s take a look at a visualization for this kind of array.
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0012-Arrays-and-loops/Indexed-array.png" width="500px"/>
-</div>
+<p align="center">
+    <img src="chapters/0012-Arrays-and-loops/images/Indexed-array.png" width="500px"/>
+</p>
 
 How do we declare this kind of array? Well there are 2 ways to declare an indexed array.
 
@@ -95,9 +51,9 @@ Where "`$index`" is a whole number (for example `0`, `1`, `2`, ...).
 
 An **Associative Array** is a data structure that associates values to “*keys*”. A key can be any random string or number.
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0012-Arrays-and-loops/Associative-array.png" width="500px"/>
-</div>
+<p align="center">
+    <img src="chapters/0012-Arrays-and-loops/images/Associative-array.png" width="500px"/>
+</p>
 
 So, how do we declare an associative array? We use the option “`-A`” of the “`declare`” builtin command.
 
@@ -110,10 +66,10 @@ This is **the only valid way** to declare an associative array.
 If you try to declare the previous associative array without “`declare -A`” you will be surprised. Let’s see it with an example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: bad_associative_array.sh
- 3 MY_MAP=( [Madrid]="Spanish" [London]="English" [Paris]="French")
- 4 declare -p MY_MAP
+#!/usr/bin/env bash
+#Script: bad_associative_array.sh
+MY_MAP=( [Madrid]="Spanish" [London]="English" [Paris]="French")
+declare -p MY_MAP
 ```
 
 When you run the previous script you will the following result in your terminal.
@@ -130,11 +86,11 @@ This means that the values “`Spanish`”, “`English`” and “`French`” a
 Now, if we declare one of the keys as a variable and assign a whole number (0, 1, 2, etc) the result will change. Let’s see it with an example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: bad_associative_array_2.sh
- 3 Madrid=20
- 4 MY_MAP=( [Madrid]="Spanish" [London]="English" [Paris]="French")
- 5 declare -p MY_MAP
+#!/usr/bin/env bash
+#Script: bad_associative_array_2.sh
+Madrid=20
+MY_MAP=( [Madrid]="Spanish" [London]="English" [Paris]="French")
+declare -p MY_MAP
 ```
 
 When you run the previous script you will have now the following result.
@@ -169,26 +125,26 @@ The idea is to create an associative array that has as keys the unique informati
 Let's see how it works with an example script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: array_as_set.sh
- 3 # Declaring set with 3 cities
- 4 declare -A CITIES=(
- 5  [London]=1
- 6  [Paris]=1
- 7  [Madrid]=1
- 8 )
- 9 # Checking for a city inside the Set
-10 if [[ -n "${CITIES[London]}" ]]; then
-11     echo "London is in the set" # This will be printed
-12 else
-13     echo "London is NOT in the set"
-14 fi
-15 # Checking for a city that is not in the Set
-16 if [[ -n "${CITIES[Seville]}" ]]; then
-17     echo "Seville is in the set"
-18 else
-19     echo "Seville is NOT in the set" # This will be printed
-20 fi
+#!/usr/bin/env bash
+#Script: array_as_set.sh
+# Declaring set with 3 cities
+declare -A CITIES=(
+ [London]=1
+ [Paris]=1
+ [Madrid]=1
+)
+# Checking for a city inside the Set
+if [[ -n "${CITIES[London]}" ]]; then
+    echo "London is in the set" # This will be printed
+else
+    echo "London is NOT in the set"
+fi
+# Checking for a city that is not in the Set
+if [[ -n "${CITIES[Seville]}" ]]; then
+    echo "Seville is in the set"
+else
+    echo "Seville is NOT in the set" # This will be printed
+fi
 ```
 
 In this simple case we are using the option “`-n`” of test which will return true if the string is not empty. When we run the previous script we get the following result.
@@ -212,10 +168,10 @@ Once the array is declared, what can we do with it? In the next subsections we w
 In the case of an indexed array referring to the variable “`$MY_ARRAY`” will show the first element of the array itself. 
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: array_index_first.sh
- 3 MY_ARRAY=("value1" "value2" "value3")
- 4 echo "First item: $MY_ARRAY"
+#!/usr/bin/env bash
+#Script: array_index_first.sh
+MY_ARRAY=("value1" "value2" "value3")
+echo "First item: $MY_ARRAY"
 ```
 
 When we execute the previous script, you will get the following in your terminal.
@@ -228,14 +184,14 @@ First item: value1
 In the case of an associative array referring to the variable “`$MY_ARRAY`” will not show anything as associative arrays are not sorted.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: array_associative_first.sh
- 3 declare -A MY_ARRAY=(
- 4     [key1]="value1"
- 5     [key2]="value2"
- 6     [key3]="value3"
- 7 )
- 8 echo "First item: $MY_ARRAY"
+#!/usr/bin/env bash
+#Script: array_associative_first.sh
+declare -A MY_ARRAY=(
+    [key1]="value1"
+    [key2]="value2"
+    [key3]="value3"
+)
+echo "First item: $MY_ARRAY"
 ```
 
 As you will see in the following execution of the script, “`$MY_ARRAY`” returns empty.
@@ -256,11 +212,11 @@ There are two ways to get the whole content of an indexed array or the values of
 The difference is that “`${MY_ARRAY[*]}`” will display the elements of the indexed array (or the values of the associative array) as **a single string**, while “`${MY_ARRAY[@]}`” will display the same ones quoted separately.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: index_array_content.sh
- 3 MY_ARRAY=("value1" "value2" "value3")
- 4 echo "Content 1: ${MY_ARRAY[*]}"
- 5 echo "Content 2: ${MY_ARRAY[@]}"
+#!/usr/bin/env bash
+#Script: index_array_content.sh
+MY_ARRAY=("value1" "value2" "value3")
+echo "Content 1: ${MY_ARRAY[*]}"
+echo "Content 2: ${MY_ARRAY[@]}"
 ```
 
 When we execute the previous script we get the following result in the terminal.
@@ -275,15 +231,15 @@ The execution does not show us the difference between “`${MY_ARRAY[*]}`” and
 Something similar happens when we try to use “`${MY_ARRAY[*]}`” and “`${MY_ARRAY[@]}`” with associative arrays.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: associative_array_content.sh
- 3 declare -A MY_ARRAY=(
- 4     [key1]="value1"
- 5     [key2]="value2"
- 6     [key3]="value3"
- 7 )
- 8 echo "Content-1: ${MY_ARRAY[*]}"
- 9 echo "Content-2: ${MY_ARRAY[@]}"
+#!/usr/bin/env bash
+#Script: associative_array_content.sh
+declare -A MY_ARRAY=(
+    [key1]="value1"
+    [key2]="value2"
+    [key3]="value3"
+)
+echo "Content-1: ${MY_ARRAY[*]}"
+echo "Content-2: ${MY_ARRAY[@]}"
 ```
 
 When you run the previous script you will get the following result in your terminal.
@@ -305,10 +261,10 @@ The way to get the indices of both indexed and associative arrays is by using �
 If you use it with an indexed array it will return the indices that contain a value. 
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: index_array_indices.sh
- 3 MY_ARRAY=("value1" "value2" "value3")
- 4 echo "Indices: ${!MY_ARRAY[@]}"
+#!/usr/bin/env bash
+#Script: index_array_indices.sh
+MY_ARRAY=("value1" "value2" "value3")
+echo "Indices: ${!MY_ARRAY[@]}"
 ```
 
 When you execute the previous script you will get the following result in your terminal.
@@ -321,14 +277,14 @@ Indices: 0 1 2
 If you use it with an associative array it will return the keys.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: associative_array_indices.sh
- 3 declare -A MY_ARRAY=(
- 4     [key1]="value1"
- 5     [key2]="value2"
- 6     [key3]="value3"
- 7 )
- 8 echo "Indices: ${!MY_ARRAY[@]}"
+#!/usr/bin/env bash
+#Script: associative_array_indices.sh
+declare -A MY_ARRAY=(
+    [key1]="value1"
+    [key2]="value2"
+    [key3]="value3"
+)
+echo "Indices: ${!MY_ARRAY[@]}"
 ```
 
 When you execute the previous script you will get the list of keys unsorted.
@@ -347,11 +303,11 @@ To be able get the length of an array (both indexed and associative) you can use
 Let’s see it with a couple of examples.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: index_array_length.sh
- 3 MY_ARRAY=("value1" "value2" "value3")
- 4 echo "Length-1: ${#MY_ARRAY[*]}"
- 5 echo "Length-2: ${#MY_ARRAY[@]}"
+#!/usr/bin/env bash
+#Script: index_array_length.sh
+MY_ARRAY=("value1" "value2" "value3")
+echo "Length-1: ${#MY_ARRAY[*]}"
+echo "Length-2: ${#MY_ARRAY[@]}"
 ```
 
 When you run the previous script for indexed arrays you will the following result in your terminal.
@@ -365,15 +321,15 @@ Length-2: 3
 And now an example for associative arrays.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: associative_array_length.sh
- 3 declare -A MY_ARRAY=(
- 4     [key1]="value1"
- 5     [key2]="value2"
- 6     [key3]="value3"
- 7 )
- 8 echo "Length-1: ${#MY_ARRAY[*]}"
- 9 echo "Length-2: ${#MY_ARRAY[@]}"
+#!/usr/bin/env bash
+#Script: associative_array_length.sh
+declare -A MY_ARRAY=(
+    [key1]="value1"
+    [key2]="value2"
+    [key3]="value3"
+)
+echo "Length-1: ${#MY_ARRAY[*]}"
+echo "Length-2: ${#MY_ARRAY[@]}"
 ```
 
 When you execute the previous script you get the following in your terminal.
@@ -391,8 +347,8 @@ In the next section we are going to see how to add an element to an array.
 
 In order to add an additional element to an array we can do it by using the following form.
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0012-Arrays-and-loops/Add-Item-To-Array.png" width="550px"/>
+<p align="center">
+    <img src="chapters/0012-Arrays-and-loops/images/Add-Item-To-Array.png" width="550px"/>
 </div>
 
 As you can see the only difference on adding a new element to an indexed array or an associative array is including the key in the associative array.
@@ -400,12 +356,12 @@ As you can see the only difference on adding a new element to an indexed array o
 For example, for an indexed array we would proceed as follows.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: index_array_add.sh
- 3 MY_ARRAY=("value1" "value2" "value3")
- 4 echo "Elements: ${MY_ARRAY[@]}"
- 5 MY_ARRAY+=("value4")
- 6 echo "Elements: ${MY_ARRAY[@]}"
+#!/usr/bin/env bash
+#Script: index_array_add.sh
+MY_ARRAY=("value1" "value2" "value3")
+echo "Elements: ${MY_ARRAY[@]}"
+MY_ARRAY+=("value4")
+echo "Elements: ${MY_ARRAY[@]}"
 ```
 
 When you run the previous script you will get the following in the terminal.
@@ -421,15 +377,15 @@ Where you can see the new value (“`value4`”) added to the end of the array.
 In the case of an associative array we would do the following.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: associative_array_add.sh
- 3 declare -A MY_ARRAY=(
- 4     [key1]="value1"
- 5     [key2]="value2"
- 6     [key3]="value3"
- 7 )
- 8 MY_ARRAY+=([key4]="value4")
- 9 declare -p MY_ARRAY
+#!/usr/bin/env bash
+#Script: associative_array_add.sh
+declare -A MY_ARRAY=(
+    [key1]="value1"
+    [key2]="value2"
+    [key3]="value3"
+)
+MY_ARRAY+=([key4]="value4")
+declare -p MY_ARRAY
 ```
 
 When you run the previous script you will get the following result in your terminal.
@@ -445,15 +401,15 @@ Something to notice is that for associative arrays you can add elements by using
 
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: associative_array_add.sh
- 3 declare -A MY_ARRAY=(
- 4     [key1]="value1"
- 5     [key2]="value2"
- 6     [key3]="value3"
- 7 )
- 8 MY_ARRAY["key4"]="value4"
- 9 declare -p MY_ARRAY
+#!/usr/bin/env bash
+#Script: associative_array_add.sh
+declare -A MY_ARRAY=(
+    [key1]="value1"
+    [key2]="value2"
+    [key3]="value3"
+)
+MY_ARRAY["key4"]="value4"
+declare -p MY_ARRAY
 ```
 
 In the next section we are going to learn how to delete specific elements from arrays.
@@ -468,20 +424,20 @@ In indexed arrays the indices are whole numbers (0, 1, 2, etc) while in associat
 
 In both types of array we will have to use the following to delete elements.
 
-<div style="text-align:center">
-<img src="/assets/bash-in-depth/0012-Arrays-and-loops/Unset-Item-From-Array.png" width="550px"/>
-</div>
+<p align="center">
+<img src="chapters/0012-Arrays-and-loops/images/Unset-Item-From-Array.png" width="550px"/>
+</p>
 
 In the following example we are deleting the second element (index “`1`”) of the array.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: index_array_delete.sh
- 3 MY_ARRAY=("value1" "value2" "value3")
- 4 # Deleting second item of the array
- 5 unset MY_ARRAY[1]
- 6 # Printing the whole content of the array
- 7 echo "Content: ${MY_ARRAY[@]}"
+#!/usr/bin/env bash
+#Script: index_array_delete.sh
+MY_ARRAY=("value1" "value2" "value3")
+# Deleting second item of the array
+unset MY_ARRAY[1]
+# Printing the whole content of the array
+echo "Content: ${MY_ARRAY[@]}"
 ```
 
 When we execute the previous script you will see that “`value2`” is no longer in the array.
@@ -494,15 +450,15 @@ Content: value1 value3
 In the case of an associative array, as it was mentioned before, we need to use the key of the entry we want to delete. In the following example we will remove the entry whose key is “`key2`”.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: associative_array_delete.sh
- 3 declare -A MY_ARRAY=(
- 4     [key1]="value1"
- 5     [key2]="value2"
- 6     [key3]="value3"
- 7 )
- 8 unset MY_ARRAY[key2]
- 9 declare -p MY_ARRAY
+#!/usr/bin/env bash
+#Script: associative_array_delete.sh
+declare -A MY_ARRAY=(
+    [key1]="value1"
+    [key2]="value2"
+    [key3]="value3"
+)
+unset MY_ARRAY[key2]
+declare -p MY_ARRAY
 ```
 
 When we execute the previous script you will see that the element whose key is “`key2`” is no longer in the associative array.
@@ -522,9 +478,9 @@ In this section we are going to learn how to delete elements based on a “*patt
 
 The generic form that we will use is as follows.
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0012-Arrays-and-loops/Generic-Form-Delete-From-Pattern.png" width="450px"/>
-</div>
+<p align="center">
+    <img src="chapters/0012-Arrays-and-loops/images/Generic-Form-Delete-From-Pattern.png" width="450px"/>
+</p>
 
 Those 4 dots will be replaced with some syntax that will do pattern matching to find the elements before removing them. There are several ways to remove an element from an array and are the following:
 * Shortest match from the front of the string
@@ -541,13 +497,13 @@ The previous statement means that once you provide the pattern, Bash will go ele
 Let’s see an example to better understand how it works.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: index_array_delete_pattern_front_shortest.sh
- 3 MY_ARRAY=( one two three four five six )
- 4 echo "Content: ${MY_ARRAY[@]}"
- 5 # Shortest match from front of string
- 6 echo "\${MY_ARRAY[@]#t*}: ${MY_ARRAY[@]#t*}"
- 7 echo "\${MY_ARRAY[@]#t*ee}: ${MY_ARRAY[@]#t*ee}"
+#!/usr/bin/env bash
+#Script: index_array_delete_pattern_front_shortest.sh
+MY_ARRAY=( one two three four five six )
+echo "Content: ${MY_ARRAY[@]}"
+# Shortest match from front of string
+echo "\${MY_ARRAY[@]#t*}: ${MY_ARRAY[@]#t*}"
+echo "\${MY_ARRAY[@]#t*ee}: ${MY_ARRAY[@]#t*ee}"
 ```
 
 On line 3 we declare an array with six elements. On line 4 we display the content of the array. Then (the interesting part) on lines 6 and 7 we use two different patterns.
@@ -582,16 +538,16 @@ The previous statement means that once you provide the pattern, Bash will go ele
 Let’s write another script to see how it works. In the next script we left the content of the previous script and added the new things of this section.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: index_array_delete_pattern.sh
- 3 MY_ARRAY=( one two three four five six )
- 4 echo "Content: ${MY_ARRAY[@]}"
- 5 # Shortest match from front of string
- 6 echo "\${MY_ARRAY[@]#t*}: ${MY_ARRAY[@]#t*}"
- 7 echo "\${MY_ARRAY[@]#t*ee}: ${MY_ARRAY[@]#t*ee}"
- 8 # Longest match from the front of string
- 9 echo -e "\n\${MY_ARRAY[@]##t*}: ${MY_ARRAY[@]##t*}"
-10 echo "\${MY_ARRAY[@]##t*ee}: ${MY_ARRAY[@]##t*ee}"
+#!/usr/bin/env bash
+#Script: index_array_delete_pattern.sh
+MY_ARRAY=( one two three four five six )
+echo "Content: ${MY_ARRAY[@]}"
+# Shortest match from front of string
+echo "\${MY_ARRAY[@]#t*}: ${MY_ARRAY[@]#t*}"
+echo "\${MY_ARRAY[@]#t*ee}: ${MY_ARRAY[@]#t*ee}"
+# Longest match from the front of string
+echo -e "\n\${MY_ARRAY[@]##t*}: ${MY_ARRAY[@]##t*}"
+echo "\${MY_ARRAY[@]##t*ee}: ${MY_ARRAY[@]##t*ee}"
 ```
 
 In this case we have added from line 8 to line 10. Let’s see what happens when we run the script.
@@ -622,19 +578,19 @@ The previous statement means that once you provide the pattern, Bash will go ele
 Let's write another script that shows this way of removing parts of the items and that is comparing them to the previous ways that we saw.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: index_array_delete_pattern_back_shortest.sh
- 3 MY_ARRAY=( one two three four five six )
- 4 echo "Content: ${MY_ARRAY[@]}"
- 5 # Shortest match from front of string
- 6 echo "\${MY_ARRAY[@]#t*}: ${MY_ARRAY[@]#t*}"
- 7 echo "\${MY_ARRAY[@]#t*ee}: ${MY_ARRAY[@]#t*ee}"
- 8 # Longest match from the front of string
- 9 echo -e "\n\${MY_ARRAY[@]##t*}: ${MY_ARRAY[@]##t*}"
-10 echo "\${MY_ARRAY[@]##t*ee}: ${MY_ARRAY[@]##t*ee}"
-11 # Shortest match from the back of string
-12 echo -e "\n\${MY_ARRAY[@]%*ee}: ${MY_ARRAY[@]%*ee}"
-13 echo "\${MY_ARRAY[@]%t*ee}: ${MY_ARRAY[@]%t*ee}"
+#!/usr/bin/env bash
+#Script: index_array_delete_pattern_back_shortest.sh
+MY_ARRAY=( one two three four five six )
+echo "Content: ${MY_ARRAY[@]}"
+# Shortest match from front of string
+echo "\${MY_ARRAY[@]#t*}: ${MY_ARRAY[@]#t*}"
+echo "\${MY_ARRAY[@]#t*ee}: ${MY_ARRAY[@]#t*ee}"
+# Longest match from the front of string
+echo -e "\n\${MY_ARRAY[@]##t*}: ${MY_ARRAY[@]##t*}"
+echo "\${MY_ARRAY[@]##t*ee}: ${MY_ARRAY[@]##t*ee}"
+# Shortest match from the back of string
+echo -e "\n\${MY_ARRAY[@]%*ee}: ${MY_ARRAY[@]%*ee}"
+echo "\${MY_ARRAY[@]%t*ee}: ${MY_ARRAY[@]%t*ee}"
 ```
 
 We added lines 11 to 13. When we run the script the following appears in your terminal window.
@@ -667,22 +623,22 @@ The previous statement means that once you provide the pattern, Bash will go ele
 Same as in the previous cases we will write a new script comparing this way of deleting items (or parts of items) of arrays to the previous ones.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: index_array_delete_pattern_back_longest.sh
- 3 MY_ARRAY=( one two three four five six )
- 4 echo "Content: ${MY_ARRAY[@]}"
- 5 # Shortest match from front of string
- 6 echo "\${MY_ARRAY[@]#t*}: ${MY_ARRAY[@]#t*}"
- 7 echo "\${MY_ARRAY[@]#t*ee}: ${MY_ARRAY[@]#t*ee}"
- 8 # Longest match from the front of string
- 9 echo -e "\n\${MY_ARRAY[@]##t*}: ${MY_ARRAY[@]##t*}"
-10 echo "\${MY_ARRAY[@]##t*ee}: ${MY_ARRAY[@]##t*ee}"
-11 # Shortest match from the back of string
-12 echo -e "\n\${MY_ARRAY[@]%*ee}: ${MY_ARRAY[@]%*ee}"
-13 echo "\${MY_ARRAY[@]%t*ee}: ${MY_ARRAY[@]%t*ee}"
-14 # Longest match from the back of string
-15 echo -e "\n\${MY_ARRAY[@]%%*e}: ${MY_ARRAY[@]%%*e}"
-16 echo "\${MY_ARRAY[@]%%f*e}: ${MY_ARRAY[@]%%f*e}"
+#!/usr/bin/env bash
+#Script: index_array_delete_pattern_back_longest.sh
+MY_ARRAY=( one two three four five six )
+echo "Content: ${MY_ARRAY[@]}"
+# Shortest match from front of string
+echo "\${MY_ARRAY[@]#t*}: ${MY_ARRAY[@]#t*}"
+echo "\${MY_ARRAY[@]#t*ee}: ${MY_ARRAY[@]#t*ee}"
+# Longest match from the front of string
+echo -e "\n\${MY_ARRAY[@]##t*}: ${MY_ARRAY[@]##t*}"
+echo "\${MY_ARRAY[@]##t*ee}: ${MY_ARRAY[@]##t*ee}"
+# Shortest match from the back of string
+echo -e "\n\${MY_ARRAY[@]%*ee}: ${MY_ARRAY[@]%*ee}"
+echo "\${MY_ARRAY[@]%t*ee}: ${MY_ARRAY[@]%t*ee}"
+# Longest match from the back of string
+echo -e "\n\${MY_ARRAY[@]%%*e}: ${MY_ARRAY[@]%%*e}"
+echo "\${MY_ARRAY[@]%%f*e}: ${MY_ARRAY[@]%%f*e}"
 ```
 
 We added lines 13 to 16. When we run the script the following appears in your terminal window.
@@ -731,14 +687,14 @@ To be able to replace the **first occurrence** of a pattern in a string element 
 Let's give it a try with the following script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: index_array_replace_pattern_first.sh
- 3 MY_ARRAY=( one two three four five six )
- 4 echo "Content: ${MY_ARRAY[@]}"
- 5 # Replace first occurrence
- 6 echo -e "\nReplace first occurrence"
- 7 echo "\${MY_ARRAY[@]/e/X}: ${MY_ARRAY[@]/e/X}"
- 8 echo "\${MY_ARRAY[@]/e*/X}: ${MY_ARRAY[@]/e*/X}"
+#!/usr/bin/env bash
+#Script: index_array_replace_pattern_first.sh
+MY_ARRAY=( one two three four five six )
+echo "Content: ${MY_ARRAY[@]}"
+# Replace first occurrence
+echo -e "\nReplace first occurrence"
+echo "\${MY_ARRAY[@]/e/X}: ${MY_ARRAY[@]/e/X}"
+echo "\${MY_ARRAY[@]/e*/X}: ${MY_ARRAY[@]/e*/X}"
 ```
 
 In the previous script we are using two different patterns. When we run the script the following is printed in the terminal window.
@@ -766,18 +722,18 @@ To be able to replace **all occurrences** of a pattern in a string element of an
 Let's write another script so that we can see how this way of replacement is different from the previous one.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: index_array_replace_pattern_all.sh
- 3 MY_ARRAY=( one two three four five six )
- 4 echo "Content: ${MY_ARRAY[@]}"
- 5 # Replace first occurrence
- 6 echo -e "\nReplace first occurrence"
- 7 echo "\${MY_ARRAY[@]/e/X}: ${MY_ARRAY[@]/e/X}"
- 8 echo "\${MY_ARRAY[@]/e*/X}: ${MY_ARRAY[@]/e*/X}"
- 9 # Replace all occurrences
-10 echo -e "\nReplace all occurrences"
-11 echo "\${MY_ARRAY[@]//e/X}: ${MY_ARRAY[@]//e/X}"
-12 echo "\${MY_ARRAY[@]//e*/X}: ${MY_ARRAY[@]//e*/X}"
+#!/usr/bin/env bash
+#Script: index_array_replace_pattern_all.sh
+MY_ARRAY=( one two three four five six )
+echo "Content: ${MY_ARRAY[@]}"
+# Replace first occurrence
+echo -e "\nReplace first occurrence"
+echo "\${MY_ARRAY[@]/e/X}: ${MY_ARRAY[@]/e/X}"
+echo "\${MY_ARRAY[@]/e*/X}: ${MY_ARRAY[@]/e*/X}"
+# Replace all occurrences
+echo -e "\nReplace all occurrences"
+echo "\${MY_ARRAY[@]//e/X}: ${MY_ARRAY[@]//e/X}"
+echo "\${MY_ARRAY[@]//e*/X}: ${MY_ARRAY[@]//e*/X}"
 ```
 
 We added lines 9 to 12 to our script. We are using the same two patterns as before.
@@ -806,22 +762,22 @@ A special use case of this syntax is that we can use it to remove elements from 
 Let's see how it is done with the following script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: index_array_replace_pattern_all_delete.sh
- 3 MY_ARRAY=( one two three four five six )
- 4 echo "Content: ${MY_ARRAY[@]}"
- 5 # Replace first occurrence
- 6 echo -e "\nReplace first occurrence"
- 7 echo "\${MY_ARRAY[@]/e/X}: ${MY_ARRAY[@]/e/X}"
- 8 echo "\${MY_ARRAY[@]/e*/X}: ${MY_ARRAY[@]/e*/X}"
- 9 # Replace all occurrences
-10 echo -e "\nReplace all occurrences"
-11 echo "\${MY_ARRAY[@]//e/X}: ${MY_ARRAY[@]//e/X}"
-12 echo "\${MY_ARRAY[@]//e*/X}: ${MY_ARRAY[@]//e*/X}"
-13 # Removal of elements
-14 echo -e "\nRemoval of elements"
-15 echo "\${MY_ARRAY[@]//e/}: ${MY_ARRAY[@]//e/}"
-16 echo "\${MY_ARRAY[@]//f*/}: ${MY_ARRAY[@]//f*/}"
+#!/usr/bin/env bash
+#Script: index_array_replace_pattern_all_delete.sh
+MY_ARRAY=( one two three four five six )
+echo "Content: ${MY_ARRAY[@]}"
+# Replace first occurrence
+echo -e "\nReplace first occurrence"
+echo "\${MY_ARRAY[@]/e/X}: ${MY_ARRAY[@]/e/X}"
+echo "\${MY_ARRAY[@]/e*/X}: ${MY_ARRAY[@]/e*/X}"
+# Replace all occurrences
+echo -e "\nReplace all occurrences"
+echo "\${MY_ARRAY[@]//e/X}: ${MY_ARRAY[@]//e/X}"
+echo "\${MY_ARRAY[@]//e*/X}: ${MY_ARRAY[@]//e*/X}"
+# Removal of elements
+echo -e "\nRemoval of elements"
+echo "\${MY_ARRAY[@]//e/}: ${MY_ARRAY[@]//e/}"
+echo "\${MY_ARRAY[@]//f*/}: ${MY_ARRAY[@]//f*/}"
 ```
 
 If you pay attention, this script is the same as before but we added lines from 13 to 16.
@@ -859,26 +815,26 @@ What will happen is that Bash will go element by element and will replace the su
 Let’s see how it works with an example by modifying our previous script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: index_array_replace_pattern_front_beginning.sh
- 3 MY_ARRAY=( one two three four five six )
- 4 echo "Content: ${MY_ARRAY[@]}"
- 5 # Replace first occurrence
- 6 echo -e "\nReplace first occurrence"
- 7 echo "\${MY_ARRAY[@]/e/X}: ${MY_ARRAY[@]/e/X}"
- 8 echo "\${MY_ARRAY[@]/e*/X}: ${MY_ARRAY[@]/e*/X}"
- 9 # Replace all occurrences
-10 echo -e "\nReplace all occurrences"
-11 echo "\${MY_ARRAY[@]//e/X}: ${MY_ARRAY[@]//e/X}"
-12 echo "\${MY_ARRAY[@]//e*/X}: ${MY_ARRAY[@]//e*/X}"
-13 # Removal of elements
-14 echo -e "\nRemoval of elements"
-15 echo "\${MY_ARRAY[@]//e/}: ${MY_ARRAY[@]//e/}"
-16 echo "\${MY_ARRAY[@]//f*/}: ${MY_ARRAY[@]//f*/}"
-17 # Replace front-end occurrences of string
-18 echo -e "\nReplace front-end occurrences of string"
-19 echo "\${MY_ARRAY[@]/#e/XY}: ${MY_ARRAY[@]/#e/XY}"
-20 echo "\${MY_ARRAY[@]/#f/XY}: ${MY_ARRAY[@]/#f/XY}"
+#!/usr/bin/env bash
+#Script: index_array_replace_pattern_front_beginning.sh
+MY_ARRAY=( one two three four five six )
+echo "Content: ${MY_ARRAY[@]}"
+# Replace first occurrence
+echo -e "\nReplace first occurrence"
+echo "\${MY_ARRAY[@]/e/X}: ${MY_ARRAY[@]/e/X}"
+echo "\${MY_ARRAY[@]/e*/X}: ${MY_ARRAY[@]/e*/X}"
+# Replace all occurrences
+echo -e "\nReplace all occurrences"
+echo "\${MY_ARRAY[@]//e/X}: ${MY_ARRAY[@]//e/X}"
+echo "\${MY_ARRAY[@]//e*/X}: ${MY_ARRAY[@]//e*/X}"
+# Removal of elements
+echo -e "\nRemoval of elements"
+echo "\${MY_ARRAY[@]//e/}: ${MY_ARRAY[@]//e/}"
+echo "\${MY_ARRAY[@]//f*/}: ${MY_ARRAY[@]//f*/}"
+# Replace front-end occurrences of string
+echo -e "\nReplace front-end occurrences of string"
+echo "\${MY_ARRAY[@]/#e/XY}: ${MY_ARRAY[@]/#e/XY}"
+echo "\${MY_ARRAY[@]/#f/XY}: ${MY_ARRAY[@]/#f/XY}"
 ```
 
 In this case we have added lines 17 to 20 to our script. In line 19 we are trying to replace the character “`e`” at the beginning of the string with “`XY`”. In line 20 we are trying to replace the character “`f`” at the beginning of the string with “`XY`”.
@@ -919,31 +875,31 @@ What will happen is that Bash will go element by element and will replace the su
 Let’s see how it works with an example by modifying our previous script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: index_array_replace_pattern_back_ending.sh
- 3 MY_ARRAY=( one two three four five six )
- 4 echo "Content: ${MY_ARRAY[@]}"
- 5 # Replace first occurrence
- 6 echo -e "\nReplace first occurrence"
- 7 echo "\${MY_ARRAY[@]/e/X}: ${MY_ARRAY[@]/e/X}"
- 8 echo "\${MY_ARRAY[@]/e*/X}: ${MY_ARRAY[@]/e*/X}"
- 9 # Replace all occurrences
-10 echo -e "\nReplace all occurrences"
-11 echo "\${MY_ARRAY[@]//e/X}: ${MY_ARRAY[@]//e/X}"
-12 echo "\${MY_ARRAY[@]//e*/X}: ${MY_ARRAY[@]//e*/X}"
-13 # Removal of elements
-14 echo -e "\nRemoval of elements"
-15 echo "\${MY_ARRAY[@]//e/}: ${MY_ARRAY[@]//e/}"
-16 echo "\${MY_ARRAY[@]//f*/}: ${MY_ARRAY[@]//f*/}"
-17 # Replace front-end occurrences of string
-18 echo -e "\nReplace front-end occurrences of string"
-19 echo "\${MY_ARRAY[@]/#e/XY}: ${MY_ARRAY[@]/#e/XY}"
-20 echo "\${MY_ARRAY[@]/#f/XY}: ${MY_ARRAY[@]/#f/XY}"
-21 # Replace back-end occurrences of string
-22 echo -e "\nReplace back-end occurrences of string"
-23 echo "\${MY_ARRAY[@]/%e/XY}: ${MY_ARRAY[@]/%e/XY}"
-24 echo "\${MY_ARRAY[@]/%our/XY}: ${MY_ARRAY[@]/%our/XY}"
-25 echo "\${MY_ARRAY[@]/%y/XY}: ${MY_ARRAY[@]/%y/XY}"
+#!/usr/bin/env bash
+#Script: index_array_replace_pattern_back_ending.sh
+MY_ARRAY=( one two three four five six )
+echo "Content: ${MY_ARRAY[@]}"
+# Replace first occurrence
+echo -e "\nReplace first occurrence"
+echo "\${MY_ARRAY[@]/e/X}: ${MY_ARRAY[@]/e/X}"
+echo "\${MY_ARRAY[@]/e*/X}: ${MY_ARRAY[@]/e*/X}"
+# Replace all occurrences
+echo -e "\nReplace all occurrences"
+echo "\${MY_ARRAY[@]//e/X}: ${MY_ARRAY[@]//e/X}"
+echo "\${MY_ARRAY[@]//e*/X}: ${MY_ARRAY[@]//e*/X}"
+# Removal of elements
+echo -e "\nRemoval of elements"
+echo "\${MY_ARRAY[@]//e/}: ${MY_ARRAY[@]//e/}"
+echo "\${MY_ARRAY[@]//f*/}: ${MY_ARRAY[@]//f*/}"
+# Replace front-end occurrences of string
+echo -e "\nReplace front-end occurrences of string"
+echo "\${MY_ARRAY[@]/#e/XY}: ${MY_ARRAY[@]/#e/XY}"
+echo "\${MY_ARRAY[@]/#f/XY}: ${MY_ARRAY[@]/#f/XY}"
+# Replace back-end occurrences of string
+echo -e "\nReplace back-end occurrences of string"
+echo "\${MY_ARRAY[@]/%e/XY}: ${MY_ARRAY[@]/%e/XY}"
+echo "\${MY_ARRAY[@]/%our/XY}: ${MY_ARRAY[@]/%our/XY}"
+echo "\${MY_ARRAY[@]/%y/XY}: ${MY_ARRAY[@]/%y/XY}"
 ```
 
 In this case we have added lines 21 to 25 to our script. In line 23 we are trying to replace the character “`e`” at the end of the string with “`XY`”. In line 24 we are trying to replace the substring “`our`” at the end of the string with “`XY`”. In line 25 we are trying to replace the character “`y`” at the end of the string with “`XY`”.
@@ -991,13 +947,13 @@ In order to delete a whole array we need to use the built-in command “`unset`�
 Let’s see it in action with an example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: delete_array.sh
- 3 MY_ARRAY=( one two three four five six )
- 4 echo "Content: '${MY_ARRAY[@]}'"
- 5 # Deleting the array
- 6 unset MY_ARRAY
- 7 echo "Content after deletion: '${MY_ARRAY[@]}'"
+#!/usr/bin/env bash
+#Script: delete_array.sh
+MY_ARRAY=( one two three four five six )
+echo "Content: '${MY_ARRAY[@]}'"
+# Deleting the array
+unset MY_ARRAY
+echo "Content after deletion: '${MY_ARRAY[@]}'"
 ```
 
 In the previous script we are declaring an array named “`MY_ARRAY`” on line 3 with 6 elements. Then, on line 6 we are using “`unset`” to remove the contents of the whole array. Last, on line 7, the script shows the content of the array after deleting it.
@@ -1031,15 +987,15 @@ To get the length of the element with index “`<index>`”.
 Let's see how it works with a simple example script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: array_length_ith_element.sh
- 3 MY_ARRAY=( one two three four five six )
- 4 echo "Length of \${MY_ARRAY[0]}: ${#MY_ARRAY[0]}"
- 5 echo "Length of \${MY_ARRAY[1]}: ${#MY_ARRAY[1]}"
- 6 echo "Length of \${MY_ARRAY[2]}: ${#MY_ARRAY[2]}"
- 7 echo "Length of \${MY_ARRAY[3]}: ${#MY_ARRAY[3]}"
- 8 echo "Length of \${MY_ARRAY[4]}: ${#MY_ARRAY[4]}"
- 9 echo "Length of \${MY_ARRAY[5]}: ${#MY_ARRAY[5]}"
+#!/usr/bin/env bash
+#Script: array_length_ith_element.sh
+MY_ARRAY=( one two three four five six )
+echo "Length of \${MY_ARRAY[0]}: ${#MY_ARRAY[0]}"
+echo "Length of \${MY_ARRAY[1]}: ${#MY_ARRAY[1]}"
+echo "Length of \${MY_ARRAY[2]}: ${#MY_ARRAY[2]}"
+echo "Length of \${MY_ARRAY[3]}: ${#MY_ARRAY[3]}"
+echo "Length of \${MY_ARRAY[4]}: ${#MY_ARRAY[4]}"
+echo "Length of \${MY_ARRAY[5]}: ${#MY_ARRAY[5]}"
 ```
 
 In the previous script you will see that on line 3 an array named “`MY_ARRAY`” is declared with six items in it.
@@ -1075,17 +1031,17 @@ In order to copy an array to another variable you need to use the syntax “`(${
 Let's see how it works with a simple example script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: array_copy.sh
- 3 MY_ARRAY=( one two three four five six )
- 4 declare -p MY_ARRAY
- 5 echo -e "\nCopying MY_ARRAY to MY_ARRAY_COPY\n"
- 6 MY_ARRAY_COPY=(${MY_ARRAY[@]})
- 7 MY_ARRAY_COPY+=("seven")
- 8 echo "Original array: "
- 9 declare -p MY_ARRAY
-10 echo "Copy array:"
-11 declare -p MY_ARRAY_COPY
+#!/usr/bin/env bash
+#Script: array_copy.sh
+MY_ARRAY=( one two three four five six )
+declare -p MY_ARRAY
+echo -e "\nCopying MY_ARRAY to MY_ARRAY_COPY\n"
+MY_ARRAY_COPY=(${MY_ARRAY[@]})
+MY_ARRAY_COPY+=("seven")
+echo "Original array: "
+declare -p MY_ARRAY
+echo "Copy array:"
+declare -p MY_ARRAY_COPY
 ```
 
 In the previous script we are declaring an array on line 3 with name “`MY_ARRAY`”, then we copy it to the new variable “`MY_ARRAY_COPY`” on line 6. After copying the array to the new variable, we add a new element on line 7 to the copied array and we show them both to prove that a modification in one of the arrays will not affect the other one.
@@ -1119,14 +1075,14 @@ The values of both “`begin`” and “`amount`” should be whole non-negative
 Let's see how it works with simple example script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: array_slice.sh
- 3 MY_ARRAY=( one two three four five six )
- 4 # Original content
- 5 echo "Content: ${MY_ARRAY[@]}"
- 6 # Slice of three elements
- 7 echo "\${MY_ARRAY[@]:2:3} : ${MY_ARRAY[@]:2:3}"
- 8 echo "\${MY_ARRAY[@]:2:30} : ${MY_ARRAY[@]:2:30}"
+#!/usr/bin/env bash
+#Script: array_slice.sh
+MY_ARRAY=( one two three four five six )
+# Original content
+echo "Content: ${MY_ARRAY[@]}"
+# Slice of three elements
+echo "\${MY_ARRAY[@]:2:3} : ${MY_ARRAY[@]:2:3}"
+echo "\${MY_ARRAY[@]:2:30} : ${MY_ARRAY[@]:2:30}"
 ```
 
 When you run the previous script you will get the following in your terminal window.
@@ -1164,16 +1120,16 @@ Although the previous example is using two different arrays, you can use as many
 Let’s see how it works with a simple example script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: array_concatenate.sh
- 3 # Declare three different arrays
- 4 MY_ARRAY=( one two three four five six )
- 5 MY_ARRAY2=( seven eight nine ten eleven twelve )
- 6 MY_ARRAY3=( thirteen fourteen fifteen )
- 7 # Merge the previous three arrays into one
- 8 MERGED=("${MY_ARRAY[@]}" "${MY_ARRAY2[@]}" "${MY_ARRAY3[@]}")
- 9 # Print the content of the new array
-10 echo "MERGED: ${MERGED[@]}"
+#!/usr/bin/env bash
+#Script: array_concatenate.sh
+# Declare three different arrays
+MY_ARRAY=( one two three four five six )
+MY_ARRAY2=( seven eight nine ten eleven twelve )
+MY_ARRAY3=( thirteen fourteen fifteen )
+# Merge the previous three arrays into one
+MERGED=("${MY_ARRAY[@]}" "${MY_ARRAY2[@]}" "${MY_ARRAY3[@]}")
+# Print the content of the new array
+echo "MERGED: ${MERGED[@]}"
 ```
 
 In the previous script we are declaring three different arrays that contain different elements. Then we are merging them into a single array (called “`MERGED`”) that contains all of the elements.
@@ -1195,9 +1151,9 @@ Once we have seen how to declare arrays and what operations we can do on them, w
 
 The “`for-loop`“ is a kind of loop that is used to perform actions, a priori, to ALL elements of an array. Its syntax is as follows.
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0012-Arrays-and-loops/For-Loop.png" width="450px"/>
-</div>
+<p align="center">
+    <img src="chapters/0012-Arrays-and-loops/images/For-Loop.png" width="450px"/>
+</p>
 
 A priori, this seems to be easy enough, but there are some details that we need to be aware of, which is how the loop is executed. Once the script is running, Bash will execute the loop in two steps:
 1. Expansion of the `<array>` provided
@@ -1206,14 +1162,14 @@ A priori, this seems to be easy enough, but there are some details that we need 
 Let's see how to use this for loop with a simple example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: loop-001.sh
- 3 # Declaration of the array
- 4 declare -a MY_ARRAY=("Item1" "Item2" "Item3")
- 5 # Using the for loop to iterate through the array
- 6 for item in ${MY_ARRAY[@]}; do
- 7     echo "Item: $item"
- 8 done
+#!/usr/bin/env bash
+#Script: loop-001.sh
+# Declaration of the array
+declare -a MY_ARRAY=("Item1" "Item2" "Item3")
+# Using the for loop to iterate through the array
+for item in ${MY_ARRAY[@]}; do
+    echo "Item: $item"
+done
 ```
 
 Right before the loop executes, the expansion will replace the syntax referencing the array, meaning `${MY_ARRAY[@]}`, with the actual content of the array resulting in the following.
@@ -1236,14 +1192,14 @@ Item: Item3
 The array expansion has a limitation. What would happen if we have items in the array that contain spaces. Something like the following script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: loop-002.sh
- 3 # Declaration of the array
- 4 declare -a MY_ARRAY=("Item 1" "Item 2" "Item 3")
- 5 # Using the for loop to iterate through the array
- 6 for item in ${MY_ARRAY[@]}; do
- 7     echo "Item: $item"
- 8 done
+#!/usr/bin/env bash
+#Script: loop-002.sh
+# Declaration of the array
+declare -a MY_ARRAY=("Item 1" "Item 2" "Item 3")
+# Using the for loop to iterate through the array
+for item in ${MY_ARRAY[@]}; do
+    echo "Item: $item"
+done
 ```
 
 Following the same reasoning as before the for loop would be expanded as the following.
@@ -1271,14 +1227,14 @@ How do we tackle this limitation? There are two ways to do it.
 The first one (the easiest one) is to wrap the array with double quotes. Resulting in the following script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: loop-003.sh
- 3 # Declaration of the array
- 4 declare -a MY_ARRAY=("Item 1" "Item 2" "Item 3")
- 5 # Using the for loop to iterate through the array
- 6 for item in "${MY_ARRAY[@]}"; do
- 7     echo "Item: $item"
- 8 done
+#!/usr/bin/env bash
+#Script: loop-003.sh
+# Declaration of the array
+declare -a MY_ARRAY=("Item 1" "Item 2" "Item 3")
+# Using the for loop to iterate through the array
+for item in "${MY_ARRAY[@]}"; do
+    echo "Item: $item"
+done
 ```
 
 Please notice how, on line 6, the array “`MY_ARRAY`” is wrapped between double quotes. Now when you run the previous script you will get the following result.
@@ -1292,19 +1248,19 @@ Item: Item 3
 
 The second way is by using the C-style for loop which we will learn in the next section.
 
-But right before going to the next section I would like to come back to what we discussed back in section “[Get the whole content of the array]({{ site.url }}/bash-in-depth/0012-Arrays-and-loops.html#get-the-whole-content-of-the-array)”. In that section we talked about the two ways to get the contents of the array being “`${MY_ARRAY[*]}`” and “`${MY_ARRAY[@]}`”.
+But right before going to the next section I would like to come back to what we discussed back in section “[Get the whole content of the array](#get-the-whole-content-of-the-array)”. In that section we talked about the two ways to get the contents of the array being “`${MY_ARRAY[*]}`” and “`${MY_ARRAY[@]}`”.
 
 We are already very familiar with the second way (“`${MY_ARRAY[@]}`”). What happens if we use one of the previous scripts and use “`${MY_ARRAY[*]}`” instead of “`${MY_ARRAY[@]}`”?
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: loop-004.sh
- 3 # Declaration of the array
- 4 declare -a MY_ARRAY=("Item 1" "Item 2" "Item 3")
- 5 # Using the for loop to iterate through the array
- 6 for item in "${MY_ARRAY[*]}"; do
- 7     echo "Item: $item"
- 8 done
+#!/usr/bin/env bash
+#Script: loop-004.sh
+# Declaration of the array
+declare -a MY_ARRAY=("Item 1" "Item 2" "Item 3")
+# Using the for loop to iterate through the array
+for item in "${MY_ARRAY[*]}"; do
+    echo "Item: $item"
+done
 ```
 
 As you can see in the previous script the only change that was done is on line 6. When you run the previous script you will get the following result.
@@ -1323,10 +1279,10 @@ Now that we have wrapped this topic we will proceed to the next section to learn
 In this case, we are going to work mainly with indices (integer numbers) and the length of the array.<a id="footnote-2-ref" href="#footnote-2" style="font-size:x-small">[2]</a> This kind of loop has the following structure.
 
 <div style="text-align:center">
-    <img src="/assets/bash-in-depth/0012-Arrays-and-loops/For-Loop-C-Style.png" width="700px"/>
+    <img src="chapters/0012-Arrays-and-loops/images/For-Loop-C-Style.png" width="700px"/>
 </div>
 
-Notice the double parenthesis `((...))`, which allows us to work with integer numbers as we saw previously in [Chapter 6]({{ site.url }}/bash-in-depth/0006-Working-with-Numbers-Integers.html#compound-command-).
+Notice the double parenthesis `((...))`, which allows us to work with integer numbers as we saw previously in [Chapter 6](https://github.com/chemacabeza/my-github-projects/blob/master/bash/0006-Working-with-Numbers-Integers.md#compound-command-).
 
 The way it works is as follows:
 1. “`<init>`” is executed setting the needed variables
@@ -1339,15 +1295,15 @@ The way it works is as follows:
 Let's see how this kind of loop works with a simple example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: loop-005.sh
- 3 # Declaration of an array
- 4 declare -a MY_ARRAY=("Item 1" "Item 2" "Item 3")
- 5 # Loop iterating through elements of the array
- 6 for ((i = 0; i < ${#MY_ARRAY[@]}; i++))
- 7 do
- 8     echo "MY_ARRAY[$i]: ${MY_ARRAY[$i]}"
- 9 done
+#!/usr/bin/env bash
+#Script: loop-005.sh
+# Declaration of an array
+declare -a MY_ARRAY=("Item 1" "Item 2" "Item 3")
+# Loop iterating through elements of the array
+for ((i = 0; i < ${#MY_ARRAY[@]}; i++))
+do
+    echo "MY_ARRAY[$i]: ${MY_ARRAY[$i]}"
+done
 ```
 
 When you run the previous script you will get the following result in the terminal window.
@@ -1365,38 +1321,38 @@ In the following section we will learn about the “`while`” loop.
 
 This kind of loop will execute a list of commands as long as a condition evaluates to true. The shape of this loop is as follows.
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0012-Arrays-and-loops/While-Loop.png" width="550px"/>
-</div>
+<p align="center">
+    <img src="chapters/0012-Arrays-and-loops/images/While-Loop.png" width="550px"/>
+</p>
 
-As you can imagine, the “`condition`” is an expression like we saw in the [Chapter dedicated to IF-ELSE]({{ site.url }}/bash-in-depth/0010-If-statement.html#how-to-test-stuff), so we can use “`test`”, “`[...]`” or “`[[...]]`”. Let’s see some examples in the following script.
+As you can imagine, the “`condition`” is an expression like we saw in the [Chapter dedicated to IF-ELSE](https://github.com/chemacabeza/my-github-projects/blob/master/bash/0010-If-statement.md#how-to-test-stuff), so we can use “`test`”, “`[...]`” or “`[[...]]`”. Let’s see some examples in the following script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: loop-006.sh
- 3 # Init a counter
- 4 i=0
- 5 # Single bracket operator
- 6 while [ $i -lt 4 ]; do
- 7     echo "Line#$i"
- 8     i=$(($i+1))
- 9 done
-10 # Separation and reset counter
-11 echo "----------"
-12 i=0
-13 # test operator
-14 while test $i -lt 5; do
-15     echo "Line#$i"
-16     i=$(($i+1))
-17 done
-18 # Separation and reset counter
-19 echo "----------"
-20 i=0
-21 # Double bracket
-22 while [[ $i < 6 ]]; do
-23     echo "Line#$i"
-24     i=$(($i+1))
-25 done
+#!/usr/bin/env bash
+#Script: loop-006.sh
+# Init a counter
+i=0
+# Single bracket operator
+while [ $i -lt 4 ]; do
+    echo "Line#$i"
+    i=$(($i+1))
+done
+# Separation and reset counter
+echo "----------"
+i=0
+# test operator
+while test $i -lt 5; do
+    echo "Line#$i"
+    i=$(($i+1))
+done
+# Separation and reset counter
+echo "----------"
+i=0
+# Double bracket
+while [[ $i < 6 ]]; do
+    echo "Line#$i"
+    i=$(($i+1))
+done
 ```
 
 When you run the previous script you will see the following output in your terminal window.
@@ -1428,9 +1384,9 @@ In the following section we will learn about the “`until`” loop.
 
 This kind of loop will execute a list of commands as long as a condition evaluates to false. The shape of this loop is as follows.
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0012-Arrays-and-loops/Until-Loop.png" width="550px"/>
-</div>
+<p align="center">
+    <img src="chapters/0012-Arrays-and-loops/images/Until-Loop.png" width="550px"/>
+</p>
 
 This kind of loop is similar to the previous “`while`” loop in the sense that it will execute the commands in its body as long as the condition has a specific value.
 
@@ -1441,31 +1397,31 @@ In this “`until`” loop, the execution of the commands in its body will conti
 Let's see how it works with the following example script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: loop-007.sh
- 3 # Initialize counter
- 4 i=0
- 5 # Using the single bracket operator
- 6 until [ $i -gt 4 ]; do
- 7     echo "Line#$i"
- 8     i=$(($i+1))
- 9 done
-10 # Separator and re-initialize the counter
-11 echo "----------"
-12 i=0
-13 # Using the test operator
-14 until test $i -gt 5; do
-15     echo "Line#$i"
-16     i=$(($i+1))
-17 done
-18 # Separator and re-initialize the counter
-19 echo "----------"
-20 i=0
-21 # Using the double bracket operator
-22 until [[ $i > 6 ]]; do
-23     echo "Line#$i"
-24     i=$(($i+1))
-25 done
+#!/usr/bin/env bash
+#Script: loop-007.sh
+# Initialize counter
+i=0
+# Using the single bracket operator
+until [ $i -gt 4 ]; do
+    echo "Line#$i"
+    i=$(($i+1))
+done
+# Separator and re-initialize the counter
+echo "----------"
+i=0
+# Using the test operator
+until test $i -gt 5; do
+    echo "Line#$i"
+    i=$(($i+1))
+done
+# Separator and re-initialize the counter
+echo "----------"
+i=0
+# Using the double bracket operator
+until [[ $i > 6 ]]; do
+    echo "Line#$i"
+    i=$(($i+1))
+done
 ```
 
 When you run the previous script you will see the following output in the terminal window.
@@ -1509,19 +1465,19 @@ There are times on which we will need to modify the execution of the current loo
 Let's see how it works with the following example script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: loop-008.sh
- 3 # Declaration of array
- 4 declare -a MY_ARRAY=(1 2 3 4 5 6 7 8 9 10)
- 5 # For-loop that iterates through the array
- 6 for item in ${MY_ARRAY[@]}; do
- 7 		# Condition to exit on item with value 5
- 8     if [ $item -eq 5 ]; then
- 9         echo "Exiting loop on item '$item'"
-10         break
-11     fi
-12     echo "Current item: $item"
-13 done
+#!/usr/bin/env bash
+#Script: loop-008.sh
+# Declaration of array
+declare -a MY_ARRAY=(1 2 3 4 5 6 7 8 9 10)
+# For-loop that iterates through the array
+for item in ${MY_ARRAY[@]}; do
+		# Condition to exit on item with value 5
+    if [ $item -eq 5 ]; then
+        echo "Exiting loop on item '$item'"
+        break
+    fi
+    echo "Current item: $item"
+done
 ```
 
 This was a very basic example. In this case, the loop will iterate over the items of “`MY_ARRAY`” until the condition matches, in that case it will break the current loop.
@@ -1542,24 +1498,24 @@ But “`break`” can also be invoked with an argument (“`break n`”, being �
 Let’s see how it works with an example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: loop-009.sh
- 3 # Declaring a couple of arrays
- 4 MY_ARRAY1=( 1 2 3 4 5 6 7 8 9 10 )
- 5 MY_ARRAY2=( a b c e f g h i j k )
- 6 # For-loops iterating through both arrays
- 7 for item1 in ${MY_ARRAY1[@]}; do # loop-1
- 8     echo "Item1: $item1"
- 9     for item2 in ${MY_ARRAY2[@]}; do # loop-2
-10         echo "Item2: $item2"
-11 		   # Exiting both loops when item1 is 5 and item2 is e
-12         if [ $item1 -eq 5 ] && [ $item2 = 'e' ]; then
-13             echo "Exiting both loops on items '$item1' and '$item2'"
-14             break 2 # Exiting both loop-1 and loop-2
-15         fi
-16     done
-17     echo "Ending execution of loop-1"
-18 done
+#!/usr/bin/env bash
+#Script: loop-009.sh
+# Declaring a couple of arrays
+MY_ARRAY1=( 1 2 3 4 5 6 7 8 9 10 )
+MY_ARRAY2=( a b c e f g h i j k )
+# For-loops iterating through both arrays
+for item1 in ${MY_ARRAY1[@]}; do # loop-1
+    echo "Item1: $item1"
+    for item2 in ${MY_ARRAY2[@]}; do # loop-2
+        echo "Item2: $item2"
+		   # Exiting both loops when item1 is 5 and item2 is e
+        if [ $item1 -eq 5 ] && [ $item2 = 'e' ]; then
+            echo "Exiting both loops on items '$item1' and '$item2'"
+            break 2 # Exiting both loop-1 and loop-2
+        fi
+    done
+    echo "Ending execution of loop-1"
+done
 ```
 
 When you execute the previous script you will the following in the terminal window.
@@ -1629,25 +1585,25 @@ If the number specified as an extra parameter is bigger than the number of level
 Let’s see an example to better understand how it works.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: loop-010.sh
- 3 # Declaring a couple of arrays
- 4 MY_ARRAY1=( 1 2 3 4 5 6 7 8 9 10 )
- 5 MY_ARRAY2=( a b c d e f g h i j )
- 6 # For-loop iterating through both arrays
- 7 for item1 in ${MY_ARRAY1[@]}; do # loop-1
- 8     echo "Item1: $item1"
- 9     for item2 in ${MY_ARRAY2[@]}; do # loop-2
-10         echo "Item2: $item2"
-11         # Jumping to the next iteration of inner loop
-12         if [ $item2 = "d" ] && [ $item1 -eq 5 ]; then
-13             echo "Jumping on 'd' and '5'"
-14             continue
-15         fi
-16         echo "End Item2"
-17     done
-18     echo "End Item1"
-19 done
+#!/usr/bin/env bash
+#Script: loop-010.sh
+# Declaring a couple of arrays
+MY_ARRAY1=( 1 2 3 4 5 6 7 8 9 10 )
+MY_ARRAY2=( a b c d e f g h i j )
+# For-loop iterating through both arrays
+for item1 in ${MY_ARRAY1[@]}; do # loop-1
+    echo "Item1: $item1"
+    for item2 in ${MY_ARRAY2[@]}; do # loop-2
+        echo "Item2: $item2"
+        # Jumping to the next iteration of inner loop
+        if [ $item2 = "d" ] && [ $item1 -eq 5 ]; then
+            echo "Jumping on 'd' and '5'"
+            continue
+        fi
+        echo "End Item2"
+    done
+    echo "End Item1"
+done
 ```
 
 When you run the previous script you will get the following result in the terminal window.
@@ -1699,26 +1655,26 @@ End Item1
 Similar to “`break`”, “`continue`” is able to accept an extra parameter which will skip the execution of the loop “`n`” levels above. Let’s see how it works with the following script as an example.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: loop-011.sh
- 3 # Declaring a couple of arrays
- 4 MY_ARRAY1=( 1 2 3 4 5 6 7 8 9 10 )
- 5 MY_ARRAY2=( a b c d e f g h i j )
- 6 # For-loops iterating through the arrays
- 7 for item1 in ${MY_ARRAY1[@]}; do # loop-1
- 8     echo "Item1: $item1"
- 9     for item2 in ${MY_ARRAY2[@]}; do # loop-2
-10         echo "Item2: $item2"
-11         # Continue to next iteration of the outer loop
-12 				# when item1 is 5 and item2 is d
-13         if [ $item2 = "d" ] && [ $item1 -eq 5 ]; then
-14             echo "Jumping on 'd' and '5'"
-15             continue 2 # go to next iteration of loop-1
-16         fi
-17         echo "End Item2"
-18     done
-19     echo "End Item1"
-20 done
+#!/usr/bin/env bash
+#Script: loop-011.sh
+# Declaring a couple of arrays
+MY_ARRAY1=( 1 2 3 4 5 6 7 8 9 10 )
+MY_ARRAY2=( a b c d e f g h i j )
+# For-loops iterating through the arrays
+for item1 in ${MY_ARRAY1[@]}; do # loop-1
+    echo "Item1: $item1"
+    for item2 in ${MY_ARRAY2[@]}; do # loop-2
+        echo "Item2: $item2"
+        # Continue to next iteration of the outer loop
+				# when item1 is 5 and item2 is d
+        if [ $item2 = "d" ] && [ $item1 -eq 5 ]; then
+            echo "Jumping on 'd' and '5'"
+            continue 2 # go to next iteration of loop-1
+        fi
+        echo "End Item2"
+    done
+    echo "End Item1"
+done
 ```
 
 When you run the previous script you get the following result.

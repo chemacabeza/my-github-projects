@@ -52,3 +52,4 @@ This book is also about **thinking like a systems engineer**: understanding not 
 * [Chapter 9: Environment Variables](./0009-Environment-Variables.md)
 * [Chapter 10: If statement](./0010-If-statement.md)
 * [Chapter 11: Case Statement](./0011-Case-Statement.md)
+* [Chapter 12: Arrays and loops](./0012-Arrays-and-loops.md)
