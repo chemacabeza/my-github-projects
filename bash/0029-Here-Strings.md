@@ -1,19 +1,5 @@
----
-layout: chapter
-title: "Chapter 29: Here Strings"
----
-
 # Chapter 29: Here Strings
 
-## Index
-* [Introduction]({{ site.url }}//bash-in-depth/0029-Here-Strings.html#introduction)
-* [Plain String as Here String]({{ site.url }}//bash-in-depth/0029-Here-Strings.html#plain-string-as-here-string)
-* [String With Variable as Here String]({{ site.url }}//bash-in-depth/0029-Here-Strings.html#string-with-variable-as-here-string)
-* [Variable as Here String]({{ site.url }}//bash-in-depth/0029-Here-Strings.html#variable-as-here-string)
-* [Summary]({{ site.url }}//bash-in-depth/0029-Here-Strings.html#summary)
-* [References]({{ site.url }}//bash-in-depth/0029-Here-Strings.html#references)
-
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px">
 
 ## Introduction
 
@@ -52,9 +38,9 @@ This elegant and concise syntax is ideal for scenarios requiring single-line inp
 Let’s explore an example where we use a Here String to pass a plain text string as input to the "`cat`" command.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: herestring-0001.sh
- 3 cat <<< "This is a plain string"
+#!/usr/bin/env bash
+#Script: herestring-0001.sh
+cat <<< "This is a plain string"
 ```
 
 When we execute this script, the output is as follows:
@@ -73,10 +59,10 @@ Here, the "`cat`" command simply echoes back to its standard output whatever con
 Let’s create a new script that incorporates a variable into the input string:
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: herestring-0002.sh
- 3 MY_VAR="Variable Value"
- 4 cat <<< "The content of \$MY_VAR is: ${MY_VAR}"
+#!/usr/bin/env bash
+#Script: herestring-0002.sh
+MY_VAR="Variable Value"
+cat <<< "The content of \$MY_VAR is: ${MY_VAR}"
 ```
 
 When executed, this script generates the following output:
@@ -95,10 +81,10 @@ Here, the "`cat`" command outputs the string with the variable properly expanded
 Finally, let’s explore an example where a variable is provided as input. As you might expect, the result will be the contents of the variable printed to the standard output:
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: herestring-0003.sh
- 3 MY_VARIABLE="Value of variable"
- 4 cat <<< $MY_VARIABLE
+#!/usr/bin/env bash
+#Script: herestring-0003.sh
+MY_VARIABLE="Value of variable"
+cat <<< $MY_VARIABLE
 ```
 
 When this script is executed, it produces the following output:
@@ -129,4 +115,3 @@ By using Here Strings, you can achieve a cleaner and more concise syntax compare
 5. <https://www.geeksforgeeks.org/shell-scripting-here-strings/>
 6. <https://xinux.net/index.php/Here_String>
 
-<!--hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px" -->

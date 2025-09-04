@@ -69,3 +69,4 @@ This book is also about **thinking like a systems engineer**: understanding not 
 * [Chapter 26: Process Substitution](./0026-Process-Substitution.md)
 * [Chapter 27: Aliases](./0027-Aliases.md)
 * [Chapter 28: Here Documents](./0028-Here-Documents.md)
+* [Chapter 29: Here Strings](./0029-Here-Strings.md)
