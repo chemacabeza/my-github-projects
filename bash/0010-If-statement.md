@@ -102,33 +102,33 @@ You might be wondering what are the different arguments for the operators we pro
 In the following examples script we are going to use a few of these operators.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: if_statement.sh
- 3 # Declaring some variables
- 4 FILE_PATH="/etc/profile"
- 5 NUMBER_1=3
- 6 NUMBER_2=4
- 7 EMPTY=
- 8 # Test if the file exists
- 9 if test -e $FILE_PATH; then
-10     echo "'$FILE_PATH' does exist"
-11 fi
-12 # Test if the variable is empty
-13 if test -z $EMPTY; then
-14     echo "The variable EMPTY has nothing"
-15 fi
-16 # Test if the variables are different
-17 if test $FILE_PATH != "different"; then
-18     echo "The values of the strings are different"
-19 fi
-20 # Test to compare numbers
-21 if test 3 -lt 7; then
-22     echo "3 is less than 7"
-23 fi
-24 # Combined test
-25 if test $NUMBER_1 -lt $NUMBER_2 -a $FILE_PATH != "boo"; then
-26     echo "Condition is true"
-27 fi
+#!/usr/bin/env bash
+#Script: if_statement.sh
+# Declaring some variables
+FILE_PATH="/etc/profile"
+NUMBER_1=3
+NUMBER_2=4
+EMPTY=
+# Test if the file exists
+if test -e $FILE_PATH; then
+    echo "'$FILE_PATH' does exist"
+fi
+# Test if the variable is empty
+if test -z $EMPTY; then
+    echo "The variable EMPTY has nothing"
+fi
+# Test if the variables are different
+if test $FILE_PATH != "different"; then
+    echo "The values of the strings are different"
+fi
+# Test to compare numbers
+if test 3 -lt 7; then
+    echo "3 is less than 7"
+fi
+# Combined test
+if test $NUMBER_1 -lt $NUMBER_2 -a $FILE_PATH != "boo"; then
+    echo "Condition is true"
+fi
 ```
 
 When you execute the previous script you will get something like the following in your terminal.
@@ -153,33 +153,33 @@ The “`[`“ command is equivalent to the “`test`” command. This means that
 In the next example we rewrote the script we had in the previous subsection but using the “`[`“ command.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: if_statement_with_square_bracket.sh
- 3 # Declaring some variables
- 4 FILE_PATH="/etc/profile"
- 5 NUMBER_1=3
- 6 NUMBER_2=4
- 7 EMPTY=
- 8 # Test if the file exists
- 9 if [ -e $FILE_PATH ]; then
-10     echo "'$FILE_PATH' does exist"
-11 fi
-12 # Test if the variable is empty
-13 if [ -z $EMPTY ]; then
-14     echo "The variable EMPTY has nothing"
-15 fi
-16 # Test if the variables are different
-17 if [ $FILE_PATH != "different" ]; then
-18     echo "The values of the strings are different"
-19 fi
-20 # Test to compare numbers
-21 if [ 3 -lt 7 ]; then
-22     echo "3 is less than 7"
-23 fi
-24 # Combined test
-25 if [ $NUMBER_1 -lt $NUMBER_2 -a $FILE_PATH != "boo" ]; then
-26     echo "Condition is true"
-27 fi
+#!/usr/bin/env bash
+#Script: if_statement_with_square_bracket.sh
+# Declaring some variables
+FILE_PATH="/etc/profile"
+NUMBER_1=3
+NUMBER_2=4
+EMPTY=
+# Test if the file exists
+if [ -e $FILE_PATH ]; then
+    echo "'$FILE_PATH' does exist"
+fi
+# Test if the variable is empty
+if [ -z $EMPTY ]; then
+    echo "The variable EMPTY has nothing"
+fi
+# Test if the variables are different
+if [ $FILE_PATH != "different" ]; then
+    echo "The values of the strings are different"
+fi
+# Test to compare numbers
+if [ 3 -lt 7 ]; then
+    echo "3 is less than 7"
+fi
+# Combined test
+if [ $NUMBER_1 -lt $NUMBER_2 -a $FILE_PATH != "boo" ]; then
+    echo "Condition is true"
+fi
 ```
 
 When you execute the previous script you will see that it generates the same result as “`if_statement.sh`”.
@@ -282,33 +282,33 @@ The following table will give you a high-level overview of the differences betwe
 Let’s see how the script we used in the last two sections would look like using the “`[[...]]`” operator.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: if_statement_with_double_square_bracket.sh
- 3 # Declaring some variables
- 4 FILE_PATH="/etc/profile"
- 5 NUMBER_1=3
- 6 NUMBER_2=4
- 7 EMPTY=
- 8 # Test if the file exists
- 9 if [[ -e $FILE_PATH ]]; then
-10     echo "'$FILE_PATH' does exist"
-11 fi
-12 # Test if the variable is empty
-13 if [[ -z $EMPTY ]]; then
-14     echo "The variable EMPTY has nothing"
-15 fi
-16 # Test if the variables are different
-17 if [[ $FILE_PATH != "different" ]]; then
-18     echo "The values of the strings are different"
-19 fi
-20 # Test to compare numbers
-21 if [[ 3 -lt 7 ]]; then
-22     echo "3 is less than 7"
-23 fi
-24 # Combined test
-25 if [[ $NUMBER_1 -lt $NUMBER_2 && $FILE_PATH != "boo" ]]; then
-26     echo "Condition is true"
-27 fi
+#!/usr/bin/env bash
+#Script: if_statement_with_double_square_bracket.sh
+# Declaring some variables
+FILE_PATH="/etc/profile"
+NUMBER_1=3
+NUMBER_2=4
+EMPTY=
+# Test if the file exists
+if [[ -e $FILE_PATH ]]; then
+    echo "'$FILE_PATH' does exist"
+fi
+# Test if the variable is empty
+if [[ -z $EMPTY ]]; then
+    echo "The variable EMPTY has nothing"
+fi
+# Test if the variables are different
+if [[ $FILE_PATH != "different" ]]; then
+    echo "The values of the strings are different"
+fi
+# Test to compare numbers
+if [[ 3 -lt 7 ]]; then
+    echo "3 is less than 7"
+fi
+# Combined test
+if [[ $NUMBER_1 -lt $NUMBER_2 && $FILE_PATH != "boo" ]]; then
+    echo "Condition is true"
+fi
 ```
 
 Notice that the main changes we did in the script were replacing “`[...]`” with “`[[...]]`” and replacing the “`-a`” operator with “`&&`”. When you execute the previous script you get the same result as in the two previous sections.
@@ -335,37 +335,37 @@ This means that we can use the result of the “`((...))`” command in conditio
 In the following script we see a few examples with the “`((...))`” command.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: if_statement_double_parentheses.sh
- 3 # Declaring some variables
- 4 FILE_PATH="/etc/profile"
- 5 NUMBER_1=3
- 6 NUMBER_2=4
- 7 # Combined test
- 8 if (( $NUMBER_1 < $NUMBER_2 )) && [[ $FILE_PATH != "boo" ]]; then
- 9     echo "Condition is true"
-10 fi
-11 # Test less than
-12 if (( 3 < 7 )); then
-13     echo "3 is less than 7"
-14 fi
-15 # Test less than or equal
-16 if (( 7 <= 7 )); then
-17     echo "7 is less than or equal to 7"
-18 fi
-19 # Test equality
-20 if (( 7 == 7 )); then
-21     echo "7 is equal to 7"
-22 fi
-23 # Test inequality
-24 if (( a = 3, 8 != 7 && 7 < 10 )); then
-25     echo "8 is not equal to 7 and 7 is less than 10"
-26 fi
-27 # Remove a file that does not exist
-28 rm /tmp/does_not_exist
-29 echo "Result: $?"
-30 (( b = 4 ))
-31 echo "Result: $?"
+#!/usr/bin/env bash
+#Script: if_statement_double_parentheses.sh
+# Declaring some variables
+FILE_PATH="/etc/profile"
+NUMBER_1=3
+NUMBER_2=4
+# Combined test
+if (( $NUMBER_1 < $NUMBER_2 )) && [[ $FILE_PATH != "boo" ]]; then
+    echo "Condition is true"
+fi
+# Test less than
+if (( 3 < 7 )); then
+    echo "3 is less than 7"
+fi
+# Test less than or equal
+if (( 7 <= 7 )); then
+    echo "7 is less than or equal to 7"
+fi
+# Test equality
+if (( 7 == 7 )); then
+    echo "7 is equal to 7"
+fi
+# Test inequality
+if (( a = 3, 8 != 7 && 7 < 10 )); then
+    echo "8 is not equal to 7 and 7 is less than 10"
+fi
+# Remove a file that does not exist
+rm /tmp/does_not_exist
+echo "Result: $?"
+(( b = 4 ))
+echo "Result: $?"
 ```
 
 In the last script you can see several uses of the compound command “`((...))`” by itself (lines 12, 16, 20 and 30), in combination with another operator (line 9) and using several expressions in the same environment (line 29).
