@@ -1,19 +1,4 @@
----
-layout: chapter
-title: "Chapter 19: True, False and Null Commands"
----
-
 # Chapter 19: True, False and Null Commands
-
-## Index
-* [The `true` command]({{ site.url }}//bash-in-depth/0019-True-False-and-Null-Commands.html#the-true-command)
-* [The Null command]({{ site.url }}//bash-in-depth/0019-True-False-and-Null-Commands.html#the-null-command)
-* [Null command vs `true` command]({{ site.url }}//bash-in-depth/0019-True-False-and-Null-Commands.html#null-command-vs-true-command)
-* [The `false` command]({{ site.url }}//bash-in-depth/0019-True-False-and-Null-Commands.html#the-false-command)
-* [Summary]({{ site.url }}//bash-in-depth/0019-True-False-and-Null-Commands.html#summary)
-* [References]({{ site.url }}//bash-in-depth/0019-True-False-and-Null-Commands.html#references)
-
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px">
 
 In Bash, the "`true`", "`false`", and null commands play essential roles in scripting by providing fundamental control over conditional logic and flow.
 
@@ -42,11 +27,11 @@ One of the use cases for the "`true`" command is **Infinite Loops**. In a "`whil
 The following example script shows an infinite loop,
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: true-0001.sh
- 3 while true; do
- 4     echo "This loop will run forever until it's interrupted manually with Control+C"
- 5 done
+#!/usr/bin/env bash
+#Script: true-0001.sh
+while true; do
+    echo "This loop will run forever until it's interrupted manually with Control+C"
+done
 ```
 
 If you run the previous script the you will see the following in your terminal window.
@@ -76,12 +61,12 @@ Another use case for the "`true`" command is being a **Placeholder in Conditions
 Let's see with use case with the following example script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: true-0002.sh
- 3 if true; then
- 4   # Placeholder for future logic
- 5   echo "This IF statement will always execute"
- 6 fi
+#!/usr/bin/env bash
+#Script: true-0002.sh
+if true; then
+  # Placeholder for future logic
+  echo "This IF statement will always execute"
+fi
 ```
 
 When you execute the previous script you will the following result in your terminal window.
@@ -100,12 +85,12 @@ Another use case for the "`true`" command is **Ensuring a Command Always Returns
 Let's see with a real example with the following example script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: true-0003.sh
- 3 rm file_that_does_not_exist
- 4 echo "Result: $?"
- 5 rm file_that_does_not_exist || true
- 6 echo "Result: $?"
+#!/usr/bin/env bash
+#Script: true-0003.sh
+rm file_that_does_not_exist
+echo "Result: $?"
+rm file_that_does_not_exist || true
+echo "Result: $?"
 ```
 
 When you run the previous script in your terminal window you will see the following result in the screen.
@@ -136,12 +121,12 @@ The syntax of the Null command is as follows.
 Beyond serving as a command that simply does nothing and succeeds, the Null command ("`:`") can also be used interchangeably with the "`true`" command. To demonstrate this, we can modify a previous script ("`true-0003.sh`") by replacing "`true`" with "`:`" and observe that the script's behavior remains identical. This flexibility makes the Null command a practical substitute in cases where we require a no-op that ensures successful execution.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: null-0001.sh
- 3 rm file_that_does_not_exist
- 4 echo "Result: $?"
- 5 rm file_that_does_not_exist || :
- 6 echo "Result: $?"
+#!/usr/bin/env bash
+#Script: null-0001.sh
+rm file_that_does_not_exist
+echo "Result: $?"
+rm file_that_does_not_exist || :
+echo "Result: $?"
 ```
 
 When you run the previous script you will get exactly the same result as the script "`true-0003.sh`".
@@ -180,49 +165,49 @@ There are some common scenario for the "`false`" command which are as follows:
 Let's see the following example script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: false-0001.sh
- 3 if false; then
- 4     echo "This line will NOT be printed"
- 5 else
- 6     echo "This is the line that will be printed"
- 7 fi
+#!/usr/bin/env bash
+#Script: false-0001.sh
+if false; then
+    echo "This line will NOT be printed"
+else
+    echo "This is the line that will be printed"
+fi
 ```
 
 With the "`false`" command you can simulate failures. Let's see it with the following example script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: false-0002.sh
- 3 process_files() {
- 4     echo "Starting file processing..."
- 5     # Simulate a processing step
- 6     echo "Processing file1.txt..."
- 7     sleep 1
- 8     # Simulate a failure condition
- 9     false
-10     # Check if the last command failed
-11     if [ $? -ne 0 ]; then
-12         echo "Error: Failed to process file1.txt" >&2
-13         return 1
-14     fi
-15     echo "Processing file2.txt..."
-16     sleep 1
-17     echo "File processing complete."
-18     return 0
-19 }
-20 # Error-handling routine
-21 main() {
-22     if ! process_files; then
-23         echo "An error occurred during file processing. Triggering error handler..."
-24         # Trigger cleanup, alert, or other recovery actions here
-25         echo "Error handler executed."
-26     else
-27         echo "All files processed successfully!"
-28     fi
-29 }
-30 # Execute main function
-31 main
+#!/usr/bin/env bash
+#Script: false-0002.sh
+process_files() {
+    echo "Starting file processing..."
+    # Simulate a processing step
+    echo "Processing file1.txt..."
+    sleep 1
+    # Simulate a failure condition
+    false
+    # Check if the last command failed
+    if [ $? -ne 0 ]; then
+        echo "Error: Failed to process file1.txt" >&2
+        return 1
+    fi
+    echo "Processing file2.txt..."
+    sleep 1
+    echo "File processing complete."
+    return 0
+}
+# Error-handling routine
+main() {
+    if ! process_files; then
+        echo "An error occurred during file processing. Triggering error handler..."
+        # Trigger cleanup, alert, or other recovery actions here
+        echo "Error handler executed."
+    else
+        echo "All files processed successfully!"
+    fi
+}
+# Execute main function
+main
 ```
 
 In the previous script we are creating 2 functions named "`main`" and "`process_files`". On line 31 the "`main`" function is called which will call the "`process_files`" function on line 22. After that we will simulate the failure on line 9 of the "`process_files`" function. When you execute the previous script you will have the following output in your terminal window.
@@ -239,11 +224,11 @@ Error handler executed.
 With the "`false`" command you can create infinite loops using the "`until`" loop.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: false-0003.sh
- 3 until false; do
- 4     echo "This loop will run forever until it's interrupted manually with Control+C"
- 5 done
+#!/usr/bin/env bash
+#Script: false-0003.sh
+until false; do
+    echo "This loop will run forever until it's interrupted manually with Control+C"
+done
 ```
 
 When you execute the previous script it will generate the same output as the script "`true-0001.sh`".

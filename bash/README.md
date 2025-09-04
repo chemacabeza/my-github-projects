@@ -59,3 +59,4 @@ This book is also about **thinking like a systems engineer**: understanding not 
 * [Chapter 16: Navigation and file folder related commands](./0016-Navigation-and-file-folder-related-commands.md)
 * [Chapter 17: Select Statement](./0017-Select-Statement.md)
 * [Chapter 18: Regular Expressions and Globbing](./0018-Regular-Expressions-and-Globbing.md)
+* [Chapter 19: True, False and Null Commands](./0019-True-False-and-Null-Commands.md)
