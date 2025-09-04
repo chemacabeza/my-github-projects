@@ -1,21 +1,4 @@
----
-layout: chapter
-title: "Chapter 11: case-esac statement"
----
-
 # Chapter 11: `case-esac` statement
-
-## Index
-* [Syntax for `case-esac`]({{ site.url }}//bash-in-depth/0011-Case-Statement.html#syntax-for-case-esac)
-* [How does it work?]({{ site.url }}//bash-in-depth/0011-Case-Statement.html#how-does-it-work)
-* [Case patterns]({{ site.url }}//bash-in-depth/0011-Case-Statement.html#case-patterns)
-    * [Literal Matching]({{ site.url }}//bash-in-depth/0011-Case-Statement.html#literal-matching)
-    * [Wildcard Matching]({{ site.url }}//bash-in-depth/0011-Case-Statement.html#wildcard-matching)
-    * [Regular Expression Matching]({{ site.url }}//bash-in-depth/0011-Case-Statement.html#regular-expression-matching)
-* [Summary]({{ site.url }}//bash-in-depth/0011-Case-Statement.html#summary)
-* [References]({{ site.url }}//bash-in-depth/0011-Case-Statement.html#references)
-
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px">
 
 In Bash scripting, the “`case-esac`” statement is a powerful and flexible construct that facilitates the implementation of conditional branching and decision-making logic. It's particularly useful when you need to evaluate a variable or expression against multiple possible values and execute different code blocks based on the matching conditions. Think of the “`case-esac`” statement as a versatile alternative to a series of “`if-elif-else`” statements, designed to simplify and enhance the readability of your scripts.
 
@@ -71,32 +54,32 @@ As we saw in the previous section the “`case-esac`” statement allows to have
 The first type is **literal matching** where the variable of the “case-esac” statement will be matched against **exact text strings** like “`pattern1`” or “`Burkina Faso`”. Let’s see an example for literal matching with the following script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: case_literal_matching.sh
- 3 # Asking the user to enter a country name
- 4 echo -n "Enter the name of a country: "
- 5 read COUNTRY
- 6 # Printing the result
- 7 echo -n "The official language of $COUNTRY is "
- 8 # Selecting the language of the country
- 9 case $COUNTRY in
-10   Lithuania)
-11     echo -n "Lithuanian"
-12     ;;
-13   Romania | Moldova)
-14     echo -n "Romanian"
-15     ;;
-16   Italy | "San Marino" | Switzerland | "Vatican City")
-17     echo -n "Italian"
-18     ;;
-19   "Burkina Faso")
-20 		echo -n "Bissa / Dyula / Fula"
-21 		;;
-22   *)
-23     echo -n "unknown"
-24     ;;
-25 esac
-26 echo ""
+#!/usr/bin/env bash
+#Script: case_literal_matching.sh
+# Asking the user to enter a country name
+echo -n "Enter the name of a country: "
+read COUNTRY
+# Printing the result
+echo -n "The official language of $COUNTRY is "
+# Selecting the language of the country
+case $COUNTRY in
+  Lithuania)
+    echo -n "Lithuanian"
+    ;;
+  Romania | Moldova)
+    echo -n "Romanian"
+    ;;
+  Italy | "San Marino" | Switzerland | "Vatican City")
+    echo -n "Italian"
+    ;;
+  "Burkina Faso")
+		echo -n "Bissa / Dyula / Fula"
+		;;
+  *)
+    echo -n "unknown"
+    ;;
+esac
+echo ""
 ```
 
 What the previous script is doing is to first ask the user to introduce a country, then it reads the country storing it in the variable “`COUNTRY`”. It will then use the variable in the “`case-esac`” statement to determine what is the language spoken in the given country which will be printed to the screen. This is what happens when you run the script and provide “`Romania`” as the country.
@@ -118,29 +101,29 @@ The second type is **wildcard matching** where the variable of the “`case-esac
 Let’s see how it works with the following script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: case_wildcard_matching.sh
- 3 # Asking the user to enter the name of a file
- 4 echo -n "Enter the name of a file: "
- 5 read FILENAME
- 6 # Printing the result
- 7 echo -n "The file $FILENAME is a "
- 8 # Selecting the right type
- 9 case $FILENAME in
-10     *.txt)
-11 	echo -n "Text file"
-12 	;;
-13     *.jpg | *.png)
-14 	echo -n "Image file"
-15 	;;
-16     *.mp3)
-17 	echo -n "Audio file"
-18 	;;
-19     *)
-20 	echo -n "Unknown file"
-21 	;;
-22 esac
-23 echo ""
+#!/usr/bin/env bash
+#Script: case_wildcard_matching.sh
+# Asking the user to enter the name of a file
+echo -n "Enter the name of a file: "
+read FILENAME
+# Printing the result
+echo -n "The file $FILENAME is a "
+# Selecting the right type
+case $FILENAME in
+    *.txt)
+	echo -n "Text file"
+	;;
+    *.jpg | *.png)
+	echo -n "Image file"
+	;;
+    *.mp3)
+	echo -n "Audio file"
+	;;
+    *)
+	echo -n "Unknown file"
+	;;
+esac
+echo ""
 ```
 
 This script is very similar to the previous one. It first asks the user for some input, then it runs the input through the different options inside the “`case-esac`” statement and then it provides a result. This is what happens when you run the script and provide “`description.txt`” as input.
@@ -154,33 +137,33 @@ The file description.txt is a Text file
 The third type is using **character classes** where the variable of the “`case-esac`” statement will be matched against strings that represent groups of characters. For example “`[[:lower:]]`” would represent lower case letters<a id="footnote-2-ref" href="#footnote-2" style="font-size:x-small">[2]</a>. Let’s see how it works with the following script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: case_class_matching.sh
- 3 # Asking the user for input
- 4 echo -n "Enter a single character: "
- 5 read INPUT_CHAR
- 6 # Making sure than only one character is entered
- 7 if [[ ${#INPUT_CHAR} > 1 ]]; then
- 8     echo "You entered more than 1 character";
- 9     exit
-10 fi
-11 # Printing the result
-12 echo -n "The character '$INPUT_CHAR' "
-13 # Selecting the correct input
-14 case $INPUT_CHAR in
-15     [[:lower:]])
-16 	echo "is a lowercase letter"
-17 	;;
-18     [[:upper:]])
-19 	echo "is an uppercase letter"
-20 	;;
-21     [[:digit:]])
-22 	echo "is a digit"
-23 	;;
-24     *)
-25 	echo "is unknown"
-26 	;;
-27 esac
+#!/usr/bin/env bash
+#Script: case_class_matching.sh
+# Asking the user for input
+echo -n "Enter a single character: "
+read INPUT_CHAR
+# Making sure than only one character is entered
+if [[ ${#INPUT_CHAR} > 1 ]]; then
+    echo "You entered more than 1 character";
+    exit
+fi
+# Printing the result
+echo -n "The character '$INPUT_CHAR' "
+# Selecting the correct input
+case $INPUT_CHAR in
+    [[:lower:]])
+	echo "is a lowercase letter"
+	;;
+    [[:upper:]])
+	echo "is an uppercase letter"
+	;;
+    [[:digit:]])
+	echo "is a digit"
+	;;
+    *)
+	echo "is unknown"
+	;;
+esac
 ```
 
 In the previous script we ask the user to introduce a single character then, in lines 7 to 10, the script validates that only a single character has been introduced. After the validation succeeds it checks what kind of character has been introduced by matching it against the different class characters sequences.
@@ -219,41 +202,41 @@ Please notice that the regular expressions are stored in different variables tha
 The example script is as follows.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: case_pattern_matching.sh
- 3 # Regular expression pattern for basic email validation
- 4 email_pattern="[A-Za-z0-9.+-]*@[A-Za-z0-9.-]*.[A-Za-z]*"
- 5 # Regular expression pattern that matches
- 6 # strings starting with number
- 7 starts_with_number_pattern="[0-9]*"
- 8 # Regular expression pattern that matches
- 9 # strings starting with a letter
-10 starts_with_letter_pattern="[a-zA-Z]*"
-11 # Regular expression pattern that matches
-12 # strings starting with a special character
-13 starts_with_special_character="[^0-9a-zA-Z]*"
-14 # Asking the user for input
-15 read -p "Enter a random string: " STRING
-16 # Printing the beginning of the result
-17 echo -n "The string '$STRING' "
-18 # Selecting the end of the result
-19 case $STRING in
-20     $email_pattern)
-21         echo "matches the email pattern"
-22         ;;
-23     $starts_with_number_pattern)
-24         echo "starts with a number"
-25         ;;
-26     $starts_with_letter_pattern)
-27         echo "starts with a letter"
-28         ;;
-29     $starts_with_special_character)
-30         echo "starts with a special character"
-31         ;;
-32     *)
-33         echo "does not match any pattern"
-34         ;;
-35 esac
+#!/usr/bin/env bash
+#Script: case_pattern_matching.sh
+# Regular expression pattern for basic email validation
+email_pattern="[A-Za-z0-9.+-]*@[A-Za-z0-9.-]*.[A-Za-z]*"
+# Regular expression pattern that matches
+# strings starting with number
+starts_with_number_pattern="[0-9]*"
+# Regular expression pattern that matches
+# strings starting with a letter
+starts_with_letter_pattern="[a-zA-Z]*"
+# Regular expression pattern that matches
+# strings starting with a special character
+starts_with_special_character="[^0-9a-zA-Z]*"
+# Asking the user for input
+read -p "Enter a random string: " STRING
+# Printing the beginning of the result
+echo -n "The string '$STRING' "
+# Selecting the end of the result
+case $STRING in
+    $email_pattern)
+        echo "matches the email pattern"
+        ;;
+    $starts_with_number_pattern)
+        echo "starts with a number"
+        ;;
+    $starts_with_letter_pattern)
+        echo "starts with a letter"
+        ;;
+    $starts_with_special_character)
+        echo "starts with a special character"
+        ;;
+    *)
+        echo "does not match any pattern"
+        ;;
+esac
 ```
 
 In the previous script you see that we defined 4 different regular expressions.
