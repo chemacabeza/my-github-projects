@@ -1,19 +1,4 @@
----
-layout: chapter
-title: "Chapter 22: Processes"
----
-
 # Chapter 22: Processes
-
-## Index
-* [What is a Process?]({{ site.url }}//bash-in-depth/0022-Processes.html#what-is-a-process)
-* [File Descriptors and their relationship with Processes]({{ site.url }}//bash-in-depth/0022-Processes.html#file-descriptors-and-their-relationship-with-processes)
-* [The "`exec`" Command]({{ site.url }}//bash-in-depth/0022-Processes.html#the-exec-command)
-    * [What does "`exec`" do?]({{ site.url }}//bash-in-depth/0022-Processes.html#what-does-exec-do)
-* [Summary]({{ site.url }}//bash-in-depth/0022-Processes.html#summary)
-* [References]({{ site.url }}//bash-in-depth/0022-Processes.html#references)
-
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px">
 
 ## What is a Process?
 
@@ -37,9 +22,9 @@ These default file descriptors can be expanded or modified based on the needs of
 
 A graphical representation of a process could be something like the following.
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0022-Processes/Process-Graphical-Representation.png"/>
-</div>
+<p align="center">
+    <img src="chapters/0022-Processes/images/Process-Graphical-Representation.png"/>
+</p>
 
 Why dive into the details of processes and file descriptors? Because understanding these foundational elements helps you see why combining commands works seamlessly in Bash. Grasping these "little details" gives you insight into the mechanics behind command interactions, making your work more intuitive and efficient.
 
@@ -69,20 +54,20 @@ The "`exec`" command **replaces** the current shell process with a new command p
 Consider the following script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: processes-0001.sh
- 3 echo "Before exec"
- 4 ls -l
- 5 echo "After exec"
+#!/usr/bin/env bash
+#Script: processes-0001.sh
+echo "Before exec"
+ls -l
+echo "After exec"
 ```
 
 In the script "`processes-0001.sh`", you’ll notice that it calls external commands and programs. Once each of these commands completes, control automatically returns to the main script, resuming execution from where it left off.
 
 The following diagram is a graphical representation of what is happening in the previous script.
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0022-Processes/Script-without-exec.png"/>
-</div>
+<p align="center">
+    <img src="chapters/0022-Processes/images/Script-without-exec.png"/>
+</p>
 
 Here you can see that inside the script “`processes-0001.sh`” external commands/programs are called. When the execution of these commands/programs are done, the execution comes back to the main script.
 
@@ -100,11 +85,11 @@ After exec
 Now let's consider the following script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: processes-0002.sh
- 3 echo "Before exec"
- 4 exec ls -l
- 5 echo "After exec" # WILL NOT BE EXECUTED
+#!/usr/bin/env bash
+#Script: processes-0002.sh
+echo "Before exec"
+exec ls -l
+echo "After exec" # WILL NOT BE EXECUTED
 ```
 
 This script closely resembles the previous one, but it adds the "`exec`" command before calling "`ls -l`".
@@ -114,9 +99,9 @@ As before, the script begins by printing "`Before exec`" to the screen. However,
 We can imagine this replacement visually as if the original script hands over control entirely to the ls command.
 
 
-<div style="text-align:center">
-    <img src="/assets/bash-in-depth/0022-Processes/Script-with-exec.png"/>
-</div>
+<p align="center">
+    <img src="chapters/0022-Processes/images/Script-with-exec.png"/>
+</p>
 
 This illustration shows that when the "`exec`" command is executed, the current script ("`processes-0002.sh`") halts in favor of running the "`ls -l`" command. Execution does not return to the script afterward, as "`exec`" has fully replaced it with "`ls -l`".
 
@@ -151,7 +136,4 @@ Finally, we looked into the "`exec`" command, a powerful tool that can invoke ot
 3. <https://www.baeldung.com/linux/exec-command-in-shell-script>
 4. <https://www.computerhope.com/unix/bash/exec.htm>
 5. <https://www.geeksforgeeks.org/formation-of-process-from-program/>
-
-
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px">
 

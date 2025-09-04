@@ -62,3 +62,4 @@ This book is also about **thinking like a systems engineer**: understanding not 
 * [Chapter 19: True, False and Null Commands](./0019-True-False-and-Null-Commands.md)
 * [Chapter 20: Brace Expansion](./0020-Brace-Expansion.md)
 * [Chapter 21: Block Statements](./0021-Block-Statements.md)
+* [Chapter 22: Processes](./0022-Processes.md)
