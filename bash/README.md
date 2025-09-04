@@ -68,3 +68,4 @@ This book is also about **thinking like a systems engineer**: understanding not 
 * [Chapter 25: Jobs](./0025-Jobs.md)
 * [Chapter 26: Process Substitution](./0026-Process-Substitution.md)
 * [Chapter 27: Aliases](./0027-Aliases.md)
+* [Chapter 28: Here Documents](./0028-Here-Documents.md)
