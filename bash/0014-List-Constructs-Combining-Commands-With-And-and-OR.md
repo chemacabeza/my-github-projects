@@ -1,18 +1,4 @@
----
-layout: chapter
-title: "Chapter 14: List constructs - Combining commands with && and ||"
----
-
 # Chapter 14: List constructs - Combining commands with `&&` and `||`
-
-## Index
-* [Operator && (Double Ampersand)]({{ site.url }}//bash-in-depth/0014-List-Constructs-Combining-Commands-With-And-and-OR.html#operator--double-ampersand)
-* [Operator `||` (Double Vertical Bar)]({{ site.url }}//bash-in-depth/0014-List-Constructs-Combining-Commands-With-And-and-OR.html#operator--double-vertical-bar)
-* [Combining operators “`&&`” and “`||`” with commands]({{ site.url }}//bash-in-depth/0014-List-Constructs-Combining-Commands-With-And-and-OR.html#combining-operators--and--with-commands)
-* [Summary]({{ site.url }}//bash-in-depth/0014-List-Constructs-Combining-Commands-With-And-and-OR.html#summary)
-* [References]({{ site.url }}//bash-in-depth/0014-List-Constructs-Combining-Commands-With-And-and-OR.html#references)
-
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px;">
 
 Up until now we have been executing commands one at a time. Did you know that you can combine them using the “`&&`” and “`||`” operators?
 
@@ -40,22 +26,22 @@ And the way success is calculated is as follows.
 To illustrate the previous table we are going to write the following example script.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: double-ampersand-cases.sh
- 3 # Succeeds and Succeeds
- 4 echo -n "case 1" && echo " succeeds"
- 5 echo "Result case 1: $?"
- 6 # Succeeds and Fails
- 7 echo "case 2" && rm does_not_exist
- 8 echo "Result case 2: $?"
- 9 # Fails and Succeeds
-10 rm does_not_exist && echo "case 3, not executed"
-11 echo "Result case 3: $?"
-12 # Fails and Fails
-13 rm does_not_exist && rm another_file_that_does_not_exist
-14 echo "Result case 4: $?"
-15 # End
-16 echo "End of program"
+#!/usr/bin/env bash
+#Script: double-ampersand-cases.sh
+# Succeeds and Succeeds
+echo -n "case 1" && echo " succeeds"
+echo "Result case 1: $?"
+# Succeeds and Fails
+echo "case 2" && rm does_not_exist
+echo "Result case 2: $?"
+# Fails and Succeeds
+rm does_not_exist && echo "case 3, not executed"
+echo "Result case 3: $?"
+# Fails and Fails
+rm does_not_exist && rm another_file_that_does_not_exist
+echo "Result case 4: $?"
+# End
+echo "End of program"
 ```
 
 When the previous script is executed the following output will appear in the terminal window.
@@ -106,22 +92,22 @@ And the way success is calculated is as follows.
 In a similar way as we did with the operator “`&&`”, we are going to write a small script to illustrate the previous table.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: double-vertical-bar-cases.sh
- 3 # Succeeds and Succeeds
- 4 echo -n "case 1" || echo " succeeds"
- 5 echo "Result case 1: $?"
- 6 # Succeeds and Fails
- 7 echo "case 2" || rm does_not_exist
- 8 echo "Result case 2: $?"
- 9 # Fails and Succeeds
-10 rm does_not_exist || echo "case 3, not executed"
-11 echo "Result case 3: $?"
-12 # Fails and Fails
-13 rm does_not_exist || rm another_file_that_does_not_exist
-14 echo "Result case 4: $?"
-15 # End
-16 echo "End of program"
+#!/usr/bin/env bash
+#Script: double-vertical-bar-cases.sh
+# Succeeds and Succeeds
+echo -n "case 1" || echo " succeeds"
+echo "Result case 1: $?"
+# Succeeds and Fails
+echo "case 2" || rm does_not_exist
+echo "Result case 2: $?"
+# Fails and Succeeds
+rm does_not_exist || echo "case 3, not executed"
+echo "Result case 3: $?"
+# Fails and Fails
+rm does_not_exist || rm another_file_that_does_not_exist
+echo "Result case 4: $?"
+# End
+echo "End of program"
 ```
 
 When the previous script is run, you will see the following in the terminal window.
@@ -175,13 +161,13 @@ Just to make it very clear, **the operator “`&&`” will always be evaluated b
 We are going to write a simple Bash script to play with both operators.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: test-or-and.sh
- 3 #       EXECUTED                  NOT EXECUTED                  EXECUTED
- 4 # vvvvvvvvvvvvvvvvvvv      vvvvvvvvvvvvvvvvvvvvvvvv    vvvvvvvvvvvvvvvvvvvvvvvvv
- 5 echo -n "Is executed, " || echo "It's not executed" && echo "It's also executed"
- 6 echo "Result: $?"
- 7 echo "End of program"
+#!/usr/bin/env bash
+#Script: test-or-and.sh
+#       EXECUTED                  NOT EXECUTED                  EXECUTED
+# vvvvvvvvvvvvvvvvvvv      vvvvvvvvvvvvvvvvvvvvvvvv    vvvvvvvvvvvvvvvvvvvvvvvvv
+echo -n "Is executed, " || echo "It's not executed" && echo "It's also executed"
+echo "Result: $?"
+echo "End of program"
 ```
 
 When the previous script is executed the following will appear in the terminal window.
@@ -219,7 +205,4 @@ In this chapter we learnt:
 2. <https://unix.stackexchange.com/questions/24684/confusing-use-of-and-operators/24685#24685>
 3. <https://www.gnu.org/software/bash/manual/bash.html>
 4. <https://www.linuxtopia.org/online_books/advanced_bash_scripting_guide/ops.html>
-
-
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px;">
 
