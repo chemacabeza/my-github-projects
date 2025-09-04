@@ -74,4 +74,5 @@ This will start Fooocus and expose the web interface on:
 │   └── sdxlYamersRealistic5_v5Rundiffusion.safetensors
 ├── outputs
 └── run.sh # A Bash script that rebuilds Docker containers without cache and then starts them using Docker Compose.
+└── start.sh # Once you have all the LoRAs and models installed you can use this script to start the docker container 
 ```
