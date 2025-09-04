@@ -7,11 +7,11 @@ If you want to execute a command without saving the result, you can just add the
 In the following example we are using the command “`ls`” to list the contents of the current folder.
 
 ```bash
- 1 #!/usr/bin/env bash
- 2 #Script: execution-of-commands.sh
- 3 echo "Executing ls command"
- 4 ls    # Lists the content of the current folder
- 5 echo "Done executing ls command"
+#!/usr/bin/env bash
+#Script: execution-of-commands.sh
+echo "Executing ls command"
+ls    # Lists the content of the current folder
+echo "Done executing ls command"
 ```
 
 If we wanted to store the result of the command in a variable then we need to use Command Substitution. This way of executing commands **will create a child process**<a id="footnote-1-ref" href="#footnote-1" style="font-size:x-small">[1]</a> that will execute the command. There are two ways of Command Substitution that we will explore in the next section.
