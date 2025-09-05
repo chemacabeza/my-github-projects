@@ -54,7 +54,7 @@ This will start Fooocus and expose the web interface on:
 ### 🗂️ Project Structure
 
 ```bash
-├── cache
+── cache
 │   └── huggingface
 │       └── hub
 │           └── version.txt
@@ -73,6 +73,7 @@ This will start Fooocus and expose the web interface on:
 │   ├── sdXL_v10VAEFix.safetensors
 │   └── sdxlYamersRealistic5_v5Rundiffusion.safetensors
 ├── outputs
-└── run.sh # A Bash script that rebuilds Docker containers without cache and then starts them using Docker Compose.
-└── start.sh # Once you have all the LoRAs and models installed you can use this script to start the docker container 
+├── README.md
+├── run.sh # A Bash script that rebuilds Docker containers without cache and then starts them using Docker Compose.
+└── start.sh # Once you have all the LoRAs and models installed you can use this script to start the docker container
 ```
