@@ -28,7 +28,7 @@ And the following **LoRAs** are included:
 
 ## 🚀 Getting Started
 
-### 1. Clone the repo
+### 1. Clone the repo with only the `fooocus` folder
 
 ```bash
 # Clone the repo without checking out files
