@@ -31,8 +31,20 @@ And the following **LoRAs** are included:
 ### 1. Clone the repo
 
 ```bash
-git clone git@github.com:chemacabeza/my-github-projects.git my-github-projects.git
-cd my-github-projects.git/fooocus
+# Clone the repo without checking out files
+git clone --no-checkout https://github.com/chemacabeza/my-github-projects.git my-github-projects.git
+cd my-github-projects.git
+
+# Enable sparse-checkout
+git sparse-checkout init --cone
+
+# Configure sparse-checkout to get only root files + fooocus folder
+echo "/*" > .git/info/sparse-checkout
+echo "\!/*/" >> .git/info/sparse-checkout
+echo "/fooocus/" >> .git/info/sparse-checkout
+
+# Pull the filtered content from master branch
+git checkout master
 ```
 
 ### 2. Build the Docker image
