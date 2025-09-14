@@ -11,9 +11,9 @@ In this section we are going to learn the important terms for us and how they ar
 ## What is a Terminal or Console?
 Back in the days before personal computers, there were time-sharing systems (computers so big that occupied complete rooms). Users needed to connect to them via special dedicated devices. These devices were typically composed of a keyboard (that allowed the user to input instructions to the computer) and a text-only display monitor (that would show the input coming from the user and the output coming from the computer).
 
-<div style="text-align:center">
+<p align="center">
     <img src="./chapters/0001-Introduction/images/Terminal.png" width="400px"/>
-</div>
+</p>
 
 This kind of device received a couple of names that were inspired by electronics and furniture. These terms are “*terminal*” and “*console*”.
 
