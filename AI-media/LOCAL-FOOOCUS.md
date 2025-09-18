@@ -28,7 +28,7 @@ And the following **LoRAs** are included:
 
 ## 🚀 Getting Started
 
-### 1. Clone the repo with only the `fooocus` folder
+### 1. Clone the repo with only the `AI-media` folder
 
 ```bash
 # Clone the repo without checking out files
@@ -41,7 +41,7 @@ git sparse-checkout init --cone
 # Configure sparse-checkout to get only root files + fooocus folder
 echo "/*" > .git/info/sparse-checkout
 echo "\!/*/" >> .git/info/sparse-checkout
-echo "/fooocus/" >> .git/info/sparse-checkout
+echo "/AI-media/" >> .git/info/sparse-checkout
 
 # Pull the filtered content from master branch
 git checkout master

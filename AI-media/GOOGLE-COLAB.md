@@ -2,7 +2,78 @@
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 -->
-# Private Notes about Fooocus
+# How to run Fooocus on Google Colab
+
+A typical notebook in Google Colab looks like the following.
+
+```bash
+!pip install pygit2==1.15.1
+%cd /content
+!git clone https://github.com/lllyasviel/Fooocus.git
+%cd /content/Fooocus
+!mkdir -p /content/Fooocus/models/checkpoints
+!curl -L 'https://civitai.com/api/download/models/299716' -o /content/Fooocus/models/checkpoints/sdxlYamersRealistic5_v5Rundiffusion.safetensors
+!python entry_with_update.py --share --always-high-vram
+```
+
+**What is happening in this notebook in Google Colab?**
+
+1. **Install a Python library**
+
+```bash
+!pip install pygit2==1.15.1
+```
+* Installs the `pygit2` package (version 1.15.1).
+* This library lets Python code work with Git repositories.
+
+2. **Go to the Colab “home” folder**
+
+```bash
+%cd /content
+```
+* Changes the current working directory to `/content`, which is the default place where files live in Google Colab.
+
+3. **Download some code from GitHub**
+
+```bash
+!git clone https://github.com/lllyasviel/Fooocus.git
+```
+* Makes a local copy of the `Fooocus` project from GitHub into `/content/Fooocus`.
+
+4. **Enter that project folder**
+
+```bash
+%cd /content/Fooocus
+```
+* Moves into the newly cloned `Fooocus` folder.
+
+5. **Create a folder for model files**
+
+```bash
+!mkdir -p /content/Fooocus/models/checkpoints
+```
+* Creates a `models/checkpoints` directory inside Fooocus.
+* The `-p` flag means “make parent folders if they don’t exist and don’t complain if they already do.”
+
+6. **Download a big AI model file**
+
+```bash
+!curl -L 'https://civitai.com/api/download/models/299716' -o /content/Fooocus/models/checkpoints/sdxlYamersRealistic5_v5Rundiffusion.safetensors
+```
+* Downloads a model (a `.safetensors` file) from Civitai and saves it in the checkpoints folder.
+* `-L` tells `curl` to follow any redirects until it gets the file.
+* You can include several models in the same Google Colab notebook. 
+    * More information about creating the `curl` commands later in this page
+
+7. **Run the program**
+
+```bash
+!python entry_with_update.py --share --always-high-vram
+```
+* Starts the Fooocus application.
+* `--share` usually means “create a public link so others can connect to the running app.”
+* `--always-high-vram` probably tells it to use more GPU memory for better performance.
+
 
 ## Building curl command for SDXL models
 
