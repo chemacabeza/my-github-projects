@@ -254,7 +254,7 @@ Then you only need to open the original image in a tool like Paint and you need 
 
 ### Installing and customizing the AI tool Fooocus
 
-I prepared the following <a href="https://colab.research.google.com/drive/1-XWG91YqADQna0uXEVL5C4TlN2IPGw18">Google Colab Notebook</a>
+I prepared the following <a href="https://colab.research.google.com/drive/1-XWG91YqADQna0uXEVL5C4TlN2IPGw18">Google Colab Notebook</a>. Please make a copy of this Google Colab Notebook.
 
 
 ### Doing a Face Swap with Fooocus

@@ -14,9 +14,9 @@ Overall, this is a truly exceptional course that provides immense value and equi
 
 ## Intructor
 
-The instructor of <a href="https://www.linkedin.com/in/dominik-felber-32b71812a/">Dominik Felber</a>
+The instructor of this course in Udemy is <a href="https://www.linkedin.com/in/dominik-felber-32b71812a/">Dominik Felber</a>.
 
-Dominik Felber is a dynamic expert in AI automation and content creation, combining deep technical expertise with entrepreneurial vision. As the founder of Limitless AI Solutions LLC, he helps businesses harness the transformative power of artificial intelligence through advanced prompting, prompt design, and engineering. His career reflects a unique blend of innovation, leadership, and resilience—having successfully built and managed multiple companies in real estate, fitness, and now cutting-edge AI solutions.
+**Dominik Felber** is a dynamic expert in AI automation and content creation, combining deep technical expertise with entrepreneurial vision. As the founder of Limitless AI Solutions LLC, he helps businesses harness the transformative power of artificial intelligence through advanced prompting, prompt design, and engineering. His career reflects a unique blend of innovation, leadership, and resilience—having successfully built and managed multiple companies in real estate, fitness, and now cutting-edge AI solutions.
 
 With a strong academic foundation from the Technical University of Munich in Mechanical Engineering & Management, Dominik brings both analytical precision and strategic thinking to every endeavor. His early career at BMW Group as a quality specialist highlights his eye for detail and dedication to excellence—qualities he has carried into his entrepreneurial ventures.
 
