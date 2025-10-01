@@ -35,4 +35,3 @@ The content provided in this section represents **my personal study notes** and 
 * [Section 3: Creating a consistent AI influencer with Flux](docs/Section-3.md)
 * [Section 4: Training a Flux Lora of your AI Influencer](docs/Section-4.md)
 * [Section 5: Additional Section: First Steps into AI Video Creation](docs/Section-5.md)
-* [Section 6: Additional Information and Goodbye](docs/Section-6.md)
