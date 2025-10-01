@@ -15,6 +15,6 @@ Meanwhile, **Realistic AI Images with Stable Diffusion and Fooocus** is pure cre
 
 The turbo-charged automation hub of the repo, this folder is a true Swiss-army toolkit packed with powerful shell scripts that transform repetitive chores into one-command victories. From deploying containers and managing environments to streamlining complex workflows and project setup, it’s the glue that keeps everything running smoothly—pure command-line adrenaline that showcases the author’s obsession with efficiency and performance.
 
-##Java + Spring Boot
+## Java + Spring Boot
 
 A launchpad for scalable backends and the true engine room of the repository, this folder brings together clean Java architecture and Spring Boot craftsmanship to build production-ready microservices, REST APIs, and web components. It’s where structure, business logic, and enterprise-grade design converge, transforming ideas into robust services that showcase backend engineering at scale and power real-world applications.
