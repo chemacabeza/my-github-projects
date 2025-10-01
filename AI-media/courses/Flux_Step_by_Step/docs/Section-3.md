@@ -232,13 +232,17 @@ Then next step that happens now is that you upload another photo with a differen
 Then you click in the image with the right button of your mouse and select "`Apps > INSwapper`".
 
 And the following results were generated:
-
+<table>
+    <tr>
+<td>
 <p align="center">
     <img src="../images/Section3/ItalianInfluencerAtThePool2_daxopt_ins.webp" width="500"/>
-</p>
-<p align="center">
+</p></td>
+<td><p align="center">
     <img src="../images/Section3/ItalianInfluencerAtThePool2_ins.webp" width="500"/>
-</p>
+</p></td>
+    </tr>
+</table>
 
 ### Trick to face swap NSFW images on Discord
 
