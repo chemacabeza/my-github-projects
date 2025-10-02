@@ -26,7 +26,7 @@ In short, Dominik Felber stands out as a visionary entrepreneur, an AI automatio
 
 ## DISCLAIMER
 
-The content provided in this section represents **my personal study notes** and should not be considered a substitute for the full course material. For comprehensive instruction, detailed explanations, and structured guidance, it is strongly recommended to enroll in the Udemy course “<a href="https://www.udemy.com/share/10cgyr3@fMowz80dquFfuqGir0CqXTdKZeYvsH-zgyrd4hMfNI69_NBRDpBXSBomVAJyz0MK/">Realistic AI Images with Stable Diffusion & Fooocus</a>”
+The content provided in this section represents **MY PERSONAL STUDY NOTES** and should not be considered a substitute for the full course material. For comprehensive instruction, detailed explanations, and structured guidance, it is strongly recommended to enroll in the Udemy course “<a href="https://www.udemy.com/share/10cgyr3@fMowz80dquFfuqGir0CqXTdKZeYvsH-zgyrd4hMfNI69_NBRDpBXSBomVAJyz0MK/">Realistic AI Images with Stable Diffusion & Fooocus</a>”
 
 ## SECTIONS
 
