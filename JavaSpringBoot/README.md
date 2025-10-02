@@ -1,4 +1,17 @@
-# My Spring Boot Notes
+# Java + Spring Boot
+
+## Introduction
+
+Welcome to **Java + SpringBoot** — the powerhouse behind the repo’s backend ambitions. This folder is where ideas transform into real, scalable services built on a foundation of clean Java architecture and Spring Boot excellence.
+Inside, you’ll discover:
+* **Spring Boot applications & modules** engineered for production, with layered structure, configuration, and best practices built in.
+* **REST APIs & microservices** that handle data, logic, and connectivity, making this the core of the system’s interaction with frontends or other services.
+* **Web components, controllers, and service layers** that illustrate how business logic, data flow, and endpoints all come together in a maintainable, modular fashion.
+* **Configurations, resource files, and build scripts** that enable easy setup, deployment, and evolution of the backend system.
+
+Think of this as the backbone: where design, performance, and reliability meet clean code. If you want to see how an entire backend stacks up—from entry point to service logic to endpoints—this is the playground.
+
+## SECTIONS
 
 * [Sections 1 to 3: Spring Core, Hibernate/JPA CRUD](docs/First-Part.md)
 * [Section 4: REST CRUD APIs](docs/Section-4.md)
