@@ -1,5 +1,9 @@
 # ABOUT ME
 
+<p align="center">
+<img src="images/Sevilla1.jpg" width="500"/>
+</p>
+
 My name is **José María Cabeza Rodríguez**, and I am a software engineer from Seville, Spain, with an M.Sc. in Computer Science from Universidad Politécnica de Madrid. Early in my career, I was selected to join the Telematics Laboratory at the university due to my strong academic performance, an experience that set the stage for my passion for technology. During this time, I led a project to customize a Debian GNU/Linux distribution, enabling the automatic installation of software to support dynamic marketing studies. I also developed and maintained a communication system using facial recognition algorithms, sparking my interest in creating efficient, impactful technology solutions.
 
 From 2009 to 2011, I honed my development skills at Cystelcom Sistemas, working on significant projects for Vodafone Spain and Helvetia Seguros. This role broadened my exposure to the telecommunications and insurance sectors, where I delivered solutions under high standards and tight timelines. Each project helped me grow my technical expertise and cemented my commitment to designing scalable, high-performance systems tailored to meet real-world client demands.
