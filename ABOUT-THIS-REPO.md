@@ -6,7 +6,6 @@ This repository is my **personal engineering playground**—a living lab where b
 
 Where imagination meets algorithms, this folder is a true playground for AI-powered creativity and learning. It dives into AI-driven image generation, blending Stable Diffusion magic with custom experiments to create striking visuals and one-of-a-kind digital art. Alongside these creative projects, it also contains notes from Udemy courses the author has taken, making it both a hands-on lab for experimentation and a study journal that fuels fresh ideas and unexpected sparks of inspiration.
 
-
 In **Flux Step by Step**, you’ll find a structured journey that breaks down complex AI media workflows into digestible, practical steps. It’s like following a roadmap where each milestone builds confidence, clarity, and real skills — perfect for anyone who wants to see theory transformed into action with precision and flow.
 
 Meanwhile, **Realistic AI Images with Stable Diffusion and Fooocus** is pure creative fire. This folder dives straight into the art of producing lifelike, breathtaking images using Stable Diffusion paired with Fooocus. It’s not just about running models — it’s about sculpting pixels into reality, turning imagination into visuals so sharp and vivid they could almost leap off the screen.
