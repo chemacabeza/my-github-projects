@@ -1,5 +1,9 @@
 # AI-media
 
+<p align="center">
+ <img src="images/StableDiffusion3.jpg" width="400"/>
+</p>
+
 ## INTRODUCTION
 
 Welcome to **AI-media** — the creative lab where imagination meets algorithms. This folder is dedicated to exploring the intersection of art and artificial intelligence, with experiments, assets, and notes that showcase how modern AI tools can transform ideas into stunning visuals.
