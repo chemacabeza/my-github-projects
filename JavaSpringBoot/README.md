@@ -1,7 +1,7 @@
 # Java + Spring Boot
 
 <p align="center">
-<img src="images/JavaSpringBoot2.jpg" width="400"/>
+<img src="images/JavaSpringBoot2.jpg" width="500"/>
 </p>
 
 ## Introduction
