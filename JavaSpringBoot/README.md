@@ -1,5 +1,9 @@
 # Java + Spring Boot
 
+<p align="center">
+<img src="images/JavaSpringBoot2.jpg" width="400"/>
+</p>
+
 ## Introduction
 
 Welcome to **Java + SpringBoot** — the powerhouse behind the repo’s backend ambitions. This folder is where ideas transform into real, scalable services built on a foundation of clean Java architecture and Spring Boot excellence.
