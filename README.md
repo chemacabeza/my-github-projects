@@ -1,5 +1,9 @@
 # My Github Projects
 
+<p align="center">
+    <img src="images/MainImage2.jpg" width="500"/>
+</p>
+
 * [ABOUT ME](ABOUT-ME.md)
 * [ABOUT THIS REPOSITORY](ABOUT-THIS-REPO.md)
 
