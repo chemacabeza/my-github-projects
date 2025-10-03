@@ -1,7 +1,7 @@
 # AI-media
 
 <p align="center">
- <img src="images/StableDiffusion3.jpg" width="400"/>
+ <img src="images/StableDiffusion3.jpg" width="500"/>
 </p>
 
 ## INTRODUCTION
