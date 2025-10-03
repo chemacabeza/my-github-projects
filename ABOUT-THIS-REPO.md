@@ -1,5 +1,9 @@
 # About This Repo
 
+<p align="center">
+    <img src="images/MyRepo1.jpg" width="500"/>
+</p>
+
 This repository is my **personal engineering playground**—a living lab where bold ideas turn into working code. Far more than a code stash, it’s a hand-picked collection of projects, clever experiments, and hard-won tips that reveal how I tackle real-world challenges. From robust backends to lightning-fast automation and even AI-powered creativity, every folder reflects my drive to **build**, **optimize**, **and push boundaries**.
 
 ## AI-Media
