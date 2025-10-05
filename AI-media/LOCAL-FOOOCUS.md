@@ -1,5 +1,9 @@
 # Fooocus with Docker + SDXL Models & LoRAs
 
+<p align="center">
+    <img src="images/LocalFooocus.jpg" width="600"/>
+</p>
+
 This folder provides a **Dockerized setup of Fooocus** for generating images with **Stable Diffusion XL (SDXL)**.
 The goal is to make it easy to replicate Fooocus on your computer or laptop without worrying about environment setup.
 
