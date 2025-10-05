@@ -1,5 +1,9 @@
 # Flux Step by Step - AI Influencers & Fanvue Models FAST
 
+<p align="center">
+    <img src="images/Main/Main1.jpg" width="600"/>
+</p>
+
 ## Udemy course
 
 <a href="https://www.udemy.com/share/10cZTt3@WG_Nwk5QxSIdtUtv0eqRkiW6nQMlwNtDqoB5WdmpNATYCOtEWWZsNnW9Z6nXiQFH/">Flux Step by Step - AI Influencers & Fanvue Models FAST</a>
