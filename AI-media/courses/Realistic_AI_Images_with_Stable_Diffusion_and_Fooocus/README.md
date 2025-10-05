@@ -3,6 +3,7 @@
 <p align="center">
     <img src="images/Main/Main1.jpg" width="600"/>
 </p>
+
 ## Udemy course
 
 <a href="https://www.udemy.com/share/10cgyr3@fMowz80dquFfuqGir0CqXTdKZeYvsH-zgyrd4hMfNI69_NBRDpBXSBomVAJyz0MK/">Realistic AI Images with Stable Diffusion & Fooocus</a>
