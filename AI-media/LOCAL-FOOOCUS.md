@@ -54,6 +54,9 @@ git checkout master
 ### 2. Build the Docker image
 
 ```bash
+# Get inside the AI-media folder
+cd AI-media/
+# Build the image
 docker compose build --no-cache
 ```
 
