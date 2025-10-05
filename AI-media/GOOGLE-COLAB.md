@@ -4,6 +4,10 @@
 -->
 # How to run Fooocus on Google Colab
 
+<p align="center">
+    <img src="images/GoogleColab2.jpg" width="600"/>
+</p>
+
 A typical notebook in Google Colab looks like the following.
 
 ```bash
