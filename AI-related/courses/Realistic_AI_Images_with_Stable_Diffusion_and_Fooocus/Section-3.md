@@ -60,11 +60,15 @@ With the following protmp "`A hyper realistic portrait of a 80 year old guru wea
 
 In our case we will check the checkbox with name "Input Image" then you will that a bunch of tabs appear below. One of the tabs is called "Image Prompt", in that tab use the top left section to upload the following image.
 
+<p align="center">
 <img src="./files/section3/Example+Image+1.jpeg"/>
+</p>
 
 Then adjust the "Weight" of that image to "`0.9`". Then press the "Generate" button. When it is done you will see something like the following image.
 
+<p align="center">
 <img src="./images/section3/House-1.png"/>
+</p>
 
 What happens here is that you are giving Fooocus an image of reference and Fooocus will generate images that are similar to the one provided.
 
@@ -81,8 +85,9 @@ Then you need to go to the "Advanced" tab (at the left of the UI of Fooocus), th
 
 In our case this is the result of the Face Swap we did.
 
+<p align="center">
 <img src="./images/section3/FaceSwap-1.png" width="350"/>
-
+</p>
 
 
 ## Pyra Canny
@@ -108,7 +113,9 @@ The same SEED number means the process starts from the **same starting point**.
 
 This is what you can do with the SEED number.
 
+<p align="center">
 <img src="./images/section3/Explanation_of_SEED_number.png" width="350"/>
+</p>
 
 ## Upscale and Variation
 
@@ -120,14 +127,17 @@ Then you upload the image you want to upscale, and select "`Upscale (1.5x)`". Th
 
 The result is the following.
 
+<p align="center">
 <img src="./images/section3/Younger-Man.jpeg" width="350"/>
+</p>
 
 Now you need to go to the "`Advanced`" tab, you select the "`Developer Debug Mode`" checkbox and go to the slider called "`Forced Overwrite of Denoising Strength of "Upscale"`", then type in that slider the following value of "`0.01`". This helps to get the face exactly as it is. 
 
 The result is the following.
 
+<p align="center">
 <img src="./images/section3/Older-Man.jpeg" width="350"/>
-
+</p>
 
 ### Variation
 
@@ -141,8 +151,9 @@ Then we can check back the "`Random`" checkbox.
 
 The result is something like the following.
 
+<p align="center">
 <img src="./images/section3/Old-Golden-Car.jpeg" width="350"/>
-
+</p>
 
 ### Inpainting
 
@@ -160,19 +171,25 @@ Then in the prompt section you type "`a sleeping dog on the floor`".
 
 The result is something like the following.
 
+<p align="center">
 <img src="./images/section3/Sleeping-Dog-Office.jpeg" width="350"/>
+</p>
 
 Now we are going to use the Method named "`Modify Content (add objects, change background, etc.)`" and put the same prompt we used before in the text box named "`Inpaint Additional Prompt`".
 
 The result is the following.
 
+<p align="center">
 <img src="./images/section3/Sleeping-Dog-Office-2.jpeg" width="350"/>
+</p>
 
 Then we select the default method of "`Inpaint or Outpaint (default)`", we mark the leather chair in the office photo and add as prompt the following "`a green leather chair`", press the "`Generate`" button. 
 
 The result we got was as follows.
 
+<p align="center">
 <img src="./images/section3/Green-Leather-Chair.jpeg" width="350"/>
+</p>
 
 Now we are going to improve some details in the following image.
 
@@ -182,7 +199,9 @@ As method we select "`Improve Detail (face, hand, eyes, etc.)`". Then on the "`I
 
 The result is as follows.
 
+<p align="center">
 <img src="./images/section3/German-Girl.jpeg" width="350"/>
+</p>
 
 ### Outpainting
 
@@ -200,8 +219,9 @@ Then you put in the Prompt text box what you want to appear in the extension of 
 
 The result is as follows.
 
+<p align="center">
 <img src="./images/section3/Old-Business-Man-Suit.jpeg" width="350"/>
-
+</p>
 
 ### Uploading a mask for very precise inpainting
 
@@ -222,7 +242,9 @@ Then you put in the Prompt text box what you want to do, something like "`a yell
 
 The result I had was something like this.
 
+<p align="center">
 <img src="./images/section3/Yellow-Race-Car.jpeg" width="350"/>
+</p>
 
 There are several ways to create masks. You can use <a href="https://www.canva.com/">Canva</a> or <a href="https://www.gimp.org/">Gimp</a>.
 
