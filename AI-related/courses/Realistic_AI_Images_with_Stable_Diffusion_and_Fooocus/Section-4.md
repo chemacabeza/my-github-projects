@@ -63,9 +63,9 @@ Then you need to setup a parameter in the "`Advanced`" tab inside the "`Develope
 
 Then we press the "`Generate`" button and we get the following as result.
 
-<div style="text-align: center;">
+<p align="center">
     <img src="./images/section4/Woman-with-red-high-heels.jpeg" width="350"/>
-</div>
+</p>
 
 You need to check if the LoRA you are using needs a "trigger word" if that is the case include the trigger word in your prompt, otherwise the LoRA will not work.
 
@@ -93,14 +93,14 @@ We go to the "`Models`" tab select Base Model the "`reaslismEngineSDXL_v30VAE.sa
 
 Then as text prompt we use "`RETRO_NEON a cool guy with sunglasses`". Then you press the "`Generate`" button, and the result will be as follows.
 
-<div style="text-align: center;;">
+<p align="center">
     <img src="./images/section4/Retro-Neon-Cool-Guy-With-Sunglasses.jpeg" width="350"/>
-</div>
+</p>
 
 If we reduce the weight of the LoRA from "`0.8`" to "`0.5`" we will have the following effect in the image created.
 
-<div style="text-align: center;">
+<p align="center">
     <img src="./images/section4/Retro-Neon-With-05-Weight.jpeg" width="350"/>
-</div>
+</p>
 
 

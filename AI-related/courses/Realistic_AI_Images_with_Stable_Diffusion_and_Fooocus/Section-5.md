@@ -26,7 +26,9 @@ A hyper realistic portrait of a beautiful Mexican 29 year old Latina girl with f
 
 (63 words)
 
+<p align="center">
 <img src="./images/section5/Latina-in-gym.jpeg" width="350"/>
+</p>
 
 We can use the following "trick" to increate the weight of a word or term in the Prompt
 
@@ -36,7 +38,9 @@ A hyper realistic portrait of a beautiful Mexican 29 year old Latina girl with f
 
 In this case we have increased the weight the of the term "`modern gym`" this will affect the image in a positive way showing a more modern gym.
 
+<p align="center">
 <img src="./images/section5/Latina-in-gym-2.jpeg" width="350"/>
+</p>
 
 If try to get the weight of the term above "`1.4`" will generate "crazy results". I did a test with "`2.5`" and it generated a nonsensical image.
 
@@ -52,11 +56,15 @@ Prompts:
 
 **Prompt A**
 
+<p align="center">
 <img src="./images/section5/Bald-80-Senior.jpeg" width="350"/>
+</p>
 
 **Prompt B**
 
+<p align="center">
 <img src="./images/section5/Bald-80-Senior-2.jpeg" width="350"/>
+</p>
 
 
 I tried with the Negative Prompt "`hair`" and still the image has some hair.
@@ -76,11 +84,15 @@ Let's do a couple of example with the same Prompt but changing a word:
 
 * **Prompt A**: "`A beautiful girl walking down the street, Depression`"
 
+<p align="center">
 <img src="./images/section5/Beauty-Girl-Depression.jpeg" width="350"/>
+</p>
 
 * **Prompt B**: "`A beautiful girl walking down the street, Celebration`"
 
+<p align="center">
 <img src="./images/section5/Beauty-Girl-Celebration.jpeg" width="350"/>
+</p>
 
 
 ## Use different styles in Fooocus
@@ -92,16 +104,22 @@ We use the following Prompt: "`a beautiful paradise bird`".
 
 The result is as follows.
 
+<p align="center">
 <img src="./images/section5/Beautiful-Bird-Paradise.jpeg" width="350"/>
+</p>
 
 Then I add to the mix the style "`SAI Anime`" so the styles we are going to use are:
 * "`SAI Anime`"
 
+<p align="center">
 <img src="./images/section5/Beautiful-Bird-Paradise-Anime.jpeg" width="350"/>
+</p>
 
 Then will try the style named "`Steampunk 2`" the result of the image with the same Prompt will be as follows.
 
+<p align="center">
 <img src="./images/section5/Beautiful-Bird-Paradise-Steampunk.jpeg" width="350"/>
+</p>
 
 
 ## Using SD1.5 base models in Fooocus
@@ -136,14 +154,18 @@ Then you will see another slider named "`Refiner Switch At`" with the following 
 
 Then we use the following Prompt "`A beautiful paradise bird`" and the result is the following.
 
+<p align="center">
 <img src="./images/section5/Beautiful-Paradise-Bird-Realistic.jpeg" width="350"/>
+</p>
 
 
 ## Increase the Speed of Fooocus
 
 In our case we can select a different CPU when connecting to the runtime in Google Colab.
 
+<p align="center">
 <img src="./images/section5/CPU_you_can_use_in_Google_Colab.png" width="350"/>
+</p>
 
 You can select the CPU named "`A100 GPU`" which uses 10x resources and will generate the image in a matter of seconds.
 
@@ -204,14 +226,18 @@ In **Developer Debug Mode**, Fooocus gives you **extra fine control** over thing
 | `0.4 – 0.6` | Balanced — a bit of both worlds |
 | `0.7 – 1.0` | Major changes; follows your prompt more strongly |
 
+<p align="center">
 <img src="./images/section5/Example_of_Denoising_Strength.png" width="350"/>
+</p>
 
 
 ## Fixing Images - Faces
 
 Now we will the following image that we created in Section 3.
 
+<p align="center">
 <img src="./images/section5/Old-Business-Man-Suit.jpeg" width="350"/>
+</p>
 
 To fix the face of the man in the suit.
 
@@ -221,11 +247,15 @@ Then we select in the "`Method`" dropdown the option that says "`Improve Detail 
 
 The result of the fixed image is as follows. Here we used "`Inpaint Denoising Strength`" with the default value which was "`0.5`".
 
+<p align="center">
 <img src="./images/section5/Old-Business-Man-Suit-Fixed-Face-1.jpeg" width="350"/>
+</p>
 
 Then we will try the "`Inpaint Denoising Strength`" with value "`0.35`".
 
+<p align="center">
 <img src="./images/section5/Old-Business-Man-Suit-Face-2.jpeg" width="350"/>
+</p>
 
 
 ## Combine ChatGPT and AI image creation
@@ -251,9 +281,13 @@ You are an expert in AI image generation using Stable Diffusion and Fooocus. You
 
 Follow the conversation with ChatGPT <a href="https://chatgpt.com/share/68514d4f-b9bc-8011-87f6-d3965e56837c">here</a>.
 
+<p align="center">
 <img src="./images/section5/ChatGPT-Cat-1.jpeg" width="350"/>
+</p>
 
+<p align="center">
 <img src="./images/section5/ChatGPT-Cat-2.jpeg" width="350"/>
+</p>
 
 
 ## Combine Image Prompts and Inpainting to change the clothing of digital models
