@@ -4,7 +4,9 @@
 
 ### Proportions
 
+<p align="center">
 <img src="./images/section9/Proportions.jpeg" width="400"/>
+</p>
 
 The image on the left side is the original, the one in the middle has a 5% smaller head and the one on the right has a 10% smaller head.
 
@@ -12,11 +14,15 @@ The image on the left side is the original, the one in the middle has a 5% small
 
 **Aesthetics** is the study of the beauty, taste, and the nature of art, focusing on what makes things visually, emotionally, or intellectually pleasing.
 
+<p align="center">
 <img src="./images/section9/Aesthetics.jpeg" width="400"/>
+</p>
 
 ### Aesthetics & Composition
 
 Composition means how well elements are aligned in an image and if everything fits together perfectly.
 
+<p align="center">
 <img src="./images/section9/Aesthetics-and-Composition.png" width="400"/>
+</p>
 
