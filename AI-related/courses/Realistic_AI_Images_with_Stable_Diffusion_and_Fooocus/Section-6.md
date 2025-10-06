@@ -4,7 +4,9 @@ The idea is to have the same clothing and different people wearing it.
 
 We need to follow the next process to be able to achieve our objective.
 
+<p align="center">
 <img src="./images/section6/Process-to-Inpaint-a-different-person.png" width="400"/>
+</p>
 
 Steps to proceed:
 1. First we start with the real photo
@@ -17,13 +19,17 @@ Let's do an example in Fooocus.
 
 We start with the following real photo.
 
+<p align="center">
 <img src="./files/section6/Example+Image+Clothing+Product+Placement.png" width="350"/>
+</p>
 
 Which we upload to the "`Inpaint or Outpaint`" tab.
 
 And we use the following mask.
 
+<p align="center">
 <img src="./files/section6/Clothing+Mask.jpg" width="350"/>
+</p>
 
 That we upload to the "`Inpaint or Outpaint`" tab as well.
 
