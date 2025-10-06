@@ -14,11 +14,9 @@ Then you click the "`Generate`" button.
 
 <!--iframe width="560" height="315" src="https://www.youtube.com/embed/EroecJWq_CQ" frameborder="0" allowfullscreen></iframe-->
 
-{% raw %}
-<iframe width="560" height="315" src="https://www.youtube.com/embed/EroecJWq_CQ" frameborder="0" allowfullscreen></iframe>
-{% endraw %}
+[![Watch the video](https://img.youtube.com/vi/EroecJWq_CQ/maxresdefault.jpg)](https://youtube.com/shorts/EroecJWq_CQ)
 
 
-Videos generated based on the previous image
+Videos generated based on the previous image:
 * <a href="./images/section10/Professional_Mode_Excited_french_girl_dancing_in_f.mp4">Video 1</a>
 * <a href="./images/section10/Professional_Mode_Excited_french_girl_dancing_in_f_2.mp4">Video 2</a>
