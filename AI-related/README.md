@@ -1,7 +1,7 @@
-# AI-media
+# AI Related
 
 <p align="center">
- <img src="images/StableDiffusion3.jpg" width="700"/>
+ <img src="images/AI-Related3.jpg" width="700"/>
 </p>
 
 ## INTRODUCTION
