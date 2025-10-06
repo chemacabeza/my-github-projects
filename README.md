@@ -9,6 +9,6 @@
 
 ## CONTENTS
 
-* [AI MEDIA](AI-media/README.md)
+* [AI RELATED](AI-related/README.md)
 * [BASH](bash/README.md)
 * [JAVA + SPRING BOOT](JavaSpringBoot/README.md)
