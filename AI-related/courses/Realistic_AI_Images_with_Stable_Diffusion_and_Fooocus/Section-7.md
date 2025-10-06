@@ -34,7 +34,9 @@ quality, professional camera, cristal clear
 
 And this is the result.
 
+<p align="center">
 <img src="./images/section7/French-Girl-22-Year-Blonde.jpeg" width="350"/>
+</p>
 
 ## Step 3 - Write a prompt for the body and first scene the AI influencer
 
@@ -71,7 +73,9 @@ A hyper-realistic full body portrait of a beautiful 21-year-old italian girl, (d
 
 The result is the following image.
 
+<p align="center">
 <img src="./images/section7/Italian-Girl-Dark-Skin-Green-Eyes.png" width="350"/>
+</p>
 
 Then we use the following prompt to create, again, the face of our AI influencer.
 
@@ -81,11 +85,15 @@ A hyper realistic closeup face portrait of a beautiful 22 year old French girl, 
 
 Which will generate the following image.
 
+<p align="center">
 <img src="./images/section7/French-Girl-Blue-Eyes-Blonde.jpeg" width="350"/>
+</p>
 
 Then we upload the image to the "`Inpaint or Outpaint`" tab, use the brush to mark the eyes of the blonde girl and we select in the "`Method`" dropdown the option named "`Improve Detail...`", then in the text box named "`Inpaint Additional Prompt`" we write "`beautiful blue eyes`". 
 
+<p align="center">
 <img src="./images/section7/French-Girl-Blue-Eyes-Fixed-Blonde.jpeg" width="350"/>
+</p>
 
 ## Step 4 - Finding the LazyMix Base Model at Tensorart
 
@@ -121,13 +129,21 @@ Then you click the "`Generate`" button.
 
 Tensor Art will generate the following images.
 
+<p align="center">
 <img src="./images/section7/Tensor_Art_Image_1.png" width="350"/>
+</p>
 
+<p align="center">
 <img src="./images/section7/Tensor_Art_Image_2.png" width="350"/>
+</p>
 
+<p align="center">
 <img src="./images/section7/Tensor_Art_Image_3.png" width="350"/>
+</p>
 
+<p align="center">
 <img src="./images/section7/Tensor_Art_Image_4.png" width="350"/>
+</p>
 
 
 Now we are going to put together the face that we created with the body that we created as well.
@@ -144,29 +160,39 @@ Then we need to repeate the same process for the app that is named "`InsightFace
 
 Once both applications are installed in our "`Swap Server`" we go to the "terminal" of our server and type the following "`/saveid`" we provide as name "`swap`" and we upload the following image.
 
+<p align="center">
 <img src="./images/section7/French-Girl-Blue-Eyes-Fixed-Blonde.jpeg" width="350"/>
+</p>
 
 That we created before and hit the Enter key.
 
 Once the image has been processed, we click on the "`+`" sign and select "`Upload file`" and select one of the bodies we created before, for instance the following image.
 
+<p align="center">
 <img src="./images/section7/Tensor_Art_Image_1.png" width="350"/>
+</p>
 
 You hit the Enter key. Once the image is uploaded, you click in the image and select "`Apps > INSwapper`". The image on the left side is always better (according to the instructor).
 
+<p align="center">
 <img src="./images/section7/Tensor_Art_Image_1_ins.jpg" width="350"/>
+</p>
 
 ## Step 5 - Refine the face of the AI Influencer using Fooocus
 
 Once you start your Fooocus, you upload the image we did a Face Swap on, which is this one.
 
+<p align="center">
 <img src="./images/section7/Tensor_Art_Image_1_ins.jpg" width="350"/>
+</p>
 
 Then we use the brush and paint the face of the model. The on the "`Method`" dropdown we select "`Improve Detail (face, hand, eyes, etc.)`", then on the "`Inpaint Additional Prompt`" text box you type "`beautiful blue eyes`".
 
 Then we go to the "`Image Prompt`" tab and click "`Advanced`", then in one of the sections to drop an image, you select the toggle "`FaceSwap`" and assign the value "`1`" to "`Stop At`" and the value of "`1.19`" to the "`Weight`", then in that section we upload the following image.
 
+<p align="center">
 <img src="./images/section7/French-Girl-Blue-Eyes-Fixed-Blonde.jpeg" width="350"/>
+</p>
 
 The we click on "`Advanced`" to have more options at the left. 
 
@@ -180,11 +206,15 @@ Then we go to the "`Inpaint`" tab inside the "`Developer Debug Mode`" and set va
 
 Then you click the "`Generate`" button. The resulting image is as follows.
 
+<p align="center">
 <img src="./images/section7/French-Girl-Blue-Eyes-Fixed-Blonde-2.jpeg" width="350"/>
+</p>
 
 Now we will do another variation where we will put "`None`" of the "`Refiner (SDXL or SD 1.5)`", we leave the "`Base Model (SDXL only)`" with only "`realismEngine...`", and we check the "`LoRA 1`". Then you click the "`Generate`" button and this is our result.
 
+<p align="center">
 <img src="./images/section7/French-Girl-Blue-Eyes-Fixed-Blonde-3.jpeg" width="350"/>
+</p>
 
 
 ## Step 6 - Fix some little errors and adjust details
