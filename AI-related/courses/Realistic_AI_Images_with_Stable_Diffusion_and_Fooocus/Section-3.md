@@ -22,7 +22,9 @@
 * Upscale and Variation
 * Inpainting and Outpainting
 
-<img src="./images/section3/Explanation_of_functions_in_Fooocus.png"/>
+<p align="center">
+<img src="./images/section3/Explanation_of_functions_in_Fooocus.png" width="600"/>
+</p>
 
 ## Text Prompt
 
