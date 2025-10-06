@@ -2,7 +2,9 @@
 
 We upload the following picture to <a href="https://klingai.com">Kling AI</a>, to the Video Generation section under "`Image to Video`".
 
+<p align="center">
 <img src="./images/section7/French-Girl-Blue-Eyes-Fixed-Blonde-2.jpeg" width="350"/>
+</p>
 
 The in the prompt section we provide the following text "`Excited french girl dancing in front of the camera`".
 
