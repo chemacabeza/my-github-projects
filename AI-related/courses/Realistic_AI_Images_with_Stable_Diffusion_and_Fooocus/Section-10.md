@@ -12,7 +12,11 @@ Also, in the "`Negative Prompt`" section we provide "`blur, distortion, disfigur
 
 Then you click the "`Generate`" button.
 
+<!--iframe width="560" height="315" src="https://www.youtube.com/embed/EroecJWq_CQ" frameborder="0" allowfullscreen></iframe-->
+
+{% raw %}
 <iframe width="560" height="315" src="https://www.youtube.com/embed/EroecJWq_CQ" frameborder="0" allowfullscreen></iframe>
+{% endraw %}
 
 
 Videos generated based on the previous image
