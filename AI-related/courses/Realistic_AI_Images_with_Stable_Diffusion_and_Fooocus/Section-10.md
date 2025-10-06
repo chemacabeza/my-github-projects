@@ -12,6 +12,9 @@ Also, in the "`Negative Prompt`" section we provide "`blur, distortion, disfigur
 
 Then you click the "`Generate`" button.
 
+<video src="./images/section10/Professional_Mode_Excited_french_girl_dancing_in_f.mp4" width="640" controls></video>
+
+
 <video width="640" height="360" controls>
   <source src="./images/section10/Professional_Mode_Excited_french_girl_dancing_in_f.mp4" type="video/mp4">
   Your browser does not support the video tag.
