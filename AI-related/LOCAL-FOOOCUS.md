@@ -32,7 +32,7 @@ And the following **LoRAs** are included:
 
 ## 🚀 Getting Started
 
-### 1. Clone the repo with only the `AI-media` folder
+### 1. Clone the repo with only the `AI-related` folder
 
 ```bash
 # Clone the repo without checking out files
@@ -45,7 +45,7 @@ git sparse-checkout init --cone
 # Configure sparse-checkout to get only root files + fooocus folder
 echo "/*" > .git/info/sparse-checkout
 echo "\!/*/" >> .git/info/sparse-checkout
-echo "/AI-media/" >> .git/info/sparse-checkout
+echo "/AI-related/" >> .git/info/sparse-checkout
 
 # Pull the filtered content from master branch
 git checkout master
@@ -54,8 +54,8 @@ git checkout master
 ### 2. Build the Docker image
 
 ```bash
-# Get inside the AI-media folder
-cd AI-media/
+# Get inside the AI-related folder
+cd AI-related/
 # Build the image
 docker compose build --no-cache
 ```
