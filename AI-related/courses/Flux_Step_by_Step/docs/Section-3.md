@@ -53,6 +53,10 @@ A hyper-realistic portrait of a 24-year-old Italian model, beautiful full lips, 
     <img src="../images/Section3/FaceOfItalianInfluencer.jpg" width="500"/>
 </p>
 
+<iframe src="../files/Body+Prompts.pdf" width="100%" height="600px">
+</iframe>
+
+
 **Body Prompt**
 ```txt
 A hyper-realistic knee-length portrait of a beautiful busty 24-year-old Italian girl, beautiful full lips, round face, sensual face, (very realistic skin structure) flawless skin, stunning brown eyes, vibrant look, small waist, athletic figure, wearing (an elegant beige party dress) (posed in a modern luxurious hotel lobby), perfect lighting
