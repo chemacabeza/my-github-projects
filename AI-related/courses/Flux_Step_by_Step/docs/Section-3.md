@@ -53,8 +53,7 @@ A hyper-realistic portrait of a 24-year-old Italian model, beautiful full lips, 
     <img src="../images/Section3/FaceOfItalianInfluencer.jpg" width="500"/>
 </p>
 
-<iframe src="../files/Body+Prompts.pdf" width="100%" height="600px">
-</iframe>
+<iframe src="https://github.com/chemacabeza/my-github-projects/blob/master/AI-related/courses/Flux_Step_by_Step/files/Section3/Body%2BPrompts.pdf" width="100%" height="600px"></iframe>
 
 
 **Body Prompt**
