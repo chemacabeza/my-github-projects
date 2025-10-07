@@ -1,4 +1,4 @@
-# About This Repo
+# About This Repository
 
 <p align="center">
     <img src="images/MyRepo1.jpg" width="500"/>
