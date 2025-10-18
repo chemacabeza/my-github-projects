@@ -1,7 +1,7 @@
 # My Github Projects
 
 <p align="center">
-    <img src="images/MainImage2.jpg" width="500"/>
+    <img src="images/MainImage2.jpg" width="700"/>
 </p>
 
 * [ABOUT ME](ABOUT-ME.md)
