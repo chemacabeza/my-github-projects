@@ -1,7 +1,7 @@
 # ABOUT ME
 
 <p align="center">
-<img src="images/Sevilla1.jpg" width="500"/>
+<img src="images/Sevilla1.jpg" width="700"/>
 </p>
 
 My name is **José María Cabeza Rodríguez**, and I am a software engineer from Seville, Spain, with an M.Sc. in Computer Science from Universidad Politécnica de Madrid. Early in my career, I was selected to join the Telematics Laboratory at the university due to my strong academic performance, an experience that set the stage for my passion for technology. During this time, I led a project to customize a Debian GNU/Linux distribution, enabling the automatic installation of software to support dynamic marketing studies. I also developed and maintained a communication system using facial recognition algorithms, sparking my interest in creating efficient, impactful technology solutions.
