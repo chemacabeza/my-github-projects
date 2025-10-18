@@ -1,7 +1,7 @@
 # 🐚 Bash In Depth: A Developer’s Guide  
 
 <p align="center">
-    <img src="images/Bash13.jpg" width="500"/>
+    <img src="images/Bash13.jpg" width="700"/>
 </p>
 
 Welcome to **Bash In Depth**, my personal deep dive into one of the most powerful and underestimated tools in a developer’s arsenal: the **Bash shell**. This project is more than just a collection of notes—it’s a **living book** where I explore Bash from the basics to the advanced corners that even seasoned engineers sometimes overlook.  
