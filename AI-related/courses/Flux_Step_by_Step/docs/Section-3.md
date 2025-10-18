@@ -173,11 +173,12 @@ sensual face, (very realistic skin structure) flawless skin, stunning brown eyes
 high resolution, perfect saturation, 4k
 ```
 <table>
-<tr><td>
+<tr>
+<td>
 <p align="center">
     <img src="../images/Section3/ItalianInfluencerFace1.jpg" width="500"/>
-</p></td></tr>
-<tr><td>
+</p></td>
+<td>
 <p align="center">
     <img src="../images/Section3/ItalianInfluencerFace2.jpg" width="500"/>
 </p></td></tr>
