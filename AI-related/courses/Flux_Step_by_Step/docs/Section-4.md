@@ -3,7 +3,7 @@
 ## ALL YOU NEED TO KNOW ABOUT LORAS
 
 <p align="center">
-    <img src="../images/Section4/LoRARepresentation.png" width="500"/>
+    <img src="../images/Section4/LoRARepresentation.png" width="700"/>
 </p>
 
 The grey box is the full model and the yellow box represent our LoRA.
