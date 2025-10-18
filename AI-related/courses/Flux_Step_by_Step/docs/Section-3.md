@@ -172,15 +172,16 @@ A hyper-realistic portrait of a beautiful 24-year-old Italian model, beautiful f
 sensual face, (very realistic skin structure) flawless skin, stunning brown eyes, professional camera,
 high resolution, perfect saturation, 4k
 ```
-
+<table>
+<tr><td>
 <p align="center">
     <img src="../images/Section3/ItalianInfluencerFace1.jpg" width="500"/>
-</p>
-
+</p></td></tr>
+<tr><td>
 <p align="center">
     <img src="../images/Section3/ItalianInfluencerFace2.jpg" width="500"/>
-</p>
-
+</p></td></tr>
+</table>
 
 ### Face Swap using Discord
 
