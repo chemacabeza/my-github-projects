@@ -44,7 +44,7 @@ It's important to train the LoRA with different:
 
 Give each image a very descriptive name of what is in the image itself.
 
-It's recommended to use **between 25 to 35 images** to train you LoRA.
+It's recommended to use **between 25 to 35 images** to train your LoRA.
 
 When you have this folder with the images within you just need to create a ZIP file.
 
