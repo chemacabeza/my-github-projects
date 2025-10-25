@@ -92,6 +92,8 @@ curl -X POST "https://api.replicate.com/v1/predictions" \
   }"
 ```
 
+The paramter that is named "`disable_safety_checker`" allows you to create images that are Not Suitable For Work.
+
 Once you have created the following Bash script, you will have enable the permissions for execution with...
 
 ```shell
