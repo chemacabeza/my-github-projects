@@ -71,24 +71,25 @@ Once you have all the information you can create a Bash script to create the ima
 
 REPLICATE_API_KEY="..."
 REPLICATE_LORA="..."
-# The prompt needs to include the trigger word for the LoRA
-PROMPT=""
+
+# The prompt needs to contain the trigger word for your LoRA
+PROMPT="..."
 
 curl -X POST "https://api.replicate.com/v1/predictions" \
-  -H "Authorization: Bearer YOUR_REPLICATE_API_KEY" \
+  -H "Authorization: Bearer $REPLICATE_API_KEY" \
   -H "Content-Type: application/json" \
-  -d '{
-    "version": "THE_SPECIFIC_NUMBER_OF_YOUR_LORA",
-    "input": {
-      "model": "dev",
-      "prompt": "IMAGE_PROMPT_INCLUDING_THE_LORA_KEY_WORD",
-      "megapixels": "1",
-      "aspect_ratio": "4:5",
-      "output_format": "png",
-      "num_inference_steps": 50,
-      "disable_safety_checker": true
+  -d "{
+    \"version\": \"$REPLICATE_LORA\",
+    \"input\": {
+      \"model\": \"dev\",
+      \"prompt\": \"$PROMPT\",
+      \"megapixels\": \"1\",
+      \"aspect_ratio\": \"4:5\",
+      \"output_format\": \"png\",
+      \"num_inference_steps\": 50,
+      \"disable_safety_checker\": true
     }
-  }'
+  }"
 ```
 
 Once you have created the following Bash script, you will have enable the permissions for execution with...
