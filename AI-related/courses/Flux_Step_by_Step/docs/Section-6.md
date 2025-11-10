@@ -13,7 +13,7 @@ For this we are going use very heavily <a href="https://chatgpt.com">ChatGPT</a>
 If you go to your ChatGPT account you will find the following section where you can create custom GPTs to create anything.
 
 <p align="center">
-    <img src="../images/Section6/ConfigurationOfANewGPT.png" width="500"/>
+    <img src="../images/Section6/ConfigurationOfANewGPT.png" width="800"/>
 </p>
 
 In our case we are going to configure a custom GPT to create images for our AI-Influencer using <a href="https://replicate.com/black-forest-labs/flux-1.1-pro-ultra">Flux 1.1 PRO Ultra from Replicate</a> which is a good way to generate images for our AI-Influencer.
@@ -21,7 +21,7 @@ In our case we are going to configure a custom GPT to create images for our AI-I
 In that case you need to push on the "`+ Create`" button. Once you press the create button the following screen will appear.
 
 <p align="center">
-    <img src="../images/Section6/NewGPT.png" width="500"/>
+    <img src="../images/Section6/NewGPT.png" width="800"/>
 </p>
 
 As you will in this page there are several fields in the page which are:
@@ -68,7 +68,7 @@ Hyper realistic image of inga reading a thick quantum physics book while wearing
 As with the previous custom GPT we do have the following image when we are trying to create a custom GPT.
 
 <p align="center">
-    <img src="../images/Section6/ConfigurationOfANewGPT.png" width="500"/>
+    <img src="../images/Section6/ConfigurationOfANewGPT.png" width="800"/>
 </p>
 
 We already know what it means the different fields from the previous sub-section. In this section we are going to create a custom GPT to create a video of 10 seconds of duration using the website <a href="https://klingai.com/global/">Kling AI</a>.
