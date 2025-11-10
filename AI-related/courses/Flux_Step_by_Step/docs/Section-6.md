@@ -112,6 +112,7 @@ hyper realistic image of inga driving a sleek white Tesla Model S through a vast
 
 Once you generate the video the following will be published.
 
-[Watch the video on YouTube](https://youtu.be/-v4uOMs8hOU)
+[![Watch the video](https://img.youtube.com/vi/-v4uOMs8hOU/maxresdefault.jpg)](https://youtu.be/-v4uOMs8hOU)
+
 
 Pay attention to the sound of the video our custom GPT was able to generate a good prompt to be able to generate the video with a good quality of image and sound.
