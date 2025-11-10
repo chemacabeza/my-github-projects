@@ -110,4 +110,8 @@ Then our custom GPT will produce the following Prompt:
 hyper realistic image of inga driving a sleek white Tesla Model S through a vast desert highway at golden hour, warm sunlight reflecting off the car’s surface, soft sand dunes stretching into the distance, cinematic lighting, wind gently blowing her hair, detailed textures, ultra high resolution, photorealistic composition, natural colors, 85mm lens look
 ```
 
+Once you generate the video the following will be published.
+
+[Watch the video on YouTube](https://youtu.be/-v4uOMs8hOU)
+
 
