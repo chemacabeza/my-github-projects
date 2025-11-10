@@ -112,6 +112,8 @@ hyper realistic image of inga driving a sleek white Tesla Model S through a vast
 
 Once you generate the video the following will be published.
 
+This is a video :point_down:
+
 [![Watch the video](https://img.youtube.com/vi/-v4uOMs8hOU/maxresdefault.jpg)](https://youtu.be/-v4uOMs8hOU)
 
 
