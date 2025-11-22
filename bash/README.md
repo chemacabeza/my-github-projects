@@ -75,3 +75,7 @@ This book is also about **thinking like a systems engineer**: understanding not 
 * [Chapter 28: Here Documents](./chapters/0028-Here-Documents/README.md)
 * [Chapter 29: Here Strings](./chapters/0029-Here-Strings/README.md)
 * [Chapter 30: Coprocesses](./chapters/0030-Coprocesses/README.md)
+* [Chapter 31: Types of Shell and Configuration Files](./chapters/0031-Types-of-Shell-and-Configuration-Files/README.md)
+* [Chapter 32: Customizing The Prompt](./chapters/0032-Customizing-The-Prompt/README.md)
+* [Chapter 33: Programmable Completion](./chapters/0033-Programmable-Completion/README.md)
+* [Chapter 34: Text Processing Commands](./chapters/0034-Text-Processing-Commands/README.md)
