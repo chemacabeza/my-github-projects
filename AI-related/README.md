@@ -19,8 +19,23 @@ Dive in, experiment boldly, and see how far your curiosity can take you.
 
 ## CONTENTS
 
-* [Running Fooocus on your local computer](LOCAL-FOOOCUS.md)
-* [Running Fooocus on Google Colab](GOOGLE-COLAB.md)
+* [Running Fooocus on your local computer](Local-Fooocus/README.md)
+* [Running Fooocus on Google Colab](Google-Colab/README.md)
+
+## QUICK START
+
+To build and run the local Fooocus environment:
+
+```bash
+cd AI-related
+make run
+```
+
+To stop:
+
+```bash
+make down
+```
 * Courses
     * [Flux Step by Step - AI Influencers & Fanvue Models FAST](courses/Flux_Step_by_Step/README.md)
     * [Realistic AI Images with Stable Diffusion & Fooocus](courses/Realistic_AI_Images_with_Stable_Diffusion_and_Fooocus/README.md)
