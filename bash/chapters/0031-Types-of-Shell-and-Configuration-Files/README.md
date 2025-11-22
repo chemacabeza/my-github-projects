@@ -1,31 +1,4 @@
----
-layout: chapter
-title: "Chapter 31: Configuration Files & Types of Shell"
----
-
 # Chapter 31: Configuration Files & Types of Shell
-
-## Index
-* [Introduction]({{ site.url }}//bash-in-depth/0031-Types-of-Shell-and-Configuration-Files.html#introduction)
-* [Available configuration files]({{ site.url }}//bash-in-depth/0031-Types-of-Shell-and-Configuration-Files.html#available-configuration-files)
-    * [Configuration file "`/etc/profile`"]({{ site.url }}//bash-in-depth/0031-Types-of-Shell-and-Configuration-Files.html#configuration-file-etcprofile)
-    * [Configuration File "`/etc/bashrc`" or Configuration File "`/etc/bash.bashrc`"]({{ site.url }}//bash-in-depth/0031-Types-of-Shell-and-Configuration-Files.html#configuration-file-etcbashrc-or-configuration-file-etcbashbashrc)
-    * [Configuration File "`~/.bash_profile`"]({{ site.url }}//bash-in-depth/0031-Types-of-Shell-and-Configuration-Files.html#configuration-file-bash_profile)
-    * [Configuration File "`~/.bash_login`"]({{ site.url }}//bash-in-depth/0031-Types-of-Shell-and-Configuration-Files.html#configuration-file-bash_login)
-    * [Configuration File "`~/.profile`"]({{ site.url }}//bash-in-depth/0031-Types-of-Shell-and-Configuration-Files.html#configuration-file-profile)
-    * [Configuration File "`~/.bashrc`"]({{ site.url }}//bash-in-depth/0031-Types-of-Shell-and-Configuration-Files.html#configuration-file-bashrc)
-    * [Configuration File "`~/.bash_logout`"]({{ site.url }}//bash-in-depth/0031-Types-of-Shell-and-Configuration-Files.html#configuration-file-bash_logout)
-* [Types of Shell]({{ site.url }}//bash-in-depth/0031-Types-of-Shell-and-Configuration-Files.html#types-of-shell)
-    * [Interactive Login Shell]({{ site.url }}//bash-in-depth/0031-Types-of-Shell-and-Configuration-Files.html#interactive-login-shell)
-    * [Interactive Non-Login Shell]({{ site.url }}//bash-in-depth/0031-Types-of-Shell-and-Configuration-Files.html#interactive-non-login-shell)
-    * [Non-Interactive Non-Login Shell]({{ site.url }}//bash-in-depth/0031-Types-of-Shell-and-Configuration-Files.html#non-interactive-non-login-shell)
-    * [Non-Interactive Login Shell]({{ site.url }}//bash-in-depth/0031-Types-of-Shell-and-Configuration-Files.html#non-interactive-login-shell)
-    * [Putting It All Together]({{ site.url }}//bash-in-depth/0031-Types-of-Shell-and-Configuration-Files.html#putting-it-all-together)
-* [A Note on Non-Interactive Non-Login Shells]({{ site.url }}//bash-in-depth/0031-Types-of-Shell-and-Configuration-Files.html#a-note-on-non-interactive-non-login-shells)
-* [Summary]({{ site.url }}//bash-in-depth/0031-Types-of-Shell-and-Configuration-Files.html#summary)
-* [References]({{ site.url }}//bash-in-depth/0031-Types-of-Shell-and-Configuration-Files.html#references)
-
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px">
 
 ## Introduction
 

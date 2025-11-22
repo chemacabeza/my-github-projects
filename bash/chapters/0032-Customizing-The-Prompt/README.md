@@ -1,29 +1,4 @@
----
-layout: chapter
-title: "Chapter 32: Customizing The Prompt"
----
-
 # Chapter 32: Customizing The Prompt
-
-## Index
-* [Introduction]({{ site.url }}//bash-in-depth/0032-Customizing-The-Prompt.html#introduction)
-* [Why Customize the Prompt?]({{ site.url }}//bash-in-depth/0032-Customizing-The-Prompt.html#why-customize-the-prompt)
-* [How many prompts are there?]({{ site.url }}//bash-in-depth/0032-Customizing-The-Prompt.html#how-many-prompts-are-there)
-* ["`PROMPT_COMMAND`"]({{ site.url }}//bash-in-depth/0032-Customizing-The-Prompt.html#prompt_command)
-    * [String Value]({{ site.url }}//bash-in-depth/0032-Customizing-The-Prompt.html#string-value)
-    * [String Array Value]({{ site.url }}//bash-in-depth/0032-Customizing-The-Prompt.html#string-array-value)
-* [Prompt String 1]({{ site.url }}//bash-in-depth/0032-Customizing-The-Prompt.html#prompt-string-1)
-    * [Special Characters]({{ site.url }}//bash-in-depth/0032-Customizing-The-Prompt.html#special-characters)
-    * [How does PS1 get evaluated?]({{ site.url }}//bash-in-depth/0032-Customizing-The-Prompt.html#how-does-ps1-get-evaluated)
-* [Changing the color and text formatting]({{ site.url }}//bash-in-depth/0032-Customizing-The-Prompt.html#changing-the-color-and-text-formatting)
-* [Using command substitution in the prompt string]({{ site.url }}//bash-in-depth/0032-Customizing-The-Prompt.html#using-command-substitution-in-the-prompt-string)
-    * [Simple behavior with command substitution]({{ site.url }}//bash-in-depth/0032-Customizing-The-Prompt.html#simple-behavior-with-command-substitution)
-    * [Not so simple behavior with command substitution]({{ site.url }}//bash-in-depth/0032-Customizing-The-Prompt.html#not-so-simple-behavior-with-command-substitution)
-* [Where to put the configuration]({{ site.url }}//bash-in-depth/0032-Customizing-The-Prompt.html#where-to-put-the-configuration)
-* [Summary]({{ site.url }}//bash-in-depth/0032-Customizing-The-Prompt.html#summary)
-* [References]({{ site.url }}//bash-in-depth/0032-Customizing-The-Prompt.html#references)
-
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px">
 
 ## Introduction
 

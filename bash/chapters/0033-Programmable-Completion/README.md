@@ -1,45 +1,4 @@
----
-layout: chapter
-title: "Chapter 33: Programmable Completion"
----
-
 # Chapter 33: Programmable Completion
-
-
-## Index
-* [Introduction]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#introduction)
-* [Programmable completion environment variables]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#programmable-completion-environment-variables)
-    * [The "`COMP_CWORD`" variable]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#the-comp_cword-variable)
-    * [The "`COMP_KEY`" variable]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#the-comp_key-variable)
-    * [The "`COMP_LINE`" variable]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#the-comp_line-variable)
-    * [The "`COMP_POINT`" variable]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#the-comp_point-variable)
-    * [The "`COMP_TYPE`" variable]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#the-comp_type-variable)
-    * [The "`COMP_WORDBREAKS`" variable]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#the-comp_wordbreaks-variable)
-    * [The "`COMPREPLY`" variable]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#the-compreply-variable)
-    * [The "`COMP_WORDS`" variable]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#the-comp_words-variable)
-* [Programmable completion built-in commands]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#programmable-completion-built-in-commands)
-    * [The "`compgen`" Command]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#the-compgen-command)
-        * [Actions (the "`-A`" flag)]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#actions-the--a-flag)
-        * [Function (the "`-F`" flag)]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#function-the--f-flag)
-        * [Globbing (the “`-G`” flag)]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#globbing-the--g-flag)
-        * [Word list (the “`-W`” flag)]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#word-list-the--w-flag)
-        * [Filter out (the “`-X`” flag)]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#filter-out-the--x-flag)
-        * [Suffix (the “`-S`” flag)]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#suffix-the--s-flag)
-        * [Options (the “`-o`” flag)]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#options-the--o-flag)
-    * [The "`complete`" Command]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#the-complete-command)
-    * [How to use “`compgen`” and “`complete`” together?]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#how-to-use-compgen-and-complete-together)
-        * [Adding static values to the "`COMPREPLY`" array variable]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#adding-static-values-to-the-compreply-array-variable)
-        * [Adding static values with “`compgen`”]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#adding-static-values-with-compgen)
-        * [Dynamic completion based on what has been typed so far]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#dynamic-completion-based-on-what-has-been-typed-so-far)
-        * [Dynamic completion using “`COMP_CWORD`” variable]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#dynamic-completion-using-comp_cword-variable)
-        * [Dynamic completion with several arguments and sub-arguments]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#dynamic-completion-with-several-arguments-and-sub-arguments)
-* [Where to place the programmable completion scripts?]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#where-to-place-the-programmable-completion-scripts)
-* [What happens with ZSH users?]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#what-happens-with-zsh-users)
-* [Summary]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#summary)
-* [References]({{ site.url }}//bash-in-depth/0033-Programmable-Completion.html#references)
-
-
-<hr style="width:100%;text-align:center;margin-left:0;margin-bottom:10px">
 
 ## Introduction
 
