@@ -7,6 +7,7 @@
 ## Introduction
 
 Welcome to **Java + SpringBoot** — the powerhouse behind the repo’s backend ambitions. This folder is where ideas transform into real, scalable services built on a foundation of clean Java architecture and Spring Boot excellence.
+
 Inside, you’ll discover:
 * **Spring Boot applications & modules** engineered for production, with layered structure, configuration, and best practices built in.
 * **REST APIs & microservices** that handle data, logic, and connectivity, making this the core of the system’s interaction with frontends or other services.
@@ -15,7 +16,7 @@ Inside, you’ll discover:
 
 Think of this as the backbone: where design, performance, and reliability meet clean code. If you want to see how an entire backend stacks up—from entry point to service logic to endpoints—this is the playground.
 
-## SECTIONS
+## Table of Contents
 
 * [Sections 1 to 3: Spring Core, Hibernate/JPA CRUD](docs/First-Part.md)
 * [Section 4: REST CRUD APIs](docs/Section-4.md)
@@ -25,6 +26,4 @@ Think of this as the backbone: where design, performance, and reliability meet c
 * [Section 8: Spring MVC Security](docs/Section-8.md)
 * [Section 9: JPA / Hibernate Advanced Mappings](docs/Section-9.md)
 * [Section 10: AOP - Aspect-Oriented Programming](docs/Section-10.md)
-
-**Java Master Class 2025**
-* [Section 1: Getting started with Java Programming](docs/JavaMasterClass2025-Section-01.md)
+* [Section 1: Getting started with Java Programming (Java Master Class 2025)](docs/JavaMasterClass2025-Section-01.md)

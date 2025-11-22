@@ -1,5 +1,14 @@
 # My Spring Boot Notes
 
+## Table of Contents
+* [Logging levels](#logging-levels-httpsdocsspringiospring-bootreferencefeatureslogginghtml)
+* [Lazy initialization](#lazy-initialization)
+* [Spring Bean Scopes](#spring-bean-scopes)
+* [Bean Lifecycle Methods](#bean-lifecycle-methods)
+* [EntityManager vs JpaRepository](#entitymanager-vs-jparepository)
+* [Using JPQuery](#using-jpquery)
+* [How to update an entity object?](#how-to-update-an-entity-object)
+
 Links:
 * https://docs.spring.io/spring-boot/appendix/application-properties/index.html
 * https://docs.spring.io/spring-boot/reference/features/logging.html#page-title
