@@ -54,7 +54,7 @@ What you need to have is:
 Inside <a href="https://replicate.com/">Replicate</a> you will find the <a href="https://replicate.com/ostris/flux-dev-lora-trainer/train">Flux Dev LoRA Trainer</a>
 
 Once you are in that trainer you need to:
-1. Assing the name for your AI Influencer, it could be anything.
+1. Adding the name for your AI Influencer, it could be anything.
 2. Then provide your dataset in the field "`input_images`" of the Flux Dev LoRA Trainer
 3. Then you need to select the "`trigger_word`" this is a very important because it will be the word that will trigger the LoRA. The recommendation is to use the name of the AI Influencer
 4. On the "`steps`" you need to select between "`2000`" and "`3000`". The more steps you take the more time you will get to train the LoRA and the more expensive it is. The cost to train a LoRA could be between 3$ or 4$.
