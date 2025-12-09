@@ -53,6 +53,35 @@ What you need to have is:
 
 Inside <a href="https://replicate.com/">Replicate</a> you will find the <a href="https://replicate.com/ostris/flux-dev-lora-trainer/train">Flux Dev LoRA Trainer</a>
 
+The recommended parameter to set in your LoRA are:
+* "`trigger_word`": The trigger word for your LoRA it could be anything... (For example: "`helga`", "`anastasia`", "`bob`"...)
+* "`autocaption`": "`true`"
+* "`steps`": "`3000`"
+* "`lora_rank`": "`32`"
+* "`hf_repo_id`": Hugging Face Access Token
+* "`wandb_project`": "`helga_flux_lora`"
+* "`wandb_sample_prompts`": "`portrait of helga, neutral expression, studio lighting, 50mm lens, photorealistic full body photo of helga standing on a beach at sunset, detailed skin, sharp focus, 8k, photorealistic helga riding a black horse on a misty shoreline, cinematic lighting, high detail, editorial fashion photo, 8k helga in casual streetwear, city at night, neon lights, shallow depth of field, ultra realistic`"
+* "`learning_rate`": "`0.0004`"
+* "`batch_size`": "`1`"
+* "`resolution`": "`512,768,1024`"
+* "`caption_dropout_rate`": "`0,05`"
+* "`optimizer`": "`adamw8bit`"
+* "`cache_latents_to_disk":
+    * "`true`" if your dataset is big and you’re OK using disk space to speed up repeated passes.
+    * "`false`" is fine too; quality is the same.
+* "`layers_to_optimize_regex`":
+    * Leave **blank / default** unless you explicitly know you want to only train some layers.
+    * For a normal character LoRA, don’t touch it.
+* "`gradient_checkpointing`"
+    * "`false`" if you’re training on Replicate’s H100 (plenty of VRAM, faster).
+    * "`true`" only if you somehow hit OOM; it trades speed for memory, not quality.
+* "`skip_training_and_use_pretrained_hf_lora_url`":
+    * Leave **empty/false.**
+    * This is only if you want to load a LoRA from Hugging Face instead of training on your zip.
+* "`wandb_run`": "`helga_steps2200_rank32_lr4e-4`"
+* "`wandb_sample_interval`": "`200`"
+* "`wandb_save_interval`": "`750`"
+
 Once you are in that trainer you need to:
 1. Adding the name for your AI Influencer, it could be anything.
 2. Then provide your dataset in the field "`input_images`" of the Flux Dev LoRA Trainer
@@ -62,6 +91,7 @@ Once you are in that trainer you need to:
 6. Then with Access Token you created in Hugging Face you back to the Flux Dev LoRA Trainer and paste Access Token in the field that says "`hf_token`"
 7. Then you go back to <a href="https://huggingface.co/">Hugging Face</a> to create a new model with the name of your AI Influencer, do not forget to copy the name of your model.
 8. Then you go back to the Flux Dev LoRA Trainer and paste the name of the model of Hugging Face inside the field "`hf_repo_id`"
+9. Then you need to create a <a href="https://replicate.com/account/api-tokens">Replicate Token</a>
 
 Once you have all the information you can create a Bash script to create the images of your AI Influencer were you will be to generate images without any constraints.
 
