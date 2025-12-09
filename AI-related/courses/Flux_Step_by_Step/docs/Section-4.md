@@ -24,6 +24,11 @@ We can train our LoRA to do:
 
 LoRAs empowers creators, even those with limited resources, to **personalize AI models** for unique outputs in a time-efficient way.
 
+## Create your token in Hugging Face
+
+You need to go <a href="https://huggingface.co/settings/tokens">the following website</a> to create User Access Token.
+
+You need to give all permissions to your token.
 
 ## Training a Flux LoRA with images of your own AI Influencer
 
