@@ -127,6 +127,24 @@ curl -X POST "https://api.replicate.com/v1/predictions" \
   }"
 ```
 
+There are different versions of the parameters in this Bash script:
+* "`model`": Always use "`dev`"
+* "`aspect_ration`":
+    * "`21:9`"
+    * "`16:9`"
+    * "`3:2`"
+    * "`4:3`"
+    * "`5:4`"
+    * "`1:1`"
+    * "`4:5`"
+    * "`3:4`"
+    * "`2:3`"
+    * "`9:16`"
+    * "`9:21`"
+* "`output_format`"
+    * "`jpg`"
+    * "`png`"
+
 The paramter that is named "`disable_safety_checker`" allows you to create images that are Not Suitable For Work.
 
 Once you have created the following Bash script, you will have enable the permissions for execution with...
