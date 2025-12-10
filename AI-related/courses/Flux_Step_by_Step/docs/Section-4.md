@@ -30,6 +30,30 @@ You need to go <a href="https://huggingface.co/settings/tokens">the following we
 
 You need to give all permissions to your token.
 
+## Create your API Token for Replicate
+
+In this case you need to the following page <a href="https://replicate.com/account/api-tokens">Replicate API Token </a>. 
+
+You will find a page like this.
+
+<p align="center">
+    <img src="../images/Section4/ReplicateAPITokens.png" width="800"/>
+</p>
+
+You need to create a new token for your LoRA. 
+
+You can assign any name to your token. The most important thing is that the name of your token should be **unique**.
+
+Then you need to copy your token using the "`Copy token`" button.
+
+Then you need to save this token on a file or something different to reuse it in our Bash script.
+
+The typical API token of replicate has 40 characters and has the following shape.
+
+```txt
+r8_SofzVG*******************************
+```
+
 ## Training a Flux LoRA with images of your own AI Influencer
 
 The advantange of training our own LoRA with images of our own AI Influencer is that you can recreate the AI Influencer again and again with a just a prompt and a click.
@@ -111,8 +135,8 @@ Once your LoRA is trained you will have the following configuration
 #!/usr/bin/env bash
 # generate_image.sh
 
-REPLICATE_API_KEY="..."
-REPLICATE_LORA="..."
+REPLICATE_API_KEY="..." # r8_SofzVG*******************************
+REPLICATE_LORA="..." # 26dce37af90b........ 
 
 # The prompt needs to contain the trigger word for your LoRA
 PROMPT="..."
