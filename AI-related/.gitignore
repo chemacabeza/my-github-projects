@@ -1,2 +1,4 @@
 *.safetensors
 outputs/
+venv/
+Fooocus/

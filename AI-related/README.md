@@ -24,18 +24,46 @@ Dive in, experiment boldly, and see how far your curiosity can take you.
 
 ## QUICK START
 
-To build and run the local Fooocus environment:
+To build and run the local Fooocus environment (using Docker):
 
-```bash
-cd AI-related
-make run
-```
+1.  **Navigate to the directory**:
+    ```bash
+    cd AI-related
+    ```
+
+2.  **Run with Docker**:
+    ```bash
+    make run
+    ```
 
 To stop:
 
 ```bash
 make down
 ```
+
+### Running Locally (No Docker)
+
+If you cannot run Docker, you can run the application directly on your machine.
+
+**Important**: Ensure you are in the `AI-related` directory before running these commands.
+
+1.  **Navigate to the directory**:
+    ```bash
+    cd AI-related
+    ```
+
+2.  **Install dependencies** (run this only once):
+    ```bash
+    make install-local
+    ```
+    *This will clone the repository, create a virtual environment, and install all required libraries.*
+
+3.  **Run the application**:
+    ```bash
+    make run-local
+    ```
+    *This will download necessary models and start the server.*
 ## COURSES
 
 * [Flux Step by Step - AI Influencers & Fanvue Models FAST](courses/Flux_Step_by_Step/README.md)
