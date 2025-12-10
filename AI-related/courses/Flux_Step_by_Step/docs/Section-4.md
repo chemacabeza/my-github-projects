@@ -100,6 +100,13 @@ Once you are in that trainer you need to:
 
 Once you have all the information you can create a Bash script to create the images of your AI Influencer were you will be to generate images without any constraints.
 
+Once your LoRA is trained you will have the following configuration
+
+
+<p align="center">
+    <img src="../images/Section4/ConfigurationOfYourLoRA.png" width="800"/>
+</p>
+
 ```bash
 #!/usr/bin/env bash
 # generate_image.sh
