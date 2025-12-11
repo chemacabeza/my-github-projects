@@ -128,7 +128,7 @@ Once your LoRA is trained you will have the following configuration
 
 
 <p align="center">
-    <img src="../images/Section4/ConfigurationOfYourLoRA.png" width="800"/>
+    <img src="../images/Section4/ConfigurationOfYourLoRA.png" width="1000"/>
 </p>
 
 ```bash
