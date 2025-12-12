@@ -80,6 +80,31 @@ If you prefer to run the application directly on your machine (without Docker), 
         *   If you don't have a token, the script will skip those restricted models and continue.
     *   *Subsequent runs:* Starts the Fooocus server immediately.
     *   Access the UI at [http://localhost:7860](http://localhost:7860).
+
+### Included Models
+
+The local installation includes the following models by default. Some are standard Fooocus models, while others are custom additions.
+
+**Checkpoint Models:**
+1.  **Standard**: `juggernautXL_v8Rundiffusion.safetensors` (General purpose, high quality)
+2.  **Standard**: `animaPencilXL_v500.safetensors` (Anime style)
+3.  **Standard**: `realisticStockPhoto_v20.safetensors` (Realistic photography)
+4.  `sdxlYamersRealistic5_v5Rundiffusion.safetensors`
+5.  `sdXL_v10VAEFix.safetensors`
+6.  `sdxlUnstableDiffusers_nihilmania.safetensors`
+7.  `SDXLRonghua_v45.safetensors`
+
+**LoRAs:**
+1.  **Standard**: `sd_xl_offset_example-lora_1.0.safetensors`
+    *   *Trigger Word*: `contrasts` (Optional, often works without)
+2.  **Standard**: `SDXL_FILM_PHOTOGRAPHY_STYLE_V1.safetensors`
+    *   *Trigger Word*: `film photography style`
+3.  `lingerie_loha.safetensors` (May require Civitai Token)
+    *   *Trigger Word*: `L1ng3r13 st0r3`
+4.  `retro_neon_illustriouos.safetensors`
+    *   *Trigger Word*: `retro_neon`
+5.  `pumpsheel.safetensors`
+    *   *Trigger Word*: `high heels`, `pumps` (Likely triggers)
 ## COURSES
 
 * [Flux Step by Step - AI Influencers & Fanvue Models FAST](courses/Flux_Step_by_Step/README.md)

@@ -52,4 +52,5 @@ install-local:
 run-local:
 	@echo "Starting Fooocus locally..."
 	. $(VENV_DIR)/bin/activate && \
-	./run_local.sh python entry_with_update.py --listen --port 7860 --always-high-vram
+	./run_local.sh python entry_with_update.py --listen --port 7860 --always-high-vram \
+		--external-working-path $(PWD)/models $(PWD)/LoRAs
