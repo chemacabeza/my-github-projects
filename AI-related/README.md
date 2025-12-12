@@ -79,7 +79,7 @@ If you prefer to run the application directly on your machine (without Docker), 
             ```
         *   If you don't have a token, the script will skip those restricted models and continue.
     *   *Subsequent runs:* Starts the Fooocus server immediately.
-    *   Access the UI at `http://localhost:7860`.
+    *   Access the UI at [http://localhost:7860](http://localhost:7860).
 ## COURSES
 
 * [Flux Step by Step - AI Influencers & Fanvue Models FAST](courses/Flux_Step_by_Step/README.md)
