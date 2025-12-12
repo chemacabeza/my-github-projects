@@ -38,15 +38,15 @@ down:
 # Local targets
 install-local:
 	@echo "Cloning Fooocus..."
-	[ -d $(FOOOCUS_DIR) ] || git clone https://github.com/lllyasviel/Fooocus.git $(FOOOCUS_DIR)
+	[ -d $(FOOOCUS_DIR)/.git ] || git clone https://github.com/lllyasviel/Fooocus.git $(FOOOCUS_DIR)
 	@echo "Creating virtual environment..."
 	[ -d $(VENV_DIR) ] || python3 -m venv $(VENV_DIR)
 	@echo "Installing dependencies..."
 	. $(VENV_DIR)/bin/activate && \
 	pip install --upgrade pip && \
 	pip install packaging setuptools wheel "pygit2==1.15.1" && \
-	pip install "torch==2.1.0" "torchvision==0.16.0" && \
-	sed -i '' 's/scipy==1.14.0/scipy>=1.10.0/' $(FOOOCUS_DIR)/requirements_versions.txt && \
+	pip install "torch==2.4.0" "torchvision==0.19.0" && \
+	sed -i 's/scipy==1.14.0/scipy>=1.10.0/' $(FOOOCUS_DIR)/requirements_versions.txt && \
 	pip install -r $(FOOOCUS_DIR)/requirements_versions.txt
 
 run-local:

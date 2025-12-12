@@ -44,26 +44,42 @@ make down
 
 ### Running Locally (No Docker)
 
-If you cannot run Docker, you can run the application directly on your machine.
+If you prefer to run the application directly on your machine (without Docker), follow these steps.
 
-**Important**: Ensure you are in the `AI-related` directory before running these commands.
+**Prerequisites**:
+*   Linux or macOS (Windows support may require manual adjustments)
+*   Python 3.10 or higher (Python 3.12 is supported)
+*   `git`, `make`, and `python3` installed
 
 1.  **Navigate to the directory**:
     ```bash
     cd AI-related
     ```
 
-2.  **Install dependencies** (run this only once):
+2.  **Install dependencies**:
     ```bash
     make install-local
     ```
-    *This will clone the repository, create a virtual environment, and install all required libraries.*
+    *   This command performs the following:*
+        *   Clones the Fooocus repository.
+        *   Creates a local virtual environment (`venv`).
+        *   Installs optimized PyTorch versions (compatible with Python 3.12).
+        *   Installs all required dependencies.
 
 3.  **Run the application**:
     ```bash
     make run-local
     ```
-    *This will download necessary models and start the server.*
+    *   *First run:* This will automatically download necessary checkpoint and LoRA models (several GBs).
+    *   **Note on Civitai Models**: Some models may require a Civitai API token (e.g., age-restricted content).
+        *   If the download fails with a 401 error, you can provide your token:
+            ```bash
+            export CIVITAI_API_TOKEN=your_token_here
+            make run-local
+            ```
+        *   If you don't have a token, the script will skip those restricted models and continue.
+    *   *Subsequent runs:* Starts the Fooocus server immediately.
+    *   Access the UI at `http://localhost:7860`.
 ## COURSES
 
 * [Flux Step by Step - AI Influencers & Fanvue Models FAST](courses/Flux_Step_by_Step/README.md)
