@@ -74,6 +74,14 @@ Each prompt must:
 **GPT generates:**
 > "Hyper realistic 10-second video of inga driving a sleek white Tesla Model S through a vast desert highway at golden hour, warm sunlight reflecting off the car’s surface, soft sand dunes stretching into the distance... Soundscape includes low hum of electric motor, tires rolling on asphalt, and wind rushing past the windows. Cinematic lighting, ultra-detailed textures..."
 
+### Video Result
+
+Here is the actual video generated using the prompt created by this custom GPT:
+
+[![Watch the video](https://img.youtube.com/vi/-v4uOMs8hOU/maxresdefault.jpg)](https://youtu.be/-v4uOMs8hOU)
+
+*Notice how the Custom GPT successfully included audio cues that resulted in realistic sound effects in the final video.*
+
 ---
 
 ## Summary
