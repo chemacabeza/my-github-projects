@@ -6,7 +6,7 @@
 
 ## 🚀 Engineering Leader & Architect of Scale
 
-I am a **Software Engineer** and **Engineering Manager** obsessed with building high-performance, scalable systems. Originally from **Seville, Spain**, my journey has taken me across Europe—from the research labs of Madrid to the tech hubs of France, Scotland, and Berlin. 
+My name is **José María Cabeza Rodríguez**, and I am a **Software Engineer** and **Engineering Manager** obsessed with building high-performance, scalable systems. Originally from **Seville, Spain**, my journey has taken me across Europe—from the research labs of Madrid to the tech hubs of France, Scotland, and Berlin. 
 
 I don't just write code; I build engines that power businesses. Whether it's crafting algorithms for airlines, architecting data platforms, or leading teams at fintech giants like Klarna, my goal remains the same: **Deliver excellence, ensuring scalability and robust performance.**
 
