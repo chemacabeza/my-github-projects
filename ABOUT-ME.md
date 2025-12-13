@@ -32,7 +32,7 @@ Mastering the backend for the travel industry.
 *   **Highlight**: Led the **Japan Airlines (JAL)** project, designing a complex algorithm for after-sales pricing and discount coupons.
 *   **Tech Stack**: Java, C++, High-performance pricing systems.
 
-### 🇪🇸 Early Career (Spain) | * The Foundation*
+### 🇪🇸 Early Career (Spain) | *The Foundation*
 **2009 - 2011**
 *   **Cystelcom**: Delivered critical projects for **Vodafone Spain** and **Helvetia Seguros**.
 *   **UPM Telematics Lab**: Selected for academic excellence. Customized **Debian GNU/Linux** distros for automation and built facial recognition comms systems.
