@@ -47,9 +47,11 @@ make down
 If you prefer to run the application directly on your machine (without Docker), follow these steps.
 
 **Prerequisites**:
-*   Linux or macOS (Windows support may require manual adjustments)
-*   Python 3.10 or higher (Python 3.12 is supported)
-*   `git`, `make`, and `python3` installed
+*   **Linux** or **macOS** (Windows support may require manual adjustments)
+*   **Python 3.10 or higher** (Python 3.12+ recommended)
+*   **`git`**, **`make`**, and **`python3`** installed
+*   **macOS only**: Xcode Command Line Tools (`xcode-select --install`)
+*   **macOS only**: macOS 12.3 (Monterey) or later for MPS support
 
 1.  **Navigate to the directory**:
     ```bash
@@ -114,6 +116,36 @@ ls -la Fooocus/models/loras
 
 You should see symlinks pointing to `../../models` and `../../LoRAs`.
 
+### macOS-Specific Information
+
+**GPU Acceleration on macOS**:
+
+This installation automatically detects macOS and installs PyTorch with **Metal Performance Shaders (MPS)** support for GPU acceleration on Apple Silicon chips:
+
+*   ✅ **Apple Silicon (M1/M2/M3/M4)**: Full MPS GPU acceleration
+*   ✅ **Intel Macs with AMD GPU**: MPS support available
+*   ℹ️ **Older Intel Macs**: CPU-only mode (slower but functional)
+
+**Installation automatically configures**:
+*   Latest PyTorch with MPS backend
+*   Platform-specific dependencies
+*   Optimized settings for macOS
+
+**Verifying MPS Support**:
+
+After installation, you can verify MPS is available:
+```bash
+. venv/bin/activate
+python -c "import torch; print('MPS available:', torch.backends.mps.is_available())"
+```
+
+Expected output on Apple Silicon: `MPS available: True`
+
+**Performance Notes**:
+*   First image generation may be slower (model caching)
+*   Subsequent generations significantly faster with GPU
+*   Apple Silicon provides excellent performance for AI image generation
+
 ### Included Models
 
 The local installation includes the following models by default. Some are standard Fooocus models, while others are custom additions.
@@ -173,6 +205,23 @@ The local installation includes the following models by default. Some are standa
 **Port already in use:**
 
 - If port 7860 is occupied, you can modify the port in the `Makefile` (`run-local` target)
+
+**macOS-Specific Issues**:
+
+- **MPS not available**: Ensure you have:
+  - macOS 12.3 or later
+  - Apple Silicon or AMD GPU
+  - Latest PyTorch installed (`pip install --upgrade torch`)
+
+- **"xcode-select" errors**: Install Command Line Tools:
+  ```bash
+  xcode-select --install
+  ```
+
+- **Slow performance on Intel Mac**: Intel Macs without AMD GPU use CPU mode. Consider:
+  - Using smaller batch sizes
+  - Reducing image resolution
+  - Being patient with generation times
 
 ---
 ## COURSES

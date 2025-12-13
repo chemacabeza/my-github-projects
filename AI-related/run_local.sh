@@ -1,6 +1,19 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Detect platform
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    PLATFORM="macOS"
+    GPU_INFO="Metal Performance Shaders (MPS)"
+else
+    PLATFORM="Linux"
+    GPU_INFO="CUDA"
+fi
+
+echo "=== Platform: $PLATFORM ==="
+echo "GPU Acceleration: $GPU_INFO"
+echo ""
+
 # Local folders (relative to where you run make)
 CKPT_DIR="./models"
 LORA_DIR="./LoRAs"

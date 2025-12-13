@@ -5,6 +5,20 @@ CONTAINER_NAME = fooocus-container
 VENV_DIR = venv
 FOOOCUS_DIR = Fooocus
 
+# Detect operating system
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Darwin)
+    OS = macos
+    SED_INPLACE = sed -i ''
+    TORCH_INSTALL = pip install torch torchvision
+    PLATFORM_MSG = "macOS detected - installing PyTorch with MPS (Metal Performance Shaders) support"
+else
+    OS = linux
+    SED_INPLACE = sed -i
+    TORCH_INSTALL = pip install "torch==2.4.0" "torchvision==0.19.0"
+    PLATFORM_MSG = "Linux detected - installing PyTorch with CUDA support"
+endif
+
 # Docker targets
 build:
 	docker build -t $(IMAGE_NAME) .
@@ -37,6 +51,7 @@ down:
 
 # Local targets
 install-local:
+	@echo $(PLATFORM_MSG)
 	@echo "Cloning Fooocus..."
 	[ -d $(FOOOCUS_DIR)/.git ] || git clone https://github.com/lllyasviel/Fooocus.git $(FOOOCUS_DIR)
 	@echo "Creating virtual environment..."
@@ -45,8 +60,8 @@ install-local:
 	. $(VENV_DIR)/bin/activate && \
 	pip install --upgrade pip && \
 	pip install packaging setuptools wheel "pygit2==1.15.1" && \
-	pip install "torch==2.4.0" "torchvision==0.19.0" && \
-	sed -i 's/scipy==1.14.0/scipy>=1.10.0/' $(FOOOCUS_DIR)/requirements_versions.txt && \
+	$(TORCH_INSTALL) && \
+	$(SED_INPLACE) 's/scipy==1.14.0/scipy>=1.10.0/' $(FOOOCUS_DIR)/requirements_versions.txt && \
 	pip install -r $(FOOOCUS_DIR)/requirements_versions.txt
 
 run-local:
