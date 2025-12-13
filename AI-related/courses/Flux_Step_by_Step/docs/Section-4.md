@@ -23,10 +23,10 @@ LoRAs add small, trainable layers to an existing AI model. These layers learn sp
 
 **Why Use LoRAs?**
 
-✅ **Efficient**: Train only a small portion of the model (much faster and cheaper)
-✅ **Reusable**: Apply your LoRA to any compatible base model
-✅ **Consistent**: Generate your AI influencer reliably with just a trigger word
-✅ **Accessible**: No need for expensive hardware - use cloud services
+* ✅ **Efficient**: Train only a small portion of the model (much faster and cheaper)
+* ✅ **Reusable**: Apply your LoRA to any compatible base model
+* ✅ **Consistent**: Generate your AI influencer reliably with just a trigger word
+* ✅ **Accessible**: No need for expensive hardware - use cloud services
 
 ---
 
