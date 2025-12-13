@@ -46,6 +46,37 @@ download_model() {
 
 mkdir -p "$CKPT_DIR" "$LORA_DIR"
 
+# Setup symbolic links for Fooocus to use centralized model storage
+echo "=== Setting up symbolic links ==="
+FOOOCUS_CKPT_DIR="./Fooocus/models/checkpoints"
+FOOOCUS_LORA_DIR="./Fooocus/models/loras"
+
+# Check if checkpoints directory is a symlink or regular directory
+if [ -L "$FOOOCUS_CKPT_DIR" ]; then
+    echo "Checkpoint symlink already exists"
+elif [ -d "$FOOOCUS_CKPT_DIR" ]; then
+    echo "Converting checkpoints directory to symlink..."
+    rm -rf "$FOOOCUS_CKPT_DIR"
+    ln -s "../../models" "$FOOOCUS_CKPT_DIR"
+    echo "Created symlink: $FOOOCUS_CKPT_DIR -> ../../models"
+else
+    ln -s "../../models" "$FOOOCUS_CKPT_DIR"
+    echo "Created symlink: $FOOOCUS_CKPT_DIR -> ../../models"
+fi
+
+# Check if loras directory is a symlink or regular directory
+if [ -L "$FOOOCUS_LORA_DIR" ]; then
+    echo "LoRA symlink already exists"
+elif [ -d "$FOOOCUS_LORA_DIR" ]; then
+    echo "Converting loras directory to symlink..."
+    rm -rf "$FOOOCUS_LORA_DIR"
+    ln -s "../../LoRAs" "$FOOOCUS_LORA_DIR"
+    echo "Created symlink: $FOOOCUS_LORA_DIR -> ../../LoRAs"
+else
+    ln -s "../../LoRAs" "$FOOOCUS_LORA_DIR"
+    echo "Created symlink: $FOOOCUS_LORA_DIR -> ../../LoRAs"
+fi
+
 echo "=== Checking models ==="
 
 # Standard Fooocus Models
@@ -71,6 +102,8 @@ download_model 'https://civitai.com/api/download/models/1082049' "$LORA_DIR/retr
 download_model 'https://civitai.com/api/download/models/100982' "$LORA_DIR/pumpsheel.safetensors"
 
 echo "=== Starting Fooocus ==="
-# We assume we are in the AI-related directory and Fooocus is cloned in ./Fooocus
+echo "All models and LoRAs are accessible via symbolic links"
+echo "Navigate to Fooocus directory and launch..."
+# Navigate to Fooocus directory before launching
 cd Fooocus
 exec "$@"

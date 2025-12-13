@@ -70,7 +70,9 @@ If you prefer to run the application directly on your machine (without Docker), 
     ```bash
     make run-local
     ```
-    *   *First run:* This will automatically download necessary checkpoint and LoRA models (several GBs).
+    *   **First run**: This will:
+        *   Create symbolic links from `Fooocus/models/checkpoints` → `models/` and `Fooocus/models/loras` → `LoRAs/`
+        *   Automatically download necessary checkpoint and LoRA models to centralized directories (several GBs)
     *   **Note on Civitai Models**: Some models may require a Civitai API token (e.g., age-restricted content).
         *   If the download fails with a 401 error, you can provide your token:
             ```bash
@@ -78,8 +80,39 @@ If you prefer to run the application directly on your machine (without Docker), 
             make run-local
             ```
         *   If you don't have a token, the script will skip those restricted models and continue.
-    *   *Subsequent runs:* Starts the Fooocus server immediately.
+    *   **Subsequent runs**: Starts the Fooocus server immediately using the existing models.
     *   Access the UI at [http://localhost:7860](http://localhost:7860).
+
+### Model Management
+
+**Storage Architecture**:
+
+This installation uses a **centralized storage approach** with symbolic links:
+
+*   📁 **Checkpoint models**: Stored in `AI-related/models/`
+*   📁 **LoRAs**: Stored in `AI-related/LoRAs/`
+*   🔗 **Symbolic links**: Fooocus accesses models via symlinks:
+    *   `Fooocus/models/checkpoints` → `../../models`
+    *   `Fooocus/models/loras` → `../../LoRAs`
+
+**Adding New Models**:
+
+1. Download your `.safetensors` model file
+2. Place it in the appropriate directory:
+   - Checkpoint models → `AI-related/models/`
+   - LoRAs → `AI-related/LoRAs/`
+3. Restart Fooocus (or it will auto-detect on next run)
+4. The new model will appear in the Fooocus UI
+
+**Verifying Symbolic Links**:
+
+To check if symbolic links are properly set up:
+```bash
+ls -la Fooocus/models/checkpoints
+ls -la Fooocus/models/loras
+```
+
+You should see symlinks pointing to `../../models` and `../../LoRAs`.
 
 ### Included Models
 
@@ -99,12 +132,49 @@ The local installation includes the following models by default. Some are standa
     *   *Trigger Word*: `contrasts` (Optional, often works without)
 2.  **Standard**: `SDXL_FILM_PHOTOGRAPHY_STYLE_V1.safetensors`
     *   *Trigger Word*: `film photography style`
-3.  `lingerie_loha.safetensors` (May require Civitai Token)
+3.  `lingerie_loha.safetensors` (Requires Civitai Token - **Note**: May not download without token)
     *   *Trigger Word*: `L1ng3r13 st0r3`
+    *   To download, set `CIVITAI_API_TOKEN` environment variable before running
 4.  `retro_neon_illustriouos.safetensors`
     *   *Trigger Word*: `retro_neon`
 5.  `pumpsheel.safetensors`
     *   *Trigger Word*: `high heels`, `pumps` (Likely triggers)
+
+### Troubleshooting
+
+**Models not appearing in Fooocus UI:**
+
+1. Verify symbolic links exist:
+   ```bash
+   ls -la Fooocus/models/checkpoints
+   ls -la Fooocus/models/loras
+   ```
+
+2. If symlinks are missing, re-run:
+   ```bash
+   make run-local
+   ```
+   The script will automatically create them.
+
+3. Ensure model files are in the correct directories:
+   ```bash
+   ls -lh models/*.safetensors
+   ls -lh LoRAs/*.safetensors
+   ```
+
+**Download failures:**
+
+- For Civitai 401 errors, set your API token:
+  ```bash
+  export CIVITAI_API_TOKEN=your_token_here
+  make run-local
+  ```
+
+**Port already in use:**
+
+- If port 7860 is occupied, you can modify the port in the `Makefile` (`run-local` target)
+
+---
 ## COURSES
 
 * [Flux Step by Step - AI Influencers & Fanvue Models FAST](courses/Flux_Step_by_Step/README.md)
