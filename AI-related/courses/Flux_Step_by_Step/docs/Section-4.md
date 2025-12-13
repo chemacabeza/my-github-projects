@@ -246,10 +246,10 @@ chmod +x generate_image.sh
 
 ### Crafting Prompts
 
-✅ **Always include your trigger word** (e.g., "helga")
-✅ **Be specific**: Describe pose, clothing, lighting, background
-✅ **Use quality descriptors**: "8k", "photorealistic", "detailed", "cinematic"
-✅ **Specify camera details**: "50mm lens", "shallow depth of field"
+* ✅ **Always include your trigger word** (e.g., "helga")
+* ✅ **Be specific**: Describe pose, clothing, lighting, background
+* ✅ **Use quality descriptors**: "8k", "photorealistic", "detailed", "cinematic"
+* ✅ **Specify camera details**: "50mm lens", "shallow depth of field"
 
 ### Example Quality Prompts
 
