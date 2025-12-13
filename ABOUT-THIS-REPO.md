@@ -6,7 +6,7 @@
 
 This repository is my **personal engineering playground**—a living lab where bold ideas turn into working code. Far more than a code stash, it’s a hand-picked collection of projects, clever experiments, and hard-won tips that reveal how I tackle real-world challenges. From robust backends to lightning-fast automation and even AI-powered creativity, every folder reflects my drive to **build**, **optimize**, **and push boundaries**.
 
-## AI-Media
+## AI-related
 
 Where imagination meets algorithms, this folder is a true playground for AI-powered creativity and learning. It dives into AI-driven image generation, blending Stable Diffusion magic with custom experiments to create striking visuals and one-of-a-kind digital art. Alongside these creative projects, it also contains notes from Udemy courses the author has taken, making it both a hands-on lab for experimentation and a study journal that fuels fresh ideas and unexpected sparks of inspiration.
 
