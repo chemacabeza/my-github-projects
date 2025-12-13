@@ -1,82 +1,111 @@
-# Section 2: Learning how to use the different models of Flux family on Replicate
+# Section 2: Learning to Use the Flux Model Family on Replicate
 
-## Creating AI images using the Flux models
+## Understanding the Flux Model Family
 
-Which Flux Model to use on <a href="https://replicate.com/">Replicate</a>?
-* <a href="https://replicate.com/black-forest-labs/flux-kontext-pro">Flux Pro</a>
-* <a href="https://replicate.com/black-forest-labs/flux-1.1-pro">Flux 1.1 Pro</a>
-* <a href="https://replicate.com/black-forest-labs/flux-1.1-pro-ultra">Flux 1.1 Pro Ultra</a>
-* <a href="https://replicate.com/black-forest-labs/flux-dev">Flux Dev</a>
-* <a href="https://replicate.com/black-forest-labs/flux-schnell">Flux Schnell</a>
+Flux offers a range of models, each optimized for different use cases. In this section, you'll learn which model to use and when.
 
-On the search bar of Replicate type "`flux`" under "`Collections`" you will see "`Use the FLUX family of models`" and when you click on it you will come to <a href="https://replicate.com/collections/flux">the following website</a>.
+### Available Flux Models on Replicate
 
-On our case we will select the Fluck 1.1 Pro Ultra model. 
+| Model | Best For | Speed | Quality | Cost |
+|-------|----------|-------|---------|------|
+| [**Flux 1.1 Pro Ultra**](https://replicate.com/black-forest-labs/flux-1.1-pro-ultra) | Highest quality, photorealistic images | Slower | ⭐⭐⭐⭐⭐ | $$$ |
+| [**Flux 1.1 Pro**](https://replicate.com/black-forest-labs/flux-1.1-pro) | Professional quality, balanced | Medium | ⭐⭐⭐⭐ | $$ |
+| [**Flux Pro**](https://replicate.com/black-forest-labs/flux-kontext-pro) | High-quality production | Medium | ⭐⭐⭐⭐ | $$ |
+| [**Flux Dev**](https://replicate.com/black-forest-labs/flux-dev) | Development and testing | Fast | ⭐⭐⭐ | $ |
+| [**Flux Schnell**](https://replicate.com/black-forest-labs/flux-schnell) | Rapid prototyping, quick previews | Fastest | ⭐⭐ | $ |
 
-Then we use the following prompt:
+**How to find Flux models:**
+1. Go to [Replicate](https://replicate.com/)
+2. Search for `flux` in the search bar
+3. Under **Collections**, click **"Use the FLUX family of models"**
+4. Or visit: [https://replicate.com/collections/flux](https://replicate.com/collections/flux)
 
-```txt
+---
+
+## Part 1: Creating AI Images with Flux
+
+### Using Flux 1.1 Pro Ultra
+
+For this tutorial, we'll use **Flux 1.1 Pro Ultra** - the highest quality model.
+
+#### Example 1: Portrait of an Italian Woman
+
+**Prompt:**
+```
 A hyper-realistic knee-length portrait of a beautiful busty 24-year-old Italian girl, beautiful full lips, round face, sensual face, (very realistic skin structure) flawless skin, stunning brown eyes, vibrant look, small waist, athletic figure, wearing (a fitted rose gold jumpsuit) (posed near a large indoor plant in a luxury apartment living room), perfect lighting.
 ```
 
-There is a paramter in the same that is called "`image_prompt`" where you upload an image where you are telling the AI what you are expecting as result.
+**Key Parameters:**
 
-There is another parameter that is called "`image_prompt_strength`" where we are telling the AI how much of impact should the image take.
+| Parameter | Value | Description |
+|-----------|-------|-------------|
+| `aspect_ratio` | `2:3` | Portrait orientation |
+| `safety_tolerance` | `6` | Maximum - allows mature/artistic content |
+| `seed` | Leave empty | Random seed for variety |
+| `raw` | ✅ Checked | More natural, less processed images |
 
-Then we select the "`aspect_ratio`" of "`2:3`".
+💡 **Pro Tip**: Always check the **`raw`** option for more natural-looking, less AI-processed images.
 
-The we have a very important parameter named "`safety_tolerance`", this tells the AI how strict should be with the image created. If you want to generate something that is NSFW you need to set it to "`6`".
-
-We have another parameter named "`seed`", if you leave empty the AI will select a random number.
-
-Another important parameter is the "`raw`" checkbox. The instructor highly recommends it to have it checked as its description says "`Generate less processed, more natural-looking images`".
-
-Then we click on "`Run`".
-
-This is the result.
+**Result:**
 
 <p align="center">
     <img src="../images/Section2/ItalianWoman1.jpg" width="500"/>
 </p>
 
-Then we use the following prompt:
+#### Example 2: Epic Gladiator Scene
 
-```txt
-A hyper-realistic upper body portrait of a 40 year old gladiator, exhausted face, piercing grey eyes,
-dirty skin, little scratches, athletic figure, wearing (a roman body armor, holding a sword in his hand) (standing in the middle of a colosseum), raining, epic scene, hero image
+**Prompt:**
+```
+A hyper-realistic upper body portrait of a 40 year old gladiator, exhausted face, piercing grey eyes, dirty skin, little scratches, athletic figure, wearing (a roman body armor, holding a sword in his hand) (standing in the middle of a colosseum), raining, epic scene, hero image
 ```
 
-With same configuration as before.
+**Configuration:** Same as above
+
+**Result:**
 
 <p align="center">
     <img src="../images/Section2/Gladiator1.jpg" width="500"/>
 </p>
 
-Then one last prompt is the following.
+#### Example 3: Fantasy Dragon
 
-```txt
+**Prompt:**
+```
 A hyper-realistic image of a black dragon expanding his wings and raising his head, throwing flames out of his mouth into the air, scaled detailed skin structure, orange glowing eyes, sharp teeth, dangerous, on top of a snowy mountain, cloudy sky, rain and thunderstorm, epic scene
 ```
+
+**Result:**
 
 <p align="center">
     <img src="../images/Section2/Dragon1.jpg" width="500"/>
 </p>
 
-Now we give it a try to the Flux Dev model with the same prompts as before.
+---
 
-The Flux Dev model has a parameter that is named "`num_inference_steps`" the instructor recommends it to have it to maximum value of "`50`".
+### Using Flux Dev Model
 
-The is another parameter named "`guidance`" which is basically telling the AI model how creative can it be. If you set a low value the AI model will be more creative, if you give a higher value your image will be much more closer to your prompt. The instructor recommends going with the default value of "`3.5`". 
+Now let's compare results using **[Flux Dev](https://replicate.com/black-forest-labs/flux-dev)** - faster and more cost-effective.
 
-There is another parameter named "`output_quality`", the instructor recommends to have it with the value "`100`".
+#### Flux Dev Parameters
 
-Then you need to uncheck "`go_fast`".
+| Parameter | Recommended Value | Description |
+|-----------|------------------|-------------|
+| `num_inference_steps` | `50` | Maximum quality (higher = better) |
+| `guidance` | `3.5` | Balance between creativity and prompt adherence |
+| `output_quality` | `100` | Maximum output quality |
+| `go_fast` | ❌ Unchecked | Prioritize quality over speed |
 
-We tried to generate the Italian Woman with the original prompt and it failed because it was NSFW.
+**Guidance Scale Explained:**
+- **Low values (2-3)**: More creative, may deviate from prompt
+- **High values (7-15)**: Strict adherence to prompt, less creativity
+- **Recommended**: 3.5 for balanced results
 
-Then the instructor fixed the prompt as follows:
+#### Flux Dev Results
 
-```txt
+**Italian Woman (Modified Prompt for Safety):**
+
+Original prompt was flagged as NSFW. Modified version:
+```
 A hyper-realistic knee-length portrait of a beautiful busty 24-year-old Italian girl, beautiful full lips, round face, sensual face, (very realistic skin structure) flawless skin, stunning brown eyes, vibrant look, small waist, athletic figure, wearing (a long cosy sweatshirt) (posed near a large indoor plant in a luxury apartment living room), perfect lighting.
 ```
 
@@ -84,134 +113,206 @@ A hyper-realistic knee-length portrait of a beautiful busty 24-year-old Italian 
     <img src="../images/Section2/ItalianWoman2.jpg" width="500"/>
 </p>
 
-We were able to generate the Gladiator with the original prompt.
+**Gladiator (Same Prompt):**
 
 <p align="center">
     <img src="../images/Section2/Gladiator2.jpg" width="500"/>
 </p>
 
-## Inpainting using the Flux models
+---
 
-Which Flux model to use?
+## Part 2: Inpainting with Flux
 
-What are **Inpaintaing** and **Outpainting**?
+**Inpainting** and **Outpainting** allow you to modify existing images:
 
-* **Outpainting**: Extensions outside of the image
-* **Inpainting**: Changes within an image
+- **Inpainting**: Modify specific areas *within* an image
+- **Outpainting**: Extend the image beyond its original borders
 
-In our case we go to the <a href="https://replicate.com/black-forest-labs/flux-fill-pro">Flux Pro</a> model and we provide the following image.
+### Tutorial: Adding a Golden Belt
+
+We'll use **[Flux Fill Pro](https://replicate.com/black-forest-labs/flux-fill-pro)** for inpainting.
+
+#### Step-by-Step Process
+
+1. **Upload the Original Image:**
 
 <p align="center">
     <img src="../files/Section2/Influencer+Example.jpg" width="500"/>
 </p>
 
-On the "`prompt`" we provide the following text:
-
-```txt
-A golden belt, very realistic, sharp image, hight quality
+2. **Write a Descriptive Prompt:**
+```
+A golden belt, very realistic, sharp image, high quality
 ```
 
-Then on the paramter "`mask`" we do upload the following image:
+3. **Upload a Mask Image:**
+
+The mask defines what area to modify (white = modify, black = keep):
 
 <p align="center">
     <img src="../files/Section2/Influencer+Example+Mask.jpg" width="500"/>
 </p>
 
-Once you click on "`Run`" the following image will appear.
+4. **Click "Run"**
+
+**Result:**
 
 <p align="center">
     <img src="../files/Section2/ItalianWomanWithBelt.jpg" width="500"/>
 </p>
 
-## Creating variations of AI images using the Flux models
+💡 **Creating Masks**: Use image editing software (Photoshop, GIMP, Paint) to create masks. Paint white where you want changes, black where you want to preserve.
 
-There are some Flux models that we can use to modify the images:
-* **Canny**: edge-guided generation (using Canny edge detection as structural guide)
-    * <a href="https://replicate.com/black-forest-labs/flux-canny-pro">Canny Pro</a>
-    * <a href="https://replicate.com/black-forest-labs/flux-canny-dev">Canny Dev</a>
-* **Depth**: depth-map guided/aware generation (using depth information for preserving spatial relationships, perspective, etc.)
-    * <a href="https://replicate.com/black-forest-labs/flux-depth-pro">Depth Pro</a>
-    * <a href="https://replicate.com/black-forest-labs/flux-depth-dev">Depth Dev</a>
-* **Redux**: image variation / restyling — take an existing image and produce variations, possibly guided by text as well.
-    * <a href="https://replicate.com/black-forest-labs/flux-redux-dev">Redux Dev</a>
-    * <a href="https://replicate.com/black-forest-labs/flux-redux-schnell">Redux Schnell</a>
+---
 
-We do start with the Canny Pro model. 
+## Part 3: Creating Image Variations with Flux
 
-First of all we need to upload our "`control_image`" which is the following one:
+### Available Variation Models
+
+Flux offers specialized models for different types of image transformations:
+
+#### 1. **Canny Edge Detection** (Structure Preservation)
+
+Preserves edges and structural composition while changing style, colors, and details.
+
+**Models:**
+- [Flux Canny Pro](https://replicate.com/black-forest-labs/flux-canny-pro) - Higher quality
+- [Flux Canny Dev](https://replicate.com/black-forest-labs/flux-canny-dev) - Faster, budget-friendly
+
+**Use Case:** Keep pose/structure, change everything else
+
+#### 2. **Depth-Guided Generation** (Spatial Preservation)
+
+Uses depth information to maintain spatial relationships and perspective.
+
+**Models:**
+- [Flux Depth Pro](https://replicate.com/black-forest-labs/flux-depth-pro) - Higher quality
+- [Flux Depth Dev](https://replicate.com/black-forest-labs/flux-depth-dev) - Faster
+
+**Use Case:** Preserve depth and 3D structure, change appearance
+
+#### 3. **Redux** (Image Restyling)
+
+Creates variations or completely restyles an image, optionally guided by text.
+
+**Models:**
+- [Flux Redux Dev](https://replicate.com/black-forest-labs/flux-redux-dev) - Development quality
+- [Flux Redux Schnell](https://replicate.com/black-forest-labs/flux-redux-schnell) - Fastest
+
+**Use Case:** Creative variations and transformations
+
+---
+
+### Tutorial 1: Canny Pro Transformation
+
+We'll transform an image while keeping its structure.
+
+**Original Control Image:**
 
 <p align="center">
     <img src="../files/Section2/Influencer+Example.jpg" width="500"/>
 </p>
 
-Now we set in the "`prompt`" the following text:
-
-```txt
-a hyper realistic image of a fashion model with read hair wearing a yellow dress
+**Prompt:**
+```
+a hyper realistic image of a fashion model with red hair wearing a yellow dress
 ```
 
-Set the "`steps`" to "`50`".
+**Parameters:**
+- `steps`: `50`
+- `prompt_upsampling`: ✅ Checked
+- `guidance`: `25`
+- `safety_tolerance`: `6`
 
-And check on "`prompt_upsampling`".
-
-For the "`guidance`" we will go with the default which is "`25`".
-
-And the "`safety_tolerance`" we put it to "`6`".
-
-And this is the output generated.
+**Result:**
 
 <p align="center">
     <img src="../files/Section2/RedHairModelWithYellowDress.jpg" width="500"/>
 </p>
 
-Let's now try with the Redux Dev model.
+Notice how the **pose and structure remained identical** but the hair color, clothing, and style completely changed!
 
-In that case we upload the following image as "`redux_image`":
+---
+
+### Tutorial 2: Redux Dev (Image Variation)
+
+Redux creates artistic variations without needing a text prompt.
+
+**Original Image:**
 
 <p align="center">
     <img src="../files/Section2/Italian+Girl+Example.jpg" width="500"/>
 </p>
 
-And this was the result:
+**Result (No Prompt Needed):**
 
 <p align="center">
     <img src="../files/Section2/VariationOfItalianGirlExample.jpg" width="500"/>
 </p>
 
-Then we try with the following image:
+**Another Example - Landscape:**
+
+**Original:**
 
 <p align="center">
     <img src="../files/Section2/Cenote.jpg" width="500"/>
 </p>
 
-And this is the result:
+**Variation:**
 
 <p align="center">
     <img src="../files/Section2/VariationOfCenote.jpg" width="500"/>
 </p>
 
-And then we try the <a href="https://replicate.com/black-forest-labs/flux-depth-pro">Flux Depth Pro</a> model.
+---
 
-In our case we provide the following image as "`control_image`":
+### Tutorial 3: Depth Pro Transformation
 
+Preserves depth and spatial structure while changing appearance.
+
+**Control Image:**
 
 <p align="center">
     <img src="../files/Section2/Influencer+Girl.jpg" width="500"/>
 </p>
 
-as prompt we put the following text:
-
-```txt
+**Prompt:**
+```
 a hyper realistic image of a black haired influencer girl wearing a T-shirt
 ```
 
-* Check the "`prompt_upsampling`" checkbox
-* As "`guidance`" we will stick to default which is "`7`"
-* Set the "`safety_tolerance`" to "`6`"
+**Parameters:**
+- `prompt_upsampling`: ✅ Checked
+- `guidance`: `7` (default)
+- `safety_tolerance`: `6`
 
-As a result we have the following image:
+**Result:**
 
 <p align="center">
     <img src="../images/Section2/BlackHairedInfluencer.jpg" width="500"/>
 </p>
 
+The depth, pose, and spatial positioning stayed the same while the appearance transformed!
+
+---
+
+## Summary
+
+You've now learned how to:
+
+✅ **Choose the right Flux model** for your needs  
+✅ **Create high-quality AI images** from text prompts  
+✅ **Use inpainting** to modify specific parts of images  
+✅ **Generate variations** using Canny, Depth, and Redux models  
+✅ **Configure parameters** for optimal results  
+
+### Key Takeaways
+
+- **Flux 1.1 Pro Ultra**: Best for final, production-quality images
+- **Flux Dev**: Great for testing and rapid iteration
+- **Canny**: Preserve structure/pose, change everything else
+- **Depth**: Maintain spatial relationships and perspective
+- **Redux**: Creative variations without text prompts
+- **Always check `raw`** for more natural-looking results
+
+In the next section, you'll learn how to create a consistent AI influencer!
