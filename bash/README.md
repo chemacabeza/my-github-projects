@@ -45,7 +45,6 @@ This book is also about **thinking like a systems engineer**: understanding not 
 ## Chapters
 
 ### Part 1: Introduction
-### Part 1: Introduction
 * [Chapter 1: Motivation and Disclaimer](./chapters/01-Introduction/01-Motivation-and-Disclaimer/README.md)
 * [Chapter 2: Introduction](./chapters/01-Introduction/02-Introduction/README.md)
 * [Chapter 3: Pre-Scripting Basics](./chapters/01-Introduction/03-Pre-Scripting-Basics/README.md)
