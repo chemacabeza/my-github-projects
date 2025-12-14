@@ -173,6 +173,8 @@ The local installation includes the following models by default. Some are standa
     *   *Trigger Word*: `high heels`, `pumps` (Likely triggers)
 6.  `helga_lora.safetensors`
     *   *Trigger Word*: `helga` (Likely trigger)
+7.  `anastasia_lora.safetensors`
+    *   *Trigger Word*: `anastasia` (Likely trigger)
 
 ### Troubleshooting
 
