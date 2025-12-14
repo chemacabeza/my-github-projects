@@ -113,6 +113,7 @@ download_model 'https://huggingface.co/mashb1t/fav_models/resolve/main/fav/SDXL_
 download_model 'https://civitai.com/api/download/models/362360' "$LORA_DIR/lingerie_loha.safetensors"
 download_model 'https://civitai.com/api/download/models/1082049' "$LORA_DIR/retro_neon_illustriouos.safetensors"
 download_model 'https://civitai.com/api/download/models/100982' "$LORA_DIR/pumpsheel.safetensors"
+download_model 'https://civitai.com/api/download/models/2219193' "$LORA_DIR/helga_lora.safetensors"
 
 echo "=== Starting Fooocus ==="
 echo "All models and LoRAs are accessible via symbolic links"
