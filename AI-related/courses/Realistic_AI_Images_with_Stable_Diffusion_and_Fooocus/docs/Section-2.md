@@ -12,7 +12,7 @@
 Stable Diffusion works by reversing the process of adding noise to an image. It starts with random "static" (noise) and gradually refines it into a clear image based on your text prompt.
 
 <p align="center">
-    <img src="../images/section2/002-TrainingLearning.png" width="800"/>
+    <img src="images/section2/002-TrainingLearning.png" width="800"/>
 </p>
 
 You don't need to be a technical expert. You just need to provide an "idea" (prompt), and the software handles the complex generation process.
@@ -41,8 +41,8 @@ Try a simple prompt like:
 > `a cute little animal`
 
 <p align="center">
-    <img src="../images/section2/CuteLittleAnimal1.png" width="400"/>
-    <img src="../images/section2/CuteLittleAnimal2.png" width="400"/>
+    <img src="images/section2/CuteLittleAnimal1.png" width="400"/>
+    <img src="images/section2/CuteLittleAnimal2.png" width="400"/>
 </p>
 
 ---
@@ -84,3 +84,6 @@ Replace the default code in the Colab cell with this script to download the mode
 2.  `entry_with_update.py`: Starts the application.
 
 Once running, select your new model from the "Base Model" dropdown in the Fooocus "Advanced" settings.
+
+---
+[Previous Section](Section-1.md) | [Next Section](Section-3.md)

@@ -7,7 +7,7 @@ Fluency in Fooocus comes from mastering its four main pillars:
 4.  **Inpainting & Outpainting** (Editing and expanding)
 
 <p align="center">
-    <img src="../images/section3/Explanation_of_functions_in_Fooocus.png" width="800"/>
+    <img src="images/section3/Explanation_of_functions_in_Fooocus.png" width="800"/>
 </p>
 
 ---
@@ -33,10 +33,10 @@ The most basic way to generate an image.
 
 **Result:**
 <p align="center">
-    <img src="../images/section3/Guru-1.png" width="200"/>
-    <img src="../images/section3/Guru-2.png" width="200"/>
-    <img src="../images/section3/Guru-3.png" width="200"/>
-    <img src="../images/section3/Guru-4.png" width="200"/>
+    <img src="images/section3/Guru-1.png" width="200"/>
+    <img src="images/section3/Guru-2.png" width="200"/>
+    <img src="images/section3/Guru-3.png" width="200"/>
+    <img src="images/section3/Guru-4.png" width="200"/>
 </p>
 
 ---
@@ -56,7 +56,7 @@ Use an existing image as a reference or structure guide.
 *   **Result**: New images that closely follow the structure/style of the uploaded photo.
 
 <p align="center">
-    <img src="../images/section3/House-1.png" width="400"/>
+    <img src="images/section3/House-1.png" width="400"/>
 </p>
 
 ### Face Swap
@@ -72,7 +72,7 @@ Replace a face in an image with another.
     *   Check **Mixing Image Prompt and Inpaint**.
 
 <p align="center">
-    <img src="../images/section3/FaceSwap-1.png" width="400"/>
+    <img src="images/section3/FaceSwap-1.png" width="400"/>
 </p>
 
 ### Pyra Canny (Pose Transfer)
@@ -94,7 +94,7 @@ The **Seed** determines the random noise pattern.
 *   This allows you to make consistent changes to an image without changing the overall composition.
 
 <p align="center">
-    <img src="../images/section3/Explanation_of_SEED_number.png" width="400"/>
+    <img src="images/section3/Explanation_of_SEED_number.png" width="400"/>
 </p>
 
 ---
@@ -119,7 +119,7 @@ Create similar versions of an image.
 3.  Enable **Random** seed for variety.
 
 <p align="center">
-    <img src="../images/section3/Old-Golden-Car.jpeg" width="400"/>
+    <img src="images/section3/Old-Golden-Car.jpeg" width="400"/>
 </p>
 
 ---
@@ -134,7 +134,7 @@ Fix or change parts *inside* the image.
 4.  **Prompt**: Describe the new element (e.g., `a sleeping dog on the floor`).
 
 <p align="center">
-    <img src="../images/section3/Sleeping-Dog-Office.jpeg" width="400"/>
+    <img src="images/section3/Sleeping-Dog-Office.jpeg" width="400"/>
 </p>
 
 **Modify Content**: Use this method to add objects that weren't there before.
@@ -149,7 +149,7 @@ Expand the image *outside* its borders.
 4.  **Prompt**: Describe the extension (e.g., `a well dressed old business man`).
 
 <p align="center">
-    <img src="../images/section3/Old-Business-Man-Suit.jpeg" width="400"/>
+    <img src="images/section3/Old-Business-Man-Suit.jpeg" width="400"/>
 </p>
 
 ### Advanced Masking
@@ -157,3 +157,6 @@ For precise control, upload a pre-made black & white mask (created in Photoshop/
 1.  Check **Enable Advanced Masking Features**.
 2.  Upload Image (Left) and Mask (Right).
 3.  **White Area** = What changes. **Black Area** = What stays the same.
+
+---
+[Previous Section](Section-2.md) | [Next Section](Section-4.md)

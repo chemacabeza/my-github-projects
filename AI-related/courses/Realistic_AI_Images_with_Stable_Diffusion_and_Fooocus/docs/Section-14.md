@@ -22,3 +22,6 @@ AI is evolving every single day.
 > *"The best way to predict the future is to create it."*
 
 Go forth and create stunning art!
+
+---
+[Previous Section](Section-13.md)

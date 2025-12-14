@@ -4,8 +4,8 @@ Mastering AI image generation opens up career opportunities. Platforms like **Fi
 
 ## 1. Choosing Your Platform
 
-*   <a href="https://www.fiverr.com/">Fiverr</a>: Good for specific, packaged services (Gigs). Example: "I will create a realistic fashion model for your clothing brand."
-*   <a href="https://www.upwork.com/">Upwork</a>: Good for long-term projects and hourly work.
+*   [Fiverr](https://www.fiverr.com/): Good for specific, packaged services (Gigs). Example: "I will create a realistic fashion model for your clothing brand."
+*   [Upwork](https://www.upwork.com/): Good for long-term projects and hourly work.
 
 ## 2. Strategies for Success
 
@@ -29,3 +29,6 @@ When creating your offer:
 *   **Title**: Clear and searchable (e.g., "I will create a consistent AI influencer for your brand").
 *   **Images**: Use your BEST work as the gig cover. Show "Before/After" if offering editing services.
 *   **Description**: Explain your process. "I use Stable Diffusion and advanced inpainting to ensure high-quality, glitch-free results."
+
+---
+[Previous Section](Section-10.md) | [Next Section](Section-12.md)

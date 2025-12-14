@@ -25,3 +25,6 @@ When working with hundreds of AI generations, chaos is your enemy.
 1.  **Define Requirements First**: Don't start generating until you know *exactly* what you want (Age, Style, Lighting).
 2.  **Batch Process**: Generate images in batches of 4-8. Don't iterate on a single image too early.
 3.  **The "Good Enough" Rule**: If an image is 90% perfect, **stop generating**. Use Inpainting to fix the last 10%. Generating "the perfect image" in one shot is a lottery; Inpainting is engineering.
+
+---
+[Previous Section](Section-11.md) | [Next Section](Section-13.md)

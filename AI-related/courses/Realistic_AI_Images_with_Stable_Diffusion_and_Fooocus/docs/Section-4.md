@@ -65,7 +65,7 @@ We want to change the shoes in an existing photo to specific high heels using th
 6.  **Generate**.
 
 <p align="center">
-    <img src="../images/section4/Woman-with-red-high-heels.jpeg" width="350"/>
+    <img src="images/section4/Woman-with-red-high-heels.jpeg" width="350"/>
 </p>
 
 ### Scenario 2: Creating a Stylized Image (Retro Neon)
@@ -82,7 +82,7 @@ We want to generate a new image from scratch using the `retro_neon` LoRA.
 3.  **Generate**.
 
 <p align="center">
-    <img src="../images/section4/Retro-Neon-Cool-Guy-With-Sunglasses.jpeg" width="350"/>
+    <img src="images/section4/Retro-Neon-Cool-Guy-With-Sunglasses.jpeg" width="350"/>
 </p>
 
 ### Adjusting LoRA Weight
@@ -92,7 +92,10 @@ The **Weight** determines how strong the effect is.
 *   **0.5**: Subtler influence, blends more with the base model.
 
 <p align="center">
-    <img src="../images/section4/Retro-Neon-With-05-Weight.jpeg" width="350"/>
+    <img src="images/section4/Retro-Neon-With-05-Weight.jpeg" width="350"/>
     <br>
     <em>Same prompt with LoRA weight reduced to 0.5</em>
 </p>
+
+---
+[Previous Section](Section-3.md) | [Next Section](Section-5.md)

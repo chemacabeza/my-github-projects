@@ -52,7 +52,7 @@ By default, Fooocus uses SDXL (high resolution). However, you can use older SD1.
     *   **Refiner Switch At**: `0.4` (Switches to the refiner at 40% of generation).
 
 <p align="center">
-    <img src="../images/section5/Beautiful-Paradise-Bird-Realistic.jpeg" width="350"/>
+    <img src="images/section5/Beautiful-Paradise-Bird-Realistic.jpeg" width="350"/>
 </p>
 
 ---
@@ -108,5 +108,8 @@ Use ChatGPT to act as your "Prompt Engineer".
 > "You are an expert in AI image generation using Stable Diffusion and Fooocus. You know how to write perfect prompts including camera and lens info. Write me a prompt for: [Your Idea]"
 
 <p align="center">
-    <img src="../images/section5/ChatGPT-Cat-1.jpeg" width="350"/>
+    <img src="images/section5/ChatGPT-Cat-1.jpeg" width="350"/>
 </p>
+
+---
+[Previous Section](Section-4.md) | [Next Section](Section-6.md)

@@ -12,7 +12,7 @@ Kling AI is currently one of the best "Image-to-Video" generators (similar to Ru
     *   *Tip: Use an image where movement is natural (e.g., dancing, walking, looking at camera).*
 
 <p align="center">
-    <img src="../images/section7/French-Girl-Blue-Eyes-Fixed-Blonde-2.jpeg" width="300" title="Source Image"/>
+    <img src="images/section7/French-Girl-Blue-Eyes-Fixed-Blonde-2.jpeg" width="300" title="Source Image"/>
 </p>
 
 3.  **Prompt**: Describe the movement you want.
@@ -31,3 +31,6 @@ Kling AI is currently one of the best "Image-to-Video" generators (similar to Ru
 
 **Example 2: Smiling**
 [![Watch the video](https://img.youtube.com/vi/8mTCsFJOaos/maxresdefault.jpg)](https://youtube.com/shorts/8mTCsFJOaos)
+
+---
+[Previous Section](Section-9.md) | [Next Section](Section-11.md)

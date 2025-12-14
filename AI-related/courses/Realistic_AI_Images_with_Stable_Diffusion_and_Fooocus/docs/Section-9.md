@@ -9,7 +9,7 @@ Even small changes in proportion significantly affect how we perceive a subject.
 *   **Body Ratios**: Understanding the "Golden Ratio" helps in placing limbs and features naturally.
 
 <p align="center">
-    <img src="../images/section9/Proportions.jpeg" width="600"/>
+    <img src="images/section9/Proportions.jpeg" width="600"/>
     <br>
     <em>Left: Original | Middle: 5% Smaller Head | Right: 10% Smaller Head</em>
 </p>
@@ -22,7 +22,7 @@ Even small changes in proportion significantly affect how we perceive a subject.
 *   **Texture**: skin pores, fabric details, environmental roughness.
 
 <p align="center">
-    <img src="../images/section9/Aesthetics.jpeg" width="400"/>
+    <img src="images/section9/Aesthetics.jpeg" width="400"/>
 </p>
 
 ## 3. Composition
@@ -33,5 +33,8 @@ Even small changes in proportion significantly affect how we perceive a subject.
 *   **Depth**: Foreground, middle ground, background separation.
 
 <p align="center">
-    <img src="../images/section9/Aesthetics-and-Composition.png" width="400"/>
+    <img src="images/section9/Aesthetics-and-Composition.png" width="400"/>
 </p>
+
+---
+[Previous Section](Section-8.md) | [Next Section](Section-10.md)

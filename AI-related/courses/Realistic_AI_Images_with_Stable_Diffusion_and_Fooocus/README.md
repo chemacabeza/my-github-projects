@@ -1,7 +1,7 @@
 # Realistic AI Images with Stable Diffusion & Fooocus
 
 <p align="center">
-    <img src="images/Main/Main2.jpg" width="600"/>
+    <img src="docs/images/Main/Main2.jpg" width="600"/>
 </p>
 
 ## Udemy course

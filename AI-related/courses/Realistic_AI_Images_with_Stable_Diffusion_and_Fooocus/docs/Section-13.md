@@ -22,3 +22,6 @@ With great power comes great responsibility.
 1.  **Be Honest**: "Full Body Portrait of an AI generated model" is an honest caption.
 2.  **Respect Licenses**: If a model creator says "Do not use for XYZ," respect it.
 3.  **Positive Impact**: Use AI to create beauty, art, and entertainment, not deception or harm.
+
+---
+[Previous Section](Section-12.md) | [Next Section](Section-14.md)

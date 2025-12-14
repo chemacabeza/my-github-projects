@@ -21,7 +21,7 @@ First, we generate the definitive image of our influencer's face. We will use th
 
 **Result:**
 <p align="center">
-    <img src="../images/section7/French-Girl-Blue-Eyes-Fixed-Blonde.jpeg" width="300"/>
+    <img src="images/section7/French-Girl-Blue-Eyes-Fixed-Blonde.jpeg" width="300"/>
 </p>
 
 *Save this image. Call it "Face Reference".*
@@ -40,7 +40,7 @@ We often use **TensorArt** to access specific models like **LazyMix+** which are
 5.  **Generate** and download the best body/pose.
 
 <p align="center">
-    <img src="../images/section7/Tensor_Art_Image_1.png" width="300"/>
+    <img src="images/section7/Tensor_Art_Image_1.png" width="300"/>
 </p>
 
 ---
@@ -59,7 +59,7 @@ We use the **InsightFace** bot on Discord to create a high-quality initial face 
 4.  **Save Result**: This is your "Base Swap" image.
 
 <p align="center">
-    <img src="../images/section7/Tensor_Art_Image_1_ins.jpg" width="300"/>
+    <img src="images/section7/Tensor_Art_Image_1_ins.jpg" width="300"/>
 </p>
 
 ---
@@ -85,7 +85,7 @@ The Discord swap is good, but often low resolution or slightly "off". We refine 
 **Result**: A high-resolution, perfectly integrated image of your character.
 
 <p align="center">
-    <img src="../images/section7/French-Girl-Blue-Eyes-Fixed-Blonde-2.jpeg" width="300"/>
+    <img src="images/section7/French-Girl-Blue-Eyes-Fixed-Blonde-2.jpeg" width="300"/>
 </p>
 
 ---
@@ -94,3 +94,6 @@ The Discord swap is good, but often low resolution or slightly "off". We refine 
 *   ✅ Always use the *same* Face Reference image.
 *   ✅ Keep the core physical description in your text prompts consistently.
 *   ✅ Use face swapping tools to standardize facial features across different poses.
+
+---
+[Previous Section](Section-6.md) | [Next Section](Section-8.md)

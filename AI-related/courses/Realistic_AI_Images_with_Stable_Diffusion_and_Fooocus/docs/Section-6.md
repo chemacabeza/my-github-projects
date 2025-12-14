@@ -5,7 +5,7 @@ This technique allows you to keep a specific product (like a shirt or dress) whi
 ## The Process
 
 <p align="center">
-<img src="../images/section6/Process-to-Inpaint-a-different-person.png" width="400"/>
+<img src="images/section6/Process-to-Inpaint-a-different-person.png" width="400"/>
 </p>
 
 1.  **Original Photo**: Start with a high-quality photo of your product on a model (or mannequin).
@@ -28,8 +28,8 @@ We want to see different people wearing the same grey suit and black t-shirt.
 4.  **Mask Upload**: Upload your pre-made mask (Black = Suit, White = Everything else).
 
 <p align="center">
-    <img src="../files/section6/Example+Image+Clothing+Product+Placement.png" width="300" title="Original Image"/>
-    <img src="../files/section6/Clothing+Mask.jpg" width="300" title="The Mask (Black is preserved)"/>
+    <img src="files/section6/Example+Image+Clothing+Product+Placement.png" width="300" title="Original Image"/>
+    <img src="files/section6/Clothing+Mask.jpg" width="300" title="The Mask (Black is preserved)"/>
 </p>
 
 ### Generation
@@ -45,7 +45,7 @@ We want to see different people wearing the same grey suit and black t-shirt.
 The suit remains exactly the same, but the person wearing it is now a 50-year-old French woman.
 
 <p align="center">
-<img src="../images/section6/French_woman_50_year_old_red_hair.jpeg" width="350"/>
+<img src="images/section6/French_woman_50_year_old_red_hair.jpeg" width="350"/>
 </p>
 
 ---
@@ -54,3 +54,6 @@ The suit remains exactly the same, but the person wearing it is now a 50-year-ol
 
 Be careful with your prompts and negative prompts.
 If you prompt for `female naked body` and set the negative prompt to `clothing`, the AI will attempt to remove the clothing you tried to preserve if your mask isn't perfect or if the denoising strength allows it to hallucinate. Always double-check your mask boundaries!
+
+---
+[Previous Section](Section-5.md) | [Next Section](Section-7.md)
