@@ -44,38 +44,52 @@ This book is also about **thinking like a systems engineer**: understanding not 
 
 ## Chapters
 
-* [Chapter 0: Motivation and Disclaimer](./chapters/0000-Motivation-and-Disclaimer/README.md)
-* [Chapter 1: Introduction](./chapters/0001-Introduction/README.md)
-* [Chapter 2: Pre-Scripting Basics](./chapters/0002-Pre-Scripting-Basics/README.md)
-* [Chapter 3: Basics](./chapters/0003-Basics/README.md)
-* [Chapter 4: Variables](./chapters/0004-Variables/README.md)
-* [Chapter 5: Working with Strings](./chapters/0005-Working-with-Strings/README.md)
-* [Chapter 6: Working with Numbers Integers](./chapters/0006-Working-with-Numbers-Integers/README.md)
-* [Chapter 7: Working with Numbers Floating](./chapters/0007-Working-with-Numbers-Float/README.md)
-* [Chapter 8: Time and date commands](./chapters/0008-Time-and-date-commands/README.md)
-* [Chapter 9: Environment Variables](./chapters/0009-Environment-Variables/README.md)
-* [Chapter 10: If Statement](./chapters/0010-If-statement/README.md)
-* [Chapter 11: Case Statement](./chapters/0011-case-statement/README.md)
-* [Chapter 12: Arrays and loops](./chapters/0012-Arrays-and-loops/README.md)
-* [Chapter 13: Execution of commands](./chapters/0013-Execution-of-commands/README.md)
-* [Chapter 14: List Constructs Combining Commands With And and OR](./chapters/0014-List-Constructs-Combining-Commands-With-And-and-OR/README.md)
-* [Chapter 15: Functions](./chapters/0015-Functions/README.md)
-* [Chapter 16: Navigation and file folder related commands](./chapters/0016-Navigation-and-file-folder-related-commands/README.md)
-* [Chapter 17: Select Statement](./chapters/0017-Select-Statement/README.md)
-* [Chapter 18: Regular Expressions and Globbing](./chapters/0018-Regular-Expressions-and-Globbing/README.md)
-* [Chapter 19: True, False and Null Commands](./chapters/0019-True-False-and-Null-Commands/README.md)
-* [Chapter 20: Brace Expansion](./chapters/0020-Brace-Expansion/README.md)
-* [Chapter 21: Block Statements](./chapters/0021-Block-Statements/README.md)
-* [Chapter 22: Processes](./chapters/0022-Processes/README.md)
-* [Chapter 23: Subshells](./chapters/0023-Subshells/README.md)
-* [Chapter 24: I/O Redirections](./chapters/0024-IO-Redirections/README.md)
-* [Chapter 25: Jobs](./chapters/0025-Jobs/README.md)
-* [Chapter 26: Process Substitution](./chapters/0026-Process-Substitution/README.md)
-* [Chapter 27: Aliases](./chapters/0027-Aliases/README.md)
-* [Chapter 28: Here Documents](./chapters/0028-Here-Documents/README.md)
-* [Chapter 29: Here Strings](./chapters/0029-Here-Strings/README.md)
-* [Chapter 30: Coprocesses](./chapters/0030-Coprocesses/README.md)
-* [Chapter 31: Types of Shell and Configuration Files](./chapters/0031-Types-of-Shell-and-Configuration-Files/README.md)
-* [Chapter 32: Customizing The Prompt](./chapters/0032-Customizing-The-Prompt/README.md)
-* [Chapter 33: Programmable Completion](./chapters/0033-Programmable-Completion/README.md)
-* [Chapter 34: Text Processing Commands](./chapters/0034-Text-Processing-Commands/README.md)
+### Part 1: Introduction
+### Part 1: Introduction
+* [Chapter 1: Motivation and Disclaimer](./chapters/01-Introduction/01-Motivation-and-Disclaimer/README.md)
+* [Chapter 2: Introduction](./chapters/01-Introduction/02-Introduction/README.md)
+* [Chapter 3: Pre-Scripting Basics](./chapters/01-Introduction/03-Pre-Scripting-Basics/README.md)
+* [Chapter 4: Basics](./chapters/01-Introduction/04-Basics/README.md)
+* [Chapter 5: Types of Shell and Configuration Files](./chapters/01-Introduction/05-Types-of-Shell-and-Configuration-Files/README.md)
+
+### Part 2: Variables and Types
+* [Chapter 6: Variables](./chapters/02-Variables-and-Types/06-Variables/README.md)
+* [Chapter 7: Working with Strings](./chapters/02-Variables-and-Types/07-Working-with-Strings/README.md)
+* [Chapter 8: Working with Numbers Integers](./chapters/02-Variables-and-Types/08-Working-with-Numbers-Integers/README.md)
+* [Chapter 9: Working with Numbers Floating](./chapters/02-Variables-and-Types/09-Working-with-Numbers-Float/README.md)
+* [Chapter 10: Environment Variables](./chapters/02-Variables-and-Types/10-Environment-Variables/README.md)
+* [Chapter 11: Arrays and loops](./chapters/02-Variables-and-Types/11-Arrays-and-loops/README.md)
+* [Chapter 12: True, False and Null Commands](./chapters/02-Variables-and-Types/12-True-False-and-Null-Commands/README.md)
+
+### Part 3: Control Flow
+* [Chapter 13: If Statement](./chapters/03-Control-Flow/13-If-statement/README.md)
+* [Chapter 14: Case Statement](./chapters/03-Control-Flow/14-Case-statement/README.md)
+* [Chapter 15: List Constructs Combining Commands With And and OR](./chapters/03-Control-Flow/15-List-Constructs-Combining-Commands-With-And-and-OR/README.md)
+* [Chapter 16: Select Statement](./chapters/03-Control-Flow/16-Select-Statement/README.md)
+* [Chapter 17: Block Statements](./chapters/03-Control-Flow/17-Block-Statements/README.md)
+
+### Part 4: IO and Redirections
+* [Chapter 18: I/O Redirections](./chapters/04-IO-and-Redirections/18-IO-Redirections/README.md)
+* [Chapter 19: Process Substitution](./chapters/04-IO-and-Redirections/19-Process-Substitution/README.md)
+* [Chapter 20: Here Documents](./chapters/04-IO-and-Redirections/20-Here-Documents/README.md)
+* [Chapter 21: Here Strings](./chapters/04-IO-and-Redirections/21-Here-Strings/README.md)
+* [Chapter 22: Navigation and file folder related commands](./chapters/04-IO-and-Redirections/22-Navigation-and-file-folder-related-commands/README.md)
+
+### Part 5: Functions and Execution
+* [Chapter 23: Execution of commands](./chapters/05-Functions-and-Execution/23-Execution-of-commands/README.md)
+* [Chapter 24: Functions](./chapters/05-Functions-and-Execution/24-Functions/README.md)
+* [Chapter 25: Aliases](./chapters/05-Functions-and-Execution/25-Aliases/README.md)
+
+### Part 6: Process Management
+* [Chapter 26: Processes](./chapters/06-Process-Management/26-Processes/README.md)
+* [Chapter 27: Subshells](./chapters/06-Process-Management/27-Subshells/README.md)
+* [Chapter 28: Jobs](./chapters/06-Process-Management/28-Jobs/README.md)
+* [Chapter 29: Coprocesses](./chapters/06-Process-Management/29-Coprocesses/README.md)
+
+### Part 7: Advanced Topics
+* [Chapter 30: Regular Expressions and Globbing](./chapters/07-Advanced-Topics/30-Regular-Expressions-and-Globbing/README.md)
+* [Chapter 31: Brace Expansion](./chapters/07-Advanced-Topics/31-Brace-Expansion/README.md)
+* [Chapter 32: Customizing The Prompt](./chapters/07-Advanced-Topics/32-Customizing-The-Prompt/README.md)
+* [Chapter 33: Programmable Completion](./chapters/07-Advanced-Topics/33-Programmable-Completion/README.md)
+* [Chapter 34: Text Processing Commands](./chapters/07-Advanced-Topics/34-Text-Processing-Commands/README.md)
+* [Chapter 35: Time and date commands](./chapters/07-Advanced-Topics/35-Time-and-date-commands/README.md)
