@@ -1006,6 +1006,5 @@ Debugging processes often involves creating core dumps, which capture the state 
 </p>
 
 
-
 ---
-[Previous Chapter](../0024-IO-Redirections/README.md) | [Next Chapter](../0026-Process-Substitution/README.md)
+[Previous Chapter](../27-Subshells/README.md) | [Next Chapter](../29-Coprocesses/README.md)

@@ -175,6 +175,5 @@ The feature can also handle numerical and alphabetical ranges, supporting both i
 </p>
 
 
-
 ---
-[Previous Chapter](../0019-True-False-and-Null-Commands/README.md) | [Next Chapter](../0021-Block-Statements/README.md)
+[Previous Chapter](../30-Regular-Expressions-and-Globbing/README.md) | [Next Chapter](../32-Customizing-The-Prompt/README.md)

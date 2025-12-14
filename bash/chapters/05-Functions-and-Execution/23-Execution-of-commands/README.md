@@ -496,6 +496,5 @@ You went through a lot of material in this chapter. Now it’s up to you to prac
 </p>
 
 
-
 ---
-[Previous Chapter](../0012-Arrays-and-loops/README.md) | [Next Chapter](../0014-List-Constructs-Combining-Commands-With-And-and-OR/README.md)
+[Previous Chapter](../../04-IO-and-Redirections/22-Navigation-and-file-folder-related-commands/README.md) | [Next Chapter](../24-Functions/README.md)

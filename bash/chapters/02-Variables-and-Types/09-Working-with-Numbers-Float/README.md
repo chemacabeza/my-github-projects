@@ -284,6 +284,5 @@ In this chapter we learnt how to deal with floating-point numbers in Bash by usi
 </p>
 
 
-
 ---
-[Previous Chapter](../0006-Working-with-Numbers-Integers/README.md) | [Next Chapter](../0008-Time-and-date-commands/README.md)
+[Previous Chapter](../08-Working-with-Numbers-Integers/README.md) | [Next Chapter](../10-Environment-Variables/README.md)

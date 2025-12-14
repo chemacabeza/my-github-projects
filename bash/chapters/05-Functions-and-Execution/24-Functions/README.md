@@ -524,6 +524,5 @@ One of the most intriguing topics covered was the **`$FUNCNAME` variable**, a hi
 </p>
 
 
-
 ---
-[Previous Chapter](../0014-List-Constructs-Combining-Commands-With-And-and-OR/README.md) | [Next Chapter](../0016-Navigation-and-file-folder-related-commands/README.md)
+[Previous Chapter](../23-Execution-of-commands/README.md) | [Next Chapter](../25-Aliases/README.md)

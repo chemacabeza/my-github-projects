@@ -138,6 +138,5 @@ Finally, we looked into the "`exec`" command, a powerful tool that can invoke ot
 5. <https://www.geeksforgeeks.org/formation-of-process-from-program/>
 
 
-
 ---
-[Previous Chapter](../0021-Block-Statements/README.md) | [Next Chapter](../0023-Subshells/README.md)
+[Previous Chapter](../../05-Functions-and-Execution/25-Aliases/README.md) | [Next Chapter](../27-Subshells/README.md)

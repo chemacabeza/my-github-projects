@@ -357,6 +357,5 @@ Now that you are done with this chapter, keep practicing. Remember… practice m
 </p>
 
 
-
 ---
-[Previous Chapter](../0008-Time-and-date-commands/README.md) | [Next Chapter](../0010-If-statement/README.md)
+[Previous Chapter](../09-Working-with-Numbers-Float/README.md) | [Next Chapter](../11-Arrays-and-loops/README.md)

@@ -248,6 +248,5 @@ Understanding the relationship between shell types and configuration files is cr
 </p>
 
 
-
 ---
-[Previous Chapter](../0030-Coprocesses/README.md) | [Next Chapter](../0032-Customizing-The-Prompt/README.md)
+[Previous Chapter](../04-Basics/README.md) | [Next Chapter](../../02-Variables-and-Types/06-Variables/README.md)

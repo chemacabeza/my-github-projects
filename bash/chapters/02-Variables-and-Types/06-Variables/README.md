@@ -306,6 +306,5 @@ Take some time to practice the different concepts we saw in this chapter.
 </p>
 
 
-
 ---
-[Previous Chapter](../0003-Basics/README.md) | [Next Chapter](../0005-Working-with-Strings/README.md)
+[Previous Chapter](../../01-Introduction/05-Types-of-Shell-and-Configuration-Files/README.md) | [Next Chapter](../07-Working-with-Strings/README.md)

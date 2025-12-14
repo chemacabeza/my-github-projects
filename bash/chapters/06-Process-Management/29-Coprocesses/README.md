@@ -349,4 +349,4 @@ In situations where coprocesses cannot be used, such as with older Bash versions
 
 
 ---
-[Previous Chapter](../0029-Here-Strings/README.md) | [Next Chapter](../0031-Types-of-Shell-and-Configuration-Files/README.md)
+[Previous Chapter](../28-Jobs/README.md) | [Next Chapter](../../07-Advanced-Topics/30-Regular-Expressions-and-Globbing/README.md)

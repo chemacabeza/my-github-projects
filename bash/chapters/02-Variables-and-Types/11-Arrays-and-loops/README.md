@@ -1758,6 +1758,5 @@ This was a lot of content. My recommendation for you is to practice to test the 
 </p>
 
 
-
 ---
-[Previous Chapter](../0011-case-statement/README.md) | [Next Chapter](../0013-Execution-of-commands/README.md)
+[Previous Chapter](../10-Environment-Variables/README.md) | [Next Chapter](../12-True-False-and-Null-Commands/README.md)

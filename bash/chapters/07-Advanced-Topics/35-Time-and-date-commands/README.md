@@ -273,6 +273,5 @@ Be curious!
 </p>
 
 
-
 ---
-[Previous Chapter](../0007-Working-with-Numbers-Float/README.md) | [Next Chapter](../0009-Environment-Variables/README.md)
+[Previous Chapter](../34-Text-Processing-Commands/README.md)

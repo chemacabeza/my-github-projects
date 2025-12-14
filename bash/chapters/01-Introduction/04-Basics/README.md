@@ -810,4 +810,4 @@ Give it a try and write some simple scripts!
 
 
 ---
-[Previous Chapter](../0002-Pre-Scripting-Basics/README.md) | [Next Chapter](../0004-Variables/README.md)
+[Previous Chapter](../03-Pre-Scripting-Basics/README.md) | [Next Chapter](../05-Types-of-Shell-and-Configuration-Files/README.md)

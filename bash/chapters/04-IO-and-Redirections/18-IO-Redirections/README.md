@@ -1872,6 +1872,5 @@ Finally, the "`PIPESTATUS`" array captures the exit statuses of all commands in 
 </p>
 
 
-
 ---
-[Previous Chapter](../0023-Subshells/README.md) | [Next Chapter](../0025-Jobs/README.md)
+[Previous Chapter](../../03-Control-Flow/17-Block-Statements/README.md) | [Next Chapter](../19-Process-Substitution/README.md)

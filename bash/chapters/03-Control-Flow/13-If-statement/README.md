@@ -430,6 +430,5 @@ Remember, *practice makes perfect*. So? Practice, practice practice.
 </p>
 
 
-
 ---
-[Previous Chapter](../0009-Environment-Variables/README.md) | [Next Chapter](../0011-case-statement/README.md)
+[Previous Chapter](../../02-Variables-and-Types/12-True-False-and-Null-Commands/README.md) | [Next Chapter](../14-Case-statement/README.md)

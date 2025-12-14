@@ -116,6 +116,5 @@ By using Here Strings, you can achieve a cleaner and more concise syntax compare
 6. <https://xinux.net/index.php/Here_String>
 
 
-
 ---
-[Previous Chapter](../0028-Here-Documents/README.md) | [Next Chapter](../0030-Coprocesses/README.md)
+[Previous Chapter](../20-Here-Documents/README.md) | [Next Chapter](../22-Navigation-and-file-folder-related-commands/README.md)

@@ -153,6 +153,5 @@ One of the standout advantages of process substitution is its compatibility with
 </p>
 
 
-
 ---
-[Previous Chapter](../0025-Jobs/README.md) | [Next Chapter](../0027-Aliases/README.md)
+[Previous Chapter](../18-IO-Redirections/README.md) | [Next Chapter](../20-Here-Documents/README.md)

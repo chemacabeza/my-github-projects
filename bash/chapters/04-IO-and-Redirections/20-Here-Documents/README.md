@@ -408,6 +408,5 @@ While HereDocs are versatile, they have some strict requirements. The delimiter 
 8. <https://www.tecmint.com/use-heredoc-in-shell-scripting/>
 
 
-
 ---
-[Previous Chapter](../0027-Aliases/README.md) | [Next Chapter](../0029-Here-Strings/README.md)
+[Previous Chapter](../19-Process-Substitution/README.md) | [Next Chapter](../21-Here-Strings/README.md)

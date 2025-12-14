@@ -26,6 +26,5 @@ On the scripts that you will see in this book we are going to always write the h
 1. <https://www.linuxjournal.com/content/what-heck-hash-bang-thingy-my-bash-script>
 
 
-
 ---
-[Previous Chapter](../0001-Introduction/README.md) | [Next Chapter](../0003-Basics/README.md)
+[Previous Chapter](../02-Introduction/README.md) | [Next Chapter](../04-Basics/README.md)

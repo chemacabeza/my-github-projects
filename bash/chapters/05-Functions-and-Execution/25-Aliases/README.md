@@ -356,6 +356,5 @@ To manage aliases, Bash provides the "`alias`" and "`unalias`" commands. The "`a
 </p>
 
 
-
 ---
-[Previous Chapter](../0026-Process-Substitution/README.md) | [Next Chapter](../0028-Here-Documents/README.md)
+[Previous Chapter](../24-Functions/README.md) | [Next Chapter](../../06-Process-Management/26-Processes/README.md)

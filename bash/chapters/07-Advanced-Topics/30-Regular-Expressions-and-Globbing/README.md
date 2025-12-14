@@ -430,6 +430,5 @@ In the world of Bash scripting, regular expressions are a superpower. Harness th
 </p>
 
 
-
 ---
-[Previous Chapter](../0017-Select-Statement/README.md) | [Next Chapter](../0019-True-False-and-Null-Commands/README.md)
+[Previous Chapter](../../06-Process-Management/29-Coprocesses/README.md) | [Next Chapter](../31-Brace-Expansion/README.md)

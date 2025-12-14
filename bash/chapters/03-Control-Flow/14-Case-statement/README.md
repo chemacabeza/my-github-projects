@@ -297,6 +297,5 @@ As always this chapter contained a lot of information. Please give it a try and 
 </p>
 
 
-
 ---
-[Previous Chapter](../0010-If-statement/README.md) | [Next Chapter](../0012-Arrays-and-loops/README.md)
+[Previous Chapter](../13-If-statement/README.md) | [Next Chapter](../15-List-Constructs-Combining-Commands-With-And-and-OR/README.md)

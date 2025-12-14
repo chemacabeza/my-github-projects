@@ -727,6 +727,5 @@ Remember, mastering these commands comes with practice. Every time you work in t
 </p>
 
 
-
 ---
-[Previous Chapter](../0015-Functions/README.md) | [Next Chapter](../0017-Select-Statement/README.md)
+[Previous Chapter](../21-Here-Strings/README.md) | [Next Chapter](../../05-Functions-and-Execution/23-Execution-of-commands/README.md)

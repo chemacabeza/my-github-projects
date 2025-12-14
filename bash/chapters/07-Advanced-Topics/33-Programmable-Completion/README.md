@@ -685,6 +685,5 @@ As with any technical topic, practice is essential. If something doesn't work as
 </p>
 
 
-
 ---
-[Previous Chapter](../0032-Customizing-The-Prompt/README.md) | [Next Chapter](../0034-Text-Processing-Commands/README.md)
+[Previous Chapter](../32-Customizing-The-Prompt/README.md) | [Next Chapter](../34-Text-Processing-Commands/README.md)

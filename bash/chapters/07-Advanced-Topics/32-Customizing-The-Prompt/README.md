@@ -532,6 +532,5 @@ Finally, the placement of your prompt configuration determines its scope. If you
 </p>
 
 
-
 ---
-[Previous Chapter](../0031-Types-of-Shell-and-Configuration-Files/README.md) | [Next Chapter](../0033-Programmable-Completion/README.md)
+[Previous Chapter](../31-Brace-Expansion/README.md) | [Next Chapter](../33-Programmable-Completion/README.md)

@@ -300,6 +300,5 @@ Understanding subshells deepens your knowledge of Bash scripting and equips you 
 </p>
 
 
-
 ---
-[Previous Chapter](../0022-Processes/README.md) | [Next Chapter](../0024-IO-Redirections/README.md)
+[Previous Chapter](../26-Processes/README.md) | [Next Chapter](../28-Jobs/README.md)

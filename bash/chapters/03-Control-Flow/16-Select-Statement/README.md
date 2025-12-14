@@ -269,6 +269,5 @@ Mastery comes from repetition—every time you use the "`select`" statement, you
 8. <https://www.baeldung.com/linux/shell-script-simple-select-menu>
 
 
-
 ---
-[Previous Chapter](../0016-Navigation-and-file-folder-related-commands/README.md) | [Next Chapter](../0018-Regular-Expressions-and-Globbing/README.md)
+[Previous Chapter](../15-List-Constructs-Combining-Commands-With-And-and-OR/README.md) | [Next Chapter](../17-Block-Statements/README.md)

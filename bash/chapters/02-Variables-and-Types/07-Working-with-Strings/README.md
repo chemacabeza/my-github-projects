@@ -552,6 +552,5 @@ After learning how to make the strings uppercase and lowercase we moved to conca
 </p>
 
 
-
 ---
-[Previous Chapter](../0004-Variables/README.md) | [Next Chapter](../0006-Working-with-Numbers-Integers/README.md)
+[Previous Chapter](../06-Variables/README.md) | [Next Chapter](../08-Working-with-Numbers-Integers/README.md)

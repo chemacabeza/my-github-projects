@@ -19,6 +19,5 @@ If you happen to come across something in the book that seems incorrect, confusi
 Remember, Bash is a vast tool, and there are many ways to achieve the same goal. What works for one person might not work for another. This book is my take on the subject, but it’s by no means the final word on Bash!
 
 
-
 ---
-[Next Chapter](../0001-Introduction/README.md)
+[Next Chapter](../02-Introduction/README.md)

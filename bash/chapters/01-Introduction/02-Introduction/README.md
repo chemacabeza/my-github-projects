@@ -144,6 +144,5 @@ I hope you will enjoy the rest of the book. Have fun!
 </p>
 
 
-
 ---
-[Previous Chapter](../0000-Motivation-and-Disclaimer/README.md) | [Next Chapter](../0002-Pre-Scripting-Basics/README.md)
+[Previous Chapter](../01-Motivation-and-Disclaimer/README.md) | [Next Chapter](../03-Pre-Scripting-Basics/README.md)

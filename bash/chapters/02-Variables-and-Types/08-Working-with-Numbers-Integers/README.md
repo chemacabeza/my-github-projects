@@ -664,6 +664,5 @@ Remember that *practice makes perfect*. So, practice, practice, practice,...
 </p>
 
 
-
 ---
-[Previous Chapter](../0005-Working-with-Strings/README.md) | [Next Chapter](../0007-Working-with-Numbers-Float/README.md)
+[Previous Chapter](../07-Working-with-Strings/README.md) | [Next Chapter](../09-Working-with-Numbers-Float/README.md)
