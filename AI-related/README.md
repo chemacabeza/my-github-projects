@@ -171,6 +171,8 @@ The local installation includes the following models by default. Some are standa
     *   *Trigger Word*: `retro_neon`
 5.  `pumpsheel.safetensors`
     *   *Trigger Word*: `high heels`, `pumps` (Likely triggers)
+6.  `helga_lora.safetensors`
+    *   *Trigger Word*: `helga` (Likely trigger)
 
 ### Troubleshooting
 
