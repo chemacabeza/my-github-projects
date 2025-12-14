@@ -21,7 +21,7 @@ Instead of manually re-entering the command every time, you can create an alias 
 In order to create an alias you need to use the “`alias`” built-in command with the following syntax:
 
 <p align="center">
-    <img src="chapters/05-Functions-and-Execution/25-Aliases/images/Alias-syntax.png"/>
+    <img src="images/Alias-syntax.png"/>
 </p>
 
 Once you execute this command you can start using the “`shortcut`” command as if it was the “`long command to execute`”.
@@ -196,7 +196,7 @@ In the previous case we just created a directory named "`eval`" with a few empty
 When you pass arguments to an alias, Bash first expands the alias into its underlying command, then appends the arguments you provided to the expanded command. In this case, the process resembles the following:
 
 <p align="center">
-    <img src="chapters/05-Functions-and-Execution/25-Aliases/images/llc-expansion.png"/>
+    <img src="images/llc-expansion.png"/>
 </p>
 
 This behavior means that aliases can accept arguments directly, depending on the command they represent. However, certain commands might require more complex handling, necessitating a function instead of a simple alias.
@@ -250,7 +250,7 @@ What’s happening here is that Bash expands the alias into the corresponding fu
 The diagram below illustrates how Bash processes the alias and executes the underlying logic:
 
 <p align="center">
-    <img src="chapters/05-Functions-and-Execution/25-Aliases/images/ffwc-expansion.png"/>
+    <img src="images/ffwc-expansion.png"/>
 </p>
 
 Using an alias tied to a function is an incredibly versatile tool. It allows you to encapsulate complex logic—such as conditional statements, loops, and piped commands—within a function, while mapping it to a simple and intuitive alias. This approach not only keeps your commands concise but also enhances productivity by abstracting away intricate details, making your workflow more efficient and elegant.

@@ -23,7 +23,7 @@ These default file descriptors can be expanded or modified based on the needs of
 A graphical representation of a process could be something like the following.
 
 <p align="center">
-    <img src="chapters/06-Process-Management/26-Processes/images/Process-Graphical-Representation.png"/>
+    <img src="images/Process-Graphical-Representation.png"/>
 </p>
 
 Why dive into the details of processes and file descriptors? Because understanding these foundational elements helps you see why combining commands works seamlessly in Bash. Grasping these "little details" gives you insight into the mechanics behind command interactions, making your work more intuitive and efficient.
@@ -66,7 +66,7 @@ In the script "`processes-0001.sh`", you’ll notice that it calls external comm
 The following diagram is a graphical representation of what is happening in the previous script.
 
 <p align="center">
-    <img src="chapters/06-Process-Management/26-Processes/images/Script-without-exec.png"/>
+    <img src="images/Script-without-exec.png"/>
 </p>
 
 Here you can see that inside the script “`processes-0001.sh`” external commands/programs are called. When the execution of these commands/programs are done, the execution comes back to the main script.
@@ -100,7 +100,7 @@ We can imagine this replacement visually as if the original script hands over co
 
 
 <p align="center">
-    <img src="chapters/06-Process-Management/26-Processes/images/Script-with-exec.png"/>
+    <img src="images/Script-with-exec.png"/>
 </p>
 
 This illustration shows that when the "`exec`" command is executed, the current script ("`processes-0002.sh`") halts in favor of running the "`ls -l`" command. Execution does not return to the script afterward, as "`exec`" has fully replaced it with "`ls -l`".

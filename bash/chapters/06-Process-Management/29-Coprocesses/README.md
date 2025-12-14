@@ -31,13 +31,13 @@ The second outcome is the creation of an environment variable to store the PID o
 Visually, a coprocess links the main script (or calling shell) with the child process via file descriptors. These descriptors enable the script to read data from the coprocess’s output and send data to its input seamlessly. If you use a custom name with "`coproc`", the array and PID variable are adjusted accordingly to reflect the specified name.
 
 <p align="center">
-    <img src="chapters/06-Process-Management/29-Coprocesses/images/Coprocess-Default.png"/>
+    <img src="images/Coprocess-Default.png"/>
 </p>
 
 or 
 
 <p align="center">
-    <img src="chapters/06-Process-Management/29-Coprocesses/images/Coprocess-With-Name.png"/>
+    <img src="images/Coprocess-With-Name.png"/>
 </p>
 
 in the case of specifying the name for the file descriptor array.

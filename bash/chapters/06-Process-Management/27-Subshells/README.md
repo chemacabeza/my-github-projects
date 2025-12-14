@@ -63,7 +63,7 @@ The subshell code executes *synchronously*, meaning that the original script (in
 The following diagram is graphic representation of what is happening in the script.
 
 <p align="center">
-    <img src="chapters/06-Process-Management/27-Subshells/images/Diagram-of-subshell.png"/>
+    <img src="images/Diagram-of-subshell.png"/>
 </p><br>
 
 

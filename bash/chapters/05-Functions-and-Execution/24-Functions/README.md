@@ -13,7 +13,7 @@ Functions in Bash enable the creation of structured and organized scripts by enc
 In Bash scripting, declaring a function involves specifying the function's name, defining its behavior or code block, and optionally providing parameters that the function can accept. The syntax for declaring a function is straightforward and can be done using either the “`function`” keyword or a concise shorthand notation.
 
 <p align="center">
-    <img src="chapters/05-Functions-and-Execution/24-Functions/images/Function-Declaration.png" width="450px"/>
+    <img src="images/Function-Declaration.png" width="450px"/>
 </p>
 
 Let’s see next a couple of examples of how to declare a function.

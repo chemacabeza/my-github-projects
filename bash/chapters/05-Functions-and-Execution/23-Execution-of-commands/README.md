@@ -289,7 +289,7 @@ Ok. What happened here?
 On line 7, the command generated before being executed was as follows.
 
 <p align="center">
-    <img src="chapters/05-Functions-and-Execution/23-Execution-of-commands/images/Code-Injection.png" width="500px"/>
+    <img src="images/Code-Injection.png" width="500px"/>
 </p>
 
 As you can see in the previous diagram, the variable “`$_array`” is expanded to “`x}"; date; #`” which closes the string with a variable “`${x}`” that expands to nothing, executes the arbitrary command “`date`” and uses “`#`” to ignore the rest of the line.
@@ -352,7 +352,7 @@ What happened here? Remember that the purpose of “`eval`” is to convert a st
 In the preparation step it will expand the command substitution “`$(ls -t)`” like follows.
 
 <p align="center">
-    <img src="chapters/05-Functions-and-Execution/23-Execution-of-commands/images/Code-Injection-2.png"/>
+    <img src="images/Code-Injection-2.png"/>
 </div>
 
 Now imagine that the name of the file contains a more harmful command like “`rm`”<a id="footnote-6-ref" href="#footnote-6" style="font-size:x-small">[6]</a>. This could cause serious trouble.

@@ -128,7 +128,7 @@ The "`pushd`", "`popd`", and "`dirs`" are shell builtins which allow you manipul
 How can we visualize the stack of directories?
 
 <p align="center">
-    <img src="chapters/04-IO-and-Redirections/22-Navigation-and-file-folder-related-commands/images/DIRSTACK.png" width="650px"/>
+    <img src="images/DIRSTACK.png" width="650px"/>
 </p>
 
 ### The `pushd` command
@@ -152,7 +152,7 @@ This command comes as well with other options that modify (or not) the stack in 
 Let's see a graphical representation of “`pushd +N`”.
 
 <p align="center">
-    <img src="chapters/04-IO-and-Redirections/22-Navigation-and-file-folder-related-commands/images/PUSHD-N.png" width="550px"/>
+    <img src="images/PUSHD-N.png" width="550px"/>
 </p>
 
 So... What is going on in the previous image? The `DIRSTACK` environment variable has 6 directories pushed to it being `DIR0` the first one to be pushed and being `DIR5` the last one to be pushed to the stack `DIRSTACK` (and also is the current working directory).
@@ -162,7 +162,7 @@ When the command "`pushd +3`" is executed, the folder on the index 3 ("`DIR2`" i
 In the following image you will see a graphical representation of “`pushd -N`”.
 
 <p align="center">
-    <img src="chapters/04-IO-and-Redirections/22-Navigation-and-file-folder-related-commands/images/PUSHD-negative-N.png" width="550px"/>
+    <img src="images/PUSHD-negative-N.png" width="550px"/>
 </p>
 
 So... What is going on in the previous image? The `DIRSTACK` environment variable has the same configuration as in the previous example.

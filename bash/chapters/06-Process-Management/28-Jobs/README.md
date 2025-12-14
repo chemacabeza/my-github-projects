@@ -150,7 +150,7 @@ $ while true; do echo Message3; sleep 3; done >/dev/null &
 With the previous commands we were able to execute in the background 3 infinite loops that send messages to the device “`/dev/null`”. We could visualize what is happening in the following way.
 
 <p align="center">
-    <img src="chapters/06-Process-Management/28-Jobs/images/Bash-Children-Processes.png"/>
+    <img src="images/Bash-Children-Processes.png"/>
 </p>
 
 To be able to inspect the shell’s table of active jobs we can use the “`jobs`” command like the following.
@@ -354,7 +354,7 @@ When you launch a Bash terminal, the process created for it is typically a child
 In this structure, "`systemd`" is the parent process responsible for starting the terminal, with "`bash`" as its child, and any background jobs initiated by bash become further child processes.
 
 <p align="center">
-    <img src="chapters/06-Process-Management/28-Jobs/images/Process-Hierarchy.png"/>
+    <img src="images/Process-Hierarchy.png"/>
 </div>
 
 When we inspect the table of active jobs in our terminal you will get something like the following.
@@ -378,7 +378,7 @@ $ jobs -l
 So the job is gone from the table of active jobs for this terminal. But if we inspect the processes with the command “`pstree -p`” (option “`-p`” is to show the PIDs) we get something like the following.
 
 <p align="center">
-    <img src="chapters/06-Process-Management/28-Jobs/images/Process-Hierarchy-With-Disowned-Job.png"/>
+    <img src="images/Process-Hierarchy-With-Disowned-Job.png"/>
 </p>
 
 This means that while the job is still linked to the original bash process, it no longer appears in the table of active jobs.
@@ -399,7 +399,7 @@ $ kill -SIGHUP 569310
 At this point, the terminal we were using will likely stop functioning or may even close entirely, requiring us to open a new one. In the new terminal, we can inspect the running processes and locate the one associated with the PID assigned to "`./2nd_job.sh &`" (in this example, the PID is 877527, but it may differ in your case). Once located, you will observe an output similar to the following.
 
 <p align="center">
-    <img src="chapters/06-Process-Management/28-Jobs/images/Disowned-Job-Alone.png"/>
+    <img src="images/Disowned-Job-Alone.png"/>
 </p>
 
 ### The "`wait`" command

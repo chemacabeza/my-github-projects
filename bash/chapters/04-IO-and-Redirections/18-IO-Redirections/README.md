@@ -26,13 +26,13 @@ Bash processes redirections sequentially, interpreting them **from left to right
 To illustrate I/O redirections more visually, we will employ variations of the following diagram to provide a clear and graphical explanation of the concept.
 
 <p align="center">
-    <img src="chapters/04-IO-and-Redirections/18-IO-Redirections/images/Process-Graphical-Representation.png"/>
+    <img src="images/Process-Graphical-Representation.png"/>
 </p>
 
 ## Standard Output Redirection
 
 <p align="center">
-    <img src="chapters/04-IO-and-Redirections/18-IO-Redirections/images/Standard-Output-Redirection.png"/>
+    <img src="images/Standard-Output-Redirection.png"/>
 </p>
 
 There are two primary ways to redirect standard output in Bash:
@@ -106,7 +106,7 @@ The second redirection, marked by the "`>>`" operator within the "`for`" loop, a
 ## Standard Error Redirection
 
 <p align="center">
-    <img src="chapters/04-IO-and-Redirections/18-IO-Redirections/images/Standard-Error-Redirection.png"/>
+    <img src="images/Standard-Error-Redirection.png"/>
 </p>
 
 Redirecting standard error in Bash closely resembles the process of redirecting standard output, with one notable distinction: Bash does not have a default shorthand for redirecting standard error, so it must always be specified explicitly.
@@ -142,7 +142,7 @@ In line 4, a variable named "`ERROR_FILE`" is defined to store the path to the f
 
 
 <p align="center">
-    <img src="chapters/04-IO-and-Redirections/18-IO-Redirections/images/Standard-Ouput-and-Error-Redirection.png"/>
+    <img src="images/Standard-Ouput-and-Error-Redirection.png"/>
 </p>
 
 We’ve already explored how to redirect the standard output and standard error individually. Now, let’s learn how to handle both simultaneously during the execution of a command. This can be achieved using either of the following approaches:
@@ -153,7 +153,7 @@ We’ve already explored how to redirect the standard output and standard error 
 In both examples, the standard output is redirected to the file named "`output.txt`", while the standard error is redirected to "`errors.txt`". The result is a clean separation of regular output and error messages, making it easier to analyze or process them independently.
 
 <p align="center">
-    <img src="chapters/04-IO-and-Redirections/18-IO-Redirections/images/Standard-Output-and-Error-Redirection-To-The-Same-File.png"/>
+    <img src="images/Standard-Output-and-Error-Redirection-To-The-Same-File.png"/>
 </p>
 
 If you want to redirect both the standard output and the standard error streams to the same file, there are several approaches you can take. One method involves explicitly specifying the same file for both streams, as shown here:
@@ -353,7 +353,7 @@ In the next section we will learn about the redirection of the standard input.
 ## Standard Input Redirection
 
 <p align="center">
-    <img src="chapters/04-IO-and-Redirections/18-IO-Redirections/images/Standard-Input-Redirection.png"/>
+    <img src="images/Standard-Input-Redirection.png"/>
 </p>
 
 In the previous sections, we explored how to redirect both standard output and standard error, which are used to capture content produced by a script or program.
@@ -690,7 +690,7 @@ ls: cannot access '/fake_3': No such file or directory
 #### <b>Opening a new file</b>
 
 <p align="center">
-    <img src="chapters/04-IO-and-Redirections/18-IO-Redirections/images/Opening-New-File.png"/>
+    <img src="images/Opening-New-File.png"/>
 </p>
 
 Using the exec command, we can open a file and associate it with a file descriptor other than the standard ones (0, 1, or 2). To do this, we use the syntax "`exec <fd><filename`", where "`<fd>`" is a file descriptor number between 3 and 9.
@@ -765,7 +765,7 @@ LINE_CONTENT[15]: Sed fringilla luctus tincidunt.
 #### <b>Appending to an existing file</b>
 
 <p align="center">
-    <img src="chapters/04-IO-and-Redirections/18-IO-Redirections/images/Appending-to-an-existing-file.png"/>
+    <img src="images/Appending-to-an-existing-file.png"/>
 </p>
 
 If we want to redirect output to an existing file and append new content rather than overwriting it, we can use an append redirection. This can be done by connecting a file descriptor (in this case, File Descriptor 4) to a file named "`output_file.txt`". The script we create will ensure that each line it generates is appended to "`output_file.txt`", preserving any existing content in the file.
@@ -831,7 +831,7 @@ The meaning of "`2>&1`" can be understood in two (equivalent) ways:
 For example, the command "`exec >output.txt 2>&1`" can be visualized graphically to illustrate how both outputs are unified into the file "`output.txt`".
 
 <p align="center">
-    <img src="chapters/04-IO-and-Redirections/18-IO-Redirections/images/Exec-Redirect-Both-STDOUT-STDERR.png"/>
+    <img src="images/Exec-Redirect-Both-STDOUT-STDERR.png"/>
 </p>
 
 ## Order of redirections
@@ -847,7 +847,7 @@ What is the difference between these two commands? In the following subsections,
 ### Redirection <b>`exec >output 2>&1`</b>
 
 <p align="center">
-   <img src="chapters/04-IO-and-Redirections/18-IO-Redirections/images/Process-Graphical-Representation.png"/>
+   <img src="images/Process-Graphical-Representation.png"/>
 </p>
 
 Before the "`exec`" built-in command is executed, the state of the file descriptors is as shown in the preceding illustration.
@@ -855,7 +855,7 @@ Before the "`exec`" built-in command is executed, the state of the file descript
 The first redirection, "`>output`", is processed. This redirection reassigns the standard output to the file named "`output`", resulting in the following configuration.
 
 <p align="center">
-   <img src="chapters/04-IO-and-Redirections/18-IO-Redirections/images/Output-Redirection-Part-1.png"/>
+   <img src="images/Output-Redirection-Part-1.png"/>
 </p>
 
 Once the first redirection has been successfully processed, Bash proceeds to interpret the next one.
@@ -863,7 +863,7 @@ Once the first redirection has been successfully processed, Bash proceeds to int
 The second redirection, "`2>&1`", instructs Bash to *"Copy the destination currently assigned to file descriptor 1 (standard output) to file descriptor 2 (standard error)."* This results in the following effect.
 
 <p align="center">
-   <img src="chapters/04-IO-and-Redirections/18-IO-Redirections/images/Output-Redirection-Part-2.png"/>
+   <img src="images/Output-Redirection-Part-2.png"/>
 </p>
 
 In this sequence of redirections, the script is configured to direct both standard output and standard error to the file named "`output`".
@@ -873,7 +873,7 @@ In this sequence of redirections, the script is configured to direct both standa
 Let’s see what happens when we reverse the order of the redirections.
 
 <p align="center">
-   <img src="chapters/04-IO-and-Redirections/18-IO-Redirections/images/Process-Graphical-Representation.png"/>
+   <img src="images/Process-Graphical-Representation.png"/>
 </p>
 
 The script starts with the same initial state, where the default file descriptors are assigned to their standard destinations.
@@ -881,7 +881,7 @@ The script starts with the same initial state, where the default file descriptor
 The first redirection, "`2>&1`", *"copies the destination currently assigned to file descriptor 1 (standard output) to file descriptor 2 (standard error),"* resulting in the following effect.
 
 <p align="center">
-   <img src="chapters/04-IO-and-Redirections/18-IO-Redirections/images/Redirection-To-Standard-Ouput.png"/>
+   <img src="images/Redirection-To-Standard-Ouput.png"/>
 </p>
 
 At this point, both the standard output and standard error file descriptors are directed to the original standard output.
@@ -889,7 +889,7 @@ At this point, both the standard output and standard error file descriptors are 
 The second redirection, "`>output`", then reassigns the standard output to the file output. This change can be visually represented as follows.
 
 <p align="center">
-   <img src="chapters/04-IO-and-Redirections/18-IO-Redirections/images/Redirection-To-Output-File.png"/>
+   <img src="images/Redirection-To-Output-File.png"/>
 </div>
 
 As a result of processing the second redirection, standard error remains directed to the original standard output ("`/dev/stdout`"), while standard output is now redirected to the file named "`output`".
@@ -916,7 +916,7 @@ This syntax works by linking:
 The flow of data through this chain can be illustrated graphically as follows.
 
 <p align="center">
-   <img src="chapters/04-IO-and-Redirections/18-IO-Redirections/images/Piping-Commands.png"/>
+   <img src="images/Piping-Commands.png"/>
 </p>
 
 Let’s explore an example using some familiar commands, such as "`cat`" and "`grep`".
@@ -1066,7 +1066,7 @@ This script performs the following steps:
 The "`tee`" command is an incredibly versatile tool for managing redirections. Its name is derived from its functionality, which resembles the shape of the letter "T".
 
 <p align="center">
-    <img src="chapters/04-IO-and-Redirections/18-IO-Redirections/images/Tee-Command.png"/>
+    <img src="images/Tee-Command.png"/>
 </p>
 
 The "`tee`" command reads data from its standard input and simultaneously writes it to both its standard output and any file(s) specified as arguments. This allows you to redirect the same data to multiple files, scripts, or commands all at once.
@@ -1199,13 +1199,13 @@ Line content: "vxr8svt"
 In this case you can see that the error from the “`ls`” command it’s still printed to the standard error and not redirected to the standard input of our script. We could visualize this situation as follows.
 
 <p align="center">
-    <img src="chapters/04-IO-and-Redirections/18-IO-Redirections/images/LS-command-without-redirecting-stderr.png"/>
+    <img src="images/LS-command-without-redirecting-stderr.png"/>
 </p>
 
 In order to be able to redirect the standard error from “`ls`” to the standard input of “io-redirections-0015.sh” we need to add “`2>&1`” to our “`ls`” command (*“Copy the destination pointed by file descriptor 1 to file descriptor 2”*). The effect of adding that redirection before the pipe ("`|`") can be visualized as follows.
 
 <p align="center">
-    <img src="chapters/04-IO-and-Redirections/18-IO-Redirections/images/LS-command-redirecting-stderr.png"/>
+    <img src="images/LS-command-redirecting-stderr.png"/>
 </p>
 
 ```txt
@@ -1584,7 +1584,7 @@ When this script is executed, Bash spawns three child processes, one for each se
 This structure can be visually represented as follows.
 
 <p align="center">
-    <img src="chapters/04-IO-and-Redirections/18-IO-Redirections/images/Three-Processes.png"/>
+    <img src="images/Three-Processes.png"/>
 </p>
 
 The first child process (“`ls`”) will produce as output the list of files of the folder and will send them to its standard output.
