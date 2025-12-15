@@ -12,11 +12,15 @@ ifeq ($(UNAME_S),Darwin)
     SED_INPLACE = sed -i ''
     TORCH_INSTALL = pip install torch torchvision
     PLATFORM_MSG = "macOS detected - installing PyTorch with MPS (Metal Performance Shaders) support"
+    # macOS runtime flags: disable offloading for better MPS performance
+    RUNTIME_FLAGS = --disable-offload-from-vram --always-high-vram
 else
     OS = linux
     SED_INPLACE = sed -i
     TORCH_INSTALL = pip install "torch==2.4.0" "torchvision==0.19.0"
     PLATFORM_MSG = "Linux detected - installing PyTorch with CUDA support"
+    # Linux runtime flags: high VRAM mode for CUDA
+    RUNTIME_FLAGS = --always-high-vram
 endif
 
 # Docker targets
@@ -67,4 +71,4 @@ install-local:
 run-local:
 	@echo "Starting Fooocus locally..."
 	. $(VENV_DIR)/bin/activate && \
-	./run_local.sh python entry_with_update.py --listen --port 7860 --always-high-vram
+	./run_local.sh python entry_with_update.py --listen --port 7860 $(RUNTIME_FLAGS)

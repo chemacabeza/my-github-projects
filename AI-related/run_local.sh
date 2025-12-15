@@ -5,13 +5,15 @@ set -euo pipefail
 if [[ "$OSTYPE" == "darwin"* ]]; then
     PLATFORM="macOS"
     GPU_INFO="Metal Performance Shaders (MPS)"
+    echo "=== Platform: $PLATFORM ==="
+    echo "GPU Acceleration: $GPU_INFO"
+    echo "Tip: Verify MPS with: python -c \"import torch; print('MPS:', torch.backends.mps.is_available())\""
 else
     PLATFORM="Linux"
     GPU_INFO="CUDA"
+    echo "=== Platform: $PLATFORM ==="
+    echo "GPU Acceleration: $GPU_INFO"
 fi
-
-echo "=== Platform: $PLATFORM ==="
-echo "GPU Acceleration: $GPU_INFO"
 echo ""
 
 # Local folders (relative to where you run make)

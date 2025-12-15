@@ -146,6 +146,18 @@ Expected output on Apple Silicon: `MPS available: True`
 *   Subsequent generations significantly faster with GPU
 *   Apple Silicon provides excellent performance for AI image generation
 
+**Advanced Performance Tuning**:
+
+For power users on Apple Silicon, you can experiment with additional flags by modifying the `Makefile` `RUNTIME_FLAGS`:
+
+```makefile
+# Example: Aggressive optimization for M1/M2/M3/M4 with 16GB+ RAM
+RUNTIME_FLAGS = --all-in-fp16 --disable-offload-from-vram --always-high-vram --unet-in-fp16 --vae-in-fp16 --clip-in-fp16
+```
+
+> [!WARNING]
+> These flags may cause instability on systems with less than 16GB unified memory. Test carefully.
+
 ### Included Models
 
 The local installation includes the following models by default. Some are standard Fooocus models, while others are custom additions.
