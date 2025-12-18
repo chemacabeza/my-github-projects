@@ -251,14 +251,14 @@ The local installation includes the following models by default. Some are standa
 
 6.  `helga_lora.safetensors`
     *   **Type**: LoRA
-    *   **Description**: Character LoRA
+    *   **Description**: Swedish woman character
     *   **Trigger Word**: `helga`
     *   **Model ID**: 2219193
     *   **Source**: [Civitai](https://civitai.com/models/999999)
 
 7.  `anastasia_lora.safetensors`
     *   **Type**: LoRA
-    *   **Description**: Character LoRA - Japanese woman
+    *   **Description**: Russian woman character
     *   **Trigger Word**: `anastasia`
     *   **Model ID**: 2502002
     *   **Source**: [Civitai](https://civitai.com/models/999999)
