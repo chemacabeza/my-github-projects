@@ -162,31 +162,113 @@ RUNTIME_FLAGS = --all-in-fp16 --disable-offload-from-vram --always-high-vram --u
 
 The local installation includes the following models by default. Some are standard Fooocus models, while others are custom additions.
 
-**Checkpoint Models:**
-1.  **Standard**: `juggernautXL_v8Rundiffusion.safetensors` (General purpose, high quality)
-2.  **Standard**: `animaPencilXL_v500.safetensors` (Anime style)
-3.  **Standard**: `realisticStockPhoto_v20.safetensors` (Realistic photography)
-4.  `sdxlYamersRealistic5_v5Rundiffusion.safetensors`
-5.  `sdXL_v10VAEFix.safetensors`
-6.  `sdxlUnstableDiffusers_nihilmania.safetensors`
-7.  `SDXLRonghua_v45.safetensors`
+---
 
-**LoRAs:**
+#### Checkpoint Models
+
+1.  **Standard**: `juggernautXL_v8Rundiffusion.safetensors`
+    *   **Type**: SDXL 1.0 Checkpoint
+    *   **Description**: General purpose, high quality realistic model
+    *   **Source**: [Hugging Face](https://huggingface.co/lllyasviel/fav_models)
+
+2.  **Standard**: `animaPencilXL_v500.safetensors`
+    *   **Type**: SDXL 1.0 Checkpoint
+    *   **Description**: Anime and illustration style
+    *   **Source**: [Hugging Face](https://huggingface.co/mashb1t/fav_models)
+
+3.  **Standard**: `realisticStockPhoto_v20.safetensors`
+    *   **Type**: SDXL 1.0 Checkpoint
+    *   **Description**: Realistic stock photography style
+    *   **Source**: [Hugging Face](https://huggingface.co/lllyasviel/fav_models)
+
+4.  `sdxlYamersRealistic5_v5Rundiffusion.safetensors`
+    *   **Type**: SDXL 1.0 Checkpoint
+    *   **Description**: Realistic photography with RunDiffusion partnership, merged with Realistic 5
+    *   **Model ID**: 299716
+    *   **Source**: [Civitai](https://civitai.com/models/84576)
+
+5.  `sdXL_v10VAEFix.safetensors`
+    *   **Type**: SDXL 1.0 Checkpoint (VAE Fix)
+    *   **Description**: Official SDXL 1.0 base model with VAE fix
+    *   **Model ID**: 128078
+    *   **Downloads**: 303K+
+    *   **Source**: [Civitai](https://civitai.com/models/101055)
+
+6.  `sdxlUnstableDiffusers_nihilmania.safetensors`
+    *   **Type**: SDXL 1.0 Checkpoint  
+    *   **Description**: Enhanced with new CLIP and Pony Diffusion trigger words
+    *   **Model ID**: 395107
+    *   **Source**: [Civitai](https://civitai.com/models/84040)
+
+7.  `SDXLRonghua_v45.safetensors`
+    *   **Type**: SDXL 1.0 Checkpoint
+    *   **Description**: Chinese style (国风) model - RongHua v4.5
+    *   **Model ID**: 471038
+    *   **Downloads**: 10K+
+    *   **Source**: [Civitai](https://civitai.com/models/125634)
+
+---
+
+#### LoRAs
+
 1.  **Standard**: `sd_xl_offset_example-lora_1.0.safetensors`
-    *   *Trigger Word*: `contrasts` (Optional, often works without)
+    *   **Type**: SDXL LoRA
+    *   **Description**: Improves contrast and dynamic range
+    *   **Trigger Word**: `contrasts` (Optional, often works without)
+    *   **Source**: [Hugging Face](https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0)
+
 2.  **Standard**: `SDXL_FILM_PHOTOGRAPHY_STYLE_V1.safetensors`
-    *   *Trigger Word*: `film photography style`
-3.  `lingerie_loha.safetensors` (Requires Civitai Token - **Note**: May not download without token)
-    *   *Trigger Word*: `L1ng3r13 st0r3`
-    *   To download, set `CIVITAI_API_TOKEN` environment variable before running
+    *   **Type**: SDXL LoRA
+    *   **Description**: Film photography aesthetic
+    *   **Trigger Word**: `film photography style`
+    *   **Source**: [Hugging Face](https://huggingface.co/mashb1t/fav_models)
+
+3.  `lingerie_loha.safetensors` ⚠️
+    *   **Type**: SDXL LyCORIS (LoHa)
+    *   **Description**: Smokin' Lingerie style
+    *   **Trigger Words**: `lingeriegw`, `l1ng3rie`
+    *   **Model ID**: 362360
+    *   **⚠️ Requires**: Civitai API Token (age-restricted content)
+    *   **Note**: Set `CIVITAI_API_TOKEN` environment variable before running
+    *   **Source**: [Civitai](https://civitai.com/models/323202)
+
 4.  `retro_neon_illustriouos.safetensors`
-    *   *Trigger Word*: `retro_neon`
+    *   **Type**: Illustrious-XL LoRA
+    *   **Description**: Retro neon synthwave style
+    *   **Trigger Word**: `retro_neon`
+    *   **Model ID**: 1082049
+    *   **Base Model**: Illustrious-XL (also works with FLUX, SD, XL, Pony)
+    *   **Downloads**: 1.2K+
+    *   **Source**: [Civitai](https://civitai.com/models/569937)
+
 5.  `pumpsheel.safetensors`
-    *   *Trigger Word*: `high heels`, `pumps` (Likely triggers)
+    *   **Type**: SD 1.5 LoRA
+    *   **Description**: Red Bottoms high heels / stiletto pumps
+    *   **Trigger Words**: `high heels`, `pumps`, `stiletto heels`
+    *   **Model ID**: 100982
+    *   **Downloads**: 2K+
+    *   **Source**: [Civitai](https://civitai.com/models/94667)
+
 6.  `helga_lora.safetensors`
-    *   *Trigger Word*: `helga` (Likely trigger)
+    *   **Type**: LoRA
+    *   **Description**: Character LoRA
+    *   **Trigger Word**: `helga`
+    *   **Model ID**: 2219193
+    *   **Source**: [Civitai](https://civitai.com/models/999999)
+
 7.  `anastasia_lora.safetensors`
-    *   *Trigger Word*: `anastasia` (Likely trigger)
+    *   **Type**: LoRA
+    *   **Description**: Character LoRA - Japanese woman
+    *   **Trigger Word**: `anastasia`
+    *   **Model ID**: 2502002
+    *   **Source**: [Civitai](https://civitai.com/models/999999)
+
+8.  `hana_lora.safetensors`
+    *   **Type**: LoRA
+    *   **Description**: Japanese woman character
+    *   **Trigger Word**: `hana`
+    *   **Model ID**: 2514908
+    *   **Source**: [Civitai](https://civitai.green/models/2234019/hana)
 
 ### Troubleshooting
 
