@@ -29,34 +29,38 @@ download_model() {
         return 0
     fi
 
-    # Try downloading without token first
-    if curl -fL "$url" -o "$output"; then
+    # Try downloading without token first (use || true to prevent set -e from exiting)
+    local exit_code=0
+    curl -fL "$url" -o "$output" || exit_code=$?
+    
+    if [ $exit_code -eq 0 ]; then
         return 0
-    else
-        local exit_code=$?
-        # If 401 Unauthorized (curl exit code 22)
-        if [ $exit_code -eq 22 ]; then
-            echo "Download failed: Unauthorized (401)."
-            if [ -n "${CIVITAI_API_TOKEN:-}" ]; then
-                echo "Retrying with CIVITAI_API_TOKEN..."
-                # Append token to URL
-                if [[ "$url" == *"?"* ]]; then
-                    url="${url}&token=${CIVITAI_API_TOKEN}"
-                else
-                    url="${url}?token=${CIVITAI_API_TOKEN}"
-                fi
-                if curl -fL "$url" -o "$output"; then
-                    return 0
-                fi
-            else
-                echo "WARNING: restricted model requires CIVITAI_API_TOKEN environment variable."
-                echo "Export it before running: export CIVITAI_API_TOKEN=your_token_here"
-                echo "Skipping download for $output"
-                return 0 # Don't fail the build, just skip
-            fi
-        fi
-        return $exit_code
     fi
+    
+    # If 401 Unauthorized (curl exit code 22 for HTTP errors, or 56 for 401 during transfer)
+    if [ $exit_code -eq 22 ] || [ $exit_code -eq 56 ]; then
+        echo "Download failed: Unauthorized (401)."
+        if [ -n "${CIVITAI_API_TOKEN:-}" ]; then
+            echo "Retrying with CIVITAI_API_TOKEN..."
+            # Append token to URL
+            if [[ "$url" == *"?"* ]]; then
+                url="${url}&token=${CIVITAI_API_TOKEN}"
+            else
+                url="${url}?token=${CIVITAI_API_TOKEN}"
+            fi
+            if curl -fL "$url" -o "$output"; then
+                return 0
+            fi
+        else
+            echo "WARNING: restricted model requires CIVITAI_API_TOKEN environment variable."
+            echo "Export it before running: export CIVITAI_API_TOKEN=your_token_here"
+            echo "Skipping download for $output"
+            # Clean up partial download
+            rm -f "$output"
+            return 0 # Don't fail the build, just skip
+        fi
+    fi
+    return $exit_code
 }
 
 mkdir -p "$CKPT_DIR" "$LORA_DIR"
@@ -115,7 +119,7 @@ download_model 'https://huggingface.co/mashb1t/fav_models/resolve/main/fav/SDXL_
 download_model 'https://civitai.com/api/download/models/362360' "$LORA_DIR/lingerie_loha.safetensors"
 download_model 'https://civitai.com/api/download/models/1082049' "$LORA_DIR/retro_neon_illustriouos.safetensors"
 download_model 'https://civitai.com/api/download/models/100982' "$LORA_DIR/pumpsheel.safetensors"
-download_model 'https://civitai.com/api/download/models/2219193' "$LORA_DIR/helga_lora.safetensors"
+download_model 'https://civitai.com/api/download/models/2498388' "$LORA_DIR/helga_lora.safetensors"
 download_model 'https://civitai.com/api/download/models/2502002' "$LORA_DIR/anastasia_lora.safetensors"
 download_model 'https://civitai.com/api/download/models/2514908' "$LORA_DIR/hana_lora.safetensors"
 
