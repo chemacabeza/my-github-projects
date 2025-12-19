@@ -270,6 +270,13 @@ The local installation includes the following models by default. Some are standa
     *   **Model ID**: 2514908
     *   **Source**: [Civitai](https://civitai.green/models/2234019/hana)
 
+9.  `inga_lora.safetensors`
+    *   **Type**: LoRA
+    *   **Description**: German woman character (26 years old)
+    *   **Trigger Word**: `inga`
+    *   **Model ID**: 2517770
+    *   **Source**: [Civitai](https://civitai.green/models/2236578/inga)
+
 ### Troubleshooting
 
 **Models not appearing in Fooocus UI:**
