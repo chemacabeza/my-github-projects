@@ -277,6 +277,13 @@ The local installation includes the following models by default. Some are standa
     *   **Model ID**: 2517770
     *   **Source**: [Civitai](https://civitai.green/models/2236578/inga)
 
+10. `mariam_lora.safetensors`
+    *   **Type**: SDXL LoRA
+    *   **Description**: Guinean woman character (25 years old)
+    *   **Trigger Word**: `mariam`
+    *   **Model ID**: 2526076
+    *   **Source**: [Civitai](https://civitai.green/models/2243911/mariam)
+
 ### Troubleshooting
 
 **Models not appearing in Fooocus UI:**
