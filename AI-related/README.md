@@ -284,6 +284,13 @@ The local installation includes the following models by default. Some are standa
     *   **Model ID**: 2526076
     *   **Source**: [Civitai](https://civitai.green/models/2243911/mariam)
 
+11. `chen_lora.safetensors`
+    *   **Type**: SDXL LoRA
+    *   **Description**: Chinese woman character (25 years old)
+    *   **Trigger Word**: `chen`
+    *   **Model ID**: 2528777
+    *   **Source**: [Civitai](https://civitai.green/models/2246318/chen)
+
 ### Troubleshooting
 
 **Models not appearing in Fooocus UI:**
