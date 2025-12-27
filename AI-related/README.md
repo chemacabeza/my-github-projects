@@ -292,11 +292,18 @@ The local installation includes the following models by default. Some are standa
     *   **Source**: [Civitai](https://civitai.green/models/2246318/chen)
 
 12. `iuliia_lora.safetensors`
-    *   **Type**: SDXL LoRA
-    *   **Description**: Ukrainian woman character (25 years old, 1.85m tall)
+    *   **Type**: SD 1.5 LoRA
+    *   **Description**: Ukrainian woman character (25 years old, 1.85m tall) - v2.0
     *   **Trigger Word**: `iuliia`
-    *   **Model ID**: 2536830
+    *   **Model ID**: 2537009
     *   **Source**: [Civitai](https://civitai.green/models/2253549/iuliia)
+
+13. `ellen_lora.safetensors`
+    *   **Type**: SDXL LoRA
+    *   **Description**: Australian woman character (26 years old, 1.85m tall)
+    *   **Trigger Word**: `ellen`
+    *   **Model ID**: 2540672
+    *   **Source**: [Civitai](https://civitai.green/models/2257006/ellen)
 
 ### Troubleshooting
 
