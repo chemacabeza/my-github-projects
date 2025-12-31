@@ -288,8 +288,8 @@ The local installation includes the following models by default. Some are standa
     *   **Type**: SDXL LoRA
     *   **Description**: Chinese woman character (25 years old)
     *   **Trigger Word**: `chen`
-    *   **Model ID**: 2528777
-    *   **Source**: [Civitai](https://civitai.green/models/2246318/chen)
+    *   **Model ID**: 2551790
+    *   **Source**: [Civitai](https://civitai.green/models/2267070/chen)
 
 12. `iuliia_lora.safetensors`
     *   **Type**: SDXL LoRA
