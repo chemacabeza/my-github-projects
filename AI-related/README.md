@@ -271,11 +271,11 @@ The local installation includes the following models by default. Some are standa
     *   **Source**: [Civitai](https://civitai.green/models/2234019/hana)
 
 9.  `inga_lora.safetensors`
-    *   **Type**: LoRA
+    *   **Type**: SDXL LoRA
     *   **Description**: German woman character (26 years old)
     *   **Trigger Word**: `inga`
-    *   **Model ID**: 2517770
-    *   **Source**: [Civitai](https://civitai.green/models/2236578/inga)
+    *   **Model ID**: 2551730
+    *   **Source**: [Civitai](https://civitai.green/models/2267015/inga)
 
 10. `mariam_lora.safetensors`
     *   **Type**: SDXL LoRA
