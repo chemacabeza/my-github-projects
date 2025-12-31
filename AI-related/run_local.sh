@@ -31,7 +31,7 @@ download_model() {
 
     # Try downloading without token first (use || true to prevent set -e from exiting)
     local exit_code=0
-    curl -fL "$url" -o "$output" || exit_code=$?
+    curl --http1.1 -fL "$url" -o "$output" || exit_code=$?
     
     if [ $exit_code -eq 0 ]; then
         return 0
@@ -48,7 +48,7 @@ download_model() {
             else
                 url="${url}?token=${CIVITAI_API_TOKEN}"
             fi
-            if curl -fL "$url" -o "$output"; then
+            if curl --http1.1 -fL "$url" -o "$output"; then
                 return 0
             fi
         else
@@ -125,8 +125,8 @@ download_model 'https://civitai.com/api/download/models/2514908' "$LORA_DIR/hana
 download_model 'https://civitai.com/api/download/models/2517770' "$LORA_DIR/inga_lora.safetensors"
 download_model 'https://civitai.com/api/download/models/2526076' "$LORA_DIR/mariam_lora.safetensors"
 download_model 'https://civitai.com/api/download/models/2528777' "$LORA_DIR/chen_lora.safetensors"
-download_model 'https://civitai.com/api/download/models/2537009' "$LORA_DIR/iuliia_lora.safetensors"
-download_model 'https://civitai.green/api/download/models/2550418' "$LORA_DIR/allison_lora.safetensors"
+download_model 'https://civitai.com/api/download/models/2551604' "$LORA_DIR/iuliia_lora.safetensors"
+download_model 'https://civitai.com/api/download/models/2550418' "$LORA_DIR/allison_lora.safetensors"
 
 echo "=== Starting Fooocus ==="
 echo "All models and LoRAs are accessible via symbolic links"
