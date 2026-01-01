@@ -305,6 +305,13 @@ The local installation includes the following models by default. Some are standa
     *   **Model ID**: 2550418
     *   **Source**: [Civitai](https://civitai.green/models/2265832/allison)
 
+14. `emma_lora.safetensors`
+    *   **Type**: SDXL LoRA
+    *   **Description**: American woman character (27 years old, 1.85m tall)
+    *   **Trigger Word**: `emma`
+    *   **Model ID**: 2554575
+    *   **Source**: [Civitai](https://civitai.green/models/2269530/emma)
+
 ### Troubleshooting
 
 **Models not appearing in Fooocus UI:**
