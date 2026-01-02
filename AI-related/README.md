@@ -312,6 +312,13 @@ The local installation includes the following models by default. Some are standa
     *   **Model ID**: 2554575
     *   **Source**: [Civitai](https://civitai.green/models/2269530/emma)
 
+15. `rabab_lora.safetensors`
+    *   **Type**: SDXL LoRA
+    *   **Description**: Moroccan woman character (25 years old, 1.72m tall)
+    *   **Trigger Word**: `rabab`
+    *   **Model ID**: 2558792
+    *   **Source**: [Civitai](https://civitai.green/models/2273303/rabab)
+
 ### Troubleshooting
 
 **Models not appearing in Fooocus UI:**
