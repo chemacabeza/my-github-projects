@@ -32,7 +32,7 @@ The prompt must begin exactly with:
 
 The visual style should convey a mature, artistic, and subtly sensual aesthetic while remaining fully non-explicit. Emphasize elegance, mood, atmosphere, cinematic lighting, and photographic realism appropriate for fine art or editorial imagery.
 
-Emma is a 25-year-old woman from Morocco with 
+Rabab is a 25-year-old woman from Morocco with 
 - beautiful light brown eyes, the eyes shape is almond-shaped, slightly lifted outer corners 
 - Nose: straight, medium width, refined tip.
 - Lips: medium-full, with a natural pink tone; lipstick is nude/pink and understated.
