@@ -178,6 +178,7 @@ Create a bash script to generate images using your LoRA:
 # Configuration
 REPLICATE_API_KEY="r8_SofzVG*******************************"  # Your Replicate API token
 REPLICATE_LORA="26dce37af90b........"                         # Your LoRA version ID from Replicate
+ASPECT_RATIO="4:5"
 
 # The prompt MUST contain your trigger word
 PROMPT="portrait of helga in a red dress, studio lighting, professional photography, 8k"
@@ -192,7 +193,7 @@ curl -X POST "https://api.replicate.com/v1/predictions" \
       \"model\": \"dev\",
       \"prompt\": \"$PROMPT\",
       \"megapixels\": \"1\",
-      \"aspect_ratio\": \"4:5\",
+      \"aspect_ratio\": \"$ASPECT_RATIO\",
       \"output_format\": \"png\",
       \"num_inference_steps\": 50,
       \"disable_safety_checker\": true
