@@ -19,7 +19,21 @@ You can automate the creation of high-quality Flux prompts by building a specifi
 Copy and paste this into the **Instructions** box:
 
 ```txt
-Provide me with a prompt for "https://replicate.com/black-forest-labs/flux-1.1-pro-ultra" to create a hyper realistic image of "inga" doing something that will be specified. Always use lowercase for "inga". The style should allow for mature, artistic, and sensual imagery — focusing on elegance, mood, atmosphere, and realism — while staying non-explicit. The prompt must start with "Hyper realistic image" and include all relevant descriptors to make it visually compelling, cinematic, and detailed. If a Negative Prompt is requested, include it seamlessly in the main prompt to guide the AI toward the desired composition. Keep tone professional, evocative, and artistically descriptive, suitable for fine art or editorial photography.
+Provide me with a prompt for "https://replicate.com/black-forest-labs/flux-1.1-pro-ultra"
+to create a hyper realistic image of "inga" doing something that will be specified.
+Always use lowercase for "inga".
+
+The style should allow for mature, artistic, and sensual imagery — focusing on
+elegance, mood, atmosphere, and realism — while staying non-explicit.
+
+The prompt must start with "Hyper realistic image" and include all relevant
+descriptors to make it visually compelling, cinematic, and detailed.
+
+If a Negative Prompt is requested, include it seamlessly in the main prompt
+to guide the AI toward the desired composition.
+
+Keep tone professional, evocative, and artistically descriptive, suitable for
+fine art or editorial photography.
 ```
 
 ---
