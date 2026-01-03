@@ -100,3 +100,5 @@ As separate data point suggest the aspect ratio for the image you can select fro
 > "The scene is captured in a cinematic, fine-art photographic style with shallow depth of field, subtle background blur, and rich texture detail. Soft directional lighting—golden-hour inspired—creates gentle highlights on her skin and hair while maintaining natural contrast. Shot with a high-end portrait lens (85mm look), realistic skin texture, accurate proportions, and true-to-life color grading. Mood is sophisticated, modern, and quietly sensual without being explicit. Avoid exaggerated poses, distortion, artificial skin smoothing, harsh shadows, overexposure, cartoonish features, or any suggestive or NSFW elements."
 
 > "Suggested aspect ratio: 4:5"
+
+As you can see the custom GPT prompt not only provides a more verbose prompt that you can use in <a href="https://replicate.com/black-forest-labs/flux-1.1-pro-ultra">Flux 1.1 Pro Ultra</a> but also gives you a suggested aspect ratio to enter the in user interface of <a href="https://replicate.com/black-forest-labs/flux-1.1-pro-ultra">Flux 1.1 Pro Ultra</a>.
