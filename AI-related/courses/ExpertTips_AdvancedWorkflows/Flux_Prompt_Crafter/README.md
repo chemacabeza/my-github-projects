@@ -10,6 +10,12 @@ You can automate the creation of high-quality Flux prompts by building a specifi
 2.  Click **+ Create** to start building a new GPT.
 3.  Navigate to the **Configure** tab and use the following settings:
 
+You will see the following default screen:
+
+<p align="center">
+   <img src="images/DraftCustomGPT.png" width="600"/>
+</p>
+
 | Field | Value |
 |-------|-------|
 | **Name** | `Flux 1.1 Pro Prompt Crafter` |
