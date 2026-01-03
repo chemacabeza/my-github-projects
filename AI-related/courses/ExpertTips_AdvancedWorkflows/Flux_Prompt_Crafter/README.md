@@ -90,7 +90,13 @@ As separate data point suggest the aspect ratio for the image you can select fro
 ## Usage Example
 
 **You type:**
-> "Inga reading a quantum physics book wearing glasses in a relaxing way."
+> "Provide me a prompt for rabab wearing Ray-Ban sunglasses looking at the camera smiling without showing her teeth."
 
 **GPT generates:**
-> "Hyper realistic image of inga reading a thick quantum physics book while wearing elegant reading glasses, sitting comfortably in a softly lit modern interior. Her posture is relaxed and graceful, one leg casually crossed, as warm afternoon light filters through sheer curtains..."
+> "Hyper realistic image of rabab, a 25-year-old Moroccan woman, standing confidently and facing the camera, wearing elegant Ray-Ban sunglasses, looking directly into the lens with a soft, closed-lip smile that conveys warmth, confidence, and quiet charisma. Her almond-shaped light brown eyes are subtly visible through the tinted lenses, framed by naturally wavy, deep dark brown hair flowing past her shoulders with a smooth, healthy sheen. Her olive, light tan skin with warm golden undertones appears even and radiant, softly illuminated by cinematic natural light."
+
+> "She has a refined, editorial presence with an upright yet relaxed posture that highlights her elongated torso and graceful hourglass silhouette. Her facial features are balanced and harmonious: a straight, refined nose, medium-full lips with understated nude-pink lipstick, and a calm, self-assured expression. The styling is mature and tasteful, emphasizing elegance rather than excess."
+
+> "The scene is captured in a cinematic, fine-art photographic style with shallow depth of field, subtle background blur, and rich texture detail. Soft directional lighting—golden-hour inspired—creates gentle highlights on her skin and hair while maintaining natural contrast. Shot with a high-end portrait lens (85mm look), realistic skin texture, accurate proportions, and true-to-life color grading. Mood is sophisticated, modern, and quietly sensual without being explicit. Avoid exaggerated poses, distortion, artificial skin smoothing, harsh shadows, overexposure, cartoonish features, or any suggestive or NSFW elements."
+
+> "Suggested aspect ratio: 4:5"
