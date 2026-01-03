@@ -101,4 +101,4 @@ As separate data point suggest the aspect ratio for the image you can select fro
 
 > "Suggested aspect ratio: 4:5"
 
-As you can see the custom GPT prompt not only provides a more verbose prompt that you can use in <a href="https://replicate.com/black-forest-labs/flux-1.1-pro-ultra">Flux 1.1 Pro Ultra</a> but also gives you a suggested aspect ratio to enter the in user interface of <a href="https://replicate.com/black-forest-labs/flux-1.1-pro-ultra">Flux 1.1 Pro Ultra</a>.
+As you can see the custom GPT prompt not only provides a more verbose prompt that you can use in <a href="https://replicate.com/black-forest-labs/flux-1.1-pro-ultra">Flux 1.1 Pro Ultra</a> but also gives you a suggested aspect ratio for the image to enter the in user interface of <a href="https://replicate.com/black-forest-labs/flux-1.1-pro-ultra">Flux 1.1 Pro Ultra</a>.
