@@ -375,3 +375,4 @@ The local installation includes the following models by default. Some are standa
 
 * [Flux Step by Step - AI Influencers & Fanvue Models FAST](courses/Flux_Step_by_Step/README.md)
 * [Realistic AI Images with Stable Diffusion & Fooocus](courses/Realistic_AI_Images_with_Stable_Diffusion_and_Fooocus/README.md)
+* [Expert Tips & Advanced Workflows](courses/ExpertTips_AdvancedWorkflows/README.md)
