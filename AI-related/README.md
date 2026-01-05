@@ -274,8 +274,8 @@ The local installation includes the following models by default. Some are standa
     *   **Type**: SDXL LoRA
     *   **Description**: German woman character (26 years old)
     *   **Trigger Word**: `inga`
-    *   **Model ID**: 2551730
-    *   **Source**: [Civitai](https://civitai.green/models/2267015/inga)
+    *   **Model ID**: 2567306
+    *   **Source**: [Civitai](https://civitai.green/models/2281071?modelVersionId=2567306)
 
 10. `mariam_lora.safetensors`
     *   **Type**: SDXL LoRA
@@ -288,22 +288,22 @@ The local installation includes the following models by default. Some are standa
     *   **Type**: SDXL LoRA
     *   **Description**: Chinese woman character (25 years old)
     *   **Trigger Word**: `chen`
-    *   **Model ID**: 2551790
-    *   **Source**: [Civitai](https://civitai.green/models/2267070/chen)
+    *   **Model ID**: 2567275
+    *   **Source**: [Civitai](https://civitai.green/models/2281042?modelVersionId=2567275)
 
 12. `iuliia_lora.safetensors`
     *   **Type**: SDXL LoRA
     *   **Description**: Ukrainian woman character (25 years old)
     *   **Trigger Word**: `iuliia`
-    *   **Model ID**: 2551604
-    *   **Source**: [Civitai](https://civitai.green/models/2266906/iuliia)
+    *   **Model ID**: 2567351
+    *   **Source**: [Civitai](https://civitai.com/models/2281112?modelVersionId=2567351)
 
 13. `allison_lora.safetensors`
     *   **Type**: SDXL LoRA
     *   **Description**: Australian woman character (1.85m tall)
     *   **Trigger Word**: `allison`
-    *   **Model ID**: 2550418
-    *   **Source**: [Civitai](https://civitai.green/models/2265832/allison)
+    *   **Model ID**: 2567333
+    *   **Source**: [Civitai](https://civitai.com/models/2281095?modelVersionId=2567333)
 
 14. `emma_lora.safetensors`
     *   **Type**: SDXL LoRA
@@ -316,8 +316,8 @@ The local installation includes the following models by default. Some are standa
     *   **Type**: SDXL LoRA
     *   **Description**: Moroccan woman character (25 years old, 1.72m tall)
     *   **Trigger Word**: `rabab`
-    *   **Model ID**: 2558792
-    *   **Source**: [Civitai](https://civitai.green/models/2273303/rabab)
+    *   **Model ID**: 2567318
+    *   **Source**: [Civitai](https://civitai.green/models/2281082?modelVersionId=2567318)
 
 ### Troubleshooting
 
