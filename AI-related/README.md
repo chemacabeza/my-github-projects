@@ -260,8 +260,8 @@ The local installation includes the following models by default. Some are standa
     *   **Type**: LoRA
     *   **Description**: Russian woman character
     *   **Trigger Word**: `anastasia`
-    *   **Model ID**: 2502002
-    *   **Source**: [Civitai](https://civitai.com/models/999999)
+    *   **Model ID**: 2570343
+    *   **Source**: [Civitai](https://civitai.green/models/2283812?modelVersionId=2570343)
 
 8.  `hana_lora.safetensors`
     *   **Type**: LoRA
