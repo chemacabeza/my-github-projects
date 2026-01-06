@@ -288,22 +288,22 @@ The local installation includes the following models by default. Some are standa
     *   **Type**: SDXL LoRA
     *   **Description**: Chinese woman character (25 years old)
     *   **Trigger Word**: `chen`
-    *   **Model ID**: 2567275
-    *   **Source**: [Civitai](https://civitai.green/models/2281042?modelVersionId=2567275)
+    *   **Model ID**: 2570349
+    *   **Source**: [Civitai](https://civitai.green/models/2283817?modelVersionId=2570349)
 
 12. `iuliia_lora.safetensors`
     *   **Type**: SDXL LoRA
     *   **Description**: Ukrainian woman character (25 years old)
     *   **Trigger Word**: `iuliia`
-    *   **Model ID**: 2567351
-    *   **Source**: [Civitai](https://civitai.com/models/2281112?modelVersionId=2567351)
+    *   **Model ID**: 2570319
+    *   **Source**: [Civitai](https://civitai.green/models/2283787?modelVersionId=2570319)
 
 13. `allison_lora.safetensors`
     *   **Type**: SDXL LoRA
     *   **Description**: Australian woman character (1.85m tall)
     *   **Trigger Word**: `allison`
-    *   **Model ID**: 2567333
-    *   **Source**: [Civitai](https://civitai.com/models/2281095?modelVersionId=2567333)
+    *   **Model ID**: 2570341
+    *   **Source**: [Civitai](https://civitai.green/models/2283809?modelVersionId=2570341)
 
 14. `emma_lora.safetensors`
     *   **Type**: SDXL LoRA
@@ -316,8 +316,8 @@ The local installation includes the following models by default. Some are standa
     *   **Type**: SDXL LoRA
     *   **Description**: Moroccan woman character (25 years old, 1.72m tall)
     *   **Trigger Word**: `rabab`
-    *   **Model ID**: 2567318
-    *   **Source**: [Civitai](https://civitai.green/models/2281082?modelVersionId=2567318)
+    *   **Model ID**: 2570327
+    *   **Source**: [Civitai](https://civitai.green/models/2283796?modelVersionId=2570327)
 
 ### Troubleshooting
 
