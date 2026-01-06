@@ -250,11 +250,11 @@ The local installation includes the following models by default. Some are standa
     *   **Source**: [Civitai](https://civitai.com/models/94667)
 
 6.  `helga_lora.safetensors`
-    *   **Type**: LoRA
-    *   **Description**: Swedish woman character
+    *   **Type**: SDXL LoRA
+    *   **Description**: Swedish woman character (26 years old, 1.85m tall)
     *   **Trigger Word**: `helga`
-    *   **Model ID**: 2219193
-    *   **Source**: [Civitai](https://civitai.com/models/999999)
+    *   **Model ID**: 2570750
+    *   **Source**: [Civitai](https://civitai.green/models/2284175?modelVersionId=2570750)
 
 7.  `anastasia_lora.safetensors`
     *   **Type**: LoRA

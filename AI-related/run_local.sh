@@ -119,7 +119,7 @@ download_model 'https://huggingface.co/mashb1t/fav_models/resolve/main/fav/SDXL_
 download_model 'https://civitai.com/api/download/models/362360' "$LORA_DIR/lingerie_loha.safetensors"
 download_model 'https://civitai.com/api/download/models/1082049' "$LORA_DIR/retro_neon_illustriouos.safetensors"
 download_model 'https://civitai.com/api/download/models/100982' "$LORA_DIR/pumpsheel.safetensors"
-download_model 'https://civitai.com/api/download/models/2498388' "$LORA_DIR/helga_lora.safetensors"
+download_model 'https://civitai.com/api/download/models/2570750' "$LORA_DIR/helga_lora.safetensors"
 download_model 'https://civitai.com/api/download/models/2570343' "$LORA_DIR/anastasia_lora.safetensors"
 download_model 'https://civitai.com/api/download/models/2570710' "$LORA_DIR/hana_lora.safetensors"
 download_model 'https://civitai.com/api/download/models/2570634' "$LORA_DIR/inga_lora.safetensors"
