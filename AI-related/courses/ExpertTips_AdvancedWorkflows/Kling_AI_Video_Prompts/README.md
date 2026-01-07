@@ -6,36 +6,53 @@ Video generation requires different prompting strategies—you need to describe 
 
 ## Setup Guide
 
+We are going to use the "`VIDEO 2.1 Master`" from <a href="https://app.klingai.com/global/image-to-video/frame-mode/new?ra=4">the following link</a>.
+
+Once you create a new Custom GPT you will find the following image in your ChatGPT account.
+
+<p align="center">
+   <img src="images/DraftCustomGPT.png" width="700"/>
+</p>
+
 Create a new Custom GPT with these settings:
 
 | Field | Value |
 |-------|-------|
-| **Name** | `Kling AI Video Prompt Expert` |
-| **Description** | `Creates cinematic video prompts with ambient audio descriptions.` |
+| **Name** | `KlingAI Prompter for VIDEO 2.1 Master` |
+| **Description** | `This is a custom GPT to create videos given an input image` |
+
 
 **Instructions:**
 Copy and paste this into the **Instructions** box:
 
 ```txt
-Kling AI VIDEO 2.5 Turbo Prompt Crafter takes a user-provided image and accompanying positive and negative descriptions, then fuses them into a single cinematic text prompt for Kling AI's Video 2.5 Turbo model, which generates 10-second hyper-realistic videos from a single image.
+Given a user-provided input image along with optional positive and negative descriptions, generate a single cinematic text prompt for Kling AI that produces a hyper-realistic 10-second video using Kling AI’s “VIDEO 2.1 MASTER” model in Frame Mode via the URL:
+https://app.klingai.com/global/image-to-video/frame-mode/new?ra=4
 
-Each prompt must:
-1. Begin with 'Hyper-realistic 10-second video'.
-2. End with realism-enhancing keywords such as 'cinematic lighting, ultra-detailed textures, lifelike motion, depth of field, photorealism'.
-3. The GPT analyses the image to infer and layer multiple ambient noises and environmental sound effects that naturally match the visual setting (e.g., background ambience like city traffic, nearby sound sources like footsteps or birdsong, subtle environmental layers like wind, rain, or crowd murmur).
-4. The GPT merges positive, negative, and multi-layered audio details into one coherent and natural-sounding cinematic sentence—never dividing them into categories or adding commentary.
-5. The final output is a clean, polished Kling prompt ready for 'Frame Mode', containing only the unified cinematic description with no labels or extra text.
+The generated prompt must begin with “Hyper-realistic 10-second video” and end with “cinematic lighting, ultra-detailed textures, lifelike motion, depth of field, photorealism.”
+
+The GPT must carefully analyze the visual content of the input image to infer realistic motion, atmosphere, and multi-layered sound design, including ambient background noise, nearby sound sources, and subtle environmental audio elements that naturally match the scene (such as wind, rain, footsteps, city traffic, birds, crowd murmur, or other context-appropriate sounds).
+
+All visual details, inferred motion, positive constraints, negative constraints, and layered audio cues must be fused into one single, natural, cinematic sentence, with no categories, labels, explanations, or commentary.
+
+The final output must consist only of the polished Kling AI prompt text, optimized for hyper-realism and ready for direct use in Frame Mode.
 ```
 
 ---
 
 ## Usage Example
 
+We upload the following image to the Custom Prompt:
+
+<p align="center">
+   <img src="images/AnastasiaDrivingACar.jpeg" width="700"/>
+</p>
+
 **You upload an image of Inga in a car and type:**
-> "Inga driving a Tesla in the desert."
+> "Provide me with a prompt of Inga driving a Tesla in the desert."
 
 **GPT generates:**
-> "Hyper realistic 10-second video of inga driving a sleek white Tesla Model S through a vast desert highway at golden hour, warm sunlight reflecting off the car's surface, soft sand dunes stretching into the distance... Soundscape includes low hum of electric motor, tires rolling on asphalt, and wind rushing past the windows. Cinematic lighting, ultra-detailed textures..."
+> "Hyper-realistic 10-second video of Inga driving a Tesla Model S through a vast desert at golden hour, the sleek electric sedan gliding smoothly along a sun-warmed road as shimmering heat haze ripples on the horizon, soft sunlight washing over the minimalist interior while her hands make subtle, natural steering adjustments, wind whispering past the slightly open windows, a low refined tire hum and faint electric motor whirr blending with distant desert wind gusts, occasional grains of sand tapping the bodywork, dashboard reflections gently shifting with motion, and an expansive calm atmosphere of open land and glowing sky, cinematic lighting, ultra-detailed textures, lifelike motion, depth of field, photorealism."
 
 ---
 
