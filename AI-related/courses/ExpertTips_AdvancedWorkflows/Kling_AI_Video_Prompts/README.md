@@ -67,7 +67,7 @@ The final output must consist only of the polished Kling AI prompt text, optimiz
 Upload the image you want to animate to your Custom GPT. For example:
 
 <p align="center">
-   <img src="images/AnastasiaDrivingACar.jpeg" width="700"/>
+   <img src="images/AnastasiiaDrivingACar2.jpeg" width="700"/>
 </p>
 
 ### 2. Describe Your Scene
