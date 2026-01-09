@@ -1,0 +1,80 @@
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# IDE and Editor Files
+.vscode/
+.idea/
+*.iml
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# Logs
+*.log
+logs/
+*.log.*
+
+# Temporary Files
+*.tmp
+*.bak
+*.cache
+*.temp
+.~*
+
+# Build Artifacts
+target/
+build/
+dist/
+*.class
+*.jar
+*.war
+*.ear
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual Environments (should not be in git)
+venv/
+env/
+ENV/
+.venv
+
+# Package Manager
+node_modules/
+bower_components/
+
+# Compiled Source
+*.com
+*.exe
+*.dll
+*.so
+*.dylib
+*.o
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# OS Generated Files
+.directory
