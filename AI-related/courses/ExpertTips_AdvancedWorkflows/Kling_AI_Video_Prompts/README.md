@@ -1,48 +1,125 @@
-# Creating a Custom GPT for Kling AI Video Prompts
+# Kling AI Video Prompt Generator
 
-Video generation requires different prompting strategies—you need to describe motion, sound, and atmosphere. A Custom GPT can translate simple ideas into complex, ready-to-use video prompts.
+## Overview
+
+This guide shows you how to create a Custom GPT that generates professional video prompts for Kling AI's **VIDEO 2.1 Master** model. 
+
+**Why use a Custom GPT?**
+- Video generation requires specific prompting techniques (motion, sound, atmosphere)
+- Automatically transforms simple ideas into detailed, production-ready prompts
+- Ensures consistent quality and format for Kling AI's Frame Mode
 
 ---
 
-## Setup Guide
+## Prerequisites
 
-Create a new Custom GPT with these settings:
+- ChatGPT Plus account (required for Custom GPTs)
+- Access to [Kling AI VIDEO 2.1 Master](https://app.klingai.com/global/image-to-video/frame-mode/new?ra=4)
+
+---
+
+## Step 1: Create Your Custom GPT
+
+1. Navigate to [ChatGPT](https://chat.openai.com) and click on your profile
+2. Select **"My GPTs"** → **"Create a GPT"**
+3. You'll see the Custom GPT creation interface:
+
+<p align="center">
+   <img src="images/DraftCustomGPT.png" width="700"/>
+</p>
+
+---
+
+## Step 2: Configure Basic Settings
+
+Fill in the following fields:
 
 | Field | Value |
 |-------|-------|
-| **Name** | `Kling AI Video Prompt Expert` |
-| **Description** | `Creates cinematic video prompts with ambient audio descriptions.` |
+| **Name** | `KlingAI Prompter for VIDEO 2.1 Master` |
+| **Description** | `This is a custom GPT to create videos given an input image` |
 
-**Instructions:**
-Copy and paste this into the **Instructions** box:
+---
+
+## Step 3: Add System Instructions
+
+Copy and paste these instructions into the **Instructions** box:
 
 ```txt
-Kling AI VIDEO 2.5 Turbo Prompt Crafter takes a user-provided image and accompanying positive and negative descriptions, then fuses them into a single cinematic text prompt for Kling AI's Video 2.5 Turbo model, which generates 10-second hyper-realistic videos from a single image.
+Given a user-provided input image along with optional positive and negative descriptions, generate a single cinematic text prompt for Kling AI that produces a hyper-realistic 10-second video using Kling AI's "VIDEO 2.1 MASTER" model in Frame Mode via the URL:
+https://app.klingai.com/global/image-to-video/frame-mode/new?ra=4
 
-Each prompt must:
-1. Begin with 'Hyper-realistic 10-second video'.
-2. End with realism-enhancing keywords such as 'cinematic lighting, ultra-detailed textures, lifelike motion, depth of field, photorealism'.
-3. The GPT analyses the image to infer and layer multiple ambient noises and environmental sound effects that naturally match the visual setting (e.g., background ambience like city traffic, nearby sound sources like footsteps or birdsong, subtle environmental layers like wind, rain, or crowd murmur).
-4. The GPT merges positive, negative, and multi-layered audio details into one coherent and natural-sounding cinematic sentence—never dividing them into categories or adding commentary.
-5. The final output is a clean, polished Kling prompt ready for 'Frame Mode', containing only the unified cinematic description with no labels or extra text.
+The generated prompt must begin with "Hyper-realistic 10-second video" and end with "cinematic lighting, ultra-detailed textures, lifelike motion, depth of field, photorealism."
+
+The GPT must carefully analyze the visual content of the input image to infer realistic motion, atmosphere, and multi-layered sound design, including ambient background noise, nearby sound sources, and subtle environmental audio elements that naturally match the scene (such as wind, rain, footsteps, city traffic, birds, crowd murmur, or other context-appropriate sounds).
+
+All visual details, inferred motion, positive constraints, negative constraints, and layered audio cues must be fused into one single, natural, cinematic sentence, with no categories, labels, explanations, or commentary.
+
+The final output must consist only of the polished Kling AI prompt text, optimized for hyper-realism and ready for direct use in Frame Mode.
 ```
 
 ---
 
-## Usage Example
+## How to Use
 
-**You upload an image of Inga in a car and type:**
-> "Inga driving a Tesla in the desert."
+### 1. Upload Your Image
 
-**GPT generates:**
-> "Hyper realistic 10-second video of inga driving a sleek white Tesla Model S through a vast desert highway at golden hour, warm sunlight reflecting off the car's surface, soft sand dunes stretching into the distance... Soundscape includes low hum of electric motor, tires rolling on asphalt, and wind rushing past the windows. Cinematic lighting, ultra-detailed textures..."
+Upload the image you want to animate to your Custom GPT. For example:
+
+<p align="center">
+   <img src="images/AnastasiiaDrivingACar2.jpeg" width="700"/>
+</p>
+
+### 2. Describe Your Scene
+
+Provide a simple description of what you want to happen in the video:
+
+**Your Input:**
+> "Provide me with a prompt of someone driving a Tesla in the desert."
+
+### 3. Get Your Prompt
+
+The Custom GPT will generate a detailed, ready-to-use prompt:
+
+**Generated Prompt:**
+> "Hyper-realistic 10-second video of a person driving a Tesla Model S through a vast desert at golden hour, the sleek electric sedan gliding smoothly along a sun-warmed road as shimmering heat haze ripples on the horizon, soft sunlight washing over the minimalist interior while her hands make subtle, natural steering adjustments, wind whispering past the slightly open windows, a low refined tire hum and faint electric motor whirr blending with distant desert wind gusts, occasional grains of sand tapping the bodywork, dashboard reflections gently shifting with motion, and an expansive calm atmosphere of open land and glowing sky, cinematic lighting, ultra-detailed textures, lifelike motion, depth of field, photorealism."
+
+### 4. Use in Kling AI
+
+Copy the generated prompt and paste it into [Kling AI's Frame Mode](https://app.klingai.com/global/image-to-video/frame-mode/new?ra=4) along with your image.
 
 ---
 
-## Video Result
+## Example Result
 
-Here is the actual video generated using the prompt created by this custom GPT:
+Here's an actual video generated using this workflow:
 
 [![Watch the video](https://img.youtube.com/vi/-v4uOMs8hOU/maxresdefault.jpg)](https://youtu.be/-v4uOMs8hOU)
 
-*Notice how the Custom GPT successfully included audio cues that resulted in realistic sound effects in the final video.*
+**Key Features:**
+- ✅ Realistic motion and camera movement
+- ✅ Detailed environmental sounds (wind, tire hum, motor whirr)
+- ✅ Cinematic lighting and atmosphere
+- ✅ Ultra-detailed textures and photorealism
+
+---
+
+## Tips for Best Results
+
+- **Be specific** with your scene descriptions (time of day, weather, emotions)
+- **Mention audio elements** if you want particular sounds emphasized
+- **Use negative prompts** to exclude unwanted elements (e.g., "no blur, no distortion")
+- **Experiment** with different phrasings to see what works best
+
+---
+
+## Troubleshooting
+
+**Problem:** Prompt is too long  
+**Solution:** Ask the GPT to "make it more concise" or focus on specific elements
+
+**Problem:** Video doesn't match expectations  
+**Solution:** Be more specific in your initial description and add negative constraints
+
+**Problem:** Audio isn't realistic  
+**Solution:** Explicitly mention the types of sounds you want in your description
