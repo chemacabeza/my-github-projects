@@ -20,47 +20,79 @@ echo ""
 CKPT_DIR="./models"
 LORA_DIR="./LoRAs"
 
-# Function to download file with optional token
+# Function to download file with optional token and retry logic
 download_model() {
     local url="$1"
     local output="$2"
+    local max_retries=3
+    local retry_delay=5
     
     if [ -f "$output" ]; then
         return 0
     fi
 
-    # Try downloading without token first (use || true to prevent set -e from exiting)
-    local exit_code=0
-    curl --http1.1 -fL "$url" -o "$output" || exit_code=$?
-    
-    if [ $exit_code -eq 0 ]; then
-        return 0
-    fi
-    
-    # If 401 Unauthorized (curl exit code 22 for HTTP errors, or 56 for 401 during transfer)
-    if [ $exit_code -eq 22 ] || [ $exit_code -eq 56 ]; then
-        echo "Download failed: Unauthorized (401)."
-        if [ -n "${CIVITAI_API_TOKEN:-}" ]; then
-            echo "Retrying with CIVITAI_API_TOKEN..."
-            # Append token to URL
-            if [[ "$url" == *"?"* ]]; then
-                url="${url}&token=${CIVITAI_API_TOKEN}"
-            else
-                url="${url}?token=${CIVITAI_API_TOKEN}"
-            fi
-            if curl --http1.1 -fL "$url" -o "$output"; then
-                return 0
-            fi
+    # Prepare URL with token if available (for Civitai models)
+    local download_url="$url"
+    if [[ "$url" == *"civitai.com"* ]] && [ -n "${CIVITAI_API_TOKEN:-}" ]; then
+        if [[ "$url" == *"?"* ]]; then
+            download_url="${url}&token=${CIVITAI_API_TOKEN}"
         else
-            echo "WARNING: restricted model requires CIVITAI_API_TOKEN environment variable."
-            echo "Export it before running: export CIVITAI_API_TOKEN=your_token_here"
-            echo "Skipping download for $output"
-            # Clean up partial download
-            rm -f "$output"
-            return 0 # Don't fail the build, just skip
+            download_url="${url}?token=${CIVITAI_API_TOKEN}"
         fi
     fi
-    return $exit_code
+
+    # Try downloading with retries for transient errors
+    local attempt=1
+    while [ $attempt -le $max_retries ]; do
+        local exit_code=0
+        curl --http1.1 --connect-timeout 30 --max-time 600 -fL "$download_url" -o "$output" || exit_code=$?
+        
+        if [ $exit_code -eq 0 ]; then
+            return 0
+        fi
+        
+        # Handle transient errors (52=empty reply, 28=timeout, 56=network failure)
+        if [ $exit_code -eq 52 ] || [ $exit_code -eq 28 ] || [ $exit_code -eq 56 ]; then
+            if [ $attempt -lt $max_retries ]; then
+                echo "Download attempt $attempt failed (curl error $exit_code). Retrying in ${retry_delay}s..."
+                rm -f "$output"
+                sleep $retry_delay
+                attempt=$((attempt + 1))
+                continue
+            else
+                echo "WARNING: Download failed after $max_retries attempts (curl error $exit_code)."
+                echo "Skipping download for $output"
+                rm -f "$output"
+                return 0 # Don't fail the build, just skip
+            fi
+        fi
+        
+        # Handle 401 Unauthorized - try with token if not already using one
+        if [ $exit_code -eq 22 ]; then
+            if [[ "$download_url" != *"token="* ]] && [ -n "${CIVITAI_API_TOKEN:-}" ]; then
+                echo "Download failed: Unauthorized (401). Retrying with CIVITAI_API_TOKEN..."
+                if [[ "$url" == *"?"* ]]; then
+                    download_url="${url}&token=${CIVITAI_API_TOKEN}"
+                else
+                    download_url="${url}?token=${CIVITAI_API_TOKEN}"
+                fi
+                attempt=$((attempt + 1))
+                continue
+            else
+                echo "WARNING: restricted model requires CIVITAI_API_TOKEN environment variable."
+                echo "Export it before running: export CIVITAI_API_TOKEN=your_token_here"
+                echo "Skipping download for $output"
+                rm -f "$output"
+                return 0 # Don't fail the build, just skip
+            fi
+        fi
+        
+        # For other errors, fail immediately
+        rm -f "$output"
+        return $exit_code
+    done
+    
+    return 0
 }
 
 mkdir -p "$CKPT_DIR" "$LORA_DIR"
@@ -129,6 +161,7 @@ download_model 'https://civitai.com/api/download/models/2570319' "$LORA_DIR/iuli
 download_model 'https://civitai.com/api/download/models/2570341' "$LORA_DIR/allison_lora.safetensors"
 download_model 'https://civitai.com/api/download/models/2570631' "$LORA_DIR/emma_lora.safetensors"
 download_model 'https://civitai.com/api/download/models/2570327' "$LORA_DIR/rabab_lora.safetensors"
+download_model 'https://civitai.com/api/download/models/2583873' "$LORA_DIR/fiona_lora.safetensors"
 
 echo "=== Starting Fooocus ==="
 echo "All models and LoRAs are accessible via symbolic links"

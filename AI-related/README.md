@@ -319,6 +319,13 @@ The local installation includes the following models by default. Some are standa
     *   **Model ID**: 2570327
     *   **Source**: [Civitai](https://civitai.green/models/2283796?modelVersionId=2570327)
 
+16. `fiona_lora.safetensors`
+    *   **Type**: SDXL LoRA
+    *   **Description**: Scottish woman character (28 years old, 1.85m tall)
+    *   **Trigger Word**: `fiona`
+    *   **Model ID**: 2583873
+    *   **Source**: [Civitai](https://civitai.green/models/2296247?modelVersionId=2583873)
+
 ### Troubleshooting
 
 **Models not appearing in Fooocus UI:**
