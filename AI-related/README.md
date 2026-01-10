@@ -258,49 +258,49 @@ The local installation includes the following models by default. Some are standa
 
 7.  `anastasia_lora.safetensors`
     *   **Type**: LoRA
-    *   **Description**: Russian woman character
+    *   **Description**: Russian woman character (25 years old, 1.75m tall)
     *   **Trigger Word**: `anastasia`
     *   **Model ID**: 2570343
     *   **Source**: [Civitai](https://civitai.green/models/2283812?modelVersionId=2570343)
 
 8.  `hana_lora.safetensors`
     *   **Type**: LoRA
-    *   **Description**: Japanese woman character
+    *   **Description**: Japanese woman character (25 years old, 1.75m tall)
     *   **Trigger Word**: `hana`
     *   **Model ID**: 2570710
     *   **Source**: [Civitai](https://civitai.green/models/2284140?modelVersionId=2570710)
 
 9.  `inga_lora.safetensors`
     *   **Type**: SDXL LoRA
-    *   **Description**: German woman character (26 years old)
+    *   **Description**: German woman character (26 years old, 1.75m tall)
     *   **Trigger Word**: `inga`
     *   **Model ID**: 2570634
     *   **Source**: [Civitai](https://civitai.green/models/2284072?modelVersionId=2570634)
 
 10. `mariam_lora.safetensors`
     *   **Type**: SDXL LoRA
-    *   **Description**: Guinean woman character (25 years old)
+    *   **Description**: Guinean woman character (25 years old, 1.70m tall)
     *   **Trigger Word**: `mariam`
     *   **Model ID**: 2570639
     *   **Source**: [Civitai](https://civitai.green/models/2284076?modelVersionId=2570639)
 
 11. `chen_lora.safetensors`
     *   **Type**: SDXL LoRA
-    *   **Description**: Chinese woman character (25 years old)
+    *   **Description**: Chinese woman character (25 years old, 1.70m tall)
     *   **Trigger Word**: `chen`
     *   **Model ID**: 2570349
     *   **Source**: [Civitai](https://civitai.green/models/2283817?modelVersionId=2570349)
 
 12. `iuliia_lora.safetensors`
     *   **Type**: SDXL LoRA
-    *   **Description**: Ukrainian woman character (25 years old)
+    *   **Description**: Ukrainian woman character (25 years old, 1.73m tall)
     *   **Trigger Word**: `iuliia`
     *   **Model ID**: 2570319
     *   **Source**: [Civitai](https://civitai.green/models/2283787?modelVersionId=2570319)
 
 13. `allison_lora.safetensors`
     *   **Type**: SDXL LoRA
-    *   **Description**: Australian woman character (1.85m tall)
+    *   **Description**: Australian woman character (27 years old,1.85m tall)
     *   **Trigger Word**: `allison`
     *   **Model ID**: 2570341
     *   **Source**: [Civitai](https://civitai.green/models/2283809?modelVersionId=2570341)
