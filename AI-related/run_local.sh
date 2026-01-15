@@ -164,13 +164,8 @@ download_model 'https://civitai.com/api/download/models/2570327' "$LORA_DIR/raba
 download_model 'https://civitai.com/api/download/models/2583873' "$LORA_DIR/fiona_lora.safetensors"
 download_model 'https://civitai.com/api/download/models/2586700' "$LORA_DIR/giulia_lora.safetensors"
 download_model 'https://civitai.com/api/download/models/2590587' "$LORA_DIR/juanita_lora.safetensors"
-<<<<<<< HEAD
 download_model 'https://civitai.com/api/download/models/2593749' "$LORA_DIR/sofia_lora.safetensors"
-
-||||||| parent of 96aab91 (Added the LoRA of svetlana with Antigravity from Google)
-=======
 download_model 'https://civitai.com/api/download/models/2599427' "$LORA_DIR/svetlana_lora.safetensors"
->>>>>>> 96aab91 (Added the LoRA of svetlana with Antigravity from Google)
 
 echo "=== Starting Fooocus ==="
 echo "All models and LoRAs are accessible via symbolic links"
