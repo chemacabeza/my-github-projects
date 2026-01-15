@@ -368,6 +368,13 @@ The local installation includes the following models by default. Some are standa
     *   **Model ID**: 2608668
     *   **Source**: [Civitai](https://civitai.green/models/2318797?modelVersionId=2608668)
 
+19. `svetlana_lora.safetensors`
+    *   **Type**: SDXL LoRA
+    *   **Description**: Russian woman character (28 years old, 1.85m tall)
+    *   **Trigger Word**: `svetlana`
+    *   **Model ID**: 2599427
+    *   **Source**: [Civitai](https://civitai.green/models/2310427?modelVersionId=2599427)
+
 ### Troubleshooting
 
 **Models not appearing in Fooocus UI:**
