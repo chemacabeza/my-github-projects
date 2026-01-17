@@ -347,12 +347,19 @@ The local installation includes the following models by default. Some are standa
     *   **Model ID**: 2593749
     *   **Source**: [Civitai](https://civitai.green/models/2305233?modelVersionId=2593749)
 
-19. `svetlana_lora.safetensors`
+20. `svetlana_lora.safetensors`
     *   **Type**: SDXL LoRA
     *   **Description**: Russian woman character (28 years old, 1.85m tall)
     *   **Trigger Word**: `svetlana`
     *   **Model ID**: 2599427
     *   **Source**: [Civitai](https://civitai.green/models/2310427?modelVersionId=2599427)
+
+21. `kasia_lora.safetensors`
+    *   **Type**: SDXL LoRA
+    *   **Description**: Polish woman character (26 years old, 1.85m tall)
+    *   **Trigger Word**: `kasia`
+    *   **Model ID**: 2603390
+    *   **Source**: [Civitai](https://civitai.green/models/2313984?modelVersionId=2603390)
 
 ### Troubleshooting
 
