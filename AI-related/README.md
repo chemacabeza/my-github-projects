@@ -382,6 +382,13 @@ The local installation includes the following models by default. Some are standa
     *   **Model ID**: 2619966
     *   **Source**: [Civitai](https://civitai.green/models/2329078?modelVersionId=2619966)
 
+25. `amina_lora.safetensors`
+    *   **Type**: SDXL LoRA
+    *   **Description**: Moroccan woman character (26 years old, 1.73m tall)
+    *   **Trigger Word**: `amina`
+    *   **Model ID**: 2622521
+    *   **Source**: [Civitai](https://civitai.green/models/2331386?modelVersionId=2622521)
+
 ### Troubleshooting
 
 **Models not appearing in Fooocus UI:**
