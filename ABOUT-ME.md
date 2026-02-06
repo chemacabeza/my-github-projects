@@ -48,3 +48,91 @@ I believe that **innovation requires a readiness to update one's mental model**.
 *   **Leadership**: Team Building, API Strategy, Agile Implementation
 
 > "Building software is not just about code; it's about creating systems that last, scale, and solve real human problems."
+
+---
+
+## 🎓 What I'm Learning Now (2026)
+
+**Current Focus:**
+- 🚧 **Java Master Class 2025** - Deepening Java fundamentals and advanced features
+- 🎨 **Advanced AI workflows** - Custom LoRA training and prompt engineering techniques
+- 📊 **Engineering leadership practices** - Building high-performing teams and technical strategy
+- 🏗️ **Architecture documentation** - Creating comprehensive system design documentation
+
+**Recent Completions (2024-2025):**
+- ✅ **Spring Boot 3 & Spring 6 comprehensive mastery** (70+ projects across 10 sections)
+- ✅ **Bash scripting from basics to advanced** (35 chapters, 236 production-ready scripts)
+- ✅ **Production AI deployment with Fooocus** (46GB model library, multi-platform optimization)
+- ✅ **Quality-first development** (133+ test classes, comprehensive documentation)
+
+**Next on Roadmap:** Microservices architecture, Kubernetes deployment, Go language fundamentals
+
+→ **[Full Learning Roadmap](ROADMAP.md)** for detailed timeline and goals
+
+---
+
+## 💼 Open to Opportunities
+
+I'm always interested in discussing:
+
+**Engineering Leadership Roles**
+- Leading backend/platform engineering teams
+- Fintech, distributed systems, or AI-powered products
+- Scaling teams and technical architecture
+- Remote or Berlin-based positions
+
+**Technical Advisory Positions**
+- Architecture consultation for Spring Boot/microservices
+- Engineering team scaling and best practices
+- Technical strategy and technology evaluation
+- Startup technical leadership
+
+**Collaboration**
+- Open-source contributions (Spring ecosystem, AI tooling)
+- Speaking engagements on engineering management or backend architecture
+- Technical writing and knowledge sharing
+- Mentoring engineers on Spring Boot and distributed systems
+
+**What I Bring:**
+- 15+ years of software engineering experience
+- 6+ years of engineering management at Klarna
+- Deep technical expertise with hands-on coding
+- International experience (Spain, France, UK, Germany)
+- Production systems at scale (payments, microservices, data platforms)
+
+---
+
+## 📬 Connect with me
+
+- 💼 **LinkedIn**: [Add your LinkedIn URL] - Let's connect for opportunities and collaboration
+- 🐙 **GitHub**: [github.com/chemacabeza](https://github.com/chemacabeza) - You're here! Explore my projects
+- 📧 **Contact**: Via [GitHub Issues](https://github.com/chemacabeza/my-github-projects/issues) or LinkedIn messages
+
+**Quick Links:**
+- [Skills Matrix](SKILLS-MATRIX.md) - Technical expertise overview
+- [Project Highlights](PROJECT-HIGHLIGHTS.md) - Impact statements and achievements
+- [Learning Roadmap](ROADMAP.md) - Future plans and continuous growth
+
+---
+
+## 🎯 Technical Philosophy
+
+**On Architecture:**
+> "Simple systems scale better than complex ones. Start with the simplest solution that works, then evolve based on real data."
+
+**On Leadership:**
+> "The best engineering managers write code, review pull requests, and stay technically sharp—not to do the team's job, but to earn their respect and make better decisions."
+
+**On Learning:**
+> "Depth in one area beats shallow knowledge in many. Master Spring Boot, then add AI. Don't try to learn everything at once."
+
+**On Innovation:**
+> "Innovation requires a readiness to update one's mental model. Stay curious, question assumptions, and embrace new paradigms."
+
+**On Quality:**
+> "Testing is not about finding bugs; it's about building confidence in the system."
+
+**On Teams:**
+> "The best code is the code that never needs to be written. Solve problems at the right level of abstraction."
+
+---

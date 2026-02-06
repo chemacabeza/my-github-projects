@@ -15,6 +15,32 @@
 
 ---
 
+## 🎯 Start Here
+
+**New to this repository?** Choose your path:
+
+| Audience | Recommended Starting Point |
+|----------|---------------------------|
+| 🔍 **Recruiters** | [Skills Matrix](SKILLS-MATRIX.md) → [Project Highlights](PROJECT-HIGHLIGHTS.md) → [Testing Practices](TESTING.md) |
+| 💼 **Hiring Managers** | [Quick Start](QUICK-START.md) → [About Me](ABOUT-ME.md) → Live demos below |
+| 💻 **Developers** | [Quick Start](QUICK-START.md) → [Examples](examples/) → Section-specific docs |
+| 🎨 **AI Enthusiasts** | [AI Projects](AI-related/README.md) → Run `cd AI-related && make run` |
+| ☕ **Backend Engineers** | [Java Projects](JavaSpringBoot/PROJECT-CATALOG.md) → [Architecture Docs](JavaSpringBoot/docs/) |
+| ⚡ **DevOps/SRE** | [Bash Guide](bash/README.md) → [Docker configs](AI-related/Dockerfile) |
+
+---
+
+## 📊 Portfolio Overview
+
+- 🚀 **70+ Spring Boot Projects** across 10 enterprise patterns (REST, Security, MVC, JPA, AOP)
+- 🎨 **46GB AI Model Library** with 7 SDXL checkpoints + 26 LoRA fine-tuning models
+- 📖 **35-Chapter Bash Guide** with 236 executable scripts and hands-on examples
+- ✅ **133+ Test Classes** demonstrating quality-first development
+- 🏗️ **Production-Ready Deployments** via Docker, Maven, automated builds
+- 📚 **1000+ Hours** of continuous learning and skill development
+
+---
+
 ## 🌟 Featured Projects
 
 ### 🎨 AI Image Generation Platform
@@ -43,6 +69,8 @@ Full-stack **Spring Boot 3.x** applications demonstrating enterprise patterns an
 - **Key Features**: Layered architecture, dependency injection, security patterns, aspect-oriented programming
 - **Highlights**: Production-ready microservices with comprehensive documentation
 - **[View Java Projects →](JavaSpringBoot/README.md)**
+
+**Want more details?** → [View all project highlights with impact statements](PROJECT-HIGHLIGHTS.md)
 
 ---
 
@@ -85,11 +113,11 @@ This repository is licensed under the **[Apache License 2.0](LICENSE)**.
 
 ## 📫 Connect
 
-Interested in my work or want to discuss collaboration opportunities?
+Interested in collaboration or discussing opportunities?
 
-- 📂 **GitHub**: You're already here!
-- 📧 **Issues/Discussions**: Feel free to open an issue or start a discussion
-- 📄 **Professional Background**: See [ABOUT-ME.md](ABOUT-ME.md) for my career journey
+- 💼 **LinkedIn**: [Add your LinkedIn profile URL here]
+- 📂 **GitHub**: You're already here! Explore the projects above
+- 📧 **Professional**: See [ABOUT-ME.md](ABOUT-ME.md) for my background and experience
 
 ---
 
