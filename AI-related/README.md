@@ -396,6 +396,13 @@ The local installation includes the following models by default. Some are standa
     *   **Model ID**: 2627557
     *   **Source**: [Civitai](https://civitai.green/models/2335896?modelVersionId=2627557)
 
+27. `anne_lora.safetensors`
+    *   **Type**: SDXL LoRA
+    *   **Description**: Dutch woman character (26 years old, 1.80m tall)
+    *   **Trigger Word**: `anne`
+    *   **Model ID**: 2665179
+    *   **Source**: [Civitai](https://civitai.green/models/2369885?modelVersionId=2665179)
+
 ### Troubleshooting
 
 **Models not appearing in Fooocus UI:**
