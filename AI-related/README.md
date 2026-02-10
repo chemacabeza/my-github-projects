@@ -410,6 +410,13 @@ The local installation includes the following models by default. Some are standa
     *   **Model ID**: 2674074
     *   **Source**: [Civitai](https://civitai.green/models/2377884?modelVersionId=2674074)
 
+29. `aaju_lora.safetensors`
+    *   **Type**: SDXL LoRA
+    *   **Description**: Greenlandic woman character (28 years old, 1.75m tall)
+    *   **Trigger Word**: `aaju`
+    *   **Model ID**: 2676941
+    *   **Source**: [Civitai](https://civitai.green/models/2380507?modelVersionId=2676941)
+
 
 ### Troubleshooting
 
