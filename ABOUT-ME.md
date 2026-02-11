@@ -63,6 +63,7 @@ I believe that **innovation requires a readiness to update one's mental model**.
 - ✅ **Spring Boot 3 & Spring 6 comprehensive mastery** (70+ projects across 10 sections)
 - ✅ **Bash scripting from basics to advanced** (35 chapters, 236 production-ready scripts)
 - ✅ **Production AI deployment with Fooocus** (46GB model library, multi-platform optimization)
+- ✅ **ML inference pipeline (Python → ONNX → Java)** (Neural networks with golden parity tests, full-stack deployment)
 - ✅ **Quality-first development** (133+ test classes, comprehensive documentation)
 
 **Next on Roadmap:** Microservices architecture, Kubernetes deployment, Go language fundamentals

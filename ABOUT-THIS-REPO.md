@@ -36,6 +36,17 @@ The engine room of the repository. Here, I craft scalable backends using **Java*
 - **REST APIs**: Clean, documented, and production-ready.
 - **Architecture**: Where solid design patterns meet real-world application.
 
+## 🧮 Neural Network with Java: ML Meets Production
+*Where AI training meets enterprise deployment.*
+
+A complete production-ready ML inference pipeline that bridges Python and Java:
+- **PyTorch → ONNX → Java**: Train neural networks in Python, export to ONNX, serve via Spring Boot.
+- **Golden Parity Tests**: Guaranteed identical outputs between Python and Java inference.
+- **Full Stack**: Python training pipeline, Java REST service, React UI, and Docker deployment.
+- **Production-Ready**: Comprehensive testing, health checks, monitoring, and documentation.
+
+This project demonstrates the complete lifecycle of deploying machine learning models in enterprise Java environments.
+
 ---
 
 > "Talk is cheap. Show me the code." - Linus Torvalds
