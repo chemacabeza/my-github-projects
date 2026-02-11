@@ -59,11 +59,11 @@ I believe that **innovation requires a readiness to update one's mental model**.
 - 📊 **Engineering leadership practices** - Building high-performing teams and technical strategy
 - 🏗️ **Architecture documentation** - Creating comprehensive system design documentation
 
-**Recent Completions (2024-2025):**
+**Recent Completions (2024-2026):**
 - ✅ **Spring Boot 3 & Spring 6 comprehensive mastery** (70+ projects across 10 sections)
 - ✅ **Bash scripting from basics to advanced** (35 chapters, 236 production-ready scripts)
 - ✅ **Production AI deployment with Fooocus** (46GB model library, multi-platform optimization)
-- ✅ **ML inference pipeline (Python → ONNX → Java)** (Neural networks with golden parity tests, full-stack deployment)
+- ✅ **ML inference pipeline (PyTorch → ONNX → Java)** (End-to-end neural network training, golden parity tests, Spring Boot REST service, React UI, Docker deployment)
 - ✅ **Quality-first development** (133+ test classes, comprehensive documentation)
 
 **Next on Roadmap:** Microservices architecture, Kubernetes deployment, Go language fundamentals

@@ -39,13 +39,26 @@ The engine room of the repository. Here, I craft scalable backends using **Java*
 ## 🧮 Neural Network with Java: ML Meets Production
 *Where AI training meets enterprise deployment.*
 
-A complete production-ready ML inference pipeline that bridges Python and Java:
-- **PyTorch → ONNX → Java**: Train neural networks in Python, export to ONNX, serve via Spring Boot.
-- **Golden Parity Tests**: Guaranteed identical outputs between Python and Java inference.
-- **Full Stack**: Python training pipeline, Java REST service, React UI, and Docker deployment.
-- **Production-Ready**: Comprehensive testing, health checks, monitoring, and documentation.
+A complete production-ready ML inference pipeline that bridges Python and Java, demonstrating end-to-end ML deployment in enterprise environments:
 
-This project demonstrates the complete lifecycle of deploying machine learning models in enterprise Java environments.
+**Architecture & Pipeline:**
+- **PyTorch Training**: Neural network training on Iris dataset with 91%+ accuracy
+- **ONNX Export**: Dynamic batch axis, embedded preprocessing, float32 enforcement
+- **Spring Boot Service**: REST API with health checks, monitoring, and CORS support
+- **React Frontend**: Interactive UI for testing predictions and running golden tests
+
+**Quality & Testing:**
+- **Golden Parity Tests**: Critical tests ensuring identical outputs between Python and Java ONNX Runtime (tolerance: 1e-5)
+- **Comprehensive Test Suite**: Unit tests, integration tests, and automated validation
+- **CI/CD Ready**: Docker multi-stage builds, Makefile automation, Ubuntu quick-start scripts
+
+**Key Features:**
+- Deterministic training with reproducible results
+- Embedded preprocessing in ONNX (eliminates Python↔Java drift)
+- Production-grade error handling and logging
+- Full documentation with troubleshooting guides
+
+This project showcases the complete lifecycle of deploying ML models in Java environments, from training to production serving.
 
 ---
 
