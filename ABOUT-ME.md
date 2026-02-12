@@ -41,10 +41,11 @@ Mastering the backend for the travel industry.
 
 ## 🛠️ Philosophy & Skills
 
-I believe that **innovation requires a readiness to update one's mental model**. My background is deeply rooted in **Java and Spring Boot**, but I constantly evolve, embracing modern clouds, data streaming, and frontend tech to architect complete solutions.
+I believe that **innovation requires a readiness to update one's mental model**. My background is deeply rooted in **Java and Spring Boot**, but I constantly evolve, embracing modern clouds, data streaming, AI/ML, and frontend tech to architect complete solutions.
 
-*   **Core**: Java, Spring Boot, Architecture Design
+*   **Core**: Java, Spring Boot, Architecture Design, ML Pipeline Engineering
 *   **Data & Cloud**: AWS, Kafka, PostgreSQL, DynamoDB, Hadoop
+*   **AI/ML**: PyTorch, ONNX, Multi-Model Serving, Neural Networks (MLP, CNN, ResNet), Model Deployment
 *   **Leadership**: Team Building, API Strategy, Agile Implementation
 
 > "Building software is not just about code; it's about creating systems that last, scale, and solve real human problems."
@@ -58,12 +59,13 @@ I believe that **innovation requires a readiness to update one's mental model**.
 - 🎨 **Advanced AI workflows** - Custom LoRA training and prompt engineering techniques
 - 📊 **Engineering leadership practices** - Building high-performing teams and technical strategy
 - 🏗️ **Architecture documentation** - Creating comprehensive system design documentation
+- 🤖 **ML Inference Pipelines** - Multi-model serving, PyTorch → ONNX → Java Spring Boot deployment, document processing with neural networks
 
 **Recent Completions (2024-2026):**
 - ✅ **Spring Boot 3 & Spring 6 comprehensive mastery** (70+ projects across 10 sections)
 - ✅ **Bash scripting from basics to advanced** (35 chapters, 236 production-ready scripts)
 - ✅ **Production AI deployment with Fooocus** (46GB model library, multi-platform optimization)
-- ✅ **ML inference pipeline (PyTorch → ONNX → Java)** (End-to-end neural network training, golden parity tests, Spring Boot REST service, React UI, Docker deployment)
+- ✅ **Multi-model ML inference platform (PyTorch → ONNX → Java)** (Iris MLP + MNIST CNN + Glasses ResNet18, ModelRegistry multi-model serving, golden parity tests, Spring Boot REST API, React UI with canvas/upload/webcam, Docker Compose & multi-platform deployment)
 - ✅ **Quality-first development** (133+ test classes, comprehensive documentation)
 
 **Next on Roadmap:** Microservices architecture, Kubernetes deployment, Go language fundamentals
