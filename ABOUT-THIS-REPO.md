@@ -36,29 +36,37 @@ The engine room of the repository. Here, I craft scalable backends using **Java*
 - **REST APIs**: Clean, documented, and production-ready.
 - **Architecture**: Where solid design patterns meet real-world application.
 
-## 🧮 Neural Network with Java: ML Meets Production
+## 🧮 Neural Network with Java: Multi-Model ML Platform
 *Where AI training meets enterprise deployment.*
 
-A complete production-ready ML inference pipeline that bridges Python and Java, demonstrating end-to-end ML deployment in enterprise environments:
+A production-ready **multi-model ML inference platform** that bridges Python and Java, demonstrating end-to-end ML deployment with guaranteed cross-runtime parity:
+
+**Supported Models:**
+- **🌸 Iris Classification (MLP)**: Tabular data — 4 features → 3 classes, PyTorch MLP, 91%+ accuracy
+- **🔢 MNIST Digit Recognition (CNN)**: Image data — 28×28 grayscale → 10 digits, PyTorch CNN, 99.13% accuracy
+- **👓 Glasses Detection (ResNet18)**: Binary image classification — 128×128 grayscale face images, transfer learning on CelebA dataset
 
 **Architecture & Pipeline:**
-- **PyTorch Training**: Neural network training on Iris dataset with 91%+ accuracy
-- **ONNX Export**: Dynamic batch axis, embedded preprocessing, float32 enforcement
-- **Spring Boot Service**: REST API with health checks, monitoring, and CORS support
-- **React Frontend**: Interactive UI for testing predictions and running golden tests
+- **PyTorch Training**: Deterministic training with fixed seeds for MLP, CNN, and ResNet architectures
+- **ONNX Export**: Dynamic batch axis, embedded preprocessing (StandardScaler/normalization), float32 enforcement
+- **ModelRegistry**: Centralized registry pattern serving multiple models simultaneously (`/models/{name}/predict`)
+- **Spring Boot Service**: Multi-model REST API with health checks, CORS, and per-model endpoints
+- **React Frontend**: Interactive UI with Iris prediction forms, digit canvas drawing, glasses detection, image upload, and webcam capture
 
 **Quality & Testing:**
-- **Golden Parity Tests**: Critical tests ensuring identical outputs between Python and Java ONNX Runtime (tolerance: 1e-5)
-- **Comprehensive Test Suite**: Unit tests, integration tests, and automated validation
-- **CI/CD Ready**: Docker multi-stage builds, Makefile automation, Ubuntu quick-start scripts
+- **Golden Parity Tests**: Per-model golden tests ensuring identical outputs between Python and Java ONNX Runtime (tolerance: 1e-5)
+- **Comprehensive Test Suite**: Unit tests, integration tests, 4D tensor handling, image processing validation
+- **CI/CD Ready**: Docker multi-stage builds, Docker Compose, Makefile automation, `start-app.sh` for macOS/Ubuntu
 
 **Key Features:**
-- Deterministic training with reproducible results
+- Multi-model serving with isolated artifacts (`artifact/iris/`, `artifact/mnist/`, `artifact/glasses/`)
 - Embedded preprocessing in ONNX (eliminates Python↔Java drift)
-- Production-grade error handling and logging
+- Image processing pipelines: base64 → grayscale → resize → normalized pixels
+- 4D tensor support for CNN/ResNet models (NCHW format)
+- Docker Compose orchestration and multi-platform support (macOS/Ubuntu)
 - Full documentation with troubleshooting guides
 
-This project showcases the complete lifecycle of deploying ML models in Java environments, from training to production serving.
+This project showcases the complete lifecycle of deploying ML models in Java environments, from training to production serving with multiple model architectures.
 
 ---
 
