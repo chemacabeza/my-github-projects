@@ -424,6 +424,13 @@ The local installation includes the following models by default. Some are standa
     *   **Model ID**: 2676941
     *   **Source**: [Civitai](https://civitai.green/models/2380507?modelVersionId=2676941)
 
+30. `tina_lora.safetensors`
+    *   **Type**: SDXL LoRA
+    *   **Description**: Slovenian woman character (26 years old, 1.75m tall)
+    *   **Trigger Word**: `tina`
+    *   **Model ID**: 2694529
+    *   **Source**: [Civitai](https://civitai.green/models/2396460?modelVersionId=2694529)
+
 
 ### Troubleshooting
 
