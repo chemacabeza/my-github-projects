@@ -368,56 +368,49 @@ The local installation includes the following models by default. Some are standa
     *   **Model ID**: 2608668
     *   **Source**: [Civitai](https://civitai.green/models/2318797?modelVersionId=2608668)
 
-23. `stefi_lora_v1.safetensors`
+23. `stefi_lora.safetensors`
     *   **Type**: SDXL LoRA
-    *   **Description**: German woman character (26 years old, 1.90m tall) - v1.0
+    *   **Description**: German woman character (26 years old, 1.90m tall)
     *   **Trigger Word**: `stefi`
     *   **Model ID**: 2614177
     *   **Source**: [Civitai](https://civitai.com/models/2323826?modelVersionId=2614177)
 
-24. `stefi_lora_v2.safetensors`
-    *   **Type**: SDXL LoRA
-    *   **Description**: German woman character (26 years old, 1.90m tall) - v2.0 Mature version
-    *   **Trigger Word**: `stefi`
-    *   **Model ID**: 2683177
-    *   **Source**: [Civitai](https://civitai.com/models/2323826?modelVersionId=2683177)
-
-25. `sheila_lora.safetensors`
+24. `sheila_lora.safetensors`
     *   **Type**: SDXL LoRA
     *   **Description**: Peruvian woman character (26 years old, 1.70m tall)
     *   **Trigger Word**: `sheila`
     *   **Model ID**: 2619966
     *   **Source**: [Civitai](https://civitai.green/models/2329078?modelVersionId=2619966)
 
-26. `amina_lora.safetensors`
+25. `amina_lora.safetensors`
     *   **Type**: SDXL LoRA
     *   **Description**: Moroccan woman character (26 years old, 1.73m tall)
     *   **Trigger Word**: `amina`
     *   **Model ID**: 2622521
     *   **Source**: [Civitai](https://civitai.green/models/2331386?modelVersionId=2622521)
 
-27. `milica_lora.safetensors`
+26. `milica_lora.safetensors`
     *   **Type**: SDXL LoRA
     *   **Description**: Serbian woman character (27 years old, 1.75m tall)
     *   **Trigger Word**: `milica`
     *   **Model ID**: 2627557
     *   **Source**: [Civitai](https://civitai.green/models/2335896?modelVersionId=2627557)
 
-28. `anne_lora.safetensors`
+27. `anne_lora.safetensors`
     *   **Type**: SDXL LoRA
     *   **Description**: Dutch woman character (26 years old, 1.80m tall)
     *   **Trigger Word**: `anne`
     *   **Model ID**: 2665179
     *   **Source**: [Civitai](https://civitai.green/models/2369885?modelVersionId=2665179)
 
-29. `maria_lora.safetensors`
+28. `maria_lora.safetensors`
     *   **Type**: SDXL LoRA
     *   **Description**: Portuguese woman character (28 years old, 1.80m tall)
     *   **Trigger Word**: `maria`
     *   **Model ID**: 2When674074
     *   **Source**: [Civitai](https://civitai.green/models/2377884?modelVersionId=2674074)
 
-30. `aaju_lora.safetensors`
+29. `aaju_lora.safetensors`
     *   **Type**: SDXL LoRA
     *   **Description**: Greenlandic woman character (28 years old, 1.75m tall)
     *   **Trigger Word**: `aaju`
