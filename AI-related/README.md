@@ -431,6 +431,13 @@ The local installation includes the following models by default. Some are standa
     *   **Model ID**: 2694529
     *   **Source**: [Civitai](https://civitai.green/models/2396460?modelVersionId=2694529)
 
+31. `nora_lora.safetensors`
+    *   **Type**: SDXL LoRA
+    *   **Description**: Estonian woman character (23 years old, 1.78m tall)
+    *   **Trigger Word**: `nora`
+    *   **Model ID**: 2697743
+    *   **Source**: [Civitai](https://civitai.green/models/2399341?modelVersionId=2697743)
+
 
 ### Troubleshooting
 
