@@ -20,7 +20,7 @@ This folder is the bleeding edge of my generative AI explorations. It's a mix of
 
 **Current model library (as of 2026-02-19):**
 - 🏛️ **7 SDXL checkpoint models** — general-purpose, anime, stock photography, Chinese style, and more
-- 🎭 **32 LoRAs** — 5 standard style/utility LoRAs + **27 custom character LoRAs** representing women from 27 different nationalities (Sweden, Russia, Japan, Germany, Guinea, China, Ukraine, Australia, USA, Morocco, Scotland, Italy, Cuba, Finland, Poland, Serbia, the Netherlands, Portugal, Greenland, Slovenia, Estonia, Latvia, and more)
+- 🎭 **33 LoRAs** — 5 standard style/utility LoRAs + **28 custom character LoRAs** representing women from 28 different nationalities (Sweden, Russia, Japan, Germany, Guinea, China, Ukraine, Australia, USA, Morocco, Scotland, Italy, Cuba, Finland, Poland, Serbia, the Netherlands, Portugal, Greenland, Slovenia, Estonia, Latvia, Lithuania, and more)
 
 ## ⚡ Bash: Automate Everything
 *Why click when you can script?*
