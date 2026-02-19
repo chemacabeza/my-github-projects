@@ -438,6 +438,13 @@ The local installation includes the following models by default. Some are standa
     *   **Model ID**: 2700775
     *   **Source**: [Civitai](https://civitai.green/models/2402032?modelVersionId=2700775)
 
+33. `dalia_lora.safetensors`
+    *   **Type**: SDXL LoRA
+    *   **Description**: Lithuanian woman character (24 years old, 1.73m tall)
+    *   **Trigger Word**: `dalia`
+    *   **Model ID**: 2703173
+    *   **Source**: [Civitai](https://civitai.green/models/2404165?modelVersionId=2703173)
+
 
 ### Troubleshooting
 

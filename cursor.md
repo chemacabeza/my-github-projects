@@ -39,6 +39,8 @@ From repo root:
 Notes for agents:
 - Expect large model assets and symlink-based model management.
 - Be careful with GPU-specific steps (CUDA vs Apple Silicon / MPS).
+- The project includes 31 LoRA models (custom character LoRAs). The latest addition is **dalia** (Lithuanian, 24 years old, 1.73m tall, SDXL LoRA, model version ID 2703173).
+- When adding a new LoRA: update `AI-related/README.md` (LoRAs list), `AI-related/run_local.sh` (download command), and this file.
 
 ### Bash book + scripts
 - Chapters live under: `bash/chapters/`

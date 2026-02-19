@@ -178,6 +178,7 @@ download_model 'https://civitai.com/api/download/models/2676941' "$LORA_DIR/aaju
 download_model 'https://civitai.com/api/download/models/2694529' "$LORA_DIR/tina_lora.safetensors"
 download_model 'https://civitai.com/api/download/models/2697743' "$LORA_DIR/nora_lora.safetensors"
 download_model 'https://civitai.com/api/download/models/2700775' "$LORA_DIR/anna_lora.safetensors"
+download_model 'https://civitai.com/api/download/models/2703173' "$LORA_DIR/dalia_lora.safetensors"
 
 echo "=== Starting Fooocus ==="
 echo "All models and LoRAs are accessible via symbolic links"
