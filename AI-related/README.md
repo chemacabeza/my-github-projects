@@ -407,7 +407,7 @@ The local installation includes the following models by default. Some are standa
     *   **Type**: SDXL LoRA
     *   **Description**: Portuguese woman character (28 years old, 1.80m tall)
     *   **Trigger Word**: `maria`
-    *   **Model ID**: 2When674074
+    *   **Model ID**: 2674074
     *   **Source**: [Civitai](https://civitai.green/models/2377884?modelVersionId=2674074)
 
 29. `aaju_lora.safetensors`
@@ -430,6 +430,13 @@ The local installation includes the following models by default. Some are standa
     *   **Trigger Word**: `nora`
     *   **Model ID**: 2697743
     *   **Source**: [Civitai](https://civitai.green/models/2399341?modelVersionId=2697743)
+
+32. `anna_lora.safetensors`
+    *   **Type**: SDXL LoRA
+    *   **Description**: Latvian woman character (24 years old, 1.75m tall)
+    *   **Trigger Word**: `anna`
+    *   **Model ID**: 2700775
+    *   **Source**: [Civitai](https://civitai.green/models/2402032?modelVersionId=2700775)
 
 
 ### Troubleshooting
