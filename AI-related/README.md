@@ -445,6 +445,13 @@ The local installation includes the following models by default. Some are standa
     *   **Model ID**: 2703173
     *   **Source**: [Civitai](https://civitai.green/models/2404165?modelVersionId=2703173)
 
+34. `olena_lora.safetensors`
+    *   **Type**: SDXL LoRA
+    *   **Description**: Ukrainian woman character (24 years old, 1.72m tall)
+    *   **Trigger Word**: `olena`
+    *   **Model ID**: 2706444
+    *   **Source**: [Civitai](https://civitai.green/models/2407082?modelVersionId=2706444)
+
 
 ### Troubleshooting
 
