@@ -445,6 +445,13 @@ The local installation includes the following models by default. Some are standa
     *   **Model ID**: 2703173
     *   **Source**: [Civitai](https://civitai.green/models/2404165?modelVersionId=2703173)
 
+34. `zoya_lora.safetensors`
+    *   **Type**: SDXL LoRA
+    *   **Description**: Belarusian woman character (26 years old, 1.75m tall)
+    *   **Trigger Word**: `zoya`
+    *   **Model ID**: 2705922
+    *   **Source**: [Civitai](https://civitai.green/models/2406617?modelVersionId=2705922)
+
 
 ### Troubleshooting
 
