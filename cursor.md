@@ -39,7 +39,7 @@ From repo root:
 Notes for agents:
 - Expect large model assets and symlink-based model management.
 - Be careful with GPU-specific steps (CUDA vs Apple Silicon / MPS).
-- The project includes 35 LoRA models (5 standard + 30 custom character LoRAs). The latest additions are **olena** (Ukrainian, 24 years old, 1.72m tall, SDXL LoRA, model version ID 2706444) and **zoya** (Belarusian, 26 years old, 1.75m tall, SDXL LoRA, model version ID 2705922).
+- The project includes 36 LoRA models (5 standard + 31 custom character LoRAs). The latest addition is **priya** (Indian, 26 years old, 1.75m tall, SDXL LoRA, model version ID 2709407).
 - When adding a new LoRA: update `AI-related/README.md` (LoRAs list), `AI-related/run_local.sh` (download command), and this file.
 
 ### Bash book + scripts
@@ -116,7 +116,7 @@ If requirements are ambiguous, ask only what unblocks:
 
 ---
 
-## Current state (last updated: 2026-02-20)
+## Current state (last updated: 2026-02-21)
 
 ### AI-related
 
@@ -131,7 +131,7 @@ If requirements are ambiguous, ask only what unblocks:
 | `sdxlUnstableDiffusers_nihilmania.safetensors` | SDXL 1.0 | Civitai #395107 |
 | `SDXLRonghua_v45.safetensors` | SDXL 1.0 | Civitai #471038 |
 
-**LoRAs** (`AI-related/LoRAs/`, 35 total — 5 standard + 30 custom character LoRAs):
+**LoRAs** (`AI-related/LoRAs/`, 36 total — 5 standard + 31 custom character LoRAs):
 
 Standard:
 - `sd_xl_offset_example-lora_1.0.safetensors` — contrast/dynamic range
@@ -173,3 +173,4 @@ Character LoRAs (trigger word = filename stem, all SDXL):
 | 28 | `dalia_lora.safetensors` | dalia | Lithuanian | 24 | 1.73m | 2703173 |
 | 29 | `olena_lora.safetensors` | olena | Ukrainian | 24 | 1.72m | 2706444 |
 | 30 | `zoya_lora.safetensors` | zoya | Belarusian | 26 | 1.75m | 2705922 |
+| 31 | `priya_lora.safetensors` | priya | Indian | 26 | 1.75m | 2709407 |

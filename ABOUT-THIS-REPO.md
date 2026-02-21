@@ -18,9 +18,9 @@ This folder is the bleeding edge of my generative AI explorations. It's a mix of
 - **Stable Diffusion & Fooocus**: Pure creative fire. Sculpting pixels into breathtaking reality. 🎨
 - **Coursework & Labs**: My personal notes and hands-on labs from top-tier AI courses.
 
-**Current model library (as of 2026-02-20):**
+**Current model library (as of 2026-02-21):**
 - 🏛️ **7 SDXL checkpoint models** — general-purpose, anime, stock photography, Chinese style, and more
-- 🎭 **35 LoRAs** — 5 standard style/utility LoRAs + **30 custom character LoRAs** representing women from 29 different nationalities (Sweden, Russia, Japan, Germany, Guinea, China, Ukraine, Australia, USA, Morocco, Scotland, Italy, Cuba, Finland, Poland, Serbia, the Netherlands, Portugal, Greenland, Slovenia, Estonia, Latvia, Lithuania, Belarus, and more)
+- 🎭 **36 LoRAs** — 5 standard style/utility LoRAs + **31 custom character LoRAs** representing women from 30 different nationalities (Sweden, Russia, Japan, Germany, Guinea, China, Ukraine, Australia, USA, Morocco, Scotland, Italy, Cuba, Finland, Poland, Serbia, the Netherlands, Portugal, Greenland, Slovenia, Estonia, Latvia, Lithuania, Belarus, India, and more)
 
 ## ⚡ Bash: Automate Everything
 *Why click when you can script?*

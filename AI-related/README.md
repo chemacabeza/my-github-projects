@@ -459,6 +459,13 @@ The local installation includes the following models by default. Some are standa
     *   **Model ID**: 2705922
     *   **Source**: [Civitai](https://civitai.green/models/2406617?modelVersionId=2705922)
 
+36. `priya_lora.safetensors`
+    *   **Type**: SDXL LoRA
+    *   **Description**: Indian woman character (26 years old, 1.75m tall)
+    *   **Trigger Word**: `priya`
+    *   **Model ID**: 2709407
+    *   **Source**: [Civitai](https://civitai.green/models/2409730?modelVersionId=2709407)
+
 
 ### Troubleshooting
 
