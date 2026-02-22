@@ -18,9 +18,9 @@ This folder is the bleeding edge of my generative AI explorations. It's a mix of
 - **Stable Diffusion & Fooocus**: Pure creative fire. Sculpting pixels into breathtaking reality. 🎨
 - **Coursework & Labs**: My personal notes and hands-on labs from top-tier AI courses.
 
-**Current model library (as of 2026-02-21):**
+**Current model library (as of 2026-02-22):**
 - 🏛️ **7 SDXL checkpoint models** — general-purpose, anime, stock photography, Chinese style, and more
-- 🎭 **36 LoRAs** — 5 standard style/utility LoRAs + **31 custom character LoRAs** representing women from 30 different nationalities (Sweden, Russia, Japan, Germany, Guinea, China, Ukraine, Australia, USA, Morocco, Scotland, Italy, Cuba, Finland, Poland, Serbia, the Netherlands, Portugal, Greenland, Slovenia, Estonia, Latvia, Lithuania, Belarus, India, and more)
+- 🎭 **37 LoRAs** — 5 standard style/utility LoRAs + **32 custom character LoRAs** representing women from 31 different nationalities (Sweden, Russia, Japan, Germany, Guinea, China, Ukraine, Australia, USA, Morocco, Scotland, Italy, Cuba, Finland, Poland, Serbia, the Netherlands, Portugal, Greenland, Slovenia, Estonia, Latvia, Lithuania, Belarus, India, Venezuela, and more)
 
 ## ⚡ Bash: Automate Everything
 *Why click when you can script?*
@@ -48,19 +48,20 @@ A production-ready **multi-model ML inference platform** that bridges Python and
 **Supported Models:**
 - **🌸 Iris Classification (MLP)**: Tabular data — 4 features → 3 classes, PyTorch MLP, 91%+ accuracy
 - **🔢 MNIST Digit Recognition (CNN)**: Image data — 28×28 grayscale → 10 digits, PyTorch CNN, 99.13% accuracy
-- **👓 Glasses Detection (ResNet18)**: Binary image classification — 128×128 grayscale face images, transfer learning on CelebA dataset
+- **👓 Glasses Detection (ResNet18)**: Binary image classification — 128×128 grayscale face images, transfer learning on CelebA dataset, 98.12% accuracy, realtime webcam detection
+- **📄 Document Reader**: Text extraction from PDF and TXT files via drag-and-drop upload
 
 **Architecture & Pipeline:**
 - **PyTorch Training**: Deterministic training with fixed seeds for MLP, CNN, and ResNet architectures
 - **ONNX Export**: Dynamic batch axis, embedded preprocessing (StandardScaler/normalization), float32 enforcement
 - **ModelRegistry**: Centralized registry pattern serving multiple models simultaneously (`/models/{name}/predict`)
-- **Spring Boot Service**: Multi-model REST API with health checks, CORS, and per-model endpoints
-- **React Frontend**: Interactive UI with Iris prediction forms, digit canvas drawing, glasses detection, image upload, and webcam capture
+- **Spring Boot Service**: Multi-model REST API with health checks, CORS, per-model endpoints, and document processing
+- **React Frontend**: Interactive UI with Iris prediction forms, digit canvas drawing, glasses detection (webcam), document reader (drag-and-drop), and image upload
 
 **Quality & Testing:**
 - **Golden Parity Tests**: Per-model golden tests ensuring identical outputs between Python and Java ONNX Runtime (tolerance: 1e-5)
 - **Comprehensive Test Suite**: Unit tests, integration tests, 4D tensor handling, image processing validation
-- **CI/CD Ready**: Docker multi-stage builds, Docker Compose, Makefile automation, `start-app.sh` for macOS/Ubuntu
+- **CI/CD Ready**: Docker multi-stage builds, Docker Compose with nginx reverse proxy, Makefile automation, `start-app.sh` for macOS/Ubuntu
 
 **Key Features:**
 - Multi-model serving with isolated artifacts (`artifact/iris/`, `artifact/mnist/`, `artifact/glasses/`)

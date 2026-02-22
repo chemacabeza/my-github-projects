@@ -466,6 +466,13 @@ The local installation includes the following models by default. Some are standa
     *   **Model ID**: 2709407
     *   **Source**: [Civitai](https://civitai.green/models/2409730?modelVersionId=2709407)
 
+37. `valentina_lora.safetensors`
+    *   **Type**: SDXL LoRA
+    *   **Description**: Venezuelan woman character (26 years old, 1.75m tall)
+    *   **Trigger Word**: `valentina`
+    *   **Model ID**: 2711709
+    *   **Source**: [Civitai](https://civitai.green/models/2411844?modelVersionId=2711709)
+
 
 ### Troubleshooting
 

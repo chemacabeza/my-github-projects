@@ -2,10 +2,11 @@
 
 Repository: `chemacabeza/my-github-projects`
 
-Purpose: portfolio-style monorepo with 3 main areas:
+Purpose: portfolio-style monorepo with 4 main areas:
 - `AI-related/` (Docker-based AI image generation platform / Fooocus deployment)
 - `bash/` (Bash In Depth: multi-chapter guide + scripts)
 - `JavaSpringBoot/` (enterprise Spring Boot 3.x examples / microservices)
+- `neural-network-with-java/` (git submodule — multi-model ML inference pipeline: Python → ONNX → Java)
 
 ---
 
@@ -21,6 +22,7 @@ Purpose: portfolio-style monorepo with 3 main areas:
   - `AI-related/`
   - `bash/`
   - `JavaSpringBoot/`
+  - `neural-network-with-java/` (submodule)
 - Supporting:
   - `examples/`
   - `images/`
@@ -39,7 +41,7 @@ From repo root:
 Notes for agents:
 - Expect large model assets and symlink-based model management.
 - Be careful with GPU-specific steps (CUDA vs Apple Silicon / MPS).
-- The project includes 36 LoRA models (5 standard + 31 custom character LoRAs). The latest addition is **priya** (Indian, 26 years old, 1.75m tall, SDXL LoRA, model version ID 2709407).
+- The project includes 37 LoRA models (5 standard + 32 custom character LoRAs). The latest addition is **valentina** (Venezuelan, 26 years old, 1.75m tall, SDXL LoRA, model version ID 2711709).
 - When adding a new LoRA: update `AI-related/README.md` (LoRAs list), `AI-related/run_local.sh` (download command), and this file.
 
 ### Bash book + scripts
@@ -50,6 +52,17 @@ Notes for agents:
 - Each subproject is a Maven app.
 - Run inside a chosen subdirectory:
   - `mvn spring-boot:run` :contentReference[oaicite:3]{index=3}
+
+### Neural Network with Java (submodule)
+- Git submodule at `neural-network-with-java/` — a production-ready multi-model ML inference pipeline.
+- **Models**: Iris MLP (91%), MNIST CNN (99.13%), Glasses ResNet18 (98.12%), Document Reader (PDF/TXT)
+- Run locally:
+  - `cd neural-network-with-java && ./start-app.sh` (backend + frontend)
+  - Backend: http://localhost:8080, Frontend: http://localhost:3000
+- Docker:
+  - `cd neural-network-with-java && docker-compose up --build`
+- Key endpoints: `GET /models`, `POST /models/{name}/predict`, `POST /documents/extract`
+- When updating: run `git submodule update --remote neural-network-with-java` then update this file, `ABOUT-ME.md`, and `ABOUT-THIS-REPO.md`.
 
 ---
 
@@ -116,7 +129,7 @@ If requirements are ambiguous, ask only what unblocks:
 
 ---
 
-## Current state (last updated: 2026-02-21)
+## Current state (last updated: 2026-02-22)
 
 ### AI-related
 
@@ -131,7 +144,7 @@ If requirements are ambiguous, ask only what unblocks:
 | `sdxlUnstableDiffusers_nihilmania.safetensors` | SDXL 1.0 | Civitai #395107 |
 | `SDXLRonghua_v45.safetensors` | SDXL 1.0 | Civitai #471038 |
 
-**LoRAs** (`AI-related/LoRAs/`, 36 total — 5 standard + 31 custom character LoRAs):
+**LoRAs** (`AI-related/LoRAs/`, 37 total — 5 standard + 32 custom character LoRAs):
 
 Standard:
 - `sd_xl_offset_example-lora_1.0.safetensors` — contrast/dynamic range
@@ -174,3 +187,4 @@ Character LoRAs (trigger word = filename stem, all SDXL):
 | 29 | `olena_lora.safetensors` | olena | Ukrainian | 24 | 1.72m | 2706444 |
 | 30 | `zoya_lora.safetensors` | zoya | Belarusian | 26 | 1.75m | 2705922 |
 | 31 | `priya_lora.safetensors` | priya | Indian | 26 | 1.75m | 2709407 |
+| 32 | `valentina_lora.safetensors` | valentina | Venezuelan | 26 | 1.75m | 2711709 |
