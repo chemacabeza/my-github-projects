@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Civitai API token (required for downloading some models)
+export CIVITAI_API_TOKEN="${CIVITAI_API_TOKEN:-4a14dd0dc712319cace2cfe9048754a8}"
+
 # Detect platform
 if [[ "$OSTYPE" == "darwin"* ]]; then
     PLATFORM="macOS"
