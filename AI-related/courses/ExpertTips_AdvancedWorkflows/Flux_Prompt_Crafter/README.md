@@ -213,7 +213,7 @@ Select one aspect ratio appropriate to the intended composition:
 You can use the following template to create values for women:
 
 ```txt
-Provide me with values down here to create a beautiful from <this country>
+Provide me with values down here to create a beautiful woman from <this country>
 - Color of eyes
 - Shape of the nose
 - Lips
@@ -240,37 +240,7 @@ Provide me with values down here to create a beautiful from <this country>
 - Age
 ```
 
-In that case we are to use the country of Chile.
-
-```txt
-Provide me with values down here to create a beautiful from Chile
-- Color of eyes
-- Shape of the nose
-- Lips
-- Skin hue
-- Skin undertone
-- Skin overall appearance
-- Hair color
-- Hair texture
-- Hair thickness
-- Hair length
-- Hair finish
-- Hairline & framing
-- Body overall build
-- Body shape
-- Body torso
-- Body chest
-- Estimated cup breast size (using the format "34DD")
-- Body waist circumference (using centimeters)
-- Body hips (using some words and centimeters)
-- Body arms
-- Body legs
-- Body posture
-- Height
-- Age
-```
-
-The answer from ChatGPT was the following:
+As an example, let's ask for a woman from **Chile**. We send the template above to ChatGPT replacing `<this country>` with `Chile`, and the answer was the following:
 
 ```txt
 Here is a balanced, realistic profile inspired by common features found among Chilean women (with a harmonious, natural aesthetic):
