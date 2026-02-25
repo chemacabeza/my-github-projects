@@ -208,6 +208,109 @@ Select one aspect ratio appropriate to the intended composition:
 
 ---
 
+## Using ChatGPT to create values for women and men
+
+You can use the following template to create values for women:
+
+```txt
+Provide me with values down here to create a beautiful from <this country>
+- Color of eyes
+- Shape of the nose
+- Lips
+- Skin hue
+- Skin undertone
+- Skin overall appearance
+- Hair color
+- Hair texture
+- Hair thickness
+- Hair length
+- Hair finish
+- Hairline & framing
+- Body overall build
+- Body shape
+- Body torso
+- Body chest
+- Estimated cup breast size (using the format "34DD")
+- Body waist circumference (using centimeters)
+- Body hips (using some words and centimeters)
+- Body arms
+- Body legs
+- Body posture
+- Height
+- Age
+```
+
+In that case we are to use the country of Chile.
+
+```txt
+Provide me with values down here to create a beautiful from Chile
+- Color of eyes
+- Shape of the nose
+- Lips
+- Skin hue
+- Skin undertone
+- Skin overall appearance
+- Hair color
+- Hair texture
+- Hair thickness
+- Hair length
+- Hair finish
+- Hairline & framing
+- Body overall build
+- Body shape
+- Body torso
+- Body chest
+- Estimated cup breast size (using the format "34DD")
+- Body waist circumference (using centimeters)
+- Body hips (using some words and centimeters)
+- Body arms
+- Body legs
+- Body posture
+- Height
+- Age
+```
+
+The answer from ChatGPT was the following:
+
+```txt
+Here is a balanced, realistic profile inspired by common features found among Chilean women (with a harmonious, natural aesthetic):
+- Color of eyes: Deep brown with warm golden flecks
+- Shape of the nose: Straight bridge with a softly rounded tip
+- Lips: Medium-full lips with a defined cupid’s bow
+- Skin hue: Light olive-beige
+- Skin undertone: Neutral-warm
+- Skin overall appearance: Smooth, healthy glow with subtle natural radiance
+- Hair color: Dark brown (almost black)
+- Hair texture: Soft wavy
+- Hair thickness: Medium to thick
+- Hair length: Mid-back length
+- Hair finish: Natural shine with soft movement
+- Hairline & framing: Slightly rounded hairline with loose face-framing layers
+- Body overall build: Fit and naturally curvy
+- Body shape: Hourglass with balanced proportions
+- Body torso: Defined core with gentle softness
+- Body chest: Full and proportionate
+- Estimated cup breast size (using the format "34DD"): 34C
+- Body waist circumference (using centimeters): 66 cm
+- Body hips (using some words and centimeters): Rounded and feminine, ~96 cm
+- Body arms: Slim but toned
+- Body legs: Long, strong, and well-shaped
+- Body posture: Upright and confident with relaxed elegance
+- Height: 167 cm
+- Age: 28
+```
+
+Then you can provide the following prompt to ChatGPT:
+
+```txt
+Now create a hyper realistic image of this woman
+```
+
+And the image will be the following:
+
+![Chilean woman](images/chilean_woman.png)
+
+
 ## Usage Example
 
 **You type:**
