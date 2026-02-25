@@ -308,7 +308,9 @@ Now create a hyper realistic image of this woman
 
 And the image will be the following:
 
-![Chilean woman](images/chilean_woman.png)
+<p align="center">
+   <img src="images/ChileanWoman.png" width="700"/>
+</p>
 
 
 ## Usage Example
