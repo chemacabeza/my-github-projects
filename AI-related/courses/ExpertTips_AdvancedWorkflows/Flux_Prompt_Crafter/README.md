@@ -210,6 +210,8 @@ Select one aspect ratio appropriate to the intended composition:
 
 ## Using ChatGPT to create values for women and men
 
+### Prompt for Women
+
 You can use the following template to create values for women:
 
 ```txt
@@ -281,6 +283,81 @@ And the image will be the following:
 <p align="center">
    <img src="images/ChileanWoman.png" width="700"/>
 </p>
+
+### Prompt for Men
+
+Similarly, you can use the following template to create values for men:
+
+```txt
+Provide me with the values down here to create a handsome man from <this country>:
+- Eye color and iris tone
+- Nasal structure and contour
+- Lip shape, fullness, and definition
+- Facial hair
+- Skin color / hue
+- Skin undertone
+- Overall skin condition and texture
+- Hair color
+- Hair texture
+- Hair density and thickness
+- Hair length
+- Hair finish
+- Hairline shape and facial framing
+- Overall body build
+- General body silhouette
+- Torso proportions and definition
+- Chest size and development (using words like Large, athletic)
+- Waist circumference (in centimeters)
+- Hip width and shape
+- Arm build and muscle tone (using words like Muscular, highly toned)
+- Leg length, thickness, and definition (using words like Medium-long, thick, defined)
+- Posture and stance
+- Height (using the format "1.90 meters")
+- Age (years)
+```
+
+As an example, let's use **Chile** again. We send the template above to ChatGPT replacing `<this country>` with `Chile`, and the answer was the following:
+
+```txt
+- Eye color and iris tone: Deep brown with warm amber flecks
+- Nasal structure and contour: Straight, well-proportioned bridge with a refined, slightly defined tip
+- Lip shape, fullness, and definition: Medium-full lips, well-defined cupid’s bow, balanced symmetry
+- Facial hair: Short, well-groomed stubble beard enhancing jawline definition
+- Skin color / hue: Light olive to medium tan complexion
+- Skin undertone: Warm golden undertone
+- Overall skin condition and texture: Smooth, healthy, and even-textured with a natural glow
+- Hair color: Dark brown, almost black
+- Hair texture: Thick, slightly wavy
+- Hair density and thickness: High density, strong and full strands
+- Hair length: Medium length on top, shorter on the sides
+- Hair finish: Natural matte finish with subtle volume
+- Hairline shape and facial framing: Straight, slightly squared hairline that frames the face cleanly
+- Overall body build: Athletic and well-balanced
+- General body silhouette: V-shaped silhouette with broad shoulders tapering to a lean waist
+- Torso proportions and definition: Well-proportioned torso with defined chest and visible core strength
+- Chest size and development: Broad, athletic
+- Waist circumference (in centimeters): 82 cm
+- Hip width and shape: Medium width, proportional and streamlined
+- Arm build and muscle tone: Muscular, highly toned with clear definition
+- Leg length, thickness, and definition: Medium-long, thick, defined
+- Posture and stance: Upright, confident stance with relaxed but assertive posture
+- Height: 1.85 meters
+- Age (years): 32
+```
+
+Then you can provide the following prompt to ChatGPT:
+
+```txt
+Now create a hyper realistic image of this man
+```
+
+And the image will be the following:
+
+<p align="center">
+   <img src="images/ChileanMan.png" width="700"/>
+</p>
+
+---
 
 
 ## Usage Example
