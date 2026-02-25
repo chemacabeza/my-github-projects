@@ -129,6 +129,11 @@ Each image needs an associated text caption that describes it. CivitAI's trainer
 </p>
 
 5. Let the auto-captioner run (or upload your own captions).
+6. Fill in the training parameters using the values obtained from ChatGPT (see [Using ChatGPT to Create the Training Parameters](#using-chatgpt-to-create-the-training-parameters) above). The parameters form looks like this:
+
+<p align="center">
+   <img src="images/ParametersFromTheLoRA.png" width="700"/>
+</p>
 
 ---
 
