@@ -13,6 +13,7 @@ This directory contains guides for creating Custom GPTs that dramatically improv
 |-------|-------------|
 | [Flux Prompt Crafter](Flux_Prompt_Crafter/README.md) | Create a Custom GPT for generating high-quality Flux 1.1 Pro image prompts |
 | [Kling AI Video Prompts](Kling_AI_Video_Prompts/README.md) | Create a Custom GPT for generating cinematic video prompts with ambient audio |
+| [CivitAI LoRA Training](CivitAI_LoRA_Training/README.md) | Step-by-step guide to training and publishing custom LoRAs on CivitAI |
 
 ---
 
