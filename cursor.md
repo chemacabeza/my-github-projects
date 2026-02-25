@@ -129,9 +129,17 @@ If requirements are ambiguous, ask only what unblocks:
 
 ---
 
-## Current state (last updated: 2026-02-22)
+## Current state (last updated: 2026-02-25)
 
 ### AI-related
+
+**Expert Tips & Advanced Workflows courses** (`AI-related/courses/ExpertTips_AdvancedWorkflows/`, 3 guides):
+
+| Guide | Path | Description |
+|-------|------|-------------|
+| Flux Prompt Crafter | `Flux_Prompt_Crafter/README.md` | Build a Custom GPT for Flux 1.1 Pro Ultra prompts. Covers: Custom GPT setup (women & men system prompts with full physical descriptors), key differences between women/men chest field conventions, ChatGPT templates to generate physical characteristics by country (with Chilean woman & man examples), and a usage example with Rabab. |
+| Kling AI Video Prompts | `Kling_AI_Video_Prompts/README.md` | Build a Custom GPT for cinematic video prompts with ambient audio for Kling AI. |
+| CivitAI LoRA Training | `CivitAI_LoRA_Training/README.md` | Step-by-step guide to training and publishing LoRAs on civitai.green using Onsite Training (no local GPU needed). Covers: prerequisites (Buzz credits), using ChatGPT to generate optimal hyperparameters (Epochs, LR, Network Dim/Alpha, Optimizer, etc.) for a given image count, dataset preparation (30–40 images, captions, trigger word), the full UI walkthrough (Train a Model → upload ZIP → fill parameters form), launch/monitor, testing (over/under-fit diagnosis), and publishing. |
 
 **Checkpoint models** (`AI-related/models/`, 7 total):
 | File | Type | Source |
