@@ -89,6 +89,7 @@ The quality of your LoRA depends almost entirely on the quality of your training
 - **Crop:** Center the subject tightly. Remove busy or distracting backgrounds where possible.
 - **Format:** JPG or PNG are both accepted.
 
+
 ### Captions (trigger words)
 
 Each image needs an associated text caption that describes it. CivitAI's trainer supports:
@@ -104,12 +105,29 @@ Each image needs an associated text caption that describes it. CivitAI's trainer
 ## Step 2 — Start a New Training Job
 
 1. Log in to [civitai.green](https://civitai.green/).
-2. Click your profile avatar → **Train a Model**.
+2. Click your profile avatar → **Train a Model**. The following screen will appear:
+
+<p align="center">
+   <img src="images/TrainLoRA.jpeg" width="700"/>
+</p>
+
 3. Select **Create** and choose the training type:
    - **Character / Subject** — for a specific person or object.
    - **Style** — for an artistic look or colour palette.
    - **Concept** — for abstract ideas or recurring scene elements.
-4. Upload your prepared images. You can drag-and-drop a ZIP archive or upload files individually.
+
+   On the next screen you will be asked to enter a name for your LoRA — this will become the **trigger word** used to activate it at inference time:
+
+<p align="center">
+   <img src="images/TrainLoRA2.jpeg" width="700"/>
+</p>
+
+4. Upload your prepared images as a ZIP archive. The following screen shows the upload step:
+
+<p align="center">
+   <img src="images/TrainLoRA3.jpeg" width="700"/>
+</p>
+
 5. Let the auto-captioner run (or upload your own captions).
 
 ---
