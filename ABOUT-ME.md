@@ -56,7 +56,7 @@ I believe that **innovation requires a readiness to update one's mental model**.
 
 **Current Focus:**
 - 🚧 **Java Master Class 2025** - Deepening Java fundamentals and advanced features
-- 🎨 **Advanced AI workflows** - Custom LoRA training, prompt engineering, and growing a multi-national character LoRA collection (32 characters, 31 nationalities)
+- 🎨 **Advanced AI workflows** - Custom LoRA training, prompt engineering, and growing a multi-national character LoRA collection (33 characters, 32 nationalities)
 - 📊 **Engineering leadership practices** - Building high-performing teams and technical strategy
 - 🏗️ **Architecture documentation** - Creating comprehensive system design documentation
 - 🤖 **ML Inference Pipelines** - Multi-model serving, PyTorch → ONNX → Java Spring Boot deployment, document processing, realtime webcam glasses detection
@@ -64,7 +64,7 @@ I believe that **innovation requires a readiness to update one's mental model**.
 **Recent Completions (2024-2026):**
 - ✅ **Spring Boot 3 & Spring 6 comprehensive mastery** (70+ projects across 10 sections)
 - ✅ **Bash scripting from basics to advanced** (35 chapters, 236 production-ready scripts)
-- ✅ **Production AI deployment with Fooocus** (7 checkpoint models, 37 LoRAs including 32 custom character LoRAs spanning 31 nationalities, multi-platform optimization)
+- ✅ **Production AI deployment with Fooocus** (7 checkpoint models, 38 LoRAs including 33 custom character LoRAs spanning 32 nationalities, multi-platform optimization)
 - ✅ **Multi-model ML inference platform (PyTorch → ONNX → Java)** (Iris MLP + MNIST CNN + Glasses ResNet18 + Document Reader, ModelRegistry multi-model serving, golden parity tests, Spring Boot REST API, React UI with canvas/upload/webcam/drag-and-drop, Docker Compose with nginx & multi-platform deployment)
 - ✅ **Quality-first development** (133+ test classes, comprehensive documentation)
 

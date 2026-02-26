@@ -473,6 +473,13 @@ The local installation includes the following models by default. Some are standa
     *   **Model ID**: 2711709
     *   **Source**: [Civitai](https://civitai.green/models/2411844?modelVersionId=2711709)
 
+38. `carmen_lora.safetensors`
+    *   **Type**: SDXL LoRA
+    *   **Description**: Chilean woman character (28 years old, 1.75m tall)
+    *   **Trigger Word**: `carmen`
+    *   **Model ID**: 2724940
+    *   **Source**: [Civitai](https://civitai.green/models/2423632?modelVersionId=2724940)
+
 
 ### Troubleshooting
 

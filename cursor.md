@@ -41,7 +41,7 @@ From repo root:
 Notes for agents:
 - Expect large model assets and symlink-based model management.
 - Be careful with GPU-specific steps (CUDA vs Apple Silicon / MPS).
-- The project includes 37 LoRA models (5 standard + 32 custom character LoRAs). The latest addition is **valentina** (Venezuelan, 26 years old, 1.75m tall, SDXL LoRA, model version ID 2711709).
+- The project includes 38 LoRA models (5 standard + 33 custom character LoRAs). The latest addition is **carmen** (Chilean, 28 years old, 1.75m tall, SDXL LoRA, model version ID 2724940).
 - When adding a new LoRA: update `AI-related/README.md` (LoRAs list), `AI-related/run_local.sh` (download command), and this file.
 
 ### Bash book + scripts
@@ -144,7 +144,7 @@ If requirements are ambiguous, ask only what unblocks:
 | `sdxlUnstableDiffusers_nihilmania.safetensors` | SDXL 1.0 | Civitai #395107 |
 | `SDXLRonghua_v45.safetensors` | SDXL 1.0 | Civitai #471038 |
 
-**LoRAs** (`AI-related/LoRAs/`, 37 total — 5 standard + 32 custom character LoRAs):
+**LoRAs** (`AI-related/LoRAs/`, 38 total — 5 standard + 33 custom character LoRAs):
 
 Standard:
 - `sd_xl_offset_example-lora_1.0.safetensors` — contrast/dynamic range
@@ -188,3 +188,4 @@ Character LoRAs (trigger word = filename stem, all SDXL):
 | 30 | `zoya_lora.safetensors` | zoya | Belarusian | 26 | 1.75m | 2705922 |
 | 31 | `priya_lora.safetensors` | priya | Indian | 26 | 1.75m | 2709407 |
 | 32 | `valentina_lora.safetensors` | valentina | Venezuelan | 26 | 1.75m | 2711709 |
+| 33 | `carmen_lora.safetensors` | carmen | Chilean | 28 | 1.75m | 2724940 |
