@@ -480,6 +480,13 @@ The local installation includes the following models by default. Some are standa
     *   **Model ID**: 2724940
     *   **Source**: [Civitai](https://civitai.green/models/2423632?modelVersionId=2724940)
 
+39. `naran_lora.safetensors`
+    *   **Type**: SDXL LoRA
+    *   **Description**: Mongolian woman character (25 years old, 1.68m tall)
+    *   **Trigger Word**: `naran`
+    *   **Model ID**: 2727706
+    *   **Source**: [Civitai](https://civitai.green/models/2426080?modelVersionId=2727706)
+
 
 ### Troubleshooting
 
