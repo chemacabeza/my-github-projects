@@ -41,7 +41,7 @@ From repo root:
 Notes for agents:
 - Expect large model assets and symlink-based model management.
 - Be careful with GPU-specific steps (CUDA vs Apple Silicon / MPS).
-- The project includes 39 LoRA models (5 standard + 34 custom character LoRAs). The latest addition is **naran** (Mongolian, 25 years old, 1.68m tall, SDXL LoRA, model version ID 2727706).
+- The project includes 40 LoRA models (5 standard + 35 custom character LoRAs). The latest addition is **olga** (Belarusian, 25 years old, 1.70m tall, SDXL LoRA, model version ID 2748594).
 - When adding a new LoRA: update `AI-related/README.md` (LoRAs list), `AI-related/run_local.sh` (download command), and this file.
 
 ### Bash book + scripts
@@ -152,7 +152,7 @@ If requirements are ambiguous, ask only what unblocks:
 | `sdxlUnstableDiffusers_nihilmania.safetensors` | SDXL 1.0 | Civitai #395107 |
 | `SDXLRonghua_v45.safetensors` | SDXL 1.0 | Civitai #471038 |
 
-**LoRAs** (`AI-related/LoRAs/`, 39 total — 5 standard + 34 custom character LoRAs):
+**LoRAs** (`AI-related/LoRAs/`, 40 total — 5 standard + 35 custom character LoRAs):
 
 Standard:
 - `sd_xl_offset_example-lora_1.0.safetensors` — contrast/dynamic range
@@ -198,3 +198,4 @@ Character LoRAs (trigger word = filename stem, all SDXL):
 | 32 | `valentina_lora.safetensors` | valentina | Venezuelan | 26 | 1.75m | 2711709 |
 | 33 | `carmen_lora.safetensors` | carmen | Chilean | 28 | 1.75m | 2724940 |
 | 34 | `naran_lora.safetensors` | naran | Mongolian | 25 | 1.68m | 2727706 |
+| 35 | `olga_lora.safetensors` | olga | Belarusian | 25 | 1.70m | 2748594 |

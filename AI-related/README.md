@@ -487,6 +487,13 @@ The local installation includes the following models by default. Some are standa
     *   **Model ID**: 2727706
     *   **Source**: [Civitai](https://civitai.green/models/2426080?modelVersionId=2727706)
 
+40. `olga_lora.safetensors`
+    *   **Type**: SDXL LoRA
+    *   **Description**: Belarusian woman character (25 years old, 1.70m tall)
+    *   **Trigger Word**: `olga`
+    *   **Model ID**: 2748594
+    *   **Source**: [Civitai](https://civitai.green/models/2444591?modelVersionId=2748594)
+
 
 ### Troubleshooting
 
