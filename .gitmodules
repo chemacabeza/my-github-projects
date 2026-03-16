@@ -1,3 +1,6 @@
 [submodule "neural-network-with-java"]
 	path = neural-network-with-java
 	url = git@github.com:chemacabeza/neural-network-with-java.git
+[submodule "test-for-ai-wan"]
+	path = test-for-ai-wan
+	url = git@github.com:chemacabeza/test-for-ai-wan.git
