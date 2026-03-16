@@ -2,7 +2,8 @@
 
 Repository: `chemacabeza/my-github-projects`
 
-Purpose: portfolio-style monorepo with 4 main areas:
+Purpose: portfolio-style monorepo with 5 main areas:
+- `test-for-ai-wan/` (AI video generation studio — Spring Boot + React + PostgreSQL + Docker + fal.ai)
 - `AI-related/` (Docker-based AI image generation platform / Fooocus deployment)
 - `bash/` (Bash In Depth: multi-chapter guide + scripts)
 - `JavaSpringBoot/` (enterprise Spring Boot 3.x examples / microservices)
@@ -19,6 +20,7 @@ Purpose: portfolio-style monorepo with 4 main areas:
   - `DEPENDENCIES.md` (dependency notes)
   - `IMPROVEMENTS.md` (roadmap / ideas)
 - Main code/content:
+  - `test-for-ai-wan/` ⭐ newest & most full-stack
   - `AI-related/`
   - `bash/`
   - `JavaSpringBoot/`
@@ -30,6 +32,19 @@ Purpose: portfolio-style monorepo with 4 main areas:
 ---
 
 ## Fast ways to run things (prefer these)
+
+### test-for-ai-wan (AI Video Studio)
+Full-stack video generation platform. From `test-for-ai-wan/`:
+- `./run.sh start` — builds Docker images (Spring Boot backend + React frontend + PostgreSQL) and starts everything
+- `./run.sh stop` — stops and removes containers (DB is in-memory / tmpfs — wiped on stop)
+- Frontend: http://localhost:3000 | Backend API: http://localhost:8080/api
+- 5 fal.ai models: Wan 2.6, Wan 2.2-A14B, Kling v2.5 Turbo Pro, LTX-2 19B, PixVerse v5
+- Requires: `FAL_API_KEY` in `test-for-ai-wan/.env` (see `.env.example`)
+
+Notes for agents:
+- Endpoint paths for the fal.ai queue API include a `fal-ai/` prefix for all models *except* `wan-2.6`.
+- Per-model duration constraints: Kling = 5/10 s, PixVerse = 5/8 s, Wan/LTX = 5/10/15 s.
+- Adding a new model: update `T2V_ENDPOINTS`/`I2V_ENDPOINTS` maps in `FalAiService.java`, add to `MODELS` arrays in `TextToVideoForm.jsx` and `ImageToVideoForm.jsx`.
 
 ### AI-related (Docker / local)
 From repo root:
@@ -129,7 +144,24 @@ If requirements are ambiguous, ask only what unblocks:
 
 ---
 
-## Current state (last updated: 2026-02-25)
+## Current state (last updated: 2026-03-16)
+
+### test-for-ai-wan (AI Video Studio)
+
+Live project at `test-for-ai-wan/`. Full-stack status:
+
+| Component | Status |
+|---|---|
+| Backend (Spring Boot) | ✅ Running on port 8080 |
+| Frontend (React/Nginx) | ✅ Running on port 3000 |
+| Database (PostgreSQL) | ✅ Flyway V3 applied (`model` column) |
+| fal.ai models | ✅ All 5 endpoints verified with curl |
+
+Latest changes (March 2026):
+- Added model selection (Wan 2.6, Wan 2.2-A14B, Kling v2.5 Turbo, LTX-2 19B, PixVerse v5)
+- Fixed endpoint paths (`fal-ai/` prefix required for all except Wan 2.6)
+- Added per-model duration/aspect-ratio constraints in frontend
+- Negative prompt raised to 3000 chars
 
 ### AI-related
 

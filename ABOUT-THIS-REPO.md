@@ -6,7 +6,48 @@
 
 Welcome to my **Engineering Playground**—the digital lab where I turn coffee into code and wild ideas into working software. 🧪✨
 
-This isn't just a code dump; it's a curated collection of **experiments, tools, and production-ready architectures**. Whether it's forging intelligent art with AI, automating the boring stuff with shell scripts, or architecting robust backends, this repo is where I **build, break, and optimize**.
+This isn't just a code dump; it's a curated collection of **experiments, tools, and production-ready architectures**. Whether it's spinning up an AI video generation studio, forging intelligent art with diffusion models, automating the boring stuff with shell scripts, or architecting robust backends—this repo is where I **build, break, and ship**.  
+
+---
+
+## 🎬 test-for-ai-wan: AI Video Generation Studio
+*Full-stack generative video platform. Built like a SaaS product.*
+
+> "I wanted to explore fal.ai's video models. Four days later I had a production-ready platform."
+
+This is the project that showcases everything in one place — **Spring Boot, React, PostgreSQL, Docker, async job orchestration, and 5 state-of-the-art AI video models** all wired together:
+
+**What it does:**
+- 📝 **Text → Video**: Describe a scene in words. The app submits the job to fal.ai, polls the status asynchronously, and presents the finished video in a live-updating gallery.
+- 🖼️ **Image → Video**: Upload any photo and a motion prompt. Watch it come to life.
+
+**AI models supported** (each with its own constraints enforced in the UI):
+
+| Model | Duration | Notes |
+|---|---|---|
+| **Wan 2.6** | 5 / 10 / 15 s | Default. Versatile, cinematic quality. |
+| **Wan 2.2-A14B** | 5 / 10 / 15 s | Higher-fidelity variant. |
+| **Kling v2.5 Turbo Pro** | 5 / 10 s | Kuaishou's flagship. Unparalleled motion fluidity. |
+| **LTX-2 19B** | Frame-count | Open-source giant from Lightricks — generates audio too. |
+| **PixVerse v5** | 5 / 8 s | Creative and stylistic generations. |
+
+**Stack (end-to-end, all Dockerised):**
+
+| Layer | Tech |
+|---|---|
+| Frontend | React + Vite, live job cards, per-model form validation, drag-and-drop image upload |
+| Backend | Spring Boot 3, REST API, reactive `WebClient`, scheduled async polling |
+| Database | PostgreSQL + Flyway migrations (`model` column added live, zero downtime) |
+| Infra | Docker Compose, Nginx reverse proxy, multi-stage Docker builds |
+| AI Layer | fal.ai queue API — 5 endpoints, dynamic routing, per-model parameter enforcement |
+
+**Engineering highlights:**
+- 🔁 **Async job lifecycle** — job submitted, polled every 15 s by a Spring `@Scheduled` task, marked `COMPLETED`/`FAILED` automatically, surfaced in the UI without a page refresh
+- ✅ **Per-model validation** — discovered at runtime that Kling only accepts 5 s/10 s durations; curl-tested every endpoint, then enforced constraints in frontend dropdowns *and* backend `@Pattern` validators — invalid payloads are impossible to submit
+- 🧩 **Clean extensibility** — adding a new model is one map entry in `FalAiService` + one item in the frontend `MODELS` array
+- 🗄️ **Live DB migration** — V3 Flyway migration adds the `model` column with a default, leaving existing rows fully intact
+
+→ **Source**: [`test-for-ai-wan/`](test-for-ai-wan/)
 
 ---
 
@@ -18,7 +59,7 @@ This folder is the bleeding edge of my generative AI explorations. It's a mix of
 - **Stable Diffusion & Fooocus**: Pure creative fire. Sculpting pixels into breathtaking reality. 🎨
 - **Coursework & Labs**: My personal notes and hands-on labs from top-tier AI courses.
 
-**Current model library (as of 2026-02-27):**
+**Current model library (as of 2026-03-16):**
 - 🏛️ **7 SDXL checkpoint models** — general-purpose, anime, stock photography, Chinese style, and more
 - 🎭 **40 LoRAs** — 5 standard style/utility LoRAs + **35 custom character LoRAs** representing women from 34 different nationalities (Sweden, Russia, Japan, Germany, Guinea, China, Ukraine, Australia, USA, Morocco, Scotland, Italy, Cuba, Finland, Poland, Serbia, the Netherlands, Portugal, Greenland, Slovenia, Estonia, Latvia, Lithuania, Belarus, India, Venezuela, Chile, Mongolia, Peru, and more)
 

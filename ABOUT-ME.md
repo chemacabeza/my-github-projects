@@ -41,32 +41,33 @@ Mastering the backend for the travel industry.
 
 ## 🛠️ Philosophy & Skills
 
-I believe that **innovation requires a readiness to update one's mental model**. My background is deeply rooted in **Java and Spring Boot**, but I constantly evolve, embracing modern clouds, data streaming, AI/ML, and frontend tech to architect complete solutions.
+I believe that **innovation requires a readiness to update one's mental model**. My background is deeply rooted in **Java and Spring Boot**, but I constantly evolve, embracing modern clouds, data streaming, generative AI, and full-stack engineering to ship complete products — fast.
 
-*   **Core**: Java, Spring Boot, Architecture Design, ML Pipeline Engineering
-*   **Data & Cloud**: AWS, Kafka, PostgreSQL, DynamoDB, Hadoop
-*   **AI/ML**: PyTorch, ONNX, Multi-Model Serving, Neural Networks (MLP, CNN, ResNet), Model Deployment
-*   **Leadership**: Team Building, API Strategy, Agile Implementation
+*   **Core**: Java 21, Spring Boot 3, Architecture Design, REST API design, ML Pipeline Engineering
+*   **Generative AI**: fal.ai video models (Wan, Kling, LTX-2, PixVerse), Stable Diffusion / Fooocus, LoRA training, prompt engineering, async AI job orchestration
+*   **Data & Cloud**: AWS, Kafka, PostgreSQL, DynamoDB, Hadoop, Flyway, WebClient (reactive)
+*   **AI/ML**: PyTorch, ONNX, Multi-Model Serving, Neural Networks (MLP, CNN, ResNet18), realtime inference
+*   **Frontend**: React, Vite, Nginx, Docker multi-stage builds
+*   **Leadership**: Team Building, API Strategy, 6+ years Engineering Management at Klarna
 
 > "Building software is not just about code; it's about creating systems that last, scale, and solve real human problems."
 
 ---
 
-## 🎓 What I'm Learning Now (2026)
+## 🎓 What I'm Learning & Building Now (2026)
 
 **Current Focus:**
-- 🚧 **Java Master Class 2025** - Deepening Java fundamentals and advanced features
-- 🎨 **Advanced AI workflows** - Custom LoRA training, prompt engineering, and growing a multi-national character LoRA collection (35 characters, 34 nationalities)
-- 📊 **Engineering leadership practices** - Building high-performing teams and technical strategy
-- 🏗️ **Architecture documentation** - Creating comprehensive system design documentation
-- 🤖 **ML Inference Pipelines** - Multi-model serving, PyTorch → ONNX → Java Spring Boot deployment, document processing, realtime webcam glasses detection
+- 🎬 **AI Video Studio** — built `test-for-ai-wan`, a full-stack SaaS-style platform that lets you generate videos from text or images using the latest fal.ai models (Wan 2.6, Kling v2.5 Turbo Pro, LTX-2 19B, PixVerse v5). Spring Boot backend with async job queuing, Flyway DB migrations, React frontend with live polling, Dockerised, and pushed to production in days — not months.
+- 🚧 **Java Master Class 2025** — Deepening Java fundamentals and advanced features
+- 🎨 **Advanced AI workflows** — Custom LoRA training, prompt engineering, and a 35-character multi-national LoRA collection
+- 🤖 **ML Inference Pipelines** — Multi-model serving, PyTorch → ONNX → Java Spring Boot deployment, realtime webcam glasses detection
 
 **Recent Completions (2024-2026):**
-- ✅ **Spring Boot 3 & Spring 6 comprehensive mastery** (70+ projects across 10 sections)
-- ✅ **Bash scripting from basics to advanced** (35 chapters, 236 production-ready scripts)
-- ✅ **Production AI deployment with Fooocus** (7 checkpoint models, 40 LoRAs including 35 custom character LoRAs spanning 34 nationalities, multi-platform optimization)
-- ✅ **Multi-model ML inference platform (PyTorch → ONNX → Java)** (Iris MLP + MNIST CNN + Glasses ResNet18 + Document Reader, ModelRegistry multi-model serving, golden parity tests, Spring Boot REST API, React UI with canvas/upload/webcam/drag-and-drop, Docker Compose with nginx & multi-platform deployment)
-- ✅ **Quality-first development** (133+ test classes, comprehensive documentation)
+- ✅ **AI Video Generation Studio (`test-for-ai-wan`)** — SaaS-grade video generation platform integrating 5 state-of-the-art fal.ai models. Full-stack: React frontend with per-model constraint validation + live job cards, Spring Boot REST API, PostgreSQL with Flyway migrations, async polling scheduler, and Docker Compose orchestration. Went from zero to working product in a weekend.
+- ✅ **Multi-model ML inference platform (PyTorch → ONNX → Java)** — Iris MLP + MNIST CNN + Glasses ResNet18 + Document Reader, golden parity tests, Spring Boot REST API, React UI with canvas/upload/webcam/drag-and-drop
+- ✅ **Spring Boot 3 & Spring 6 comprehensive mastery** — 70+ projects across 10 sections
+- ✅ **Bash scripting extreme** — 35 chapters, 236 production-ready scripts
+- ✅ **Production AI deployment with Fooocus** — 7 checkpoint models, 40 LoRAs, 35 custom characters, 34 nationalities
 
 **Next on Roadmap:** Microservices architecture, Kubernetes deployment, Go language fundamentals
 
