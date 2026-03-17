@@ -1,142 +1,179 @@
-# 👋 Hi, I'm José María
+# 👋 Hi, I'm José María Cabeza Rodríguez
 
 <p align="center">
 <img src="images/Sevilla1.jpg" width="700" alt="Seville"/>
 </p>
 
-## 🚀 Engineering Leader & Architect of Scale
-
-My name is **José María Cabeza Rodríguez**, and I am a **Software Engineer** and **Engineering Manager** obsessed with building high-performance, scalable systems. Originally from **Seville, Spain**, my journey has taken me across Europe—from the research labs of Madrid to the tech hubs of France, Scotland, and Berlin. 
-
-I don't just write code; I build engines that power businesses. Whether it's crafting algorithms for airlines, architecting data platforms, or leading teams at fintech giants like Klarna, my goal remains the same: **Deliver excellence, ensuring scalability and robust performance.**
-
----
-
-## 🌍 The Journey
-
-### 🇩🇪 Klarna (Berlin) | *Engineering Manager*
-**2018 - Present**
-Leading the charge in fintech. I currently manage the **Onboarding Team**, driving critical API integrations with payment titans like **Stripe, Adyen, and Mollie**.
-*   **Tech Stack**: Java, Spring Boot, Kafka, AWS, DynamoDB, PostgreSQL, React, TypeScript.
-*   **Impact**: Building systems that handle massive scale and dynamic user bases. Transitioned from Senior Engineer to Manager in 2020.
-
-### 🇬🇧 NCR Corporation (Edinburgh) | *Data Platform Engineer*
-**2017 - 2018**
-Dove deep into the world of **Big Data**.
-*   **Focus**: Data-centric engineering and large-scale processing.
-*   **Tech Stack**: Java, Dropwizard, Hadoop, Hive, Cassandra.
-
-### 🇫🇷 Amadeus (Sophia Antipolis) | *Senior Developer*
-**2011 - 2017**
-Mastering the backend for the travel industry.
-*   **Highlight**: Led the **Japan Airlines (JAL)** project, designing a complex algorithm for after-sales pricing and discount coupons.
-*   **Tech Stack**: Java, C++, High-performance pricing systems.
-
-### 🇪🇸 Early Career (Spain) | *The Foundation*
-**2009 - 2011**
-*   **Cystelcom**: Delivered critical projects for **Vodafone Spain** and **Helvetia Seguros**.
-*   **UPM Telematics Lab**: Selected for academic excellence. Customized **Debian GNU/Linux** distros for automation and built facial recognition comms systems.
+<p align="center">
+  <strong>Software Engineer · Engineering Manager · Builder of Things That Scale</strong><br/>
+  <em>From Seville 🇪🇸 → Paris 🇫🇷 → Edinburgh 🏴󠁧󠁢󠁳󠁣󠁴󠁿 → Berlin 🇩🇪</em>
+</p>
 
 ---
 
-## 🛠️ Philosophy & Skills
+## ⚡ Who Am I?
 
-I believe that **innovation requires a readiness to update one's mental model**. My background is deeply rooted in **Java and Spring Boot**, but I constantly evolve, embracing modern clouds, data streaming, generative AI, and full-stack engineering to ship complete products — fast.
+I'm a **Software Engineer and Engineering Manager** who has spent 15+ years building systems that don't buckle under pressure. I've shipped pricing algorithms for Japan Airlines, built data platforms for NCR, and spent 6+ years at **Klarna in Berlin** engineering the infrastructure that onboards merchants onto one of Europe's most iconic fintech platforms.
 
-*   **Core**: Java 21, Spring Boot 3, Architecture Design, REST API design, ML Pipeline Engineering
-*   **Generative AI**: fal.ai video models (Wan, Kling, LTX-2, PixVerse), Stable Diffusion / Fooocus, LoRA training, prompt engineering, async AI job orchestration
-*   **Data & Cloud**: AWS, Kafka, PostgreSQL, DynamoDB, Hadoop, Flyway, WebClient (reactive)
-*   **AI/ML**: PyTorch, ONNX, Multi-Model Serving, Neural Networks (MLP, CNN, ResNet18), realtime inference
-*   **Frontend**: React, Vite, Nginx, Docker multi-stage builds
-*   **Leadership**: Team Building, API Strategy, 6+ years Engineering Management at Klarna
+I don't just write code — I design systems that **handle millions of events, survive failures, and scale without drama**.
 
-> "Building software is not just about code; it's about creating systems that last, scale, and solve real human problems."
+And lately? I've been going deep into **Generative AI** — building full-stack AI video platforms, training custom LoRA character models, deploying ML inference pipelines — because the best engineers don't wait for the future, they build it.
 
 ---
 
-## 🎓 What I'm Learning & Building Now (2026)
+## 🗺️ The Journey
 
-**Current Focus:**
-- 🎬 **AI Video Studio** — built `test-for-ai-wan`, a full-stack SaaS-style platform that lets you generate videos from text or images using the latest fal.ai models (Wan 2.6, Kling v2.5 Turbo Pro, LTX-2 19B, PixVerse v5). Spring Boot backend with async job queuing, Flyway DB migrations, React frontend with live polling, Dockerised, and pushed to production in days — not months.
-- 🚧 **Java Master Class 2025** — Deepening Java fundamentals and advanced features
-- 🎨 **Advanced AI workflows** — Custom LoRA training, prompt engineering, and a 35-character multi-national LoRA collection
-- 🤖 **ML Inference Pipelines** — Multi-model serving, PyTorch → ONNX → Java Spring Boot deployment, realtime webcam glasses detection
+### 🇩🇪 Klarna — Berlin | *Engineering Manager*
+**2018 → Present**
 
-**Recent Completions (2024-2026):**
-- ✅ **AI Video Generation Studio (`test-for-ai-wan`)** — SaaS-grade video generation platform integrating 5 state-of-the-art fal.ai models. Full-stack: React frontend with per-model constraint validation + live job cards, Spring Boot REST API, PostgreSQL with Flyway migrations, async polling scheduler, and Docker Compose orchestration. Went from zero to working product in a weekend.
-- ✅ **Multi-model ML inference platform (PyTorch → ONNX → Java)** — Iris MLP + MNIST CNN + Glasses ResNet18 + Document Reader, golden parity tests, Spring Boot REST API, React UI with canvas/upload/webcam/drag-and-drop
-- ✅ **Spring Boot 3 & Spring 6 comprehensive mastery** — 70+ projects across 10 sections
-- ✅ **Bash scripting extreme** — 35 chapters, 236 production-ready scripts
-- ✅ **Production AI deployment with Fooocus** — 7 checkpoint models, 40 LoRAs, 35 custom characters, 34 nationalities
+Six years at the heart of European fintech. I lead the **Onboarding Team**, owning the API integrations that connect merchants to payment giants like **Stripe, Adyen, and Mollie**. Hundreds of thousands of merchants. Real money. Zero margin for error.
 
-**Next on Roadmap:** Microservices architecture, Kubernetes deployment, Go language fundamentals
+- 📐 **Tech Stack**: Java 21, Spring Boot 3, Kafka, AWS, DynamoDB, PostgreSQL, React, TypeScript
+- 🚀 **Promoted** from Senior Engineer to Engineering Manager in 2020
+- 💥 **Impact**: Systems operating at scale, with the reliability that fintech demands
 
-→ **[Full Learning Roadmap](ROADMAP.md)** for detailed timeline and goals
+---
+
+### 🇬🇧 NCR Corporation — Edinburgh | *Data Platform Engineer*
+**2017 → 2018**
+
+Moved to Scotland to get my hands dirty with **Big Data at industrial scale** — millions of retail transactions, distributed across Cassandra clusters, processed with Hadoop and Hive.
+
+- 📐 **Tech Stack**: Java, Dropwizard, Hadoop, Hive, Cassandra
+
+---
+
+### 🇫🇷 Amadeus — Sophia Antipolis | *Senior Developer*
+**2011 → 2017**
+
+Six years engineering the backbone of global air travel — where a single bug in pricing can cost an airline millions. I led the **Japan Airlines (JAL)** project, designing a complex algorithm for after-sales pricing and discount coupon workflows that had to be bulletproof across time zones, currencies, and regulatory edge cases.
+
+- 📐 **Tech Stack**: Java, C++, high-performance pricing systems
+- ✈️ Serving millions of passengers without them ever knowing your code exists — that's the job
+
+---
+
+### 🇪🇸 Spain — *The Foundation*
+**2009 → 2011**
+
+- **Cystelcom**: Delivered critical projects for **Vodafone Spain** and **Helvetia Seguros**
+- **UPM Telematics Lab**: Handpicked for academic excellence. Built facial-recognition communication systems and customised **Debian GNU/Linux** distros for research automation
+
+---
+
+## 🛠️ The Toolkit
+
+> "Innovation requires a readiness to update one's mental model."
+
+My roots are in **Java and Spring Boot**, but I never stop evolving. Here's what I bring to the table today:
+
+| Domain | Technologies |
+|---|---|
+| **Core Backend** | Java 21, Spring Boot 3, REST APIs, Kafka, WebClient (reactive) |
+| **Generative AI** | fal.ai (Wan 2.6, Kling v2.5, LTX-2, PixVerse), Stable Diffusion, Fooocus, LoRA training, async AI job orchestration |
+| **ML / Inference** | PyTorch, ONNX, Multi-Model Serving, MLP · CNN · ResNet18, real-time inference pipelines |
+| **Cloud & Data** | AWS, DynamoDB, PostgreSQL, Hadoop, Hive, Cassandra, Flyway |
+| **Frontend** | React, Vite, TypeScript, Nginx, Docker multi-stage builds |
+| **Leadership** | Engineering Management, API Strategy, Team Scaling, Hiring, Technical Mentorship |
+
+---
+
+## 🔥 What I'm Building Right Now (2026)
+
+### 🎬 AI Video Studio — [`test-for-ai-wan`](test-for-ai-wan/README.md)
+A **full-stack, SaaS-grade AI video generation platform** built from scratch in a weekend. Type a prompt. Pick a model. Watch the system submit the job, poll fal.ai asynchronously, and stream results back into a live React gallery — all Dockerised, production-ready, and running locally with one command.
+
+Five state-of-the-art video models. One clean interface. Zero compromises.
+
+> **Stack**: Spring Boot 3 · React + Vite · PostgreSQL · Flyway · Docker Compose · fal.ai
+
+---
+
+### 🤖 ML Inference Pipeline (PyTorch → ONNX → Java)
+Multi-model serving on a single Spring Boot REST API — Iris MLP, MNIST CNN, Glasses ResNet18, Document Reader — trained in Python, exported to ONNX, deployed in Java, and accessible through a React UI with live webcam inference.
+
+> **Stack**: PyTorch, ONNX Runtime, Spring Boot, React, WebSocket
+
+---
+
+### 🎨 35-Character LoRA Collection
+A custom Stable Diffusion / Fooocus deployment running 7 checkpoint models, 40 LoRAs, and a collection of **35 handcrafted characters spanning 34 nationalities** — trained portrait-style and deployable on demand.
+
+---
+
+## ✅ Recent Wins (2024–2026)
+
+| Project | What I shipped |
+|---|---|
+| 🎬 **AI Video Studio** | SaaS-grade T2V/I2V platform, 5 fal.ai models, full-stack, zero-to-production in days |
+| 🤖 **ML Inference API** | PyTorch → ONNX → Java pipeline with golden parity tests and webcam inference |
+| ☕ **Spring Boot 3 Mastery** | 70+ projects across 10 deep-dive sections |
+| 🖥️ **Bash Scripting Extreme** | 35 chapters, 236 production-ready scripts |
+| 🎨 **AI Character Studio** | 7 checkpoints, 40 LoRAs, 35 characters, 34 nationalities |
+
+**Up next:** Microservices architecture, Kubernetes deployment, Go language fundamentals
+
+→ **[Full Learning Roadmap →](ROADMAP.md)**
 
 ---
 
 ## 💼 Open to Opportunities
 
-I'm always interested in discussing:
+I'm actively interested in:
 
-**Engineering Leadership Roles**
-- Leading backend/platform engineering teams
+**🏗️ Engineering Leadership**
+- Backend / platform engineering leadership
 - Fintech, distributed systems, or AI-powered products
-- Scaling teams and technical architecture
-- Remote or Berlin-based positions
+- Teams that care about craft, performance, and reliability
+- Remote or Berlin-based
 
-**Technical Advisory Positions**
-- Architecture consultation for Spring Boot/microservices
-- Engineering team scaling and best practices
+**🧠 Technical Advisory**
+- Architecture consultation (Spring Boot, microservices, event-driven systems)
+- Scaling engineering teams from 5 to 50
 - Technical strategy and technology evaluation
-- Startup technical leadership
+- Startup CTO / tech lead roles
 
-**Collaboration**
-- Open-source contributions (Spring ecosystem, AI tooling)
-- Speaking engagements on engineering management or backend architecture
-- Technical writing and knowledge sharing
-- Mentoring engineers on Spring Boot and distributed systems
+**🤝 Collaboration**
+- Open-source projects in the Spring ecosystem or AI tooling
+- Speaking on engineering management, backend architecture, or generative AI
+- Mentoring engineers ready to go deep
 
-**What I Bring:**
-- 15+ years of software engineering experience
-- 6+ years of engineering management at Klarna
-- Deep technical expertise with hands-on coding
-- International experience (Spain, France, UK, Germany)
-- Production systems at scale (payments, microservices, data platforms)
-
----
-
-## 📬 Connect with me
-
-- 💼 **LinkedIn**: [Add your LinkedIn URL] - Let's connect for opportunities and collaboration
-- 🐙 **GitHub**: [github.com/chemacabeza](https://github.com/chemacabeza) - You're here! Explore my projects
-- 📧 **Contact**: Via [GitHub Issues](https://github.com/chemacabeza/my-github-projects/issues) or LinkedIn messages
-
-**Quick Links:**
-- [Skills Matrix](SKILLS-MATRIX.md) - Technical expertise overview
-- [Project Highlights](PROJECT-HIGHLIGHTS.md) - Impact statements and achievements
-- [Learning Roadmap](ROADMAP.md) - Future plans and continuous growth
+**What you get:**
+- 15+ years of software engineering — from algorithms to architecture to AI
+- 6+ years engineering management at one of Europe's leading fintechs
+- Deep hands-on technical expertise — I still write code, every week
+- International perspective: Spain, France, UK, Germany
+- Production systems at scale — payments, microservices, data platforms
 
 ---
 
-## 🎯 Technical Philosophy
+## 📬 Let's Talk
 
-**On Architecture:**
-> "Simple systems scale better than complex ones. Start with the simplest solution that works, then evolve based on real data."
+- 💼 **LinkedIn**: [Add your LinkedIn URL] — let's connect
+- 🐙 **GitHub**: [github.com/chemacabeza](https://github.com/chemacabeza) — you're already here, explore the work
+- 📧 **Contact**: [GitHub Issues](https://github.com/chemacabeza/my-github-projects/issues) or LinkedIn messages
 
-**On Leadership:**
-> "The best engineering managers write code, review pull requests, and stay technically sharp—not to do the team's job, but to earn their respect and make better decisions."
-
-**On Learning:**
-> "Depth in one area beats shallow knowledge in many. Master Spring Boot, then add AI. Don't try to learn everything at once."
-
-**On Innovation:**
-> "Innovation requires a readiness to update one's mental model. Stay curious, question assumptions, and embrace new paradigms."
-
-**On Quality:**
-> "Testing is not about finding bugs; it's about building confidence in the system."
-
-**On Teams:**
-> "The best code is the code that never needs to be written. Solve problems at the right level of abstraction."
+**Quick navigation:**
+- [Skills Matrix →](SKILLS-MATRIX.md)
+- [Project Highlights →](PROJECT-HIGHLIGHTS.md)
+- [Learning Roadmap →](ROADMAP.md)
 
 ---
+
+## 🧠 How I Think
+
+> **On Architecture:** *"Simple systems scale better than complex ones. Start with the simplest solution that works, then evolve based on real data."*
+
+> **On Leadership:** *"The best engineering managers write code, review PRs, and stay technically sharp — not to do the team's job, but to earn their trust and make better decisions."*
+
+> **On Learning:** *"Depth in one area beats shallow knowledge in many. Master Spring Boot, then add AI. Go deep before going wide."*
+
+> **On Innovation:** *"Innovation requires a readiness to update one's mental model. Stay curious, question assumptions, embrace new paradigms — or get left behind."*
+
+> **On Quality:** *"Testing is not about finding bugs. It's about building confidence in the system."*
+
+---
+
+<p align="center">
+  <em>Built in Seville. Tempered in Paris. Sharpened in Edinburgh. Deployed in Berlin.</em>
+</p>
