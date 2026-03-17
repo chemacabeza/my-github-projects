@@ -494,6 +494,13 @@ The local installation includes the following models by default. Some are standa
     *   **Model ID**: 2748594
     *   **Source**: [Civitai](https://civitai.green/models/2444591?modelVersionId=2748594)
 
+41. `gabriela_lora.safetensors`
+    *   **Type**: SDXL LoRA
+    *   **Description**: Brazilian woman character (26 years old, 1.72m tall)
+    *   **Trigger Word**: `gabriela`
+    *   **Model ID**: 2780416
+    *   **Source**: [Civitai](https://civitai.green/models/2472971?modelVersionId=2780416)
+
 
 ### Troubleshooting
 
