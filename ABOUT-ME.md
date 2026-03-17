@@ -6,7 +6,7 @@
 
 <p align="center">
   <strong>Software Engineer · Engineering Manager · Builder of Things That Scale</strong><br/>
-  <em>From Seville 🇪🇸 → Paris 🇫🇷 → Edinburgh 🏴󠁧󠁢󠁳󠁣󠁴󠁿 → Berlin 🇩🇪</em>
+  <em>From Seville 🇪🇸 → Nice 🇫🇷 → Edinburgh 🏴󠁧󠁢󠁳󠁣󠁴󠁿 → Berlin 🇩🇪</em>
 </p>
 
 ---
@@ -45,6 +45,8 @@ Moved to Scotland to get my hands dirty with **Big Data at industrial scale** �
 
 ### 🇫🇷 Amadeus — Sophia Antipolis | *Senior Developer*
 **2011 → 2017**
+
+*Sophia Antipolis is a tech hub right next to Nice on the Côte d'Azur — sun, sea, and serious engineering.*
 
 Six years engineering the backbone of global air travel — where a single bug in pricing can cost an airline millions. I led the **Japan Airlines (JAL)** project, designing a complex algorithm for after-sales pricing and discount coupon workflows that had to be bulletproof across time zones, currencies, and regulatory edge cases.
 
@@ -175,5 +177,5 @@ I'm actively interested in:
 ---
 
 <p align="center">
-  <em>Built in Seville. Tempered in Paris. Sharpened in Edinburgh. Deployed in Berlin.</em>
+  <em>Built in Seville. Tempered in Nice. Sharpened in Edinburgh. Deployed in Berlin.</em>
 </p>
