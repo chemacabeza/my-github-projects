@@ -4,3 +4,6 @@
 [submodule "test-for-ai-wan"]
 	path = test-for-ai-wan
 	url = git@github.com:chemacabeza/test-for-ai-wan.git
+[submodule "test-for-audio-generation"]
+	path = test-for-audio-generation
+	url = git@github.com:chemacabeza/test-for-audio-generation.git
