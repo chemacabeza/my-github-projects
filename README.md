@@ -21,10 +21,10 @@
 
 | Audience | Recommended Starting Point |
 |----------|---------------------------|
-| 🔍 **Recruiters** | ⚡ [AI Video Studio →](test-for-ai-wan/README.md) · 🔊 [AI Voice Studio →](test-for-audio-generation/README.md) · [Skills Matrix](SKILLS-MATRIX.md) |
+| 🔍 **Recruiters** | ⚡ [AI Video Studio →](https://github.com/chemacabeza/test-for-ai-wan) · 🔊 [AI Voice Studio →](https://github.com/chemacabeza/test-for-audio-generation) · [Skills Matrix](SKILLS-MATRIX.md) |
 | 💼 **Hiring Managers** | [About Me](ABOUT-ME.md) → [Project Highlights](PROJECT-HIGHLIGHTS.md) → Live demos below |
 | 💻 **Developers** | [Quick Start](QUICK-START.md) → [Examples](examples/) → Section-specific docs |
-| 🎨 **AI Enthusiasts** | [AI Video Studio](test-for-ai-wan/) · [AI Voice Studio](test-for-audio-generation/) · [Image Gen](AI-related/README.md) |
+| 🎨 **AI Enthusiasts** | [AI Video Studio](https://github.com/chemacabeza/test-for-ai-wan) · [AI Voice Studio](https://github.com/chemacabeza/test-for-audio-generation) · [Image Gen](AI-related/README.md) |
 | ☕ **Backend Engineers** | [Java Projects](JavaSpringBoot/PROJECT-CATALOG.md) → [Architecture Docs](JavaSpringBoot/docs/) |
 | ⚡ **DevOps/SRE** | [Bash Guide](bash/README.md) → [Docker configs](AI-related/Dockerfile) |
 
@@ -57,7 +57,7 @@ A **full-stack AI video platform** that lets you type a prompt (or upload an ima
 - **AI Models**: 5 state-of-the-art models — Wan 2.6, Wan 2.2-A14B, Kling v2.5 Turbo Pro, LTX-2 19B, PixVerse v5
 - **Architecture**: Async job lifecycle (submit → scheduled polling → live UI update), per-model parameter enforcement, reactive `WebClient`, multi-stage Docker builds
 - **Highlights**: Zero-downtime live DB migrations via Flyway, curl-validated endpoints, clean extensibility — adding a new model is one config entry
-- **[Explore AI Video Studio →](test-for-ai-wan/README.md)**
+- **[Explore AI Video Studio →](https://github.com/chemacabeza/test-for-ai-wan)**
 
 ---
 
@@ -70,7 +70,7 @@ A **full-stack Text-to-Speech application** that converts any text into natural,
 - **Voices**: 11 OpenAI voices (alloy, nova, onyx, shimmer, ash, ballad, coral, echo, fable, sage, verse)
 - **Architecture**: Binary MP3 streamed as `audio/mpeg`; key isolation via environment variables only; one-command Docker startup with health checks
 - **Highlights**: Clean security model (key never in browser), custom speaking instructions, stateless backend — scales horizontally with zero changes
-- **[Explore AI Voice Studio →](test-for-audio-generation/README.md)**
+- **[Explore AI Voice Studio →](https://github.com/chemacabeza/test-for-audio-generation)**
 
 ---
 
@@ -78,7 +78,7 @@ A **full-stack Text-to-Speech application** that converts any text into natural,
 Multi-model serving on a single Spring Boot REST API — Iris MLP, MNIST CNN (99.13%), Glasses ResNet18 (98.12%), Document Reader — trained in Python, exported to ONNX, and deployed in Java with golden parity tests guaranteeing identical outputs across runtimes.
 
 - **Tech Stack**: PyTorch, ONNX Runtime, Spring Boot 3, React, WebSocket, Docker
-- **[Explore ML Pipeline →](neural-network-with-java/README.md)**
+- **[Explore ML Pipeline →](https://github.com/chemacabeza/neural-network-with-java)**
 
 ---
 
@@ -110,8 +110,8 @@ Full-stack **Spring Boot 3.x** applications demonstrating enterprise patterns an
 
 ## 📚 CONTENTS
 
-* [🎬 AI VIDEO STUDIO](test-for-ai-wan/README.md) ← **Start here**
-* [🔊 AI VOICE STUDIO](test-for-audio-generation/README.md) ← **Start here**
+* [🎬 AI VIDEO STUDIO](https://github.com/chemacabeza/test-for-ai-wan) ← **Start here**
+* [🔊 AI VOICE STUDIO](https://github.com/chemacabeza/test-for-audio-generation) ← **Start here**
 * [AI RELATED](AI-related/README.md)
 * [BASH](bash/README.md)
 * [JAVA + SPRING BOOT](JavaSpringBoot/README.md)
