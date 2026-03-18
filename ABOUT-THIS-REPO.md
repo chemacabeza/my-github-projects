@@ -51,6 +51,52 @@ This is the project that showcases everything in one place — **Spring Boot, Re
 
 ---
 
+## 🔊 test-for-audio-generation: AI Voice Studio
+*Full-stack text-to-speech platform. Because audio generation is fascinating.*
+
+> "Voice is the most human output a machine can produce. I had to build it."
+
+A full-stack application that converts text into natural-sounding speech using the **OpenAI TTS API** — with the API key living securely on the backend, never exposed to the browser.
+
+**What it does:**
+- 🎙️ **Text → Speech**: Type any text, pick a voice and model, and receive a streamed MP3 — played instantly in the browser via an `<audio>` player.
+- 🎛️ **Custom instructions**: Guide the voice with natural-language directives (e.g. *"speak warmly, with a hint of enthusiasm"*).
+- 🔒 **Security by design**: The React frontend sends a JSON request to the Spring Boot backend, which calls OpenAI and returns raw audio bytes — the API key is never in the client.
+
+**Voices supported** (11 OpenAI voices):
+
+| Voice | Character |
+|---|---|
+| alloy | Neutral & balanced |
+| ash | Clear & composed |
+| ballad | Warm & emotive |
+| coral | Friendly & bright |
+| echo | Smooth & expressive |
+| fable | Storytelling |
+| nova | Energetic & lively |
+| onyx | Deep & authoritative |
+| sage | Calm & thoughtful |
+| shimmer | Airy & uplifting |
+| verse | Versatile & natural |
+
+**Stack (end-to-end, all Dockerised):**
+
+| Layer | Tech |
+|---|---|
+| Frontend | React 18 + Vite 5, custom audio player, voice/model selector, instructions field |
+| Backend | Spring Boot 3, reactive `WebClient`, streaming MP3 response via `byte[]` |
+| AI Layer | OpenAI TTS API — models `gpt-4o-mini-tts` and `tts-1-hd`, MP3/opus/aac/flac output |
+| Infra | Docker Compose, Nginx reverse proxy, multi-stage builds |
+
+**Engineering highlights:**
+- 🔁 **Streaming audio response** — binary MP3 returned as `audio/mpeg`, played inline without saving to disk
+- 🛡️ **Key isolation** — `OPENAI_API_KEY` injected via environment variable only; `.env` files gitignored
+- ⚡ **One-command startup** — `./start.sh start` builds both images and launches everything; health-checked before ready
+
+→ **Source**: [`test-for-audio-generation/`](test-for-audio-generation/)
+
+---
+
 ## 🧠 AI-Related: The Creative Engine
 *Where algorithms dream.*
 

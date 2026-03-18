@@ -2,8 +2,9 @@
 
 Repository: `chemacabeza/my-github-projects`
 
-Purpose: portfolio-style monorepo with 5 main areas:
+Purpose: portfolio-style monorepo with 6 main areas:
 - `test-for-ai-wan/` (AI video generation studio — Spring Boot + React + PostgreSQL + Docker + fal.ai)
+- `test-for-audio-generation/` (git submodule — AI Voice Studio: full-stack TTS using OpenAI API — Spring Boot + React + Docker)
 - `AI-related/` (Docker-based AI image generation platform / Fooocus deployment)
 - `bash/` (Bash In Depth: multi-chapter guide + scripts)
 - `JavaSpringBoot/` (enterprise Spring Boot 3.x examples / microservices)
@@ -20,7 +21,8 @@ Purpose: portfolio-style monorepo with 5 main areas:
   - `DEPENDENCIES.md` (dependency notes)
   - `IMPROVEMENTS.md` (roadmap / ideas)
 - Main code/content:
-  - `test-for-ai-wan/` ⭐ newest & most full-stack
+  - `test-for-ai-wan/` ⭐ most full-featured video platform
+  - `test-for-audio-generation/` ⭐ newest — AI voice/TTS studio (submodule)
   - `AI-related/`
   - `bash/`
   - `JavaSpringBoot/`
@@ -45,6 +47,26 @@ Notes for agents:
 - Endpoint paths for the fal.ai queue API include a `fal-ai/` prefix for all models *except* `wan-2.6`.
 - Per-model duration constraints: Kling = 5/10 s, PixVerse = 5/8 s, Wan/LTX = 5/10/15 s.
 - Adding a new model: update `T2V_ENDPOINTS`/`I2V_ENDPOINTS` maps in `FalAiService.java`, add to `MODELS` arrays in `TextToVideoForm.jsx` and `ImageToVideoForm.jsx`.
+
+### test-for-audio-generation (AI Voice Studio)
+Full-stack TTS platform. From `test-for-audio-generation/`:
+- `./start.sh start` — builds Docker images (Spring Boot backend + React/Nginx frontend) and starts everything
+- `./start.sh stop` — stops and removes containers
+- `./start.sh restart` — stop then start (picks up `.env` changes)
+- `./start.sh logs` — tail live logs from all containers
+- `./start.sh status` — show running container status
+- Frontend: http://localhost | Backend API: http://localhost:8080
+- Requires: `OPENAI_API_KEY` in `backend/.env` (copy from `backend/.env.example`)
+- Health check: `curl http://localhost:8080/actuator/health` → `{"status":"UP"}`
+
+Notes for agents:
+- The API key is injected via `backend/.env` — **never hardcode it** and never commit `.env`.
+- `api-key.txt` at repo root should be deleted — it is not used by the app and may contain a stale key.
+- Backend port: 8080 (Spring Boot). Frontend port: 80 (Nginx). No database — stateless.
+- Available voices: alloy, ash, ballad, coral, echo, fable, nova, onyx, sage, shimmer, verse.
+- Available models: `gpt-4o-mini-tts` (default), `tts-1`, `tts-1-hd`.
+- Response format: MP3 streamed as `audio/mpeg` binary from backend → browser `<audio>` tag.
+- When updating: run `git submodule update --remote test-for-audio-generation` then update this file, `ABOUT-ME.md`, and `ABOUT-THIS-REPO.md`.
 
 ### AI-related (Docker / local)
 From repo root:
@@ -144,7 +166,7 @@ If requirements are ambiguous, ask only what unblocks:
 
 ---
 
-## Current state (last updated: 2026-03-16)
+## Current state (last updated: 2026-03-18)
 
 ### test-for-ai-wan (AI Video Studio)
 
@@ -162,6 +184,21 @@ Latest changes (March 2026):
 - Fixed endpoint paths (`fal-ai/` prefix required for all except Wan 2.6)
 - Added per-model duration/aspect-ratio constraints in frontend
 - Negative prompt raised to 3000 chars
+
+### test-for-audio-generation (AI Voice Studio)
+
+Live project at `test-for-audio-generation/`. Full-stack status:
+
+| Component | Status |
+|---|---|
+| Backend (Spring Boot 3) | ✅ Running on port 8080 |
+| Frontend (React 18 / Nginx) | ✅ Running on port 80 |
+| OpenAI TTS integration | ✅ Verified — MP3 streamed successfully |
+
+Latest changes (March 2026):
+- Added as git submodule to `my-github-projects`
+- Added "🔑 Obtaining Your OpenAI API Key" section to README
+- API key configured via `backend/.env` (gitignored)
 
 ### AI-related
 

@@ -72,7 +72,7 @@ My roots are in **Java and Spring Boot**, but I never stop evolving. Here's what
 | Domain | Technologies |
 |---|---|
 | **Core Backend** | Java 21, Spring Boot 3, REST APIs, Kafka, WebClient (reactive) |
-| **Generative AI** | fal.ai (Wan 2.6, Kling v2.5, LTX-2, PixVerse), Stable Diffusion, Fooocus, LoRA training, async AI job orchestration |
+| **Generative AI** | fal.ai (Wan 2.6, Kling v2.5, LTX-2, PixVerse), Stable Diffusion, Fooocus, LoRA training, async AI job orchestration, OpenAI TTS API |
 | **ML / Inference** | PyTorch, ONNX, Multi-Model Serving, MLP · CNN · ResNet18, real-time inference pipelines |
 | **Cloud & Data** | AWS, DynamoDB, PostgreSQL, Hadoop, Hive, Cassandra, Flyway |
 | **Frontend** | React, Vite, TypeScript, Nginx, Docker multi-stage builds |
@@ -88,6 +88,15 @@ A **full-stack, SaaS-grade AI video generation platform** built from scratch in 
 Five state-of-the-art video models. One clean interface. Zero compromises.
 
 > **Stack**: Spring Boot 3 · React + Vite · PostgreSQL · Flyway · Docker Compose · fal.ai
+
+---
+
+### 🔊 AI Voice Studio — [`test-for-audio-generation`](test-for-audio-generation/README.md)
+I find **audio generation fascinating** — the idea that a few lines of code can produce a warm, expressive human voice from plain text still feels like magic to me. So I built a full-stack Text-to-Speech studio powered by the **OpenAI TTS API**.
+
+Type any text, pick one of 11 voices (alloy, nova, onyx, shimmer…), dial in custom speaking instructions, choose your model — and you get back a streamed MP3, played immediately in the browser. No local ML model. No GPU. Just a clean Spring Boot API proxying OpenAI, and a React UI keeping your key safely away from the browser.
+
+> **Stack**: Spring Boot 3 · React 18 + Vite 5 · OpenAI TTS API · Docker Compose · Nginx
 
 ---
 
@@ -108,6 +117,7 @@ A custom Stable Diffusion / Fooocus deployment running 7 checkpoint models, 40 L
 | Project | What I shipped |
 |---|---|
 | 🎬 **AI Video Studio** | SaaS-grade T2V/I2V platform, 5 fal.ai models, full-stack, zero-to-production in days |
+| 🔊 **AI Voice Studio** | Full-stack TTS app: OpenAI API + Spring Boot + React, 11 voices, streamed MP3, Dockerised |
 | 🤖 **ML Inference API** | PyTorch → ONNX → Java pipeline with golden parity tests and webcam inference |
 | ☕ **Spring Boot 3 Mastery** | 70+ projects across 10 deep-dive sections |
 | 🖥️ **Bash Scripting Extreme** | 35 chapters, 236 production-ready scripts |
