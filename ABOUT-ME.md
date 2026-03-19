@@ -107,8 +107,8 @@ Multi-model serving on a single Spring Boot REST API — Iris MLP, MNIST CNN, Gl
 
 ---
 
-### 🎨 35-Character LoRA Collection
-A custom Stable Diffusion / Fooocus deployment running 7 checkpoint models, 40 LoRAs, and a collection of **35 handcrafted characters spanning 34 nationalities** — trained portrait-style and deployable on demand.
+### 🎨 36-Character LoRA Collection
+A custom Stable Diffusion / Fooocus deployment running 7 checkpoint models, 41 LoRAs, and a collection of **36 handcrafted characters spanning 35 nationalities** — trained portrait-style and deployable on demand.
 
 ---
 
@@ -121,7 +121,7 @@ A custom Stable Diffusion / Fooocus deployment running 7 checkpoint models, 40 L
 | 🤖 **ML Inference API** | PyTorch → ONNX → Java pipeline with golden parity tests and webcam inference |
 | ☕ **Spring Boot 3 Mastery** | 70+ projects across 10 deep-dive sections |
 | 🖥️ **Bash Scripting Extreme** | 35 chapters, 236 production-ready scripts |
-| 🎨 **AI Character Studio** | 7 checkpoints, 40 LoRAs, 35 characters, 34 nationalities |
+| 🎨 **AI Character Studio** | 7 checkpoints, 41 LoRAs, 36 characters, 35 nationalities |
 
 **Up next:** Microservices architecture, Kubernetes deployment, Go language fundamentals
 
