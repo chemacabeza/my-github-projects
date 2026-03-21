@@ -13,7 +13,9 @@ The usual escape route is to split the monolith into **microservices** — but t
 
 Spring Modulith sits in between: it imposes **module boundaries inside a single Spring Boot application** and enforces them at compile/test time. You get the development simplicity of a monolith with the logical separation of microservices — and you can externalize modules to real services later if needed.
 
-![The Architecture Spectrum — Monolith vs Spring Modulith vs Microservices](../images/modulith_architecture_spectrum.png)
+<p align="center">
+  <img src="../images/modulith_architecture_spectrum.png" alt="The Architecture Spectrum — Monolith vs Spring Modulith vs Microservices" width="800"/>
+</p>
 
 ---
 
@@ -36,7 +38,9 @@ com.example.modular/          ← application root
 
 Spring Modulith detects these automatically by scanning from the class annotated `@Modulithic`.
 
-![Spring Modulith — Module Dependency Graph](../images/modulith_module_dependency_graph.png)
+<p align="center">
+  <img src="../images/modulith_module_dependency_graph.png" alt="Spring Modulith — Module Dependency Graph" width="700"/>
+</p>
 
 > Solid arrows = direct service calls (allowed if public API). Dashed arrows = event-based communication (preferred for cross-module decoupling).
 
@@ -78,7 +82,9 @@ catalog/
 
 Spring Modulith's test support will **fail the build** if a module reaches into another module's internals.
 
-![Module Boundary Rules — Public API vs Internal](../images/modulith_module_boundaries.png)
+<p align="center">
+  <img src="../images/modulith_module_boundaries.png" alt="Module Boundary Rules — Public API vs Internal" width="750"/>
+</p>
 
 ---
 
@@ -90,7 +96,9 @@ Instead of calling another module's service directly (tight coupling), modules c
 - **Guaranteed delivery** — if the app crashes after committing but before the listener runs, the event is replayed on restart.
 - **Externalization** — events can be automatically forwarded to Kafka (or RabbitMQ, SQS …) with a single annotation.
 
-![Transactional Event Publication Lifecycle](../images/modulith_event_publication_sequence.png)
+<p align="center">
+  <img src="../images/modulith_event_publication_sequence.png" alt="Transactional Event Publication Lifecycle" width="750"/>
+</p>
 
 ### Publishing an Event
 
@@ -308,7 +316,9 @@ com.example.modular/
 
 The same structure as a module interaction map:
 
-![Full System Interaction Map](../images/modulith_full_system_map.png)
+<p align="center">
+  <img src="../images/modulith_full_system_map.png" alt="Full System Interaction Map" width="800"/>
+</p>
 
 ---
 
