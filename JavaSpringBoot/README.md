@@ -28,6 +28,7 @@ Think of this as the backbone: where design, performance, and reliability meet c
 * [Section 8: Spring MVC Security](docs/Section-8.md)
 * [Section 9: JPA / Hibernate Advanced Mappings](docs/Section-9.md)
 * [Section 10: AOP - Aspect-Oriented Programming](docs/Section-10.md)
+* [Section 11: Apache Kafka Integration with Spring Boot](docs/Section-11-ApacheKafka.md)
 
 ### Spring Modulith
 
