@@ -1,11 +1,11 @@
-# Spring Modulith — Introduction
+# Spring Modulith — Introduction & Complete Tutorial
 
 > **Framework:** Spring Modulith 1.x (requires Spring Boot 3.x)
 > **Reference project:** [`Tests-with-Modular-SpringBoot`](https://github.com/chemacabeza/Tests-with-Modular-SpringBoot)
 
 ---
 
-## The Problem Spring Modulith Solves
+## 1. The Problem Spring Modulith Solves
 
 A standard Spring Boot application puts everything in one package tree. After a few months it devolves into a **Big Ball of Mud**: every class can call every other class, business boundaries dissolve, and adding a feature in one area silently breaks another.
 
@@ -19,170 +19,11 @@ Spring Modulith sits in between: it imposes **module boundaries inside a single 
 
 ---
 
-## Core Concepts
+## 2. Setting Up (`pom.xml` & `Application.java`)
 
-### 1. Modules = Java Packages
+To get started, add the **Spring Modulith BOM (Bill of Materials)** management to your build, and then include the starters you need. 
 
-Each **top-level sub-package** of your main application package is a module. There is no XML, no configuration — just the package structure.
-
-```
-com.example.modular/          ← application root
-├── Application.java
-├── catalog/                  ← module: Catalog
-├── orders/                   ← module: Orders
-├── inventory/                ← module: Inventory
-├── notifications/            ← module: Notifications
-├── reviews/                  ← module: Reviews
-└── shared/                   ← not a module (shared utilities)
-```
-
-Spring Modulith detects these automatically by scanning from the class annotated `@Modulithic`.
-
-<p align="center">
-  <img src="../images/modulith_module_dependency_graph.png" alt="Spring Modulith — Module Dependency Graph" width="700"/>
-</p>
-
-> Solid arrows = direct service calls (allowed if public API). Dashed arrows = event-based communication (preferred for cross-module decoupling).
-
-### 2. `@Modulithic` — the Entry Point
-
-Replace nothing — just add this annotation to your `@SpringBootApplication` class:
-
-```java
-@SpringBootApplication
-@Modulithic(
-    systemName = "Spring Modulith Reference App",
-    useFullyQualifiedModuleNames = false
-)
-@EnableCaching
-public class Application {
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
-    }
-}
-```
-
-| Property | Purpose |
-|----------|---------|
-| `systemName` | Human-readable name used in generated documentation and Actuator output |
-| `useFullyQualifiedModuleNames` | `false` → module name is just `catalog`; `true` → `com.example.modular.catalog` |
-
-### 3. Module Boundaries — What Is and Isn't Allowed
-
-By default, only **public types in the module's root package** form the public API. Anything in a sub-package (e.g. `catalog/internal/`) is private to that module.
-
-```
-catalog/
-├── Product.java          ← public — other modules may reference this
-├── ProductDto.java       ← public
-├── CatalogService.java   ← public — callable from OrderService
-└── internal/
-    └── PriceCalculator.java  ← private — violation if used by another module
-```
-
-Spring Modulith's test support will **fail the build** if a module reaches into another module's internals.
-
-<p align="center">
-  <img src="../images/modulith_module_boundaries.png" alt="Module Boundary Rules — Public API vs Internal" width="750"/>
-</p>
-
----
-
-## Domain Events — Decoupling Modules
-
-Instead of calling another module's service directly (tight coupling), modules communicate via **domain events**. Spring Modulith integrates with Spring's `ApplicationEventPublisher` and adds:
-
-- **Transactional publication** — events are persisted to an `event_publication` table *within the same transaction* that triggered them. If the transaction rolls back, the event is never dispatched.
-- **Guaranteed delivery** — if the app crashes after committing but before the listener runs, the event is replayed on restart.
-- **Externalization** — events can be automatically forwarded to Kafka (or RabbitMQ, SQS …) with a single annotation.
-
-<p align="center">
-  <img src="../images/modulith_event_publication_sequence.png" alt="Transactional Event Publication Lifecycle" width="750"/>
-</p>
-
-### Publishing an Event
-
-```java
-// orders/OrderService.java
-@Transactional
-public OrderSummary placeOrder(PlaceOrderRequest request) {
-    // ... business logic ...
-    var order = orderRepository.save(new Order(...));
-
-    // Spring Modulith persists this to event_publication within the transaction,
-    // then forwards it to Kafka asynchronously after the commit.
-    eventPublisher.publishEvent(OrderPlacedEvent.from(order));
-
-    return OrderSummary.from(order);
-}
-```
-
-### Defining an Event
-
-Events are plain Java records. Add `@Externalized` to route them to a Kafka topic automatically:
-
-```java
-// orders/OrderPlacedEvent.java
-@Externalized("orders.placed")          // ← Kafka topic name
-public record OrderPlacedEvent(
-    Long orderId,
-    Long productId,
-    int quantity,
-    String customerEmail) {
-
-    static OrderPlacedEvent from(Order order) {
-        return new OrderPlacedEvent(
-            order.getId(),
-            order.getProductId(),
-            order.getQuantity(),
-            order.getCustomerEmail());
-    }
-}
-```
-
-> **Tip:** Keep event records free of references to other module types so they carry no compile-time cross-module dependency.
-
-```java
-// inventory/StockDepletedEvent.java
-@Externalized("inventory.stock-depleted")
-public record StockDepletedEvent(
-    Long productId,
-    int requestedQuantity,
-    int availableQuantity) {}
-```
-
-### Listening to Events — `@ApplicationModuleListener`
-
-Use `@ApplicationModuleListener` instead of `@EventListener`. It runs the listener in a **new transaction**, after the publishing transaction has committed:
-
-```java
-// notifications/NotificationService.java
-@Service
-public class NotificationService {
-
-    @ApplicationModuleListener
-    public void onOrderPlaced(OrderPlacedEvent event) {
-        log.info("[NOTIFICATION] Sending confirmation to {} for order #{}",
-            event.customerEmail(), event.orderId());
-        // Call SendGrid, Twilio, etc.
-    }
-
-    @ApplicationModuleListener
-    public void onStockDepleted(StockDepletedEvent event) {
-        log.warn("[NOTIFICATION] Stock alert! Product {} is out of stock.",
-            event.productId());
-        // Page the warehouse team.
-    }
-}
-```
-
-The `notifications` module depends on *event types* from `orders` and `inventory` — but never directly calls their services. Removing the notifications module has zero effect on the rest of the system.
-
----
-
-## Maven Dependencies
-
-Add the Spring Modulith BOM to your parent `pom.xml`, then pick the starters you need in your module's `pom.xml`:
+Here are the essential additions for your **`pom.xml`** dependencies section:
 
 ```xml
 <!-- Core (module detection, validation, documentation) -->
@@ -197,7 +38,7 @@ Add the Spring Modulith BOM to your parent `pom.xml`, then pick the starters you
     <artifactId>spring-modulith-starter-jpa</artifactId>
 </dependency>
 
-<!-- Forward events to Kafka -->
+<!-- Forward events to Kafka (optional, if you want external events) -->
 <dependency>
     <groupId>org.springframework.modulith</groupId>
     <artifactId>spring-modulith-events-kafka</artifactId>
@@ -209,13 +50,7 @@ Add the Spring Modulith BOM to your parent `pom.xml`, then pick the starters you
     <artifactId>spring-modulith-actuator</artifactId>
 </dependency>
 
-<!-- Distributed tracing spans for module interactions -->
-<dependency>
-    <groupId>org.springframework.modulith</groupId>
-    <artifactId>spring-modulith-observability</artifactId>
-</dependency>
-
-<!-- Test support -->
+<!-- Test support for JUnit 5 verifying rules -->
 <dependency>
     <groupId>org.springframework.modulith</groupId>
     <artifactId>spring-modulith-starter-test</artifactId>
@@ -223,102 +58,378 @@ Add the Spring Modulith BOM to your parent `pom.xml`, then pick the starters you
 </dependency>
 ```
 
----
+### The `@Modulithic` Entry Point
 
-## Testing Module Integrity
-
-Spring Modulith ships a JUnit 5 extension that verifies your architectural rules automatically:
+Replace nothing — just add the `@Modulithic` annotation to your main `@SpringBootApplication` class. This tells Spring Modulith to map your top-level sub-packages to structural modules.
 
 ```java
-@Test
-void verifiesModularStructure() {
-    ApplicationModules.of(Application.class).verify();
+package com.example.modular;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.modulith.Modulithic;
+
+@SpringBootApplication
+@Modulithic(
+        systemName = "Spring Modulith Reference App",
+        useFullyQualifiedModuleNames = false
+)
+public class Application {
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
 }
 ```
 
-This will **fail** if:
-- A module accesses another module's internal sub-packages
-- There are circular dependencies between modules
-- An event listener is in the wrong module
+---
 
-Run it as a regular unit test in CI — no extra tooling needed.
+## 3. Package Structure: Modules = Java Packages
+
+Each **top-level sub-package** of your main application package is a module. No XML, no separate `.jar` files — just standard folder structure.
+
+<p align="center">
+  <img src="../images/modulith_module_dependency_graph.png" alt="Spring Modulith — Module Dependency Graph" width="700"/>
+</p>
+
+> Solid arrows = direct service calls (allowed if a class is public). Dashed arrows = event-based communication.
 
 ---
 
-## The `event_publication` Table
+## 4. Building the Catalog Module (Public vs Private)
 
-When you use `spring-modulith-starter-jpa`, Modulith creates an `event_publication` table automatically:
+By default, only **public types in the module's root package** form the public API. If you create a sub-package (e.g., `catalog/internal/`), those classes are strictly private to that module and inaccessible by others.
 
-| Column | Purpose |
-|--------|---------|
-| `id` | UUID primary key |
-| `event_type` | Fully-qualified class name of the event |
-| `serialized_event` | JSON payload |
-| `publication_date` | When the event was recorded (within the TX) |
-| `completion_date` | `NULL` until the listener completes successfully |
+<p align="center">
+  <img src="../images/modulith_module_boundaries.png" alt="Module Boundary Rules — Public API vs Internal" width="750"/>
+</p>
 
-**On startup**, Spring Modulith re-publishes any rows where `completion_date` is `NULL` — this is the guaranteed-delivery mechanism. No manual retry code needed.
+Instead of exposing the JPA Entity (`Product`), we expose a public `ProductDto` out of the Catalog module, ensuring that the internal database model remains isolated.
+
+### `catalog/ProductDto.java` (Public API)
+This is what other modules (`orders`, for example) get when they query the Catalog module.
+
+```java
+package com.example.modular.catalog;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+
+public record ProductDto(Long id, String name, String description, BigDecimal price, boolean available) implements Serializable {
+    static ProductDto from(Product p) {
+        return new ProductDto(p.getId(), p.getName(), p.getDescription(), p.getPrice(), p.isAvailable());
+    }
+}
+```
+
+### `catalog/Product.java` (Internal JPA Entity)
+This class stays inside the module and connects directly to the DB. Notice how we use package-visibility (or protected) where we can.
+
+```java
+package com.example.modular.catalog;
+
+import jakarta.persistence.*;
+import java.math.BigDecimal;
+
+@Entity
+@Table(name = "products")
+public class Product {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_seq")
+    @SequenceGenerator(name = "product_seq", sequenceName = "product_seq", allocationSize = 50)
+    private Long id;
+
+    @Column(nullable = false, length = 255)
+    private String name;
+
+    @Column(nullable = false, length = 1000)
+    private String description;
+
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal price;
+
+    @Column(nullable = false)
+    private boolean available = true;
+
+    protected Product() {}
+
+    public Product(String name, String description, BigDecimal price) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
+
+    public Long getId() { return id; }
+    public String getName() { return name; }
+    public String getDescription() { return description; }
+    public BigDecimal getPrice() { return price; }
+    public boolean isAvailable() { return available; }
+    public void setAvailable(boolean available) { this.available = available; }
+}
+```
+
+### `catalog/CatalogService.java` (Public Service)
+Other modules (like `orders`) can autowire this service and interact with it directly since it is public and in the root package of module `catalog`.
+
+```java
+package com.example.modular.catalog;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+@Transactional(readOnly = true)
+public class CatalogService {
+
+    private final ProductRepository productRepository; // Standard Spring Data JPA repo
+
+    public CatalogService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+
+    public List<ProductDto> findAllAvailable() {
+        return productRepository.findByAvailableTrue().stream().map(ProductDto::from).toList();
+    }
+
+    public Optional<ProductDto> findById(Long id) {
+        return productRepository.findById(id).map(ProductDto::from);
+    }
+    
+    // (Other methods like create product)
+}
+```
 
 ---
 
-## Actuator Integration
+## 5. Domain Events — Decoupling Modules
 
-With `spring-modulith-actuator` on the classpath, a new endpoint appears:
+While direct service calls (like `OrderService` calling `CatalogService`) are fine for reading data, **state-changing operations should use Domain Events**. 
 
+Spring Modulith upgrades Spring's standard `ApplicationEventPublisher`:
+1. **Transactional publication**: events are saved to an `event_publication` database table in the exact same transaction that saves your business data.
+2. **Guaranteed delivery**: if the app crashes, the event publication stays in the DB, and Modulith replays it once the server restarts.
+3. **Externalization**: use `@Externalized("topic-name")` to automatically dump the event onto Kafka without writing extra generic publisher code.
+
+<p align="center">
+  <img src="../images/modulith_event_publication_sequence.png" alt="Transactional Event Publication Lifecycle" width="750"/>
+</p>
+
+### Publishing the Event: `orders/OrderPlacedEvent.java`
+
+Keep event records completely free of references to other modules. They are plain data (primitives, strings). 
+
+```java
+package com.example.modular.orders;
+
+import org.springframework.modulith.events.Externalized;
+
+/**
+ * Domain event published when an order is placed.
+ * The @Externalized annotation automatically pushes this to the Kafka topic "orders.placed".
+ */
+@Externalized("orders.placed")
+public record OrderPlacedEvent(Long orderId, Long productId, int quantity, String customerEmail) {
+    static OrderPlacedEvent from(Order order) {
+        return new OrderPlacedEvent(
+                order.getId(),
+                order.getProductId(),
+                order.getQuantity(),
+                order.getCustomerEmail());
+    }
+}
 ```
-GET /actuator/modulith
-```
 
-It returns a JSON description of all detected modules, their dependencies, and their published/consumed event types. Useful for onboarding new team members or generating architecture diagrams.
+### Triggering the Event: `orders/OrderService.java`
+
+Notice how `OrderService` uses standard Spring core `ApplicationEventPublisher`. It has ZERO idea who will be listening. It simply does its main job (creating the order) and publishes the event.
+
+```java
+package com.example.modular.orders;
+
+import com.example.modular.catalog.CatalogService;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@Transactional(readOnly = true)
+public class OrderService {
+
+    private final OrderRepository orderRepository;
+    private final CatalogService catalogService; // Direct dependency on Catalog allowed for reading
+    private final ApplicationEventPublisher eventPublisher;
+
+    public OrderService(OrderRepository orderRepository, CatalogService catalogService, ApplicationEventPublisher eventPublisher) {
+        this.orderRepository = orderRepository;
+        this.catalogService = catalogService;
+        this.eventPublisher = eventPublisher;
+    }
+
+    @Transactional
+    public OrderSummary placeOrder(PlaceOrderRequest request) {
+        // 1. Ask Catalog for price
+        var product = catalogService.findById(request.productId())
+                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+
+        if (!product.available()) {
+            throw new IllegalStateException("Product is not available");
+        }
+
+        // 2. Persist order
+        var totalPrice = product.price().multiply(java.math.BigDecimal.valueOf(request.quantity()));
+        var order = new Order(request.productId(), request.quantity(), request.customerEmail(), totalPrice);
+        order = orderRepository.save(order);
+
+        // 3. Modulith persists this event to event_publication within the same TX,
+        // and safely dispatches to Kafka and internal listeners asynchronously.
+        eventPublisher.publishEvent(OrderPlacedEvent.from(order));
+
+        return OrderSummary.from(order);
+    }
+}
+```
 
 ---
 
-## Module Structure at a Glance
+## 6. Listening to Events — `@ApplicationModuleListener`
 
-```
-com.example.modular/
-│
-├── catalog/                     # Public API: Product, ProductDto, CatalogService
-│   ├── Product.java
-│   ├── ProductDto.java
-│   ├── ProductRepository.java
-│   ├── CatalogService.java
-│   └── CatalogController.java
-│
-├── orders/                      # Publishes: OrderPlacedEvent
-│   ├── Order.java
-│   ├── OrderPlacedEvent.java    ← @Externalized("orders.placed")
-│   ├── OrderRepository.java
-│   ├── OrderService.java        ← eventPublisher.publishEvent(...)
-│   └── OrderController.java
-│
-├── inventory/                   # Publishes: StockDepletedEvent
-│   ├── StockItem.java
-│   ├── StockDepletedEvent.java  ← @Externalized("inventory.stock-depleted")
-│   ├── StockItemRepository.java
-│   └── InventoryService.java
-│
-├── notifications/               # Listens to: OrderPlacedEvent, StockDepletedEvent
-│   └── NotificationService.java ← @ApplicationModuleListener
-│
-├── reviews/                     # Independent CRUD module
-│   ├── Review.java
-│   ├── ReviewDto.java
-│   ├── ReviewRepository.java
-│   ├── ReviewService.java
-│   └── ReviewController.java
-│
-└── shared/                      # Cross-cutting config (Redis, Kafka, exception handler)
-    ├── RedisConfig.java
-    ├── KafkaTopicsConfig.java
-    └── GlobalExceptionHandler.java
+Instead of `@EventListener` or `@TransactionalEventListener`, use `@ApplicationModuleListener`. It runs asynchronously in a **new transaction**, ensuring your main request thread is never held back by downstream notification tasks.
+
+### `inventory/InventoryService.java` (Reduces stock on order)
+
+This module listens to `OrderPlacedEvent` asynchronously to update warehouse inventory.
+
+```java
+package com.example.modular.inventory;
+
+import com.example.modular.orders.OrderPlacedEvent;
+import org.springframework.modulith.events.ApplicationModuleListener;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+public class InventoryService {
+
+    private final StockItemRepository stockItemRepository;
+
+    public InventoryService(StockItemRepository stockItemRepository) {
+        this.stockItemRepository = stockItemRepository;
+    }
+
+    // Runs in the background, in an independent transaction
+    @ApplicationModuleListener
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void onOrderPlaced(OrderPlacedEvent event) {
+        stockItemRepository.findByProductId(event.productId()).ifPresentOrElse(
+                stock -> {
+                    boolean reserved = stock.reserve(event.quantity());
+                    if (!reserved) {
+                        // We could publish another event here (e.g. StockDepletedEvent)
+                    }
+                },
+                () -> System.err.println("No stock item found!")
+        );
+    }
+}
 ```
 
-The same structure as a module interaction map:
+### `notifications/NotificationService.java` (Emails out alerts)
+
+Another completely detached module that acts on the same event. We can completely delete the `notifications` package without modifying a single line of `orders` or `inventory`.
+
+```java
+package com.example.modular.notifications;
+
+import com.example.modular.orders.OrderPlacedEvent;
+import org.springframework.modulith.events.ApplicationModuleListener;
+import org.springframework.stereotype.Service;
+
+@Service
+public class NotificationService {
+
+    @ApplicationModuleListener
+    public void onOrderPlaced(OrderPlacedEvent event) {
+        System.out.println("[NOTIFICATION] Sending order confirmation to " + event.customerEmail() + 
+                           " for order #" + event.orderId());
+        // Integrated with AWS SES, SendGrid, Twilio etc.
+    }
+}
+```
+
+---
+
+## 7. Verifying Modularity with Tests (The Safety Net)
+
+All of these boundaries mean nothing if developers can still accidentally import private `internal` classes or create circular dependencies (`catalog` imports `orders`, `orders` imports `catalog`).
+
+Add this **JUnit 5 test**. If anyone breaks your architecture, the CI/CD build fails immediately.
+
+```java
+package com.example.modular;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.modulith.core.ApplicationModules;
+import org.springframework.modulith.docs.Documenter;
+
+class ModularityTest {
+
+    // Analyzes bytecode from application class root down
+    static final ApplicationModules modules = ApplicationModules.of(Application.class);
+
+    @Test
+    void verifiesModuleStructure() {
+        // Will throw an exception and fail the test if: 
+        // 1. Module internals are accessed directly
+        // 2. Circular dependencies exist
+        modules.verify();
+    }
+
+    @Test
+    void writeDocumentationSnippets() {
+        // Automatically generates PlantUML diagrams and text maps in the target/ folder!
+        new Documenter(modules).writeModulesAsPlantUml();
+    }
+}
+```
+
+---
+
+## 8. The `event_publication` Table
+
+When you include `spring-modulith-starter-jpa`, you must create an `event_publication` table in your database schema. If not enabled via auto-generation, it typically looks like this (in PostgreSQL/Flyway format):
+
+```sql
+CREATE TABLE IF NOT EXISTS event_publication (
+    id               UUID         NOT NULL PRIMARY KEY,
+    listener_id      TEXT         NOT NULL,
+    event_type       TEXT         NOT NULL,
+    serialized_event TEXT         NOT NULL,
+    publication_date TIMESTAMPTZ  NOT NULL,
+    completion_date  TIMESTAMPTZ
+);
+
+CREATE INDEX IF NOT EXISTS idx_event_pub_completion ON event_publication(completion_date);
+```
+
+When an event is fired, a row is inserted (`completion_date = NULL`). After a listener successfully finishes, Modulith updates the `completion_date`. Unfinished ones are what Modulith re-triggers when the app comes back online after a crash.
+
+---
+
+## 9. Full Architecture Map & Actuator
+
+The complete application behaves like miniature microservices sharing a single JVM, network port, and database instance. 
 
 <p align="center">
   <img src="../images/modulith_full_system_map.png" alt="Full System Interaction Map" width="800"/>
 </p>
+
+By activating `spring-modulith-actuator` in your properties, you expose a live `/actuator/modulith` JSON endpoint describing how everything connects.
 
 ---
 
@@ -338,4 +449,4 @@ The same structure as a module interaction map:
 
 - [Spring Modulith Reference Documentation](https://docs.spring.io/spring-modulith/reference/)
 - [Spring Modulith GitHub](https://github.com/spring-projects/spring-modulith)
-- [Reference project: `Tests-with-Modular-SpringBoot`](https://github.com/chemacabeza/Tests-with-Modular-SpringBoot) — the live codebase these examples come from
+- [Reference project: `Tests-with-Modular-SpringBoot`](https://github.com/chemacabeza/Tests-with-Modular-SpringBoot) — the live codebase these examples come from.
