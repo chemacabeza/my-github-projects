@@ -19,7 +19,83 @@ Spring Modulith sits in between: it imposes **module boundaries inside a single 
 
 ---
 
-## 2. Setting Up (`pom.xml` & `Application.java`)
+## 2. Docker Setup (Mac & Ubuntu)
+
+To make this project completely reproducible locally, we provide a containerized environment. Modulith relies heavily on a database (for the `event_publication` log) and optionally a message broker (like Kafka) if you are externalizing events.
+
+Place these files in your project root to spin up PostgreSQL, Kafka, and the app seamlessly.
+
+### `docker-compose.yml`
+
+```yaml
+version: '3.8'
+
+services:
+  db:
+      image: postgres:15-alpine
+      container_name: modulith_db
+      environment:
+        POSTGRES_USER: modulith_user
+        POSTGRES_PASSWORD: modulith_password
+        POSTGRES_DB: modulith_system
+      ports:
+        - "5432:5432"
+      volumes:
+        - pg_modulith_data:/var/lib/postgresql/data
+
+  kafka:
+    image: confluentinc/cp-kafka:7.4.0
+    container_name: modulith_kafka
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:29092,PLAINTEXT_HOST://0.0.0.0:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:29093
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      CLUSTER_ID: 'MkU3OEVBNTcwNTJENDM2Qk'
+    ports:
+      - "9092:9092"
+
+  app:
+    build: .
+    container_name: modulith_app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+      - kafka
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/modulith_system
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+
+volumes:
+  pg_modulith_data:
+```
+
+### `Dockerfile`
+
+```dockerfile
+# Stage 1: Build the application
+FROM maven:3.9.6-eclipse-temurin-21-alpine AS build
+WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package -DskipTests
+
+# Stage 2: Create the final lightweight image
+FROM eclipse-temurin:21-jre-alpine
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
+```
+
+---
+
+## 3. Setting Up (`pom.xml` & `Application.java`)
 
 To get started, add the **Spring Modulith BOM (Bill of Materials)** management to your build, and then include the starters you need. 
 
@@ -83,7 +159,7 @@ public class Application {
 
 ---
 
-## 3. Package Structure: Modules = Java Packages
+## 4. Package Structure: Modules = Java Packages
 
 Each **top-level sub-package** of your main application package is a module. No XML, no separate `.jar` files — just standard folder structure.
 
@@ -95,7 +171,7 @@ Each **top-level sub-package** of your main application package is a module. No 
 
 ---
 
-## 4. Building the Catalog Module (Public vs Private)
+## 5. Building the Catalog Module (Public vs Private)
 
 By default, only **public types in the module's root package** form the public API. If you create a sub-package (e.g., `catalog/internal/`), those classes are strictly private to that module and inaccessible by others.
 
@@ -206,7 +282,7 @@ public class CatalogService {
 
 ---
 
-## 5. Domain Events — Decoupling Modules
+## 6. Domain Events — Decoupling Modules
 
 While direct service calls (like `OrderService` calling `CatalogService`) are fine for reading data, **state-changing operations should use Domain Events**. 
 
@@ -296,7 +372,7 @@ public class OrderService {
 
 ---
 
-## 6. Listening to Events — `@ApplicationModuleListener`
+## 7. Listening to Events — `@ApplicationModuleListener`
 
 Instead of `@EventListener` or `@TransactionalEventListener`, use `@ApplicationModuleListener`. It runs asynchronously in a **new transaction**, ensuring your main request thread is never held back by downstream notification tasks.
 
@@ -364,7 +440,7 @@ public class NotificationService {
 
 ---
 
-## 7. Verifying Modularity with Tests (The Safety Net)
+## 8. Verifying Modularity with Tests (The Safety Net)
 
 All of these boundaries mean nothing if developers can still accidentally import private `internal` classes or create circular dependencies (`catalog` imports `orders`, `orders` imports `catalog`).
 
@@ -400,7 +476,7 @@ class ModularityTest {
 
 ---
 
-## 8. The `event_publication` Table
+## 9. The `event_publication` Table
 
 When you include `spring-modulith-starter-jpa`, you must create an `event_publication` table in your database schema. If not enabled via auto-generation, it typically looks like this (in PostgreSQL/Flyway format):
 
@@ -421,7 +497,7 @@ When an event is fired, a row is inserted (`completion_date = NULL`). After a li
 
 ---
 
-## 9. Full Architecture Map & Actuator
+## 10. Full Architecture Map & Actuator
 
 The complete application behaves like miniature microservices sharing a single JVM, network port, and database instance. 
 

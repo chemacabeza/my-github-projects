@@ -1,1710 +1,92 @@
-## Section 6: Spring MVC with Thymeleaf
+# Section 6: Spring MVC with Thymeleaf (Forms & Validation)
 
-**What is Thymeleaf**
-* <a href="https://www.thymeleaf.org/">Thymeleaf</a> is a Java templating engine
-* Commonly used to generate HTML views for web apps
-* However, it is general purpose templating engine
-    * Can use Thymeleaf outside of webapps
+This guide is a complete, copy-pasteable tutorial covering **Spring MVC Form Handling** and **Data Validation** using Thymeleaf. 
 
-**Where to place Thymeleaf template?**
-* In Spring Boot, your Thymeleaf template file go in "`src/main/resources/templates`"
-* For web apps, Thymeleaf templates have a "`.html`" extension
+You will build a "Student Registration Form" that handles dropdowns, radio buttons, checkboxes, standard validation (required fields, regex), and a custom validation annotation (`@CourseCode`). To demonstrate property binding, options for the dropdowns and checkboxes will be loaded from `application.properties`.
 
-**Additional Features**
-* Looping and conditionals
-* CSS and JavaScript integration
-* Template layouts and fragments
+By following this guide, you will build a runnable application, entirely containerized via Docker.
 
-**Using CSS with Thymeleaf Templates**
-* You have the option of using
-    * Local CSS files as part of your project
-    * Referencing remote CSS files
+## 1. Project Setup (Maven `pom.xml`)
 
-**Development Process**
-1. Create CSS file
-    * Spring Boot will look for static resources in the directory "`src/main/resources/static`"
-        * We could have a CSS file stored in "`src/main/resources/static/css/demo.css`"
-2. Reference CSS in Thymeleaf template
+You need the Spring Web starter, Thymeleaf, and the Validation starter.
 
-```html
-<head>
-    <title>Thymeleaf Demo</title>
+```xml
+    <dependencies>
+        <!-- Spring MVC -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
 
-    <!-- reference CSS file -->
-    <link rel="stylesheet" th:href="@{/css/demo.css}"/>
-</head>
+        <!-- Thymeleaf Templating Engine -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <!-- Spring Boot Validation (Hibernate Validator) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+    </dependencies>
 ```
 
-Let's say the content of the CSS file "`demo.css`" is the following:
+---
 
-```css
-.funny {
-    font-style: italic;
-    color: green;
-}
+## 2. Docker Setup (Mac & Ubuntu)
+
+Since this specific section does not require a database (everything is held in memory for form processing), the Docker setup is very simple. Place this file in your project root.
+
+### `Dockerfile`
+
+```dockerfile
+# Stage 1: Build the application
+FROM maven:3.9.6-eclipse-temurin-21-alpine AS build
+WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package -DskipTests
+
+# Stage 2: Create the final lightweight image
+FROM eclipse-temurin:21-jre-alpine
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
 ```
 
-3. Apply CSS
+> **To run:** Open a terminal in the project root and run `docker build -t mvc-forms . && docker run -p 8080:8080 mvc-forms`.
 
-```html
-<head>
-    <title>Thymeleaf Demo</title>
+---
 
-    <!-- reference CSS file -->
-    <link rel="stylesheet" th:href="@{/css/demo.css}"/>
-</head>
-<body>
-    <p th:text="'The time on the server is ' + ${theDate}" class="funny"/>
-</body>
-```
+## 3. Configuration & Error Messages (`application.properties`)
 
-### Spring Boot - Spring MVC Behind the Scenes
-
-**Components of a Spring MVC Application**
-* A set of web pages to layout UI components
-* A collection of Spring beans (controllers, services, etc...)
-* Spring condiguration (XML, Annotations or Java)
-
-**Spring MVC Front Controller**
-* Front controller known as **DispatchetServlet**
-    * Part of the Spring Framework
-    * Already developed by Spring Dev Team
-* You will create
-    * Model objects
-    * View templates
-    * Controller classes
-
-#### Controller
-* Code created by developer
-* Contains your business logic
-    * Handle the request
-    * Store/retrieve data (db, web service,...)
-    * Place data in model
-* Send to appropriate view template
-
-#### Model
-* Model: contains your data
-* Store/retrieve data via backend systems
-    * database, web service, etc...
-    * Use a Spring bean if you like
-* Place your data in the model
-    * Data can be any Java object/collection
-
-#### View Template
-* Spring MVC is flexible
-    * Supports many view templates
-* Recommended: <a href="https://www.thymeleaf.org/">Thymeleaf</a>
-* Developer creates a page
-    * Displays data
-
-**View Template (more)**
-* Other view templates supported:
-    * Groovy, Velocity, Freemarker, etc...
-* For details go to this <a href="https://docs.spring.io/spring-framework/reference/web/webmvc-view.html">webpage</a>
-
-### Reading Form Data with Spring MVC
-On high level overview we will present to our user with a form. It could very simple something like a text field and a button asking for the name of the user. When the user clicks the button the webpage will display a message that will use the name of the user. 
-
-**Development Process**
-1. **Create Controller class**
-2. **Show HTML form**
-    * Create controller method to show HTML form
-    * Create View Page for HTML form
-3. **Process HTML form**
-    * Create controller method to process HTML form
-    * Develop View Page for Confirmation
-
-### Adding Data to Spring Model
-
-**Spring Model**
-* The **Model** is a container for your application data
-* In your Controller
-    * You can put anything in the **model**
-    * string, objects, info from database, etc...
-* Your View page can access data from the **model**
-
-```java
-package com.luv2code.springboot.thymeleafdemo.controller;
-
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-@Controller
-public class HelloWorldController {
-
-    // need a controller method to show initial HTML form
-
-    @RequestMapping("/showForm")
-    public String showForm() {
-        return "helloworld-form";
-    }
-
-    // need a controller method to process the HTML form
-    @RequestMapping("/processForm")
-    public String processForm() {
-        return "helloworld";
-    }
-
-    // need a controller method to read form data and
-    // add data to the model
-
-    @RequestMapping("/processFormVersionTwo")
-    public String letsShoutDude(HttpServletRequest request, Model model) {
-
-        // read the request parameter from the HTML form
-        String theName = request.getParameter("studentName");
-
-        // convert the data to all caps
-        theName = theName.toUpperCase();
-
-        // create the message
-        String result = "Yo! " + theName;
-
-        // add message to the model
-        model.addAttribute("message", result);
-
-        return "helloworld";
-    }
-}
-```
-
-### Reading HTML Form Data with `@RequestParam` annotation
-
-```java
-package com.luv2code.springboot.thymeleafdemo.controller;
-
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-@Controller
-public class HelloWorldController {
-
-    // need a controller method to show initial HTML form
-
-    @RequestMapping("/showForm")
-    public String showForm() {
-        return "helloworld-form";
-    }
-
-    // need a controller method to process the HTML form
-    @RequestMapping("/processForm")
-    public String processForm() {
-        return "helloworld";
-    }
-
-    // need a controller method to read form data and
-    // add data to the model
-
-    @RequestMapping("/processFormVersionTwo")
-    public String letsShoutDude(HttpServletRequest request, Model model) {
-
-        // read the request parameter from the HTML form
-        String theName = request.getParameter("studentName");
-
-        // convert the data to all caps
-        theName = theName.toUpperCase();
-
-        // create the message
-        String result = "Yo! " + theName;
-
-        // add message to the model
-        model.addAttribute("message", result);
-
-        return "helloworld";
-    }
-
-    @RequestMapping("/processFormVersionThree")
-    public String processFormVersionThree(@RequestParam("studentName") String theName,
-                                          Model model) {
-
-        // convert the data to all caps
-        theName = theName.toUpperCase();
-
-        // create the message
-        String result = "Hey My Friend from v3! " + theName;
-
-        // add message to the model
-        model.addAttribute("message", result);
-
-        return "helloworld";
-    }
-}
-```
-
-### Spring MVC Form - Drop Down List
-
-Let's review how to make a drop down list in HTML. Typically is something like this:
-
-```html
-<select th:field="*{country}">
-    <option th:value="Brazil">Brazil</option>
-    <option th:value="France">France</option>
-    <option th:value="Germany">Germany</option>
-    <option th:value="India">India</option>
-</select>
-```
-
-Bear in mind that this "`select`" uses Thymeleaf (pay attention to the attributes:
-* "`th:field`": This one is used to do a binding between the HTML code and the Java class.
-* "`th:value`": This one is used to assign a value to the attribute of the Java class that was referred using "`th:field`".
-
-**Development Process**
-1. Update HTML form
-2. Update Student class - add getter/setter for new property
-    * We are adding the new "`country`" property to the Student class
-3. Update confirmation page
-
-**You can make things more dynamic**
-
-You could declare a new property in your "`application.properties`" file and you could use that information.
-
-Let's say that you declare the following property in your properties file:
+Create this in `src/main/resources/application.properties`. It holds the dynamic options for our form dropdowns and custom error messages for type mismatch failures (e.g., typing letters into a number field).
 
 ```properties
+# Dynamic Form Options
 countries=Brazil,France,Germany,India,Mexico,Spain,United States
+languages=Java,Go,Python,Rust,TypeScript
+systems=Linux,macOS,Microsoft Windows
+
+# Custom Validation Message for Type Mismatch
+# Format: typeMismatch.[ModelName].[FieldName]=Message
+typeMismatch.student.freePasses=Invalid number format. Please enter an integer.
 ```
 
-Once this information is added in the properties file you need to update the model to introduce this information so that in can be accessed in the view.
+---
 
-For instance, we need to update the "`StudentController`" class as the following:
+## 4. Custom Validation Annotation (`@CourseCode`)
 
+We will create our own Java annotation! We want to enforce that a course code must start with a specific string (e.g., "LUV").
+
+### 1. The Annotation Interface: `CourseCode.java`
 ```java
-package com.luv2code.springboot.thymeleafdemo.controller;
-
-import com.luv2code.springboot.thymeleafdemo.model.Student;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-
-import java.util.List;
-
-@Controller
-public class StudentController {
-
-    @Value("${countries}")
-    private List<String> countries;
-
-    @GetMapping("/showStudentForm")
-    public String showForm(Model theModel) {
-
-        // create a student object
-        Student theStudent = new Student();
-
-        // add student object to the model
-        theModel.addAttribute("student", theStudent);
-
-        // add the list of countries to the model
-        theModel.addAttribute("countries", countries);
-
-        return "student-form";
-    }
-
-    @PostMapping("/processStudentForm")
-    public String processForm(@ModelAttribute("student") Student theStudent) {
-
-        // log the input data
-        System.out.println("theStudent: " + theStudent.getFirstName() + " " + theStudent.getLastName());
-
-        return "student-confirmation";
-    }
-
-}
-```
-
-Pay attention to the line where "`countries`" is added to "`theModel`" object. 
-
-The "`countries`" will be used in the View like this:
-
-```html
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Student Registration Form</title>
-</head>
-<body>
-<h3>Student Registration Form</h3>
-<form th:action="@{/processStudentForm}" th:object="${student}" method="POST">
-    First name: <input type="text" th:field="*{firstName}" />
-
-    <br><br>
-
-    Last name: <input type="text" th:field="*{lastName}" />
-
-    <br><br>
-
-    Country:
-    <!-- THIS IS THE IMPORTANT PART -->
-    <select th:field="*{country}">
-        <option th:each="tempCountry : ${countries}" th:value="${tempCountry}" th:text="${tempCountry}" />
-    </select>
-    <!-- THIS IS THE IMPORTANT PART -->
-    <br><br>
-    <input type="submit" value="Submit" />
-</form>
-</body>
-</html>
-```
-
-
-### Spring MVC Form - Radio Buttons
-
-Let's review how to make radio buttons in HTML:
-
-```html
-    <input type="radio" th:field="*{favoriteLanguage}" th:value="Go">Go</input>
-    <input type="radio" th:field="*{favoriteLanguage}" th:value="Java">Java</input>
-    <input type="radio" th:field="*{favoriteLanguage}" th:value="Python">Python</input>
-```
-
-As you can see here you need to use the "`<input>`" tag in HTML with the type "`radio`". Then, using Thymeleaf you are mapping the new attribute "`favoriteLanguage`" to the Student class.
-
-**Development Process** (Same as previous examples)
-1. Update HTML form
-
-```html
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Student Registration Form</title>
-</head>
-<body>
-<h3>Student Registration Form</h3>
-<form th:action="@{/processStudentForm}" th:object="${student}" method="POST">
-    First name: <input type="text" th:field="*{firstName}" />
-    <br><br>
-    Last name: <input type="text" th:field="*{lastName}" />
-    <br><br>
-    Country:
-    <select th:field="*{country}">
-        <option th:each="tempCountry : ${countries}" th:value="${tempCountry}" th:text="${tempCountry}" />
-    </select>
-
-    <br><br>
-
-    Favorite Programming Language:
-    <! THIS IS NEW -->
-    <input type="radio" th:field="*{favoriteLanguage}" th:value="Go">Go</input>
-    <input type="radio" th:field="*{favoriteLanguage}" th:value="Java">Java</input>
-    <input type="radio" th:field="*{favoriteLanguage}" th:value="Python">Python</input>
-    <! THIS IS NEW -->
-
-    <br><br>
-    <input type="submit" value="Submit" />
-</form>
-</body>
-</html>
-```
-
-2. Update Student class - add getter/setter for new property
-
-```java
-package com.luv2code.springboot.thymeleafdemo.model;
-
-public class Student {
-
-    private String firstName;
-    private String lastName;
-    private String country;
-    private String favoriteLanguage;
-
-    public Student() {
-
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getFavoriteLanguage() {
-        return favoriteLanguage;
-    }
-
-    public void setFavoriteLanguage(String favoriteLanguage) {
-        this.favoriteLanguage = favoriteLanguage;
-    }
-}
-```
-
-3. Update confirmation page
-
-```html
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Student Confirmation</title>
-</head>
-<body>
-
-<h3>Student Confirmation</h3>
-
-The student is confirmed: <span th:text="${student.firstName} + ' ' + ${student.lastName}" />
-
-<br><br>
-
-Country: <span th:text="${student.country}" />
-
-<br><br>
-
-Favorite Programming Language: <span th:text="${student.favoriteLanguage}" />
-
-</body>
-</html>
-```
-
-In the same way that we are to "bind" the countries using the "`@Value`" annotation and the data in the "`application.properties`" file we can do the same with the radio buttons.
-
-**Step 1: We modiffy the "`application.properties`" file**
-
-```txt
-countries=Brazil,France,Germany,India,Mexico,Spain,United States
-languages=Go,Java,Python,Rust,TypeScript
-```
-
-**Step 2: We modify the "`StudentController`" class to inject the new data of the properties file with the "`@Value`" annotation**
-
-```java
-package com.luv2code.springboot.thymeleafdemo.controller;
-
-import com.luv2code.springboot.thymeleafdemo.model.Student;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-
-import java.util.List;
-
-@Controller
-public class StudentController {
-
-    @Value("${countries}")
-    private List<String> countries;
-
-    /*
-     * THIS IS NEW VVVVVVVVVVV
-     */
-    @Value("${languages}")
-    private List<String> languages;
-    /*
-     * THIS IS NEW ^^^^^^^^^^^
-     */
-
-    @GetMapping("/showStudentForm")
-    public String showForm(Model theModel) {
-
-        // create a student object
-        Student theStudent = new Student();
-
-        // add student object to the model
-        theModel.addAttribute("student", theStudent);
-
-        // add the list of countries to the model
-        theModel.addAttribute("countries", countries);
-
-        /*
-         * THIS IS NEW VVVVVVVVVVV
-         */
-        // add the list of languages to the model
-        theModel.addAttribute("languages", languages);
-        /*
-         * THIS IS NEW ^^^^^^^^^^^
-         */
-
-        return "student-form";
-    }
-
-    @PostMapping("/processStudentForm")
-    public String processForm(@ModelAttribute("student") Student theStudent) {
-
-        // log the input data
-        System.out.println("theStudent: " + theStudent.getFirstName() + " " + theStudent.getLastName());
-
-        return "student-confirmation";
-    }
-
-}
-```
-
-**Step 3: Add the list of languages to the model**
-
-```java
-package com.luv2code.springboot.thymeleafdemo.model;
-
-public class Student {
-
-    private String firstName;
-    private String lastName;
-    private String country;
-
-    /*
-    * THIS IS NEW VVVVVVV
-    */
-    private String favoriteLanguage;
-    /*
-    * THIS IS NEW ^^^^^^^
-    */
-
-    public Student() {
-
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getFavoriteLanguage() {
-        return favoriteLanguage;
-    }
-
-    public void setFavoriteLanguage(String favoriteLanguage) {
-        this.favoriteLanguage = favoriteLanguage;
-    }
-}
-```
-
-**Step 4: Modify the Studen form to include the new data**
-
-```html
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Student Registration Form</title>
-</head>
-<body>
-<h3>Student Registration Form</h3>
-<form th:action="@{/processStudentForm}" th:object="${student}" method="POST">
-
-    First name: <input type="text" th:field="*{firstName}" />
-
-    <br><br>
-
-    Last name: <input type="text" th:field="*{lastName}" />
-
-    <br><br>
-
-    Country:
-
-    <select th:field="*{country}">
-
-        <option th:each="tempCountry : ${countries}" th:value="${tempCountry}" th:text="${tempCountry}" />
-
-    </select>
-
-    <br><br>
-
-    Favorite Programming Language:
-    <!-- THIS IS NEW VVVVVV -->
-    <input type="radio" th:field="*{favoriteLanguage}"
-                        th:each="tempLang : ${languages}"
-                        th:value="${tempLang}"
-                        th:text="${tempLang}" />
-    <!-- THIS IS NEW ^^^^^^ -->
-    <br><br>
-
-    <input type="submit" value="Submit" />
-
-</form>
-
-</body>
-</html>
-```
-
-### Spring MVC Form - Check Boxes
-
-**Step 1: Modify the form to include the check boxes**
-
-```html
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
-<head>
-    <meta charset="UTF-8">
-    <title>Student Registration Form</title>
-</head>
-<body>
-<h3>Student Registration Form</h3>
-<form th:action="@{/processStudentForm}" th:object="${student}" method="POST">
-    First name: <input type="text" th:field="*{firstName}" />
-
-    <br><br>
-    Last name: <input type="text" th:field="*{lastName}" />
-
-    <br><br>
-    Country:
-    <select th:field="*{country}">
-        <option th:each="tempCountry : ${countries}" th:value="${tempCountry}" th:text="${tempCountry}" />
-    </select>
-
-    <br><br>
-    Favorite Programming Language:
-    <input type="radio" th:field="*{favoriteLanguage}"
-                        th:each="tempLang : ${languages}"
-                        th:value="${tempLang}"
-                        th:text="${tempLang}" />
-
-    <br><br>
-
-    Favorite Operating Systems:
-
-    <!-- THIS IS NEW VVVVVV -->
-    <input type="checkbox" th:field="*{favoriteSystems}" th:value="Linux">Linux</input>
-    <input type="checkbox" th:field="*{favoriteSystems}" th:value="macOS">macOS</input>
-    <input type="checkbox" th:field="*{favoriteSystems}"
-                           th:value="'Microsoft Windows'">Microsoft Windows</input>
-    <!-- THIS IS NEW ^^^^^^ -->
-
-    <br><br>
-
-    <input type="submit" value="Submit" />
-
-</form>
-
-</body>
-</html>
-```
-
-Notice the special case of the 3rd option ("`Microsoft Windows`"). As the name itself contains spaces it needs to be enclosed between single quotes ("`'...'`) to be able to be shown properly.
-
-**Step 2: Add the new property to the model**
-
-```java
-package com.luv2code.springboot.thymeleafdemo.model;
-
-import java.util.List;
-
-public class Student {
-
-    private String firstName;
-    private String lastName;
-    private String country;
-    private String favoriteLanguage;
-    /*
-    * THIS IS NEW VVVVVVV
-    */
-    private List<String> favoriteSystems;
-    /*
-    * THIS IS NEW ^^^^^^^
-    */
-
-    public Student() {
-
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getFavoriteLanguage() {
-        return favoriteLanguage;
-    }
-
-    public void setFavoriteLanguage(String favoriteLanguage) {
-        this.favoriteLanguage = favoriteLanguage;
-    }
-
-    public List<String> getFavoriteSystems() {
-        return favoriteSystems;
-    }
-
-    public void setFavoriteSystems(List<String> favoriteSystems) {
-        this.favoriteSystems = favoriteSystems;
-    }
-}
-```
-
-**Step 3: Update confirmation page**
-
-```html
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Student Confirmation</title>
-</head>
-<body>
-
-<h3>Student Confirmation</h3>
-
-The student is confirmed: <span th:text="${student.firstName} + ' ' + ${student.lastName}" />
-
-<br><br>
-
-Country: <span th:text="${student.country}" />
-
-<br><br>
-
-Favorite Programming Language: <span th:text="${student.favoriteLanguage}" />
-
-<br><br>
-
-Favorite Operating Systems:
-
-<!-- THIS IS NEW VVVVVV -->
-<ul>
-    <li th:each="tempSystem : ${student.favoriteSystems}" th:text="${tempSystem}" />
-</ul>
-<!-- THIS IS NEW ^^^^^^ -->
-
-
-</body>
-</html>
-```
-
-To do the "*binding*" so that it can be extracted from the "`application.properties`" file you need to do the following:
-* Step 1: Add the new data in the "`application.properties`" file
-
-```txt
-countries=Brazil,France,Germany,India,Mexico,Spain,United States
-languages=Go,Java,Python,Rust,TypeScript
-systems=Linux,macOS,Microsoft Windows,Android OS,iOS
-```
-
-* Step 2: Add the new data in the model
-
-```java
-package com.luv2code.springboot.thymeleafdemo.model;
-
-import java.util.List;
-
-public class Student {
-
-    private String firstName;
-    private String lastName;
-    private String country;
-    private String favoriteLanguage;
-    /*
-    * THIS IS NEW VVVVVVV
-    */
-    private List<String> favoriteSystems;
-    /*
-    * THIS IS NEW ^^^^^^^
-    */
-
-    public Student() {
-
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getFavoriteLanguage() {
-        return favoriteLanguage;
-    }
-
-    public void setFavoriteLanguage(String favoriteLanguage) {
-        this.favoriteLanguage = favoriteLanguage;
-    }
-
-    public List<String> getFavoriteSystems() {
-        return favoriteSystems;
-    }
-
-    public void setFavoriteSystems(List<String> favoriteSystems) {
-        this.favoriteSystems = favoriteSystems;
-    }
-}
-```
-
-* Step 3: Modify the "`StudentController`" class
-
-```java
-package com.luv2code.springboot.thymeleafdemo.controller;
-
-import com.luv2code.springboot.thymeleafdemo.model.Student;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-
-import java.util.List;
-
-@Controller
-public class StudentController {
-
-    @Value("${countries}")
-    private List<String> countries;
-
-    @Value("${languages}")
-    private List<String> languages;
-
-    @Value("${systems}")
-    private List<String> systems;
-
-    @GetMapping("/showStudentForm")
-    public String showForm(Model theModel) {
-
-        // create a student object
-        Student theStudent = new Student();
-
-        // add student object to the model
-        theModel.addAttribute("student", theStudent);
-
-        // add the list of countries to the model
-        theModel.addAttribute("countries", countries);
-
-        // add the list of languages to the model
-        theModel.addAttribute("languages", languages);
-
-        // add the list of systems to the model
-        theModel.addAttribute("systems", systems);
-
-        return "student-form";
-    }
-
-    @PostMapping("/processStudentForm")
-    public String processForm(@ModelAttribute("student") Student theStudent) {
-
-        // log the input data
-        System.out.println("theStudent: " + theStudent.getFirstName() + " " + theStudent.getLastName());
-
-        return "student-confirmation";
-    }
-
-}
-```
-
-* Step 4: Modify the student form page
-
-```html
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
-<head>
-    <meta charset="UTF-8">
-    <title>Student Registration Form</title>
-</head>
-<body>
-
-<h3>Student Registration Form</h3>
-
-<form th:action="@{/processStudentForm}" th:object="${student}" method="POST">
-
-    First name: <input type="text" th:field="*{firstName}" />
-
-    <br><br>
-
-    Last name: <input type="text" th:field="*{lastName}" />
-
-    <br><br>
-
-    Country:
-
-    <select th:field="*{country}">
-
-        <option th:each="tempCountry : ${countries}" th:value="${tempCountry}" th:text="${tempCountry}" />
-
-    </select>
-
-    <br><br>
-
-    Favorite Programming Language:
-
-    <input type="radio" th:field="*{favoriteLanguage}"
-                        th:each="tempLang : ${languages}"
-                        th:value="${tempLang}"
-                        th:text="${tempLang}" />
-
-    <br><br>
-
-    Favorite Operating Systems:
-    <!-- THIS IS NEW VVVVVV -->
-    <input type="checkbox" th:field="*{favoriteSystems}"
-                           th:each="tempSystem : ${systems}"
-                           th:value="${tempSystem}"
-                           th:text="${tempSystem}" />
-    <!-- THIS IS NEW ^^^^^^ -->
-    <br><br>
-
-    <input type="submit" value="Submit" />
-
-</form>
-
-</body>
-</html>
-```
-
-* Step 5: Modify the student confirmation page
-
-```html
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Student Confirmation</title>
-</head>
-<body>
-
-<h3>Student Confirmation</h3>
-
-The student is confirmed: <span th:text="${student.firstName} + ' ' + ${student.lastName}" />
-
-<br><br>
-
-Country: <span th:text="${student.country}" />
-
-<br><br>
-
-Favorite Programming Language: <span th:text="${student.favoriteLanguage}" />
-
-<br><br>
-
-Favorite Operating Systems:
-
-<!-- THIS IS NEW VVVVVV -->
-<ul>
-    <li th:each="tempSystem : ${student.favoriteSystems}" th:text="${tempSystem}" />
-</ul>
-<!-- THIS IS NEW ^^^^^^ -->
-
-</body>
-</html>
-```
-
-### Spring MVC Validation
-
-The need for validation. Check the user input for:
-* Required fields
-* Valid numbers in a range
-* Valid format (for example, postal code)
-* Custom business rule
-
-**Java's Standard Bean Validation API**
-* Java has a standard Bean Validation API
-* Defines a metadata model and API for entity validation
-* Spring Boot and Thymeleaf also support the Bean Validation API
-* You can find more information about the Bean Validation API in <a href="https://beanvalidation.org/">the following link</a>
-* Bean validation features
-    * Required
-    * Validate length
-    * Validate numbers
-    * Validate with regular expressions
-    * Custom validation
-
-#### Spring MVC Validation - Required Fields
-
-**Development Process**
-1. Create Customer class and add validation rules
-
-```java
-package com.luv2code.springdemo.mvc;
-
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-
-public class Customer {
-
-    private String firstName;
-
-    @NotNull(message="is required")
-    @Size(min=1, message="is required")
-    private String lastName = "";
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-}
-```
-
-2. Add Controller code to show HTML form
-
-```java
-package com.luv2code.springdemo.mvc;
-
-import jakarta.validation.Valid;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-
-@Controller
-public class CustomerController {
-
-    @GetMapping("/")
-    public String showForm(Model theModel) {
-
-        theModel.addAttribute("customer", new Customer());
-
-        return "customer-form";
-    }
-
-    @PostMapping("/processForm")
-    public String processForm(
-            @Valid @ModelAttribute("customer") Customer theCustomer,
-            BindingResult theBindingResult) {
-
-        if (theBindingResult.hasErrors()) {
-            return "customer-form";
-        }
-        else {
-            return "customer-confirmation";
-        }
-    }
-}
-```
-
-3. Develop HTML form and add validation support
-
-```html
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Customer Registration Form</title>
-
-    <style>
-        .error {color:red}
-    </style>
-</head>
-
-<body>
-<i>Fill out the form. Asterisk (*) means required.</i>
-<br><br>
-<form th:action="@{/processForm}" th:object="${customer}" method="POST">
-
-    First name: <input type="text" th:field="*{firstName}" />
-
-    <br><br>
-
-    Last name (*): <input type="text" th:field="*{lastName}" />
-
-    <!-- Add error message (if present) -->
-    <span th:if="${#fields.hasErrors('lastName')}"
-          th:errors="*{lastName}"
-          class="error"></span>
-
-    <br><br>
-
-    <input type="submit" value="Submit" />
-
-</form>
-
-</body>
-</html>
-```
-
-4. Perform validation in the Controller class
-
-```java
-package com.luv2code.springdemo.mvc;
-
-import jakarta.validation.Valid;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-
-@Controller
-public class CustomerController {
-
-    @GetMapping("/")
-    public String showForm(Model theModel) {
-
-        theModel.addAttribute("customer", new Customer());
-
-        return "customer-form";
-    }
-
-    @PostMapping("/processForm")
-    public String processForm(
-            @Valid @ModelAttribute("customer") Customer theCustomer,
-            BindingResult theBindingResult) {
-
-        if (theBindingResult.hasErrors()) {
-            return "customer-form";
-        }
-        else {
-            return "customer-confirmation";
-        }
-    }
-}
-```
-
-5. Create confirmation page
-
-```html
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Customer Confirmation</title>
-</head>
-<body>
-
-The customer is confirmed: <span th:text="${customer.firstName + ' ' + customer.lastName}" />
-
-</body>
-</html>
-```
-
-#### Spring MVC Validation - @InitBinder
-
-* Our previous example had a problem with white space
-    * Last name field with all whitespace passed ... YIKES!
-    * Should have failed
-* We need to trim whitespace from input fields
-
-For that we will use the "`@InitBinder`" annotation:
-* The "`@InitBinder`" annotation works as a pre-processor
-* It will pre-process each web request to our controller
-* Method annotated with "`@InitBinder`" is executed
-* We will use it to trim Strings
-    * Remove leading and trailing white space
-* If String only has white spaces... trim it to `null` 
-* This will resolve our validation problem... whew :-)
-
-In our case we are adding a method in the "`CustomerController`" class like the following:
-
-```java
-    @InitBinder
-    public void initBinder(WebDataBinder dataBinder) {
-
-        StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
-
-        dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
-    }
-```
-
-This method will:
-* Pre-process every String form data
-* Remove leading and trailing white space
-* If String only has white space ... trim it to `null`
-
-Once you introduce the new "`initBinder`" method annotated with the "`@InitBinder`" annotation the "`CustomerController`" class will look like follows:
-
-```java
-package com.luv2code.springdemo.mvc;
-
-import jakarta.validation.Valid;
-import org.springframework.beans.propertyeditors.StringTrimmerEditor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-
-@Controller
-public class CustomerController {
-
-    // add an initbinder ... to convert trim input strings
-    // remove leading and trailing whitespace
-    // resolve issue for our validation
-    @InitBinder
-    public void initBinder(WebDataBinder dataBinder) {
-
-        StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
-
-        dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
-    }
-
-    @GetMapping("/")
-    public String showForm(Model theModel) {
-
-        theModel.addAttribute("customer", new Customer());
-
-        return "customer-form";
-    }
-
-    @PostMapping("/processForm")
-    public String processForm(
-            @Valid @ModelAttribute("customer") Customer theCustomer,
-            BindingResult theBindingResult) {
-
-        System.out.println("Last name: |" + theCustomer.getLastName() + "|");
-
-        if (theBindingResult.hasErrors()) {
-            return "customer-form";
-        }
-        else {
-            return "customer-confirmation";
-        }
-    }
-}
-```
-
-#### Spring MVC Validation - Number Range "`@Min`" and "`@Max`"
-
-**Development Process**
-1. Add validation rule to "`Customer`" class
-
-```java
-package com.luv2code.springdemo.mvc;
-
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-
-public class Customer {
-
-    private String firstName;
-
-    @NotNull(message="is required")
-    @Size(min=1, message="is required")
-    private String lastName = "";
-
-    @Min(value=0, message="must be greater than or equal to zero")
-    @Max(value=10, message="must be less than or equal to 10")
-    private int freePasses;
-
-    public int getFreePasses() {
-        return freePasses;
-    }
-
-    public void setFreePasses(int freePasses) {
-        this.freePasses = freePasses;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-}
-```
-
-2. Display error messages on HTML form
-
-```html
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Customer Registration Form</title>
-
-    <style>
-        .error {color:red}
-    </style>
-</head>
-
-<body>
-<i>Fill out the form. Asterisk (*) means required.</i>
-<br><br>
-<form th:action="@{/processForm}" th:object="${customer}" method="POST">
-
-    First name: <input type="text" th:field="*{firstName}" />
-
-    <br><br>
-
-    Last name (*): <input type="text" th:field="*{lastName}" />
-
-    <!-- Add error message (if present) -->
-    <span th:if="${#fields.hasErrors('lastName')}"
-          th:errors="*{lastName}"
-          class="error"></span>
-
-    <br><br>
-
-    Free passes: <input type="text" th:field="*{freePasses}" />
-
-    <!-- Add error message (if present) -->
-    <span th:if="${#fields.hasErrors('freePasses')}"
-          th:errors="*{freePasses}"
-          class="error"></span>
-
-    <br><br>
-
-    <input type="submit" value="Submit" />
-
-</form>
-
-</body>
-</html>
-```
-
-3. Perform validation in the Controller class
-
-```java
-package com.luv2code.springdemo.mvc;
-
-import jakarta.validation.Valid;
-import org.springframework.beans.propertyeditors.StringTrimmerEditor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-
-@Controller
-public class CustomerController {
-
-    // add an initbinder ... to convert trim input strings
-    // remove leading and trailing whitespace
-    // resolve issue for our validation
-    @InitBinder
-    public void initBinder(WebDataBinder dataBinder) {
-
-        StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
-
-        dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
-    }
-
-    @GetMapping("/")
-    public String showForm(Model theModel) {
-
-        theModel.addAttribute("customer", new Customer());
-
-        return "customer-form";
-    }
-
-    @PostMapping("/processForm")
-    public String processForm(
-            @Valid @ModelAttribute("customer") Customer theCustomer,
-            BindingResult theBindingResult) {
-
-        System.out.println("Last name: |" + theCustomer.getLastName() + "|");
-
-        if (theBindingResult.hasErrors()) {
-            return "customer-form";
-        }
-        else {
-            return "customer-confirmation";
-        }
-    }
-}
-```
-
-4. Update confirmation page
-
-```html
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Customer Confirmation</title>
-</head>
-<body>
-
-The customer is confirmed: <span th:text="${customer.firstName + ' ' + customer.lastName}" />
-
-<br><br>
-
-Free passes: <span th:text="${customer.freePasses}" />
-
-</body>
-</html>
-```
-
-#### Spring MVC Validation - Regular Expressions
-
-**Regular Expressions**
-* A sequence of characters that define a search pattern
-    * This pattern is used to find or match strings
-* Regular Expressions is like its own language (advanced topic)
-* <a href="https://docs.oracle.com/javase/tutorial/essential/regex/">There are plenty of free tutorials available</a>
-
-The development process is very similar to the previous examples:
-1. Add validation rule to the "`Customer`" class
-
-```java
-package com.luv2code.springdemo.mvc;
-
-import jakarta.validation.constraints.*;
-
-public class Customer {
-
-    private String firstName;
-
-    @NotNull(message="is required")
-    @Size(min=1, message="is required")
-    private String lastName = "";
-
-    @Min(value=0, message="must be greater than or equal to zero")
-    @Max(value=10, message="must be less than or equal to 10")
-    private int freePasses;
-
-    @Pattern(regexp = "^[a-zA-Z0-9]{5}", message = "only 5 chars/digits")
-    private String postalCode;
-
-    public String getPostalCode() {
-        return postalCode;
-    }
-
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
-    }
-
-    public int getFreePasses() {
-        return freePasses;
-    }
-
-    public void setFreePasses(int freePasses) {
-        this.freePasses = freePasses;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-}
-```
-
-2. Display error messages on HTML form
-
-```html
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Customer Registration Form</title>
-
-    <style>
-        .error {color:red}
-    </style>
-</head>
-
-<body>
-<i>Fill out the form. Asterisk (*) means required.</i>
-<br><br>
-<form th:action="@{/processForm}" th:object="${customer}" method="POST">
-
-    First name: <input type="text" th:field="*{firstName}" />
-
-    <br><br>
-
-    Last name (*): <input type="text" th:field="*{lastName}" />
-
-    <!-- Add error message (if present) -->
-    <span th:if="${#fields.hasErrors('lastName')}"
-          th:errors="*{lastName}"
-          class="error"></span>
-
-    <br><br>
-
-    Free passes: <input type="text" th:field="*{freePasses}" />
-
-    <!-- Add error message (if present) -->
-    <span th:if="${#fields.hasErrors('freePasses')}"
-          th:errors="*{freePasses}"
-          class="error"></span>
-
-    <br><br>
-
-    Postal Code: <input type="text" th:field="*{postalCode}" />
-
-    <!-- Add error message (if present) -->
-    <span th:if="${#fields.hasErrors('postalCode')}"
-          th:errors="*{postalCode}"
-          class="error"></span>
-
-    <br><br>
-
-    <input type="submit" value="Submit" />
-
-</form>
-
-</body>
-</html>
-```
-
-3. Update confirmation page
-
-```html
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Customer Confirmation</title>
-</head>
-<body>
-
-The customer is confirmed: <span th:text="${customer.firstName + ' ' + customer.lastName}" />
-
-<br><br>
-
-Free passes: <span th:text="${customer.freePasses}" />
-
-<br><br>
-
-Postal code: <span th:text="${customer.postalCode}" />
-
-</body>
-</html>
-```
-
-#### Spring MVC Validation - Make an Integer Field Required
-
-Basically you add the "`@NotNull`" annotation to the field of the model that is required and that's it.
-
-
-#### Spring MVC Validation - Handle String Input for Integer Fields
-
-There are cases where you will have a user introduce text in a field that is supposed to be a number.
-
-You need to add the "`messages.properties`" file with the following content:
-
-```txt
-typeMismatch.customer.freePasses=Invalid number
-```
-
-Where the key "`typeMismatch.customer.freePasses`" will be mapped to the property of the model that has a "Type Mismatch".
-
-The key can be decomposed in the following parts:
-* **Error Type**: "`typeMismatch`"
-* **Spring model attribute name**: "`customer`"
-* **Field name**: "`freePasses`"
-
-Very important to bear in mind is that the location of the "`messages.properties`" file should always be "`src/main/resources/messages.properties`".
-
-#### Spring MVC Validation - Custom Validation
-
-* Perform custom validation based on your business rules
-    * In the following example we will write a validator forcing the "Course Code" to start with "LUV"
-* Spring MVC calls our custom validation
-* Custom validation returns boolean value for pass/fail (true / false)
-
-To be able to write a custom validation we need to create a custom Java Annotation... from scratch
-* So far, we've used predefines validation rules: "`@Min`", "`@Max`", ...
-* For custom validation ... we will create a **Custom Java Annotation**
-    * "`@CourseCode`"
-
-**Development Process**
-1. Create custom validation rule
-    a. Create "`@CourseCode`" annotation
-
-```java
-package com.luv2code.springdemo.mvc.validation;
+package com.luv2code.springboot.demo.validation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -1715,32 +97,28 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CourseCode {
 
-    // define default course code
-    public String value() default "LUV";
+    // default course code prefix
+    String value() default "LUV";
 
-    // define default error message
-    public String message() default "must start with LUV";
+    // default error message
+    String message() default "must start with LUV";
 
-    // define default groups
-    public Class<?>[] groups() default {};
+    // define default groups (required by validation API)
+    Class<?>[] groups() default {};
 
-    // define default payloads
-    public Class<? extends Payload>[] payload() default {};
+    // define default payloads (required by validation API)
+    Class<? extends Payload>[] payload() default {};
 }
 ```
 
-
-   b. Create "`CourseCodeConstraintValidator`" class
-       * It's a helper class that contains our custom business logic for validation
-
-
+### 2. The Validator Logic: `CourseCodeConstraintValidator.java`
 ```java
-package com.luv2code.springdemo.mvc.validation;
+package com.luv2code.springboot.demo.validation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-public class CourseCodeConstraintValidator  implements ConstraintValidator<CourseCode, String> {
+public class CourseCodeConstraintValidator implements ConstraintValidator<CourseCode, String> {
 
     private String coursePrefix;
 
@@ -1750,191 +128,303 @@ public class CourseCodeConstraintValidator  implements ConstraintValidator<Cours
     }
 
     @Override
-    public boolean isValid(String theCode, ConstraintValidatorContext theConstraintValidatorContext) {
-
-        boolean result;
-
+    public boolean isValid(String theCode, ConstraintValidatorContext context) {
+        
+        // Validation logic: If not null, must start with the prefix. If null, it's valid (let @NotNull handle nulls).
         if (theCode != null) {
-            result = theCode.startsWith(coursePrefix);
+            return theCode.startsWith(coursePrefix);
+        } else {
+            return true;
         }
-        else {
-            result = true;
-        }
-
-        return result;
     }
 }
 ```
 
-2. Add validation rule to "`Customer`" class
+---
+
+## 5. The Model (`Student.java`)
+
+This maps directly to the HTML form fields. We apply our validation rules here using standard annotations like `@NotNull` and our custom `@CourseCode`.
 
 ```java
-package com.luv2code.springdemo.mvc;
+package com.luv2code.springboot.demo.model;
 
-import com.luv2code.springdemo.mvc.validation.CourseCode;
+import com.luv2code.springboot.demo.validation.CourseCode;
 import jakarta.validation.constraints.*;
 
-public class Customer {
+import java.util.List;
 
-    private String firstName;
+public class Student {
+
+    private String firstName; // Optional
 
     @NotNull(message="is required")
     @Size(min=1, message="is required")
-    private String lastName = "";
+    private String lastName; // Required
+
+    private String country;
+    private String favoriteLanguage;
+    private List<String> favoriteSystems;
 
     @NotNull(message="is required")
     @Min(value=0, message="must be greater than or equal to zero")
     @Max(value=10, message="must be less than or equal to 10")
-    private Integer freePasses;
+    private Integer freePasses; // Required, must be between 0 and 10
 
-    @Pattern(regexp = "^[a-zA-Z0-9]{5}", message = "only 5 chars/digits")
-    private String postalCode;
+    @Pattern(regexp = "^[a-zA-Z0-9]{5}", message = "must be exactly 5 chars/digits")
+    private String postalCode; // Optional, but if provided must be exactly 5 chars
 
-    /*
-    * THIS IS NEW VVVVV
-    */
     @CourseCode(value="TOPS", message="must start with TOPS")
-    private String courseCode;
-    /*
-    * THIS IS NEW ^^^^^
-    */
+    private String courseCode; // Uses our custom validator
 
-    public String getCourseCode() {
-        return courseCode;
+    public Student() {}
+
+    // --- Getters and Setters ---
+    public String getFirstName() { return firstName; }
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+    public String getLastName() { return lastName; }
+    public void setLastName(String lastName) { this.lastName = lastName; }
+    public String getCountry() { return country; }
+    public void setCountry(String country) { this.country = country; }
+    public String getFavoriteLanguage() { return favoriteLanguage; }
+    public void setFavoriteLanguage(String favoriteLanguage) { this.favoriteLanguage = favoriteLanguage; }
+    public List<String> getFavoriteSystems() { return favoriteSystems; }
+    public void setFavoriteSystems(List<String> favoriteSystems) { this.favoriteSystems = favoriteSystems; }
+    public Integer getFreePasses() { return freePasses; }
+    public void setFreePasses(Integer freePasses) { this.freePasses = freePasses; }
+    public String getPostalCode() { return postalCode; }
+    public void setPostalCode(String postalCode) { this.postalCode = postalCode; }
+    public String getCourseCode() { return courseCode; }
+    public void setCourseCode(String courseCode) { this.courseCode = courseCode; }
+}
+```
+
+---
+
+## 6. The Controller (`StudentController.java`)
+
+The controller binds the form options from `application.properties`, provides the empty `Student` object to the form, and processes the POST request checking for `@Valid` errors. It also uses an `@InitBinder` to fix whitespace issues.
+
+```java
+package com.luv2code.springboot.demo.controller;
+
+import com.luv2code.springboot.demo.model.Student;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
+
+@Controller
+public class StudentController {
+
+    // 1. Inject UI values from application.properties
+    @Value("${countries}")
+    private List<String> countries;
+
+    @Value("${languages}")
+    private List<String> languages;
+
+    @Value("${systems}")
+    private List<String> systems;
+
+    // 2. Pre-process all web requests to remove leading/trailing whitespace.
+    // If a string only has whitespace, trim it to null to ensure @NotNull catches it!
+    @InitBinder
+    public void initBinder(WebDataBinder dataBinder) {
+        StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+        dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
-    public void setCourseCode(String courseCode) {
-        this.courseCode = courseCode;
+    // 3. Show the Form
+    @GetMapping("/")
+    public String showForm(Model theModel) {
+        // Create an empty Student object for the form to bind to
+        theModel.addAttribute("student", new Student());
+
+        // Add dropdown/radio/checkbox options
+        theModel.addAttribute("countries", countries);
+        theModel.addAttribute("languages", languages);
+        theModel.addAttribute("systems", systems);
+
+        return "student-form";
     }
 
-    public String getPostalCode() {
-        return postalCode;
-    }
+    // 4. Process the Form Submission
+    @PostMapping("/processForm")
+    public String processForm(
+            @Valid @ModelAttribute("student") Student theStudent,
+            BindingResult theBindingResult, 
+            Model theModel) {
 
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
-    }
+        // Log the result to the server console
+        System.out.println("Processing student: " + theStudent.getFirstName() + " " + theStudent.getLastName());
+        System.out.println("Binding results: " + theBindingResult.toString());
 
-    public Integer getFreePasses() {
-        return freePasses;
-    }
-
-    public void setFreePasses(Integer freePasses) {
-        this.freePasses = freePasses;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+        // If there are validation errors, send them back to the form
+        if (theBindingResult.hasErrors()) {
+            // Need to re-populate the dropdowns/radios/checkboxes because we are rendering the form again
+            theModel.addAttribute("countries", countries);
+            theModel.addAttribute("languages", languages);
+            theModel.addAttribute("systems", systems);
+            
+            return "student-form"; 
+        } else {
+            // Success! Send them to the confirmation page
+            return "student-confirmation";
+        }
     }
 }
 ```
 
-3. Display error messages on HTML form
+---
+
+## 7. Thymeleaf HTML Templates
+
+Create these files in `src/main/resources/templates/`.
+
+### `student-form.html`
+
+Notice how we use `th:if="${#fields.hasErrors('fieldName')}"` to render the validation error texts directly below the inputs.
 
 ```html
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Customer Registration Form</title>
-
+    <title>Student Registration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <style>
-        .error {color:red}
+        .error { color: red; font-size: 0.9em; margin-left: 10px; }
     </style>
 </head>
+<body class="container mt-5">
 
-<body>
-<i>Fill out the form. Asterisk (*) means required.</i>
-<br><br>
-<form th:action="@{/processForm}" th:object="${customer}" method="POST">
+    <div class="card p-4 shadow-sm w-75 mx-auto">
+        <h3 class="mb-4">Student Registration Form</h3>
+        <p class="text-muted"><i>Fields marked with (*) are required.</i></p>
 
-    First name: <input type="text" th:field="*{firstName}" />
+        <!-- Form bound to the "student" ModelAttribute -->
+        <form th:action="@{/processForm}" th:object="${student}" method="POST">
 
-    <br><br>
+            <!-- Name -->
+            <div class="mb-3">
+                <label class="form-label">First name:</label>
+                <input type="text" th:field="*{firstName}" class="form-control" />
+            </div>
 
-    Last name (*): <input type="text" th:field="*{lastName}" />
+            <div class="mb-3">
+                <label class="form-label">Last name (*):</label>
+                <input type="text" th:field="*{lastName}" class="form-control d-inline w-75" />
+                <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="error"></span>
+            </div>
 
-    <!-- Add error message (if present) -->
-    <span th:if="${#fields.hasErrors('lastName')}"
-          th:errors="*{lastName}"
-          class="error"></span>
+            <!-- Dropdown (Select) -->
+            <div class="mb-3">
+                <label class="form-label">Country:</label>
+                <select th:field="*{country}" class="form-select">
+                    <option th:each="tempCountry : ${countries}" th:value="${tempCountry}" th:text="${tempCountry}" />
+                </select>
+            </div>
 
-    <br><br>
+            <!-- Radio Buttons -->
+            <div class="mb-3">
+                <label class="form-label">Favorite Programming Language:</label>
+                <div class="form-check" th:each="tempLang : ${languages}">
+                    <input type="radio" th:field="*{favoriteLanguage}" th:value="${tempLang}" class="form-check-input">
+                    <label th:text="${tempLang}" class="form-check-label"></label>
+                </div>
+            </div>
 
-    Free passes: <input type="text" th:field="*{freePasses}" />
+            <!-- Checkboxes (Multiple Selection) -->
+            <div class="mb-3">
+                <label class="form-label">Favorite Operating Systems:</label>
+                <div class="form-check" th:each="tempSystem : ${systems}">
+                    <input type="checkbox" th:field="*{favoriteSystems}" th:value="${tempSystem}" class="form-check-input">
+                    <!-- Note the single quotes handling spaces in application.properties -->
+                    <label th:text="${tempSystem}" class="form-check-label"></label>
+                </div>
+            </div>
 
-    <!-- Add error message (if present) -->
-    <span th:if="${#fields.hasErrors('freePasses')}"
-          th:errors="*{freePasses}"
-          class="error"></span>
+            <!-- Number Validation -->
+            <div class="mb-3">
+                <label class="form-label">Free Passes (0-10) (*):</label>
+                <input type="text" th:field="*{freePasses}" class="form-control d-inline w-25" />
+                <span th:if="${#fields.hasErrors('freePasses')}" th:errors="*{freePasses}" class="error"></span>
+            </div>
 
-    <br><br>
+            <!-- Regex Pattern Validation -->
+            <div class="mb-3">
+                <label class="form-label">Postal Code:</label>
+                <input type="text" th:field="*{postalCode}" class="form-control d-inline w-50" placeholder="e.g. 1A2B3"/>
+                <span th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}" class="error"></span>
+            </div>
 
-    Postal Code: <input type="text" th:field="*{postalCode}" />
+            <!-- Custom Validation -->
+            <div class="mb-3">
+                <label class="form-label">Course Code (Must start with TOPS):</label>
+                <input type="text" th:field="*{courseCode}" class="form-control d-inline w-50" />
+                <span th:if="${#fields.hasErrors('courseCode')}" th:errors="*{courseCode}" class="error"></span>
+            </div>
 
-    <!-- Add error message (if present) -->
-    <span th:if="${#fields.hasErrors('postalCode')}"
-          th:errors="*{postalCode}"
-          class="error"></span>
-
-    <br><br>
-
-    Course Code: <input type="text" th:field="*{courseCode}" />
-
-    <!-- Add error message (if present) -->
-    <span th:if="${#fields.hasErrors('courseCode')}"
-          th:errors="*{courseCode}"
-          class="error"></span>
-
-    <br><br>
-
-    <input type="submit" value="Submit" />
-
-</form>
+            <button type="submit" class="btn btn-primary w-100">Submit</button>
+        </form>
+    </div>
 
 </body>
 </html>
 ```
 
-4. Update confirmation page
+### `student-confirmation.html`
 
 ```html
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Customer Confirmation</title>
+    <title>Registration Success</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
-<body>
+<body class="container mt-5 text-center">
 
-The customer is confirmed: <span th:text="${customer.firstName + ' ' + customer.lastName}" />
+    <div class="alert alert-success d-inline-block px-5 py-4 w-75 shadow">
+        <h2 class="display-5 text-success">Registration Confirmed!</h2>
+        <hr>
+        <p class="fs-4">Welcome, <strong th:text="${student.firstName + ' ' + student.lastName}"></strong>!</p>
+        
+        <ul class="list-group text-start">
+            <li class="list-group-item"><strong>Country:</strong> <span th:text="${student.country}"></span></li>
+            <li class="list-group-item"><strong>Language:</strong> <span th:text="${student.favoriteLanguage}"></span></li>
+            <li class="list-group-item"><strong>Systems:</strong> 
+                <span th:if="${student.favoriteSystems != null}" th:each="sys, iterStat : ${student.favoriteSystems}" 
+                      th:text="${sys} + ${!iterStat.last ? ', ' : ''}"></span>
+                <span th:unless="${student.favoriteSystems != null}">None Selected</span>
+            </li>
+            <li class="list-group-item"><strong>Passes:</strong> <span th:text="${student.freePasses}"></span></li>
+            <li class="list-group-item"><strong>Postal Code:</strong> <span th:text="${student.postalCode}"></span></li>
+            <li class="list-group-item"><strong>Course Code:</strong> <span th:text="${student.courseCode}"></span></li>
+        </ul>
 
-<br><br>
-
-Free passes: <span th:text="${customer.freePasses}" />
-
-<br><br>
-
-Postal code: <span th:text="${customer.postalCode}" />
-
-<br><br>
-
-Course code: <span th:text="${customer.courseCode}" />
-
+        <a th:href="@{/}" class="btn btn-primary mt-4">Register Another</a>
+    </div>
 
 </body>
 </html>
 ```
 
+---
+
+## 8. Running & Testing
+
+1. Bring up the application: `docker build -t mvc-forms . && docker run -p 8080:8080 mvc-forms`
+2. Open your web browser and navigate to `http://localhost:8080/`
+3. Hit "Submit" without filling anything out to trigger the validation errors on `lastName` and `freePasses`.
+4. Enter an invalid postal code (e.g., "123") and an invalid course code (e.g., "MATH200") to see the Regex and Custom Validator in action.
