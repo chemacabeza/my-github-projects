@@ -1,4 +1,9 @@
-# My Spring Boot Notes
+# Sections 1–3: Spring Core & Hibernate/JPA CRUD
+
+Notes covering the first three sections of the *Spring Boot 3 + Spring 6 + Hibernate* course:
+- **Section 1** — Spring Boot Overview (auto-configuration, DevTools, Actuator)
+- **Section 2** — Spring Core (Dependency Injection, bean scopes, lifecycle)
+- **Section 3** — Hibernate/JPA CRUD (EntityManager, JPQL, CRUD operations)
 
 ## Table of Contents
 * [Logging levels](#logging-levels-httpsdocsspringiospring-bootreferencefeatureslogginghtml)

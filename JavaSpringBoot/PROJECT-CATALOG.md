@@ -367,16 +367,18 @@ Focus on these key projects:
 
 ## Quick Navigation
 
-- **Architecture Overview:** [docs/architecture-overview.md](docs/architecture-overview.md)
-- **Testing Guide:** [docs/testing-guide.md](docs/testing-guide.md)
-- **Quick Start Guides:**
-  - [REST CRUD](docs/quickstart-rest-crud.md)
-  - [Spring Security](docs/quickstart-security.md)
-  - [MVC CRUD](docs/quickstart-mvc-crud.md)
-  - [JPA Mappings](docs/quickstart-jpa-mappings.md)
-  - [AOP](docs/quickstart-aop.md)
-- **Main README:** [README.md](README.md)
-- **Main Repository:** [../README.md](../README.md)
+| Topic | Document |
+|-------|----------|
+| Spring Boot Overview, Spring Core, JPA/Hibernate CRUD | [docs/Sections-1-to-3.md](docs/Sections-1-to-3.md) |
+| REST CRUD APIs | [docs/Section-4.md](docs/Section-4.md) |
+| REST API Security | [docs/Section-5.md](docs/Section-5.md) |
+| Spring MVC | [docs/Section-6.md](docs/Section-6.md) |
+| Spring MVC CRUD | [docs/Section-7.md](docs/Section-7.md) |
+| Spring MVC Security | [docs/Section-8.md](docs/Section-8.md) |
+| JPA / Hibernate Advanced Mappings | [docs/Section-9.md](docs/Section-9.md) |
+| AOP — Aspect-Oriented Programming | [docs/Section-10.md](docs/Section-10.md) |
+| Main README | [README.md](README.md) |
+| Main Repository | [../README.md](../README.md) |
 
 ---
 
