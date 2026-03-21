@@ -29,6 +29,10 @@ Think of this as the backbone: where design, performance, and reliability meet c
 * [Section 9: JPA / Hibernate Advanced Mappings](docs/Section-9.md)
 * [Section 10: AOP - Aspect-Oriented Programming](docs/Section-10.md)
 
+### Spring Modulith
+
+* [Introduction to Spring Modulith](docs/SpringModulith-Introduction.md)
+
 ### Java Programming Master Class 2025
 
 * [Section 1: Getting started with Java Programming](docs/JavaMasterClass2025-Section-01.md)

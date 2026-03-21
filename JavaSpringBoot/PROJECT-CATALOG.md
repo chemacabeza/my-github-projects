@@ -377,6 +377,7 @@ Focus on these key projects:
 | Spring MVC Security | [docs/Section-8.md](docs/Section-8.md) |
 | JPA / Hibernate Advanced Mappings | [docs/Section-9.md](docs/Section-9.md) |
 | AOP — Aspect-Oriented Programming | [docs/Section-10.md](docs/Section-10.md) |
+| Spring Modulith — Introduction | [docs/SpringModulith-Introduction.md](docs/SpringModulith-Introduction.md) |
 | Main README | [README.md](README.md) |
 | Main Repository | [../README.md](../README.md) |
 
