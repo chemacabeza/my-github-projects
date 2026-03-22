@@ -81,4 +81,4 @@ sudo rmmod usb_storage
 ### Summary
 The Kernel operates ruthlessly and efficiently, acting as the absolute authority mediating between hardware electrical signals and User Space requests. We never bypass the Kernel; we use APIs (`glibc`) to submit securely sanitized Syscalls. 
 
-In the next guide (`08_Memory_and_Storage_Internals.md`), we dive deeper into exactly how the Kernel manages physical RAM arrays and translates them into an illusion.
+In the next guide (`08_Kernel_Module_Development.md`), we will literally write our own Kernel Module and inject it directly into Ring 0.

@@ -30,15 +30,16 @@ This hardcore curriculum was synthesized from 15 professional-grade textbooks pr
 *Fundamentally unlearn user-space logic. Enter Ring-0 hardware context natively.*
 
 * [**07: The Linux Kernel**](./07_The_Linux_Kernel.md) - Monolithic architecture perfectly mapped against Microkernels, Loadable Modules (`.ko`), and diagnosing silent HTTP crashes via `strace` Syscall tracking.
-* [**08: Memory and Storage Internals**](./08_Memory_and_Storage_Internals.md) - The MMU Virtual Memory illusion, aggressive disk Paging/Swapping, Inodes, and Enterprise LVM logical volumes.
-* [**09: UNIX Systems Programming & IPC**](./09_Unix_Systems_Programming.md) - Creating UNIX pipelines entirely in C memory, reaping `wait()` exit codes, and bypassing TCP with high-speed `AF_UNIX` Sockets natively.
+* [**08: Kernel Module Development**](./08_Kernel_Module_Development.md) - Writing a fully-fledged Character Device Driver from scratch utilizing C `copy_to_user` buffers, `fops` pointer mappings, and Atomic vs Process hardware context constraints. 
+* [**09: Memory and Storage Internals**](./09_Memory_and_Storage_Internals.md) - The MMU Virtual Memory illusion, aggressive disk Paging/Swapping, Inodes, and Enterprise LVM logical volumes.
+* [**10: UNIX Systems Programming & IPC**](./10_Unix_Systems_Programming.md) - Creating UNIX pipelines entirely in C memory, reaping `wait()` exit codes, and bypassing TCP with high-speed `AF_UNIX` Sockets natively.
 
 ### Phase 4: Extreme Observability & Performance (The Capstone)
 *When the database is randomly stopping for 5 seconds, amateurs restart the machine. Experts use the USE Method.*
 
-* [**10: Systems Performance and Metrics**](./10_Systems_Performance_Metrics.md) - Brendan Gregg's **USE Method**, the terrifying truth behind Load Averages, I/O wait saturation (`iostat`), and CPU profiling via `perf`.
-* [**11: Deep Packet Inspection (TCP/IP)**](./11_Deep_Packet_Inspection.md) - Tracing brutal connection-refused failures down to the exact `RST` flag during TCP Handshakes utilizing `tcpdump` and Wireshark.
-* [**12: Capstone: eBPF Observability**](./12_eBPF_Observability.md) - The absolute pinnacle. Utilizing Python `bcc` wrappers to verify, JIT Compile, and securely inject tiny C architectures directly into the isolated Linux Kernel hooking active Syscalls.
+* [**11: Systems Performance and Metrics**](./11_Systems_Performance_Metrics.md) - Brendan Gregg's **USE Method**, the terrifying truth behind Load Averages, I/O wait saturation (`iostat`), and CPU profiling via `perf`.
+* [**12: Deep Packet Inspection (TCP/IP)**](./12_Deep_Packet_Inspection.md) - Tracing brutal connection-refused failures down to the exact `RST` flag during TCP Handshakes utilizing `tcpdump` and Wireshark.
+* [**13: Capstone: eBPF Observability**](./13_eBPF_Observability.md) - The absolute pinnacle. Utilizing Python `bcc` wrappers to verify, JIT Compile, and securely inject tiny C architectures directly into the isolated Linux Kernel hooking active Syscalls.
 
 ---
 
