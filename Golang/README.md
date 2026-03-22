@@ -1,5 +1,9 @@
 # The Golang Mastery Curriculum
 
+<p align="center">
+  <img src="images/cover.png" alt="Golang Mastery Cover" width="800"/>
+</p>
+
 Welcome to the **Golang Mastery Guide**. This repository contains a complete, 12-part curriculum designed to take you from absolute beginner to building production-ready, multi-container microservices. 
 
 This curriculum was synthesized from 17 professional-grade textbooks (including textbooks on gRPC, Concurrency, TDD, and Domain-Driven Design). 
