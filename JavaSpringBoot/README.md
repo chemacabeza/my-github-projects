@@ -34,6 +34,10 @@ Think of this as the backbone: where design, performance, and reliability meet c
 
 * [Introduction to Spring Modulith](docs/SpringModulith-Introduction.md)
 
+### AI and Advanced Protocols
+
+* [Model Context Protocol (MCP) with Spring Boot](docs/ModelContextProtocol-SpringBoot.md) - Exposing enterprise Java tools natively to LLMs.
+
 ### Java Programming Master Class 2025
 
 * [Section 1: Getting started with Java Programming](docs/JavaMasterClass2025-Section-01.md)
