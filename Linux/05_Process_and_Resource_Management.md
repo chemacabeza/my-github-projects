@@ -98,3 +98,39 @@ Docker is not virtualization (like VirtualBox). Docker is simply an elegant Go C
 
 ### Summary
 To manage Linux is to intimately manage processes via PIDs, analyze `/proc` files, and gracefully orchestrate their lifecycles through SIGTERM communications and cgroup constraints.
+
+---
+
+## 6. Containerized Execution (MacBook / Linux)
+Because Docker natively utilizes cgroups and Namespaces, running `htop` inside a container literally proves the namespace illusion! You will not see your host's processes.
+
+**`Dockerfile`**
+```dockerfile
+FROM ubuntu:latest
+RUN apt-get update && apt-get install -y htop procps stress
+WORKDIR /root
+CMD ["/bin/bash"]
+```
+
+**`docker-compose.yml`**
+```yaml
+services:
+  process-sandbox:
+    build: .
+    stdin_open: true
+    tty: true
+```
+
+**To Run:**
+```bash
+docker compose run process-sandbox
+
+# 1. Spawn a background CPU stress process
+stress --cpu 4 &
+
+# 2. Open htop and find the PIDs!
+htop
+
+# 3. Kill the stress processes using the PID you found
+kill -9 <PID>
+```

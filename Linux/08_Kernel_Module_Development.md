@@ -298,3 +298,41 @@ sudo rmmod keylogger
 
 ### Summary
 You just successfully engineered two physical Kernel drivers. By orchestrating File Operation mappings (`fops`) for character devices, and isolating aggressive Hardware Interrupt callbacks using `schedule_work()`, you have officially written native C code for the Linux monolithic architecture.
+
+---
+
+## 5. Containerized Execution (MacBook / Linux)
+Dockerizing Kernel Module compilation is incredibly complex because containers **share the Host Kernel**. You must dynamically pass the Host's kernel headers into the container, and the container must be `privileged: true` to insert (`insmod`) directly into the physical host machine's Ring 0.
+
+*(Note for Mac users: Docker Desktop runs a tiny invisible Linux Virtual Machine natively. When you compile and insert this module from Docker on Mac, you are actually happily modifying the Docker Desktop Linux Kernel, which is completely safe!)*
+
+**`Dockerfile`**
+```dockerfile
+FROM ubuntu:latest
+RUN apt-get update && apt-get install -y build-essential kmod
+WORKDIR /module
+CMD ["/bin/bash"]
+```
+
+**`docker-compose.yml`**
+```yaml
+services:
+  kernel-sandbox:
+    build: .
+    privileged: true # CRITICAL: Required to write to /dev and execute insmod
+    volumes:
+      # We mount the Host's physical Kernel Headers identically into the container!
+      - /lib/modules:/lib/modules:ro
+      - .:/module
+    stdin_open: true
+    tty: true
+```
+
+**To Run:**
+```bash
+docker compose run kernel-sandbox
+
+# Inside the container, you can now run 'make' securely!
+make
+insmod mastery_device.ko
+```

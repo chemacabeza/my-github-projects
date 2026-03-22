@@ -95,3 +95,36 @@ You will literally see: `std::vector::push_back` taking 45% of the CPU dynamical
 
 ### Summary
 Never trust application logs alone. Applications do not know they are running in a namespace, they do not know they are swapping to disk, and they do not know how many TCP packets are being dropped by the Hypervisor. You must measure the OS directly utilizing the *USE Method*.
+
+---
+
+## 5. Containerized Execution (MacBook / Linux)
+Profiling CPU hardware call graphs inside a virtualized container requires absolute physical system privileges.
+
+**`Dockerfile`**
+```dockerfile
+FROM ubuntu:latest
+# Install Brendan Gregg's performance hunting tools
+RUN apt-get update && apt-get install -y sysstat linux-tools-common linux-tools-generic stress
+WORKDIR /root
+CMD ["/bin/bash"]
+```
+
+**`docker-compose.yml`**
+```yaml
+services:
+  perf-sandbox:
+    build: .
+    privileged: true # CRITICAL: Required to read the CPU architecture execution rings!
+    pid: "host"      # CRITICAL: Share the Host's PID namespace so we can profile REAL processes!
+    stdin_open: true
+    tty: true
+```
+
+**To Run:**
+```bash
+docker compose run perf-sandbox
+
+# Instantly hunt for CPU bottlenecks across the entire Host machine natively:
+perf top
+```

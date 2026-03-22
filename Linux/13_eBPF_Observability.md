@@ -100,3 +100,44 @@ Open a completely separate terminal. Simply type `ls`. You will instantly see yo
 You have successfully bypassed the Linux Kernel's isolated boundary. You wrote code dynamically evaluated, verified, JIT compiled, and securely injected into the very heart of the OS dynamically while millions of packets flew perfectly past it. 
 
 You no longer manage the system; you *are* the system. This concludes the Linux Mastery Tracking Guide.
+
+---
+
+## 5. Containerized Execution (MacBook / Linux)
+We construct the ultimate eBPF injection sandbox carefully! As with Module 08, injecting eBPF from inside a Docker Container actually injects the probe securely into the Host Kernel. 
+
+*(For Mac users: This perfectly traces the Docker Desktop internal Linux VM.)*
+
+**`Dockerfile`**
+```dockerfile
+FROM ubuntu:latest
+# Install the BPF Compiler Collection (bcc)
+RUN apt-get update && apt-get install -y bpfcc-tools python3-bpfcc linux-headers-generic
+WORKDIR /ebpf
+CMD ["/bin/bash"]
+```
+
+**`docker-compose.yml`**
+```yaml
+services:
+  ebpf-sandbox:
+    build: .
+    privileged: true   # CRITICAL: eBPF requires absolute maximum Kernel privileges
+    volumes:
+      - /lib/modules:/lib/modules:ro  # CRITICAL: eBPF needs Kernel Headers to compile the C code
+      - .:/ebpf                       # Mount our Python scripts
+    pid: "host"        # CRITICAL: Allow eBPF to trace Host PIDs natively
+    stdin_open: true
+    tty: true
+```
+
+**To Run:**
+```bash
+docker compose run ebpf-sandbox
+
+# Run the raw built-in tools against the physical host!
+biolatency-bpfcc
+
+# Run your custom Python script natively!
+python3 trace_clone.py
+```

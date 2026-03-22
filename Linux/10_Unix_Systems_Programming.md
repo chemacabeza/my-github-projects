@@ -129,3 +129,35 @@ When you type `docker ps`, your terminal perfectly creates an `AF_UNIX` network 
 To master UNIX Systems Programming is to understand that all processes dynamically split themselves utilizing `fork()`, communicate safely across isolated process memory utilizing Pipes and UNIX Sockets, and strictly orchestrate lifecycle teardowns utilizing `wait()`. This concludes Phase 3. 
 
 We now advance to Phase 4: Extreme Observability.
+
+---
+
+## 4. Containerized Execution (MacBook / Linux)
+Compile and test your raw C code inside an isolated native GCC container to ensure binary compatibility across platforms.
+
+**`Dockerfile`**
+```dockerfile
+FROM gcc:latest
+WORKDIR /src
+CMD ["/bin/bash"]
+```
+
+**`docker-compose.yml`**
+```yaml
+services:
+  ipc-sandbox:
+    build: .
+    volumes:
+      - .:/src  # Mount your local C files directly into the container
+    stdin_open: true
+    tty: true
+```
+
+**To Run:**
+```bash
+docker compose run ipc-sandbox
+
+# Inside the container, compile and hunt for zombies!
+gcc pipe_example.c -o pipe_example
+./pipe_example
+```

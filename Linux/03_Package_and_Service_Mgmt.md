@@ -103,3 +103,40 @@ sudo dpkg -i downloaded_cool_software.deb
 
 ### Summary of System Administration Basics
 The moment you write your own `systemd.service` file and view its live logs through `journalctl`, you transition from a Linux user to a Linux Administrator. `systemd` is the beating heart of modern enterprise Linux infrastructure.
+
+---
+
+## 4. Containerized Execution (MacBook / Linux)
+Standard Docker containers do absolutely **not** run `systemd` by default (Docker itself is the init system!). To practice writing `systemctl` daemons natively on a MacBook without a Virtual Machine, you must use a specialized Privileged image mounting the cgroup subsystem!
+
+**`Dockerfile`**
+```dockerfile
+FROM jrei/systemd-ubuntu:22.04
+RUN apt-get update && apt-get install -y nginx
+WORKDIR /etc/systemd/system
+CMD ["/lib/systemd/systemd"]
+```
+
+**`docker-compose.yml`**
+```yaml
+services:
+  sysadmin-sandbox:
+    build: .
+    privileged: true # CRITICAL: Required for systemd to assume PID 1!
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    tty: true
+```
+
+**To Run:**
+```bash
+# 1. Start it safely in the background
+docker compose up -d
+
+# 2. Attach an interactive Bash shell to the running init system!
+docker compose exec sysadmin-sandbox bash
+
+# 3. Practice! 
+systemctl status nginx
+journalctl -f
+```

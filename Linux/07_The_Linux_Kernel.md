@@ -82,3 +82,35 @@ sudo rmmod usb_storage
 The Kernel operates ruthlessly and efficiently, acting as the absolute authority mediating between hardware electrical signals and User Space requests. We never bypass the Kernel; we use APIs (`glibc`) to submit securely sanitized Syscalls. 
 
 In the next guide (`08_Kernel_Module_Development.md`), we will literally write our own Kernel Module and inject it directly into Ring 0.
+
+---
+
+## 5. Containerized Execution (MacBook / Linux)
+Standard Docker containers block the `ptrace` system call for security reasons, meaning `strace` will fail! You must explicitly grant `SYS_PTRACE` capabilities to trace processes inside a container.
+
+**`Dockerfile`**
+```dockerfile
+FROM ubuntu:latest
+RUN apt-get update && apt-get install -y strace curl
+WORKDIR /root
+CMD ["/bin/bash"]
+```
+
+**`docker-compose.yml`**
+```yaml
+services:
+  strace-sandbox:
+    build: .
+    cap_add:
+      - SYS_PTRACE  # CRITICAL: Required for strace to hook into other processes!
+    stdin_open: true
+    tty: true
+```
+
+**To Run:**
+```bash
+docker compose run strace-sandbox
+
+# Experiment! Watch exactly what the Kernel does when you curl Google:
+strace curl https://google.com
+```

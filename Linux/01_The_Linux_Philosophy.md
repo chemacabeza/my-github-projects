@@ -93,3 +93,36 @@ When navigating using `cd` (Change Directory), understand the difference.
 
 ### Summary
 The UNIX philosophy asserts that small, modular tools operating on text files provide maximum power. Once you memorize the FHS and master Octal permissions, you control who has access to every program and hardware device on the system.
+
+---
+
+## 5. Containerized Execution (MacBook / Linux)
+Do not practice `chmod` or `chown` on your host machine's root filesystem! We have provided an isolated Ubuntu Docker container to practice safely.
+
+**`Dockerfile`**
+```dockerfile
+FROM ubuntu:latest
+# Create a dummy test environment
+RUN mkdir -p /root/playground && \
+    touch /root/playground/secret.txt && \
+    touch /root/playground/script.sh
+WORKDIR /root/playground
+CMD ["/bin/bash"]
+```
+
+**`docker-compose.yml`**
+```yaml
+services:
+  linux-sandbox:
+    build: .
+    stdin_open: true # Equivalent to -i
+    tty: true        # Equivalent to -t
+```
+
+**To Run:**
+```bash
+docker compose run linux-sandbox
+# Now inside the container, practice!
+ls -l
+chmod 755 script.sh
+```

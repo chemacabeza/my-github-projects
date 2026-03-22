@@ -68,3 +68,37 @@ Wireshark provides a beautiful graphical interface allowing you to uniquely filt
 
 ### Summary
 When Application Logs silently fail, `tcpdump` proves precisely where the network is bleeding. By identifying `FIN` termination timeouts or aggressive `RST` connection drops, you stop hunting ghost bugs in your HTTP Router and begin fixing your underlying network proxy architectures!
+
+---
+
+## 4. Containerized Execution (MacBook / Linux)
+Standard Docker containers run on an isolated virtual `bridge` network. If you run `tcpdump` securely inside standard Docker, you will literally only see traffic from other containers! To sniff your actual MacBook/Linux Host network cards natively, we must map the Network Namespace exactly safely.
+
+**`Dockerfile`**
+```dockerfile
+FROM ubuntu:latest
+RUN apt-get update && apt-get install -y tcpdump curl iproute2
+WORKDIR /root
+CMD ["/bin/bash"]
+```
+
+**`docker-compose.yml`**
+```yaml
+services:
+  tcpdump-sandbox:
+    build: .
+    network_mode: "host" # CRITICAL: Bypass Docker's network entirely. Attach to the physical host NIC natively!
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    stdin_open: true
+    tty: true
+```
+
+**To Run:**
+```bash
+docker compose run tcpdump-sandbox
+
+# Warning: You are now blindly sniffing your actual host computer's NIC!
+tcpdump -i any -n -nn 'port 443'
+```

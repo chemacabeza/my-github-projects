@@ -117,3 +117,35 @@ There are exactly 5 asterisks `* * * * *`, representing time, followed by the co
 
 ### Summary
 The transition from entering commands linearly to composing them logically inside a resilient, strict-mode Bash file is the definition of Systems Automation. By combining `set -euo pipefail` with `crontab`, you create background jobs that operate reliably for decades.
+
+---
+
+## 5. Containerized Execution (MacBook / Linux)
+Test strict-mode Bash scripts and Crontab scheduling inside an isolated container.
+
+**`Dockerfile`**
+```dockerfile
+FROM ubuntu:latest
+# Install cron daemon
+RUN apt-get update && apt-get install -y cron nano
+WORKDIR /root
+# Pre-create a strict mode test script
+RUN echo '#!/bin/bash\nset -euo pipefail\necho "Strict-mode Script Executing..."\nexit 0' > /root/test.sh && \
+    chmod +x /root/test.sh
+CMD ["/bin/bash"]
+```
+
+**`docker-compose.yml`**
+```yaml
+services:
+  bash-sandbox:
+    build: .
+    stdin_open: true
+    tty: true
+```
+
+**To Run:**
+```bash
+docker compose run bash-sandbox
+./test.sh
+```

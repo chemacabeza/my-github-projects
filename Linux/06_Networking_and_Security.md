@@ -115,3 +115,37 @@ Now, you open DataGrip or pgAdmin on your laptop, connect to `localhost:9000`, a
 Sysadmin networking revolves entirely around isolating processes holding sockets (`ss`), configuring robust kernel firewalls (`ufw`), and manipulating encrypted streams (`ssh`). 
 
 As you transition into Phase 3, you are no longer learning *how* to construct the machine; you begin learning **why** the machine ticks: the Linux Kernel itself.
+
+---
+
+## 5. Containerized Execution (MacBook / Linux)
+Standard Docker containers are explicitly forbidden from modifying network firewalls. To practice `ip` mappings and `ufw` policies, you must grant the container `NET_ADMIN` privileges.
+
+**`Dockerfile`**
+```dockerfile
+FROM ubuntu:latest
+RUN apt-get update && apt-get install -y iproute2 ufw iptables iputils-ping
+WORKDIR /root
+CMD ["/bin/bash"]
+```
+
+**`docker-compose.yml`**
+```yaml
+services:
+  network-sandbox:
+    build: .
+    cap_add:
+      - NET_ADMIN  # CRITICAL: Required to manipulate the Linux networking stack!
+      - NET_RAW
+    stdin_open: true
+    tty: true
+```
+
+**To Run:**
+```bash
+docker compose run network-sandbox
+
+# Experiment securely with routing and firewalls without destroying your actual computer's Wi-Fi!
+ip addr show
+ufw status
+```

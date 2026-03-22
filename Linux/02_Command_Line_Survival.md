@@ -127,3 +127,34 @@ tar -xzvf backup.tar.gz
 
 ### Summary
 The Linux command line is an exercise in composition. You don't learn a massive monolithic tool that does everything. You learn 20 tiny tools (`ls`, `grep`, `awk`, `sed`, `sort`, `uniq`) and pipe them together to achieve infinite programmatic possibilities.
+
+---
+
+## 7. Containerized Execution (MacBook / Linux)
+Practice your piping and filtering inside a completely disposable, isolated sandbox. 
+
+**`Dockerfile`**
+```dockerfile
+FROM ubuntu:latest
+RUN apt-get update && apt-get install -y iproute2 net-tools
+WORKDIR /root
+# Create a dummy syslog file for grep practice
+RUN echo "May 14 12:00:00 server NGINX: Connection established\nMay 14 12:01:00 server NGINX: ERROR: Process Out of Memory!\nMay 14 12:02:00 server SSH: User login successful" > /var/log/dummy_syslog.log
+CMD ["/bin/bash"]
+```
+
+**`docker-compose.yml`**
+```yaml
+services:
+  cli-sandbox:
+    build: .
+    stdin_open: true
+    tty: true
+```
+
+**To Run:**
+```bash
+docker compose run cli-sandbox
+# Test your sed pipes!
+sed 's/ERROR/WARNING/g' /var/log/dummy_syslog.log
+```
