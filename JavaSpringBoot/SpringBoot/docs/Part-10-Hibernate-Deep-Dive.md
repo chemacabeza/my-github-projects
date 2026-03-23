@@ -40,22 +40,9 @@ ORM (Object-Relational Mapping) bridges these worlds by:
 
 ### 2.1 Core Components
 
-```
-Application Code
-     │
-     ▼
-  Session (Unit of Work)
-     │
-     ├── First-Level Cache (per-session)
-     │
-     ▼
- SessionFactory (thread-safe, one per database)
-     │
-     ├── Second-Level Cache (shared)
-     │
-     ▼
- ConnectionProvider → JDBC → Database
-```
+<p align="center">
+<img src="../images/HibernateArchitecture.png" width="600"/>
+</p>
 
 ### 2.2 SessionFactory & Session
 
@@ -233,29 +220,9 @@ public class User {
 
 ## 4. Object Lifecycle & Persistence States
 
-```
-              new()
-                │
-                ▼
-    ┌──────────────────────┐
-    │     TRANSIENT        │ → Not associated with any Session
-    └──────────────────────┘
-                │ persist() / save()
-                ▼
-    ┌──────────────────────┐
-    │     PERSISTENT       │ → Associated with Session, tracked
-    └──────────────────────┘
-                │ detach() / close() / clear()
-                ▼
-    ┌──────────────────────┐
-    │     DETACHED          │ → Was persistent, session closed
-    └──────────────────────┘
-                │ merge()
-                ▼
-           PERSISTENT again
-
-    PERSISTENT ──remove()──► REMOVED ──flush()──► DELETED from DB
-```
+<p align="center">
+<img src="../images/HibernateLifecycle.png" width="600"/>
+</p>
 
 ### Dirty Checking
 
