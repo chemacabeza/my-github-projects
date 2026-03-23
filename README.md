@@ -21,10 +21,10 @@
 
 | Audience | Recommended Starting Point |
 |----------|---------------------------|
-| 🔍 **Recruiters** | ⚡ [AI Video Studio →](https://github.com/chemacabeza/test-for-ai-wan) · 🔊 [AI Voice Studio →](https://github.com/chemacabeza/test-for-audio-generation) · [Skills Matrix](SKILLS-MATRIX.md) |
+| 🔍 **Recruiters** | ⚡ [AI Video Studio →](https://github.com/chemacabeza/test-for-ai-wan) · 🔊 [AI Voice Studio →](https://github.com/chemacabeza/test-for-audio-generation) · 🎧 [AI Audio Listener →](https://github.com/chemacabeza/test-for-audio-listener) · [Skills Matrix](SKILLS-MATRIX.md) |
 | 💼 **Hiring Managers** | [About Me](ABOUT-ME.md) → [Project Highlights](PROJECT-HIGHLIGHTS.md) → Live demos below |
 | 💻 **Developers** | [Quick Start](QUICK-START.md) → [Examples](examples/) → Section-specific docs |
-| 🎨 **AI Enthusiasts** | [AI Video Studio](https://github.com/chemacabeza/test-for-ai-wan) · [AI Voice Studio](https://github.com/chemacabeza/test-for-audio-generation) · [Image Gen](AI-related/README.md) |
+| 🎨 **AI Enthusiasts** | [AI Video Studio](https://github.com/chemacabeza/test-for-ai-wan) · [AI Voice Studio](https://github.com/chemacabeza/test-for-audio-generation) · [AI Audio Listener](https://github.com/chemacabeza/test-for-audio-listener) |
 | ☕ **Backend Engineers** | [Java Projects](JavaSpringBoot/PROJECT-CATALOG.md) → [Architecture Docs](JavaSpringBoot/docs/) |
 | ⚡ **DevOps/SRE** | [Bash Guide](bash/README.md) → [Docker configs](AI-related/Dockerfile) |
 
@@ -33,8 +33,9 @@
 ## 📊 Portfolio Overview
 
 - 🎬 **AI Video Studio** — full-stack generative video platform (Spring Boot · React · PostgreSQL · 5 fal.ai models · Docker)
-- � **AI Voice Studio** — full-stack TTS platform (Spring Boot · React · OpenAI TTS API · 11 voices · Docker)
-- �🚀 **70+ Spring Boot Projects** across 10 enterprise patterns (REST, Security, MVC, JPA, AOP)
+- 🔊 **AI Voice Studio** — full-stack TTS platform (Spring Boot · React · OpenAI TTS API · 11 voices · Docker)
+- 🎧 **AI Audio Listener** — full-stack STT platform (Spring Boot · Next.js · OpenAI Whisper API · PostgreSQL · Docker)
+- 🚀 **70+ Spring Boot Projects** across 10 enterprise patterns (REST, Security, MVC, JPA, AOP)
 - 🎨 **46GB AI Model Library** with 7 SDXL checkpoints + 41 LoRA fine-tuning models
 - 📖 **35-Chapter Bash Guide** with 236 executable scripts and hands-on examples
 - ✅ **133+ Test Classes** demonstrating quality-first development
@@ -44,7 +45,7 @@
 
 ## 🌟 Featured Projects
 
-> � **Recruiters:** jump straight to the two AI studios below — they showcase the most breadth and depth in the shortest time.
+> 🔍 **Recruiters:** jump straight to the three AI studios below — they showcase the most breadth and depth in the shortest time.
 
 ---
 
@@ -71,7 +72,20 @@ A **full-stack Text-to-Speech application** that converts any text into natural,
 - **Architecture**: Binary MP3 streamed as `audio/mpeg`; key isolation via environment variables only; one-command Docker startup with health checks
 - **Highlights**: Clean security model (key never in browser), custom speaking instructions, stateless backend — scales horizontally with zero changes
 - **[Explore AI Voice Studio →](https://github.com/chemacabeza/test-for-audio-generation)**
-
+ 
+---
+ 
+### 🎧 AI Audio Listener — `test-for-audio-listener`
+*Because transcribing audio is as useful as it is complex — and a great test of high-performance Java.*
+ 
+A **full-stack Audio Intelligence platform** that turns any speech (live mic or file upload) into accurate text using the OpenAI Whisper API. Features persistent transcription history, full-text search, and a refined Next.js interface.
+ 
+- **Tech Stack**: Spring Boot 3 · Next.js 15 · PostgreSQL · Flyway · Docker Compose · OpenAI Whisper API
+- **Features**: Live microphone recording, multi-format file uploads, searchable transcription archive, persistent storage
+- **Architecture**: Modular Spring Boot service for transcription orchestration; Next.js 15 frontend for a lightning-fast UI; Dockerized for instant local setup
+- **Highlights**: Production-grade error handling, containerized PostgreSQL with Flyway migrations, clean separation of concerns between audio processing and UI
+- **[Explore AI Audio Listener →](https://github.com/chemacabeza/test-for-audio-listener)**
+ 
 ---
 
 ### 🧠 ML Inference Pipeline (PyTorch → ONNX → Java)
@@ -112,6 +126,7 @@ Full-stack **Spring Boot 3.x** applications demonstrating enterprise patterns an
 
 * [🎬 AI VIDEO STUDIO](https://github.com/chemacabeza/test-for-ai-wan) ← **Start here**
 * [🔊 AI VOICE STUDIO](https://github.com/chemacabeza/test-for-audio-generation) ← **Start here**
+* [🎧 AI AUDIO LISTENER](https://github.com/chemacabeza/test-for-audio-listener) ← **Start here**
 * [AI RELATED](AI-related/README.md)
 * [BASH](bash/README.md)
 * [JAVA + SPRING BOOT](JavaSpringBoot/README.md)
@@ -125,6 +140,7 @@ Each section contains its own detailed setup instructions:
 
 - **AI Video Studio**: `cd test-for-ai-wan && ./run.sh start` → Frontend: http://localhost:3000 | API: http://localhost:8080
 - **AI Voice Studio**: `cd test-for-audio-generation && ./start.sh start` → http://localhost
+- **AI Audio Listener**: `cd test-for-audio-listener && ./start.sh start` → http://localhost:3000 (React) | http://localhost:8080 (API)
 - **AI Image Gen**: `cd AI-related && make run` (Docker) or `make install-local && make run-local`
 - **Bash**: Navigate to `bash/chapters/` and explore the structured learning path
 - **Java**: Individual Maven projects with `mvn spring-boot:run` in each subdirectory
