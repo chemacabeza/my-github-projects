@@ -94,14 +94,9 @@ int[] numbers = {1, 2, 3};   // Arrays are reference types
 
 **Memory model:**
 
-```
-Stack                    Heap
-┌──────────┐            ┌──────────────┐
-│ age = 30 │            │ "Alice"      │
-│ name ─────────────────│──────────────│
-│ numbers ──────────────│─{1, 2, 3}   │
-└──────────┘            └──────────────┘
-```
+<p align="center">
+<img src="../images/MemoryModel.png" width="600"/>
+</p>
 
 ### 2.3 Variable Declaration & Initialization
 
