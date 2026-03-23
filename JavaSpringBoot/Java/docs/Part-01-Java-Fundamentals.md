@@ -29,45 +29,15 @@ Java was designed around five key principles:
 
 ### 1.2 JDK, JRE, and JVM
 
-```
-┌─────────────────────────────────────────┐
-│              JDK (Java Development Kit) │
-│  ┌───────────────────────────────────┐  │
-│  │         JRE (Java Runtime)        │  │
-│  │  ┌─────────────────────────────┐  │  │
-│  │  │    JVM (Virtual Machine)    │  │  │
-│  │  │  • Class Loader             │  │  │
-│  │  │  • Bytecode Verifier        │  │  │
-│  │  │  • JIT Compiler             │  │  │
-│  │  │  • Garbage Collector        │  │  │
-│  │  └─────────────────────────────┘  │  │
-│  │  + Core Libraries (java.lang,     │  │
-│  │    java.util, java.io, etc.)      │  │
-│  └───────────────────────────────────┘  │
-│  + javac (compiler)                     │
-│  + java (launcher)                      │
-│  + javadoc, jar, jshell, etc.           │
-└─────────────────────────────────────────┘
-```
+<p align="center">
+<img src="../images/JdkJreJvm.png" width="600"/>
+</p>
 
 ### 1.3 The Compilation & Execution Pipeline
 
-```
-Source Code (.java)
-       │
-       ▼
-   javac compiler
-       │
-       ▼
-Bytecode (.class)
-       │
-       ▼
-   JVM (java)
-       │
-       ▼
-  Machine Code
- (via JIT compiler)
-```
+<p align="center">
+<img src="../images/CompilationPipeline.png" width="600"/>
+</p>
 
 **Key insight:** Java bytecode is platform-independent. The JVM is platform-specific. This is how Java achieves portability.
 
