@@ -290,4 +290,4 @@ jextract --source -t com.example.mylib -I /usr/include mylib.h
 
 ---
 
-[← Part 11: Modern Java Features](Part-11-Modern-Java-Features.md) | [Back to Course Index](../README.md)
+[← Part 11: Modern Java Features](Part-11-Modern-Java-Features.md) | [Back to Course Index](../README.md) | [Next: Part 13 — JVM Troubleshooting →](Part-13-JVM-Troubleshooting.md)

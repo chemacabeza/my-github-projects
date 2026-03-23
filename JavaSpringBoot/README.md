@@ -14,7 +14,7 @@ This project is organized into **two comprehensive courses**, each built from in
 
 ## 📚 Courses
 
-### ☕ [Java Course](Java/README.md) — 12 Parts
+### ☕ [Java Course](Java/README.md) — 13 Parts
 
 A deep dive into the Java language, from fundamentals to cutting-edge features:
 
@@ -32,8 +32,9 @@ A deep dive into the Java language, from fundamentals to cutting-edge features:
 | 10 | [Advanced OOP & Design Patterns](Java/docs/Part-10-Advanced-OOP.md) |
 | 11 | [Modern Java Features](Java/docs/Part-11-Modern-Java-Features.md) |
 | 12 | [JNI & Project Panama](Java/docs/Part-12-JNI-And-Panama.md) |
+| 13 | [JVM Troubleshooting & Tuning](Java/docs/Part-13-JVM-Troubleshooting.md) |
 
-**Sources:** *Thinking in Java* · *OCA/OCP Java SE 8* · *Java 8 Lambdas* · *Java Coding Problems* · *Java Native Interface*
+**Sources:** *Thinking in Java* · *OCA/OCP Java SE 8* · *Java 8 Lambdas* · *Java Coding Problems* · *Java Native Interface* · *JVM Troubleshooting Handbook*
 
 ---
 

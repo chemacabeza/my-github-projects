@@ -14,7 +14,7 @@ Whether you're refreshing your fundamentals, preparing for certification, or mas
 
 ## 📚 Source Material
 
-This course draws on **6 authoritative Java books**:
+This course draws on **7 authoritative Java books**:
 
 | Book | Author(s) | Focus |
 |------|-----------|-------|
@@ -24,6 +24,7 @@ This course draws on **6 authoritative Java books**:
 | *OCP Java SE 8 Programmer II* | Boyarsky & Selikoff | Generics, Streams, Concurrency, I/O |
 | *Java 8 Lambdas* | Richard Warburton | Lambda Expressions, Streams, Parallelism |
 | *The Java Native Interface* | Sheng Liang | JNI programming |
+| *JVM Troubleshooting Handbook* | Pierre-Hugues Charbonneau | JVM tuning, GC analysis, diagnostics |
 
 ---
 
@@ -43,6 +44,7 @@ This course draws on **6 authoritative Java books**:
 | 10 | [Advanced OOP](docs/Part-10-Advanced-OOP.md) | ⭐⭐⭐ Advanced | Design patterns, RTTI, reflection, abstract classes |
 | 11 | [Modern Java Features](docs/Part-11-Modern-Java-Features.md) | ⭐⭐⭐ Advanced | Sealed classes, records, pattern matching, text blocks |
 | 12 | [JNI & Project Panama](docs/Part-12-JNI-And-Panama.md) | ⭐⭐⭐⭐ Expert | Native code, Foreign Function API, memory segments |
+| 13 | [JVM Troubleshooting](docs/Part-13-JVM-Troubleshooting.md) | ⭐⭐⭐⭐ Expert | Heap tuning, GC analysis, thread dumps, OOM diagnosis |
 
 ---
 
@@ -54,11 +56,11 @@ This course draws on **6 authoritative Java books**:
 ### 🔵 Path B: Functional & Modern Java (Parts 6–8, 11)
 **Time:** 3–4 weeks | **Goal:** Master lambdas, streams, and modern idioms
 
-### 🟣 Path C: Complete Course (Parts 1–12)
-**Time:** 10–14 weeks | **Goal:** Full expert-level Java proficiency
+### 🟣 Path C: Complete Course (Parts 1–13)
+**Time:** 12–16 weeks | **Goal:** Full expert-level Java proficiency
 
-### 🔴 Path D: Advanced Specialization (Parts 10, 12)
-**Time:** 2–3 weeks | **Goal:** Deep OOP patterns, native interop, Panama
+### 🔴 Path D: Advanced Specialization (Parts 10, 12, 13)
+**Time:** 3–4 weeks | **Goal:** Deep OOP patterns, native interop, JVM internals
 
 ---
 
