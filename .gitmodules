@@ -7,3 +7,6 @@
 [submodule "test-for-audio-generation"]
 	path = test-for-audio-generation
 	url = git@github.com:chemacabeza/test-for-audio-generation.git
+[submodule "test-audio-listener"]
+	path = test-audio-listener
+	url = https://github.com/chemacabeza/test-for-audio-listener
