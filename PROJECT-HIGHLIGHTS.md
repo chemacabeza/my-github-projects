@@ -108,7 +108,43 @@ Proves the ability to design and implement security-conscious full-stack applica
 
 ---
 
-### 4. 🎧 AI Audio Listener (Full-Stack STT)
+### 5. 🎙️ AI Voice Assistant (Full-Stack Conversational AI)
+
+**The Challenge:**
+Build a fully conversational AI assistant — one that **listens**, **thinks**, and **speaks back** — entirely in the browser. The goal was to create an Alexa-like experience from scratch, combining three OpenAI APIs into a seamless real-time loop, with multilingual support, customizable personas, and both online and offline operation modes.
+
+**The Solution:**
+Engineered a three-stage voice pipeline: the browser captures audio via the MediaRecorder API, the Spring Boot backend transcribes it with OpenAI Whisper, generates an intelligent response with GPT-4o, and synthesises speech with OpenAI TTS — all streamed back as MP3 and played instantly. A React frontend delivers a stunning dark-themed UI with wake word detection, push-to-talk, and continuous listening modes.
+
+**Technologies:**
+- **Backend**: Java 17+, Spring Boot 3, Spring WebClient
+- **Frontend**: React + Vite, custom audio hooks (useAudioRecorder, useWakeWord)
+- **AI**: OpenAI Whisper (STT) + GPT-4o (Chat) + TTS (6 voices)
+- **Infrastructure**: Docker, Docker Compose, Nginx, dual-profile orchestration (online/offline)
+
+**Key Achievements:**
+- 🎙️ **Full Conversational Loop**: Seamless STT → Chat → TTS pipeline running entirely in the browser
+- 🌍 **9 Languages**: English, Spanish, German, French, Italian, Portuguese, Japanese, Chinese, Korean
+- 🎯 **Wake Word Detection**: Say the AI's name to activate — just like a real assistant
+- ✏️ **Custom AI Persona**: Name your assistant anything — Nova, Jarvis, Helga — and it responds only to that name
+- 🔄 **Dual Interaction Modes**: Push-to-talk for precision, continuous listening for hands-free operation
+- 🔌 **Online + Offline Backends**: Full GPT-4o pipeline online; lightweight Node.js fallback offline
+- 🐳 **One-Command Setup**: `./start.sh start` launches everything with health checks and auto-browser-open
+
+**Technical Highlights:**
+- Three-endpoint REST API: `/api/audio/transcribe`, `/api/chat/respond`, `/api/audio/speak`
+- Secure API key isolation — credentials never reach the browser
+- Docker Compose profiles (`online`/`offline`) for environment-specific orchestration
+- Modular React component architecture: Header, SettingsPanel, ChatHistory, MicrophoneButton, StatusIndicator
+
+**Impact:**
+Demonstrates the ability to orchestrate multiple AI APIs into a cohesive, real-time product experience. This project goes beyond simple API wrappers — it's a complete conversational AI system with production-grade architecture, multilingual intelligence, and a polished user experience that rivals commercial voice assistants.
+
+**Code:** [test-ai-asistant/](https://github.com/chemacabeza/test-ai-asistant)
+
+---
+
+### 6. 🎧 AI Audio Listener (Full-Stack STT)
 
 **The Challenge:**
 Build a high-performance audio intelligence platform capable of transcribing live microphone recordings and multi-format file uploads with near-perfect accuracy. The goal was to demonstrate full-stack proficiency with Next.js 15, Spring Boot 3, and persistent storage using PostgreSQL.
@@ -144,7 +180,7 @@ Demonstrates the ability to build sophisticated AI-powered applications from scr
 
 ---
 
-### 5. ☕ Enterprise Spring Boot Architecture (70+ Projects)
+### 7. ☕ Enterprise Spring Boot Architecture (70+ Projects)
 
 **The Challenge:**
 Master modern Spring Boot 3.x and Spring Framework 6 enterprise patterns while demonstrating production-ready architecture across REST APIs, security, MVC applications, and advanced ORM. The goal was to showcase comprehensive backend expertise aligned with Engineering Manager responsibilities at Klarna.
@@ -185,7 +221,7 @@ Demonstrates enterprise Java expertise directly aligned with my Engineering Mana
 
 ---
 
-### 6. ⚡ Bash In Depth: Developer Education (35 Chapters, 236 Scripts)
+### 8. ⚡ Bash In Depth: Developer Education (35 Chapters, 236 Scripts)
 
 **The Challenge:**
 Bridge the gap in comprehensive Bash scripting resources by creating a structured learning path from fundamentals to advanced production patterns. The goal was to demonstrate teaching ability, technical communication, and depth of systems programming knowledge—critical skills for engineering leadership.

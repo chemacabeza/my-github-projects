@@ -152,7 +152,7 @@ Engineering Manager at Klarna with 15+ years building scalable systems across fi
 ### Continuous Learning (2024-2026)
 - Spring Boot 3 & Spring Framework 6 comprehensive mastery (70+ projects)
 - AI/ML with Stable Diffusion and Fooocus (46GB model library)
-- Full-stack AI studios: Video (fal.ai), Voice (OpenAI TTS), and Audio Listener (Whisper)
+- Full-stack AI studios: Video (fal.ai), Voice (OpenAI TTS), Audio Listener (Whisper), and Voice Assistant (GPT-4o + Whisper + TTS)
 - Advanced Bash scripting (35 chapters, 236 scripts)
 - Java Master Class 2025 (in progress)
 

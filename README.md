@@ -21,10 +21,10 @@
 
 | Audience | Recommended Starting Point |
 |----------|---------------------------|
-| 🔍 **Recruiters** | ⚡ [AI Video Studio →](https://github.com/chemacabeza/test-for-ai-wan) · 🔊 [AI Voice Studio →](https://github.com/chemacabeza/test-for-audio-generation) · 🎧 [AI Audio Listener →](https://github.com/chemacabeza/test-for-audio-listener) · [Skills Matrix](SKILLS-MATRIX.md) |
+| 🔍 **Recruiters** | ⚡ [AI Video Studio →](https://github.com/chemacabeza/test-for-ai-wan) · 🔊 [AI Voice Studio →](https://github.com/chemacabeza/test-for-audio-generation) · 🎧 [AI Audio Listener →](https://github.com/chemacabeza/test-for-audio-listener) · 🎙️ [AI Voice Assistant →](https://github.com/chemacabeza/test-ai-asistant) · [Skills Matrix](SKILLS-MATRIX.md) |
 | 💼 **Hiring Managers** | [About Me](ABOUT-ME.md) → [Project Highlights](PROJECT-HIGHLIGHTS.md) → Live demos below |
 | 💻 **Developers** | [Quick Start](QUICK-START.md) → [Examples](examples/) → Section-specific docs |
-| 🎨 **AI Enthusiasts** | [AI Video Studio](https://github.com/chemacabeza/test-for-ai-wan) · [AI Voice Studio](https://github.com/chemacabeza/test-for-audio-generation) · [AI Audio Listener](https://github.com/chemacabeza/test-for-audio-listener) |
+| 🎨 **AI Enthusiasts** | [AI Video Studio](https://github.com/chemacabeza/test-for-ai-wan) · [AI Voice Studio](https://github.com/chemacabeza/test-for-audio-generation) · [AI Audio Listener](https://github.com/chemacabeza/test-for-audio-listener) · [AI Voice Assistant](https://github.com/chemacabeza/test-ai-asistant) |
 | ☕ **Backend Engineers** | [Java Projects](JavaSpringBoot/PROJECT-CATALOG.md) → [Architecture Docs](JavaSpringBoot/docs/) |
 | ⚡ **DevOps/SRE** | [Bash Guide](bash/README.md) → [Docker configs](AI-related/Dockerfile) |
 
@@ -35,6 +35,7 @@
 - 🎬 **AI Video Studio** — full-stack generative video platform (Spring Boot · React · PostgreSQL · 5 fal.ai models · Docker)
 - 🔊 **AI Voice Studio** — full-stack TTS platform (Spring Boot · React · OpenAI TTS API · 11 voices · Docker)
 - 🎧 **AI Audio Listener** — full-stack STT platform (Spring Boot · Next.js · OpenAI Whisper API · PostgreSQL · Docker)
+- 🎙️ **AI Voice Assistant** — full-stack conversational AI (Spring Boot · React · OpenAI GPT-4o + Whisper + TTS · 9 languages · Docker)
 - 🚀 **70+ Spring Boot Projects** across 10 enterprise patterns (REST, Security, MVC, JPA, AOP)
 - 🎨 **46GB AI Model Library** with 7 SDXL checkpoints + 41 LoRA fine-tuning models
 - 📖 **35-Chapter Bash Guide** with 236 executable scripts and hands-on examples
@@ -88,6 +89,19 @@ A **full-stack Audio Intelligence platform** that turns any speech (live mic or 
  
 ---
 
+### 🎙️ AI Voice Assistant — `test-ai-asistant`
+*"Hey Nova, tell me a joke." — Your own AI assistant, built from scratch.*
+
+A **full-stack conversational AI voice assistant** that listens, thinks, and speaks back — just like Alexa or Google Assistant, but fully customizable. Speak naturally, and the system transcribes your voice (Whisper), generates an intelligent response (GPT-4o), and speaks it back in a natural voice (TTS) — all in real time. Features wake word detection, 9 languages, custom AI names, and both online and offline modes.
+
+- **Tech Stack**: Spring Boot 3 · React + Vite · OpenAI (Whisper + GPT-4o + TTS) · Docker Compose · Nginx
+- **Features**: Wake word detection, 9 languages, 6 voice personas, push-to-talk & continuous listening, online/offline dual backends
+- **Architecture**: Three-stage pipeline (STT → Chat → TTS), secure API key isolation, health-checked Docker orchestration
+- **Highlights**: Fully conversational loop in the browser, custom AI naming, offline fallback backend, one-command Docker startup
+- **[Explore AI Voice Assistant →](https://github.com/chemacabeza/test-ai-asistant)**
+
+---
+
 ### 🧠 ML Inference Pipeline (PyTorch → ONNX → Java)
 Multi-model serving on a single Spring Boot REST API — Iris MLP, MNIST CNN (99.13%), Glasses ResNet18 (98.12%), Document Reader — trained in Python, exported to ONNX, and deployed in Java with golden parity tests guaranteeing identical outputs across runtimes.
 
@@ -127,6 +141,7 @@ Full-stack **Spring Boot 3.x** applications demonstrating enterprise patterns an
 * [🎬 AI VIDEO STUDIO](https://github.com/chemacabeza/test-for-ai-wan) ← **Start here**
 * [🔊 AI VOICE STUDIO](https://github.com/chemacabeza/test-for-audio-generation) ← **Start here**
 * [🎧 AI AUDIO LISTENER](https://github.com/chemacabeza/test-for-audio-listener) ← **Start here**
+* [🎙️ AI VOICE ASSISTANT](https://github.com/chemacabeza/test-ai-asistant) ← **Start here**
 * [AI RELATED](AI-related/README.md)
 * [BASH](bash/README.md)
 * [JAVA + SPRING BOOT](JavaSpringBoot/README.md)
@@ -141,6 +156,7 @@ Each section contains its own detailed setup instructions:
 - **AI Video Studio**: `cd test-for-ai-wan && ./run.sh start` → Frontend: http://localhost:3000 | API: http://localhost:8080
 - **AI Voice Studio**: `cd test-for-audio-generation && ./start.sh start` → http://localhost
 - **AI Audio Listener**: `cd test-for-audio-listener && ./start.sh start` → http://localhost:3000 (React) | http://localhost:8080 (API)
+- **AI Voice Assistant**: `cd test-ai-asistant && ./start.sh start` → http://localhost:3000 (UI) | http://localhost:8080 (API)
 - **AI Image Gen**: `cd AI-related && make run` (Docker) or `make install-local && make run-local`
 - **Bash**: Navigate to `bash/chapters/` and explore the structured learning path
 - **Java**: Individual Maven projects with `mvn spring-boot:run` in each subdirectory

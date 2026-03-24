@@ -130,6 +130,41 @@ A high-performance platform that turns any speech (live mic or file upload) into
 
 ---
 
+## 🎙️ test-ai-asistant: AI Voice Assistant
+*Your own AI assistant. Built from scratch. Speak naturally.*
+
+> "What if I could build my own Alexa — one that speaks 9 languages and has a personality I choose?"
+
+A **full-stack conversational AI** that completes the voice loop: you speak, it transcribes (Whisper), thinks (GPT-4o), and speaks back (TTS) — all in real time, right in your browser. Name it Nova. Name it Jarvis. It's yours.
+
+**What it does:**
+- 🗣️ **Voice Input**: Browser microphone capture, transcribed instantly by OpenAI Whisper.
+- 🤖 **Intelligent Chat**: GPT-4o generates context-aware responses with full conversation history.
+- 🔊 **Voice Output**: Natural text-to-speech with 6 voice personas (alloy, echo, fable, onyx, nova, shimmer).
+- 🎯 **Wake Word**: Say the AI's name to activate — *"Nova, what's the weather?"*
+- 🌍 **9 Languages**: English, Spanish, German, French, Italian, Portuguese, Japanese, Chinese, Korean.
+- 🎤 **Dual Modes**: Push-to-talk for precision or continuous listening for hands-free operation.
+
+**Stack (end-to-end, all Dockerised):**
+
+| Layer | Tech |
+|---|---|
+| Frontend | React + Vite, custom hooks (useAudioRecorder, useWakeWord), dark premium UI |
+| Backend (Online) | Spring Boot 3, REST API, reactive `WebClient` for OpenAI orchestration |
+| Backend (Offline) | Node.js Express, lightweight fallback with mock responses |
+| AI Layer | OpenAI Whisper (STT) + GPT-4o (Chat) + TTS (Speech) — three APIs, one seamless loop |
+| Infra | Docker Compose with profiles (`online`/`offline`), Nginx, health checks, auto-browser-open |
+
+**Engineering highlights:**
+- 🔁 **Three-Stage Pipeline** — `/api/audio/transcribe` → `/api/chat/respond` → `/api/audio/speak` — a complete voice-in, voice-out loop.
+- 🛡️ **Secure by Design** — API keys stored exclusively on the backend; the frontend never sees credentials.
+- 🔌 **Dual Backend Profiles** — Docker Compose profiles let you switch between full GPT-4o online mode and a lightweight offline fallback.
+- ⚡ **One-Command Launch** — `./start.sh start` builds, launches, health-checks, and opens the browser automatically.
+
+→ **Source**: [`test-ai-asistant/`](test-ai-asistant/)
+
+---
+
 ## 🧠 AI-Related: The Creative Engine
 *Where algorithms dream.*
 

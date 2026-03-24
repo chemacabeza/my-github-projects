@@ -107,6 +107,13 @@ A **full-stack Audio Intelligence platform** that turns any speech (live mic or 
 
 ---
 
+### 🎙️ AI Voice Assistant — [`test-ai-asistant`](test-ai-asistant/README.md)
+A **full-stack conversational AI** that listens, thinks, and speaks back — like Alexa, but built from scratch. Combines OpenAI Whisper (STT), GPT-4o (chat), and TTS into a seamless real-time voice loop. Features wake word detection, 9 languages, custom AI naming, and both online and offline backends.
+
+> **Stack**: Spring Boot 3 · React + Vite · OpenAI (Whisper + GPT-4o + TTS) · Docker Compose · Nginx
+
+---
+
 ### 🤖 ML Inference Pipeline (PyTorch → ONNX → Java)
 Multi-model serving on a single Spring Boot REST API — Iris MLP, MNIST CNN, Glasses ResNet18, Document Reader — trained in Python, exported to ONNX, deployed in Java, and accessible through a React UI with live webcam inference.
 
@@ -126,6 +133,7 @@ A custom Stable Diffusion / Fooocus deployment running 7 checkpoint models, 41 L
 | 🎬 **AI Video Studio** | SaaS-grade T2V/I2V platform, 5 fal.ai models, full-stack, zero-to-production in days |
 | 🔊 **AI Voice Studio** | Full-stack TTS app: OpenAI API + Spring Boot + React, 11 voices, streamed MP3, Dockerised |
 | 🎧 **AI Audio Listener** | Full-stack STT platform: OpenAI Whisper + Spring Boot + Next.js 15, searchable history |
+| 🎙️ **AI Voice Assistant** | Conversational AI: Whisper + GPT-4o + TTS, wake words, 9 languages, online/offline |
 | 🤖 **ML Inference API** | PyTorch → ONNX → Java pipeline with golden parity tests and webcam inference |
 | ☕ **Spring Boot 3 Mastery** | 70+ projects across 10 deep-dive sections |
 | 🖥️ **Bash Scripting Extreme** | 35 chapters, 236 production-ready scripts |
