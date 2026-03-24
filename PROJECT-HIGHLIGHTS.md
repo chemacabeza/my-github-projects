@@ -42,8 +42,73 @@ Created a learning platform for generative AI that demonstrates infrastructure t
 **Code:** [AI-related/](AI-related/) | [Documentation](AI-related/README.md) | [Docker Setup](AI-related/Dockerfile)
 
 ---
+---
 
-### 2. 🎧 AI Audio Listener (Full-Stack STT)
+### 2. 🎬 AI Video Generation Studio (Full-Stack T2V/I2V)
+
+**The Challenge:**
+Build a production-ready AI video generation platform that orchestrates multiple state-of-the-art generative models with a seamless asynchronous workflow. The goal was to demonstrate high-speed product development — going from zero to a fully Dockerized, database-backed SaaS-grade platform in just days.
+
+**The Solution:**
+Developed a robust full-stack architecture featuring a Spring Boot 3 backend that manages the asynchronous job lifecycle (submit → poll → update). Integrated 5 cutting-edge video models via the fal.ai API, providing a unified React interface with live job status updates and per-model parameter validation.
+
+**Technologies:**
+- **Backend**: Java 21, Spring Boot 3, Spring WebClient (Reactive), `@Scheduled` tasks
+- **Frontend**: React 18, Vite, Tailwind CSS, live job polling
+- **AI**: fal.ai (Wan 2.6, Kling v2.5 Turbo, LTX-2, PixVerse v5)
+- **Database**: PostgreSQL, Flyway migrations
+- **Infrastructure**: Docker, Docker Compose, Nginx, Multi-stage builds
+
+**Key Achievements:**
+- 🎬 **Multi-Model Support**: Unified integration for 5 state-of-the-art T2V and I2V models
+- 🔄 **Async Job Orchestration**: Completely automated lifecycle management for long-running AI tasks
+- ⚡ **Rapid Development**: Fully functional, production-ready platform built in under a week
+- ✅ **Dynamic Validation**: Real-time enforcement of per-model API constraints in both UI and API
+- 🗄️ **Zero-Downtime Migrations**: schema evolution managed via Flyway for persistent job history
+- 🐳 **Instant Deployment**: Single-command startup for the entire stack via Docker Compose
+
+**Technical Highlights:**
+- Native Vite-based React application for a lightning-fast frontend
+- Reactive `WebClient` for non-blocking communication with high-latency AI services
+- Scheduled status polling with real-time UI updates via persistent state
+- Containerized Nginx reverse proxy for consolidated access path
+
+**Impact:**
+Demonstrates the ability to bridge the gap between AI research and consumer-ready products at extreme speed. Shows mastery of asynchronous system design, reactive programming, and modern full-stack deployment patterns — essential for building the next generation of AI-native applications.
+
+**Code:** [test-for-ai-wan/](https://github.com/chemacabeza/test-for-ai-wan)
+
+---
+
+### 3. 🔊 AI Voice Studio (Full-Stack TTS)
+
+**The Challenge:**
+Create a secure, high-performance text-to-speech platform that delivers a premium user experience while strictly isolating sensitive API credentials from the client. The goal was to showcase security-first architecture combined with high-performance binary streaming.
+
+**The Solution:**
+Built a full-stack studio powered by the OpenAI TTS API. The Spring Boot backend acts as a secure proxy, handling authentication and streaming raw MP3 bytes directly to the browser. The React frontend provides a refined interface for voice selection and real-time audio playback without ever seeing the API key.
+
+**Technologies:**
+- **Backend**: Java 21, Spring Boot 3, Spring WebClient
+- **Frontend**: React 18, Vite, custom audio streaming player
+- **AI**: OpenAI TTS API (11 voices)
+- **Infrastructure**: Docker, Docker Compose, Nginx
+
+**Key Achievements:**
+- 🔒 **Security-First Design**: Complete API key isolation — credentials never touch the frontend
+- 🎙️ **Multi-Voice Studio**: Support for 11 expressive voices with custom speaking instructions
+- 🚀 **High-Performance Streaming**: Binary audio delivery for instant playback with zero disk latency
+- 🐳 **One-Command Setup**: Fully containerized environment with integrated health checks
+- 🧱 **Clean Architecture**: Simplified, stateless backend designed for horizontal scalability
+
+**Impact:**
+Proves the ability to design and implement security-conscious full-stack applications that leverage high-latency external APIs effectively. This project highlights a deep understanding of proxy patterns, binary data handling, and production-grade environment management.
+
+**Code:** [test-for-audio-generation/](https://github.com/chemacabeza/test-for-audio-generation)
+
+---
+
+### 4. 🎧 AI Audio Listener (Full-Stack STT)
 
 **The Challenge:**
 Build a high-performance audio intelligence platform capable of transcribing live microphone recordings and multi-format file uploads with near-perfect accuracy. The goal was to demonstrate full-stack proficiency with Next.js 15, Spring Boot 3, and persistent storage using PostgreSQL.
@@ -79,7 +144,7 @@ Demonstrates the ability to build sophisticated AI-powered applications from scr
 
 ---
 
-### 3. ☕ Enterprise Spring Boot Architecture (70+ Projects)
+### 5. ☕ Enterprise Spring Boot Architecture (70+ Projects)
 
 **The Challenge:**
 Master modern Spring Boot 3.x and Spring Framework 6 enterprise patterns while demonstrating production-ready architecture across REST APIs, security, MVC applications, and advanced ORM. The goal was to showcase comprehensive backend expertise aligned with Engineering Manager responsibilities at Klarna.
@@ -120,7 +185,7 @@ Demonstrates enterprise Java expertise directly aligned with my Engineering Mana
 
 ---
 
-### 4. ⚡ Bash In Depth: Developer Education (35 Chapters, 236 Scripts)
+### 6. ⚡ Bash In Depth: Developer Education (35 Chapters, 236 Scripts)
 
 **The Challenge:**
 Bridge the gap in comprehensive Bash scripting resources by creating a structured learning path from fundamentals to advanced production patterns. The goal was to demonstrate teaching ability, technical communication, and depth of systems programming knowledge—critical skills for engineering leadership.
@@ -284,4 +349,4 @@ Interested in collaboration or discussing opportunities?
 
 ---
 
-**Last Updated:** 2026-02-06
+**Last Updated:** 2026-03-24

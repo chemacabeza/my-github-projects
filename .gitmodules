@@ -10,3 +10,6 @@
 [submodule "test-audio-listener"]
 	path = test-audio-listener
 	url = git@github.com:chemacabeza/test-for-audio-listener.git
+[submodule "test-ai-asistant"]
+	path = test-ai-asistant
+	url = git@github.com:chemacabeza/test-ai-asistant.git

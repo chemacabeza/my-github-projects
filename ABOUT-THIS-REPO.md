@@ -97,6 +97,39 @@ A full-stack application that converts text into natural-sounding speech using t
 
 ---
 
+## 🎧 test-for-audio-listener: AI Audio Listener
+*Full-stack Audio Intelligence platform. Turning speech into searchable knowledge.*
+
+> "Transcribing audio is a classic engineering challenge. Doing it with near-zero latency and persistent history is where it gets interesting."
+
+A high-performance platform that turns any speech (live mic or file upload) into accurate text using the **OpenAI Whisper API**. Designed for speed, accuracy, and long-term searchability.
+
+**What it does:**
+- 🎤 **Live Recording**: Stream audio directly from your microphone via the browser MediaRecorder API.
+- 📂 **File Uploads**: Process `.mp3`, `.wav`, and `.m4a` files with ease.
+- 🔍 **Global Search**: Instantly find any past transcription using the full-text search engine powered by PostgreSQL.
+- 📜 **Persistent History**: Every transcription is saved, time-stamped, and ready for review.
+
+**Stack (end-to-end, all Dockerised):**
+
+| Layer | Tech |
+|---|---|
+| Frontend | Next.js 15 (App Router), TypeScript, Tailwind CSS, high-performance recording hooks |
+| Backend | Spring Boot 3, REST API, reactive `WebClient` for Whisper orchestration |
+| Database | PostgreSQL + Flyway migrations for reliable schema management |
+| AI Layer | OpenAI Whisper API — industry-standard STT accuracy |
+| Infra | Docker Compose, Multi-stage builds, one-command setup |
+
+**Engineering highlights:**
+- 🏎️ **Next.js 15 App Router** — leveraging the latest React Server Components and optimized routing for a lightning-fast UI.
+- 🛡️ **Secure Backend Proxy** — Whisper API keys are held exclusively on the server, maintaining a zero-trust frontend security model.
+- 🗄️ **Flyway Managed Schema** — production-grade database evolution ensuring consistent environments across dev and production.
+- 🐳 **Unified Orchestration** — the entire ecosystem (Frontend, API, DB) launches with a single `./start.sh start` command.
+
+→ **Source**: [`test-for-audio-listener/`](test-for-audio-listener/)
+
+---
+
 ## 🧠 AI-Related: The Creative Engine
 *Where algorithms dream.*
 

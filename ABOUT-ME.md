@@ -100,6 +100,13 @@ Type any text, pick one of 11 voices (alloy, nova, onyx, shimmer…), dial in cu
 
 ---
 
+### 🎧 AI Audio Listener — [`test-for-audio-listener`](test-for-audio-listener/README.md)
+A **full-stack Audio Intelligence platform** that turns any speech (live mic or file upload) into accurate text using the OpenAI Whisper API. Features persistent transcription history, full-text search, and a refined Next.js interface.
+
+> **Stack**: Spring Boot 3 · Next.js 15 · PostgreSQL · Flyway · Docker Compose · OpenAI Whisper API
+
+---
+
 ### 🤖 ML Inference Pipeline (PyTorch → ONNX → Java)
 Multi-model serving on a single Spring Boot REST API — Iris MLP, MNIST CNN, Glasses ResNet18, Document Reader — trained in Python, exported to ONNX, deployed in Java, and accessible through a React UI with live webcam inference.
 
@@ -118,6 +125,7 @@ A custom Stable Diffusion / Fooocus deployment running 7 checkpoint models, 41 L
 |---|---|
 | 🎬 **AI Video Studio** | SaaS-grade T2V/I2V platform, 5 fal.ai models, full-stack, zero-to-production in days |
 | 🔊 **AI Voice Studio** | Full-stack TTS app: OpenAI API + Spring Boot + React, 11 voices, streamed MP3, Dockerised |
+| 🎧 **AI Audio Listener** | Full-stack STT platform: OpenAI Whisper + Spring Boot + Next.js 15, searchable history |
 | 🤖 **ML Inference API** | PyTorch → ONNX → Java pipeline with golden parity tests and webcam inference |
 | ☕ **Spring Boot 3 Mastery** | 70+ projects across 10 deep-dive sections |
 | 🖥️ **Bash Scripting Extreme** | 35 chapters, 236 production-ready scripts |
