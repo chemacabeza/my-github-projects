@@ -41,6 +41,13 @@ This hardcore curriculum was synthesized from 15 professional-grade textbooks pr
 * [**12: Deep Packet Inspection (TCP/IP)**](./12_Deep_Packet_Inspection.md) - Tracing brutal connection-refused failures down to the exact `RST` flag during TCP Handshakes utilizing `tcpdump` and Wireshark.
 * [**13: Capstone: eBPF Observability**](./13_eBPF_Observability.md) - The absolute pinnacle. Utilizing Python `bcc` wrappers to verify, JIT Compile, and securely inject tiny C architectures directly into the isolated Linux Kernel hooking active Syscalls.
 
+### Phase 5: The UNIX Programming Interface (TLPI)
+*Descending natively into C, managing raw Memory locks, Sockets, and the absolute File I/O architecture.*
+
+* [**14: File I/O Internals & Buffering**](./14_File_IO_Internals.md) - The 3-layer `fd`/open-file/inode tracking hierarchy, File descriptor mapping, `O_DIRECT` caching, and absolute Atomicity utilizing `O_APPEND`.
+* [**15: Signals and Process Lifecycle**](./15_Signals_and_Process_Lifecycle.md) - Physical UNIX process cloning via `fork()`, exact binary execution via `execve()`, and capturing Asynchronous hardware Signals safely with `sig_atomic_t`.
+* [**16: POSIX Threads (Pthreads)**](./16_POSIX_Threads.md) - Safe Multi-Core Parallel Native execution, avoiding Deadlocks utilizing extreme Mutex synchronization (`pthread_mutex_t`), and Condition Variables for Producer/Consumer modeling natively.
+* [**17: Socket Programming & TCP/IP**](./17_Socket_Programming.md) - Escaping the OS motherboard universally. The complete architectural `socket()`/`bind()`/`accept()` API, Network Byte order constraints natively, and UNIX Server/Client echoing dynamically natively.
 ---
 
 ## 🚀 Execution
