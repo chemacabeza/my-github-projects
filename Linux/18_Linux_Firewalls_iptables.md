@@ -106,20 +106,73 @@ iptables-restore < /etc/iptables.rules
 
 ---
 
-## 7. EXPERT LAB: The IPTables Sandbox
+## 7. 🧪 EXPERT LAB: The IPTables Sandbox
 
-It is dangerous to experiment with firewalls on your main machine. One wrong command could lock you out of the internet. 
+It is dangerous to experiment with firewalls on your main machine. One wrong command could lock you out of the internet.
 
-We have provided a **Docker Sandbox** in the `sandbox/iptables-lab/` directory. This creates a two-node network where you can play "God" with the packets.
+This sandbox creates a **two-node network**: a `firewall-node` where you run iptables commands, and a `target-node` (victim) to test your rules against.
 
-### How to use it:
-1.  **Navigate to the lab:** `cd sandbox/iptables-lab`
-2.  **Start the environment:** `docker compose up -d`
-3.  **Enter the "Firewall" node:** `docker exec -it iptables-sandbox sh`
+**`docker-compose.yml`** — save this file in a new folder and run from there:
 
-Inside this node, you have a "Target" server at the IP `target-server`. You can practice blocking pings, web traffic, and setting up stateful rules without fear.
+```yaml
+services:
+  # The "Firewall" node where you will run iptables commands
+  firewall-node:
+    image: alpine:latest
+    container_name: iptables-sandbox
+    cap_add:
+      - NET_ADMIN          # Critical: Allows the container to modify its own network stack
+    volumes:
+      - ./lab-work:/work   # A shared space for your scripts
+    working_dir: /work
+    command: >
+      sh -c "apk add --no-cache iptables iproute2 curl tcpdump &&
+            echo '--- IPTABLES SANDBOX READY ---' &&
+            sleep infinity"
+    networks:
+      - lab-net
 
-*See the [Sandbox README](./sandbox/iptables-lab/README.md) for a list of experiments to try.*
+  # A "Victim" node to test if your rules are actually blocking traffic
+  target-node:
+    image: alpine:latest
+    container_name: target-server
+    command: >
+      sh -c "apk add --no-cache curl python3 &&
+            python3 -m http.server 80"
+    networks:
+      - lab-net
+
+networks:
+  lab-net:
+    driver: bridge
+```
+
+```bash
+# Start both nodes
+docker compose up -d
+
+# Enter the Firewall node
+docker exec -it iptables-sandbox sh
+```
+
+**Inside `iptables-sandbox` — practice your rules:**
+```bash
+# Verify connectivity to the target
+ping -c 2 target-server
+
+# Block ALL ICMP (ping) from the target
+iptables -A INPUT -s target-server -p icmp -j DROP
+ping -c 2 target-server   # Should fail now!
+
+# Allow only established connections
+iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+# List current rules
+iptables -L -n -v
+
+# Clear all rules
+iptables -F
+```
 
 ---
 

@@ -107,15 +107,66 @@ The `listen(sfd, backlog)` system call defines how many incomplete handshakes th
 
 ---
 
-## 8. Sandbox Execution
+## 8. 🧪 Sandbox: Practice Socket Programming
+
+Compile and test the server/client programs inside a Docker container with networking tools pre-installed.
+
+**`docker-compose.yml`** — save this file in a new folder and run from there:
+
+```yaml
+services:
+  sockets-sandbox:
+    image: ubuntu:22.04
+    container_name: sockets-sandbox
+    volumes:
+      - ./lab-work:/work
+    working_dir: /work
+    command: >
+      bash -c "apt-get update && apt-get install -y gcc make telnet netcat-openbsd
+      iproute2 iputils-ping net-tools tcpdump strace
+      && echo '--- SOCKETS SANDBOX READY ---'
+      && sleep infinity"
+```
 
 ```bash
-# Terminal A: Start the Server natively
-gcc server.c -o server
-./server
+# Start the sandbox
+docker compose up -d
 
-# Terminal B: Probe the protocol stack
-telnet 127.0.0.1 5000
+# Enter the container
+docker exec -it sockets-sandbox bash
+```
+
+**Inside the container — compile and run:**
+```bash
+# Write and compile the server
+cat > /work/server.c << 'EOF'
+#include <stdio.h>
+#include <netinet/in.h>
+#include <string.h>
+#include <unistd.h>
+int main() {
+    int fd = socket(AF_INET, SOCK_STREAM, 0);
+    struct sockaddr_in addr = {AF_INET, htons(5000), {INADDR_ANY}};
+    bind(fd, (struct sockaddr*)&addr, sizeof(addr));
+    listen(fd, 5);
+    printf("Server listening on :5000\n");
+    int client = accept(fd, NULL, NULL);
+    char buf[256]; read(client, buf, sizeof(buf));
+    printf("Received: %s\n", buf);
+    close(client); close(fd);
+    return 0;
+}
+EOF
+gcc /work/server.c -o /work/server
+
+# Terminal A: Start the server
+/work/server &
+
+# Terminal B: Connect and probe
+echo "Hello from client" | nc 127.0.0.1 5000
+
+# Inspect the connection
+ss -tnp | grep 5000
 ```
 
 *This concludes the Phase 5 expansion based on the Linux Programming Interface. You have mastered the absolute technical plumbing of the Linux OS.*

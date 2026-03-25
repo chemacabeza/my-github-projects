@@ -118,12 +118,60 @@ Modern Linux uses **NPTL (Native POSIX Thread Library)**. Threads are still crea
 
 ---
 
-## 7. Sandbox Execution
+## 7. 🧪 Sandbox: Practice POSIX Threads
+
+Compile and run the thread examples safely inside a Docker container.
+
+**`docker-compose.yml`** — save this file in a new folder and run from there:
+
+```yaml
+services:
+  threads-sandbox:
+    image: ubuntu:22.04
+    container_name: threads-sandbox
+    volumes:
+      - ./lab-work:/work
+    working_dir: /work
+    command: >
+      bash -c "apt-get update && apt-get install -y gcc make strace
+      && echo '--- THREADS SANDBOX READY ---'
+      && sleep infinity"
+```
 
 ```bash
+# Start the sandbox
+docker compose up -d
+
+# Enter the container
+docker exec -it threads-sandbox bash
+```
+
+**Inside the container — compile and run:**
+```bash
+# Write the example to a file
+cat > /work/threaded_app.c << 'EOF'
+#include <stdio.h>
+#include <pthread.h>
+
+void *worker(void *arg) {
+    printf("Thread %ld is running\n", (long)arg);
+    return NULL;
+}
+
+int main() {
+    pthread_t t1, t2;
+    pthread_create(&t1, NULL, worker, (void *)1);
+    pthread_create(&t2, NULL, worker, (void *)2);
+    pthread_join(t1, NULL);
+    pthread_join(t2, NULL);
+    printf("All threads done.\n");
+    return 0;
+}
+EOF
+
 # Compile with the pthread library linked!
-gcc threaded_app.c -o threaded_app -lpthread
-./threaded_app
+gcc /work/threaded_app.c -o /work/threaded_app -lpthread
+/work/threaded_app
 ```
 
 *Proceed to Chapter 17 to explore the world of Network Sockets and the TCP/IP stack.*
