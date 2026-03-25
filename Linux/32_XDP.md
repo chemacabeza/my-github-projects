@@ -1,7 +1,7 @@
 # 32: XDP (eXpress Data Path)
 
 <p align="center">
-  <img src="images/firewall_architecture.png" alt="XDP Architecture" width="800"/>
+  <img src="images/xdp_express_datapath.png" alt="XDP Architecture" width="800"/>
 </p>
 
 In Chapter 13, you learned about eBPF — attaching tiny programs to kernel events. **XDP** takes eBPF to the extreme: it processes packets at the **NIC driver level**, *before* the kernel even builds an `sk_buff` structure. This means decisions happen in **nanoseconds**, not microseconds.

@@ -1,7 +1,7 @@
 # 31: Traffic Control (`tc`) & QoS
 
 <p align="center">
-  <img src="images/firewall_architecture.png" alt="Traffic Control Architecture" width="800"/>
+  <img src="images/traffic_control_qos.png" alt="Traffic Control Architecture" width="800"/>
 </p>
 
 In Chapter 18, you learned to **accept or drop** packets with `iptables`. But what if you don't want to block traffic — you want to **slow it down**, **prioritize** it, or **shape** it? This is **Traffic Control (TC)**.
