@@ -53,6 +53,13 @@ This hardcore curriculum was synthesized from 15 professional-grade textbooks pr
 *Master the kernel-level packet filtering engine that protects every Linux server on Earth.*
 
 * [**18: Linux Netfilter & iptables Architecture**](./18_Linux_Firewalls_iptables.md) - Deep-diving into the Kernel Hook points (Chains), Table hierarchies (`filter`, `nat`, `mangle`), and utilizing the `conntrack` state machine for sophisticated 'Bare Metal' rule engineering.
+
+### Phase 7: Containerization Internals
+*Deconstruct Docker and Kubernetes into the core Linux Kernel primitives that make them possible.*
+
+* [**19: Linux Namespaces - The Illusion of Isolation**](./19_Linux_Namespaces.md) - Virtualizing the system view via PID, Network, and Mount namespaces.
+* [**20: Control Groups (cgroups) - Resource Mastery**](./20_Control_Groups_cgroups.md) - Enforcing hard CPU/RAM limits via the `/sys/fs/cgroup` filesystem interface.
+* [**21: Creating a Container from Scratch**](./21_Container_from_Scratch.md) - Integrating Namespaces, Cgroups, and `chroot` into a single functional container runner from scratch (C/Bash).
 ---
 
 ## 🚀 Execution
