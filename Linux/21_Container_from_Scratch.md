@@ -1,92 +1,73 @@
 # 21: Creating a Container from Scratch
 
-You have mastered the primitives. Now, let’s stop using Docker and **build it ourselves**. 
+You have mastered the primitives. You understand **Namespaces** (Isolation) and **Cgroups** (Resource Limits). 
 
-A container is just a **Namespace** + **Cgroup** + **Layered Filesystem**.
-
----
-
-## 1. The Ingredients
-
-To build our minimal "Antigravity Container," we need:
-1.  **Isolation (PID/MNT Namespaces):** To hide the host.
-2.  **Imprisonment (chroot/pivot_root):** To give it a private filesystem.
-3.  **Governance (Cgroups):** To limit its power.
+Now, we will stop talking about theory and start **engineering**. We are going to build a "Docker-like" container runner using only raw Bash and the Linux Kernel.
 
 ---
 
-## 2. Lab Setup: The Root Filesystem
+## 1. The Container Recipe
 
-We need a directory that looks like a real OS.
+A modern container is just a "Happy Meal" made of three specific ingredients:
+1.  **Isolation (Namespaces):** Making the process think it's alone.
+2.  **Imprisonment (chroot):** Giving the process its own private filesystem.
+3.  **Governance (Cgroups):** Making sure it stays within its RAM/CPU budget.
+
+---
+
+## 2. Lab Setup: The Tiny OS
+
+A process needs a home. We will create a root directory that contains only what is absolutely necessary: **Busybox**.
 
 ```bash
-mkdir -p container-root/bin
-# Copy the minimal shell 'busybox'
-cp /bin/busybox container-root/bin/
-# Create symlink for common tools
-ln -s busybox container-root/bin/ls
-ln -s busybox container-root/bin/ps
-ln -s busybox container-root/bin/sh
+mkdir -p my-container/bin
+
+# Copy the multi-tool 'busybox' into our project
+cp /bin/busybox my-container/bin/
+
+# Create the links for the OS to function
+ln -s busybox my-container/bin/ls
+ln -s busybox my-container/bin/ps
+ln -s busybox my-container/bin/sh
 ```
 
 ---
 
-## 3. Creating the Container (C / Bash approach)
+## 3. The "God Mode" Command
 
-We will use the `unshare` command to simulate the complex C `clone()` system call.
+We will use the `unshare` utility. This command is the terminal interface for the `clone()` and `unshare()` kernel system calls.
 
-### The Magic Command:
+### Launching the Jailbird:
 ```bash
 sudo unshare --map-root-user --push-root \
              --mount --uts --ipc --net --pid --fork \
              /bin/sh -c "
              mount -t proc proc /proc;
-             hostname antigravity-jail;
+             hostname expert-container;
              chroot . /bin/sh
              "
 ```
 
-**What just happened?**
-1.  `--map-root-user`: You are root inside! But a nobody outside.
-2.  `--mount --uts --ipc --net --pid`: Full isolation.
-3.  `mount -t proc proc /proc`: We mount a *private* process list.
-4.  `chroot . /bin/sh`: We switch the world to our `container-root` folder.
+**Breaking it down pedagogically:**
+- `unshare`: "Kernel, please stop sharing these parts of the system with me."
+- `--pid --fork`: "Give me a private process list."
+- `chroot .`: "Make this folder my entire universe."
+- `mount -t proc`: "Fill my universe with its own heartbeat (the /proc list)."
 
 ---
 
-## 4. Final Project: The "Hardcore" C-Runner
+## 4. Why Experts Don't Use Docker (Always)
 
-If you want to do this like a true kernel engineer, you use the `clone()` flag `CLONE_NEWPID`.
+By building this, you now understand that **Docker is just a manager**. It doesn't actually "run" containers; the Linux Kernel does. 
 
-```c
-#define _GNU_SOURCE
-#include <sched.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/wait.h>
-#include <unistd.h>
-
-static int child_fn(void* arg) {
-    printf("Child PID: %d\n", getpid());
-    sethostname("expert-jail", 11);
-    // Add chroot here to finalize isolation
-    system("sh");
-    return 0;
-}
-
-int main() {
-    char stack[1024 * 1024]; // 1MB Stack
-    pid_t child_pid = clone(child_fn, stack + sizeof(stack), 
-                            CLONE_NEWPID | CLONE_NEWNET | SIGCHLD, NULL);
-    waitpid(child_pid, NULL, 0);
-    return 0;
-}
-```
+Docker's job is simply to automate the commands you just ran. When you understand this, you stop being a "User" and start being a "System Architect."
 
 ---
 
 ## 5. Summary of Phase 7
 
-You have deconstructed one of the most complex technologies in modern computing into its raw components. You now understand that **there are no containers**, only isolated and resource-constrained processes.
+- **Namespaces** = Perception (Virtual Reality).
+- **Cgroups** = Limitation (Governor).
+- **Union FS / chroot** = Location (Filesystem).
 
-*In Phase 8, we will explore the Linux Kernel's Virtual File System (VFS).*
+*Phase 7 complete. You now possess the keys to the most important technology in the modern cloud.*

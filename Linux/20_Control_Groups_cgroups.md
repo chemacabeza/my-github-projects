@@ -4,67 +4,61 @@
   <img src="images/container_internals.png" alt="Linux Cgroup Architecture" width="800"/>
 </p>
 
-Namespaces (Ch 19) handle **Isolation** (what a process can see). 
-**Control Groups (cgroups)** handle **Resource Governance** (how much a process can use).
+Namespaces (Ch 19) handle **Isolation**—making sure residents don't see each other.
+**Control Groups (cgroups)** handle **Governance**—making sure a single resident doesn't eat everyone else's food or hog the electricity.
 
-Without cgroups, a single process could leak memory or hog the CPU, crashing your entire server. cgroups prevent this "noisy neighbor" effect.
-
----
-
-## 1. Everything is a File: `/sys/fs/cgroup`
-
-In Linux, cgroups are managed through a virtual filesystem. You don't use a database; you create directories and write numbers to files.
-
-- **CPU Controller:** Limits CPU cycles.
-- **Memory Controller:** Limits RAM usage.
-- **PIDs Controller:** Limits the number of processes (preventing Fork Bombs).
+Think of it as putting a process on a **Resource Leash**. You allow it to roam the skyscraper, but it can only go as far as the leash allows.
 
 ---
 
-## 2. Hands-on: Throttling a Process
+## 1. The Power of "Everything is a File"
 
-Let's manually limit the memory of a shell to 50MB.
+One of the most elegant parts of Linux is that you don't need a heavy GUI to manage hardware limits. You just need to talk to a special directory: `/sys/fs/cgroup`.
 
-### Step 1: Create a Group
+Inside this folder, there are sub-folders for every resource:
+- **`memory`**: RAM limits.
+- **`cpu`**: CPU cycle shares.
+- **`pids`**: Limit the number of sub-processes (Fork Bomb protection).
+
+---
+
+## 2. Guided Exercise: Creating a RAM Jail
+
+Let's manually cap a process so it can never use more than a tiny amount of memory.
+
+### Step 1: Create a Sub-Group
+Simply making a directory in `/sys` tells the Kernel to spawn a new security team.
 ```bash
-sudo mkdir /sys/fs/cgroup/memory/my-lab
-```
-Linux automatically populates this folder with control files.
-
-### Step 2: Set the Limit
-```bash
-# Limit to 50,000,000 bytes (~50MB)
-echo 50000000 | sudo tee /sys/fs/cgroup/memory/my-lab/memory.limit_in_bytes
+sudo mkdir /sys/fs/cgroup/memory/lab-jail
 ```
 
-### Step 3: Put yourself in the Jail
+### Step 2: Set the "Hard Limit"
+We will limit this group to roughly 50MB. If any process inside tries to use more, the Kernel will instantly kill it.
 ```bash
-# Add your current shell's PID to the 'tasks' file
-echo $$ | sudo tee /sys/fs/cgroup/memory/my-lab/tasks
+echo 50000000 | sudo tee /sys/fs/cgroup/memory/lab-jail/memory.limit_in_bytes
 ```
 
-**Testing:** If you try to run a program that needs 100MB of RAM now, the kernel will instantly trigger the **OOM Killer** and kill the process to protect the system.
+### Step 3: Imprison a Process
+We add our current shell to the jail by writing its PID (`$$`) to the `tasks` file.
+```bash
+echo $$ | sudo tee /sys/fs/cgroup/memory/lab-jail/tasks
+```
+
+**Verification:** Run any command. Your shell is now "leashed." If you try to run a memory-heavy app, it will vanish before it can damage the host system.
 
 ---
 
-## 3. The Modern Era: Cgroup v2
+## 3. Cgroup v1 vs v2: The Evolution
 
-The example above uses v1 (distributed). Modern Linux (Ubuntu 22.04+) uses **Cgroup v2**, which uses a unified hierarchy. 
-
-**V2 Path:** `/sys/fs/cgroup/cgroup.controllers`
-
-In Cgroup v2, controllers are enabled by writing to `cgroup.subtree_control`. This architecture is more efficient and is what modern Kubernetes uses to manage pods.
+- **v1 (Old):** Resources were separated into different "hierarchies." It was messy.
+- **v2 (Modern):** One single tree managing everything (`/sys/fs/cgroup`). This is what Docker and Kubernetes use natively today.
 
 ---
 
-## 4. Why this matters for Docker
+## 4. Why This Matters for Architects
 
-When you run:
-`docker run --memory="500m" --cpus="2.0" nginx`
+Without cgroups, "Cloud Computing" could not exist. 
 
-Docker is simply:
-1.  Creating a directory in `/sys/fs/cgroup`.
-2.  Writing the limits to the files.
-3.  Launching the process inside that group.
+When you pay for a "Medium Instance," the provider isn't giving you a whole computer; they are simply adding your process to a **Control Group** that limits you to 2 CPUs and 4GB of RAM.
 
-*In the final module of Phase 7, we will combine Namespaces and Cgroups to build a container from scratch.*
+*In Chapter 21, we will merge Isolation and Governance to build a complete container from scratch.*

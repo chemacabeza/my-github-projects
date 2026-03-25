@@ -4,72 +4,67 @@
   <img src="images/container_internals.png" alt="Linux Container Architecture" width="800"/>
 </p>
 
-If you've used Docker, you know that a container feels like a separate computer. But it's not. It's just a regular Linux process that is **hallucinating**. 
+Imagine your computer is a massive skyscraper. Every process is a resident. Normally, everyone shares the same hallways, the same water pipes, and can see each other in the lobby.
 
-**Namespaces** are the kernel feature that provides this hallucination by restricting what a process can "see."
+**Namespaces** allow the Kernel to put certain residents into a **Parallel Universe**. From their perspective, the skyscraper is empty, and they are the only ones living there.
 
 ---
 
-## 1. The Six Core Namespaces
+## 1. The Virtualized View
 
-Linux allows us to virtualize almost every aspect of the system view.
+A Namespace isn't a "box"—it's a **filter** on what a process can see. There are 6 main types of "Parallel Universes" we can create:
 
-| Namespace | What it Isolates | The "Hallucination" |
+| Namespace Type | The Analogy | The Technical Reality |
 | :--- | :--- | :--- |
-| **Mount (mnt)** | Filesystem Mount Points | Process sees a unique directory structure. |
-| **UTS** | Hostname and Domain Name | Process thinks it has its own computer name. |
-| **IPC** | Interprocess Communication | Process cannot see shared memory of others. |
-| **PID** | Process IDs | Process thinks it is PID 1 (The King). |
-| **Network (net)** | IP Addresses, Ports, Routes | Process has its own virtual network card. |
-| **User (user)** | User and Group IDs | Process thinks it is 'root' (UID 0). |
+| **Mount (mnt)** | A private floor with its own rooms. | The process has its own unique list of mount points (`/`, `/tmp`). |
+| **UTS** | A private mailbox with a custom name. | The process has its own hostname (e.g., `container-alpha`). |
+| **PID** | Thinking you're the first person on Earth. | The process thinks its ID is `1`. It cannot see the host's processes. |
+| **Network (net)** | Having your own private internet line. | The process has its own IP address and routing table. |
+| **User (user)** | Thinking you're the landlord. | A regular user on the host becomes `root` inside the namespace. |
+| **IPC** | A private soundproof room. | Isolation of System V IPC and POSIX message queues. |
 
 ---
 
-## 2. Hands-on: Building a PID Jail
+## 2. Guided Experiment: Creating a Ghost Universe
 
-Let's prove it. Normally, if you ran `ps aux`, you'd see hundreds of processes. Let's create an environment where you can only see yourself.
+Let's prove the "Parallel Universe" theory. We will use the `unshare` command to create a shell that thinks it's alone on the machine.
 
-### The `unshare` command
-`unshare` allows you to start a new process with its own namespaces.
+### Step 1: The "Loneliness" Command
+Run this in your terminal. It detaches your PID list from the rest of the computer.
 
 ```bash
 # -p: New PID Namespace
-# -f: Fork a new process
-# --mount-proc: Mount a new /proc filesystem (needed for 'ps' to work)
+# -f: Fork a new shell
+# --mount-proc: Create a private /proc for 'ps' to read from
 sudo unshare -p -f --mount-proc /bin/sh
 ```
 
-**Inside the new shell:**
+### Step 2: Observe the Ghost Town
+Now run the command to list processes:
 ```bash
 ps aux
 ```
-**Results:** You will only see two processes: `ps aux` and your shell. You have officially isolated your process list from the host.
+
+**What you will see:**
+- You only see **two** processes. 
+- You are **PID 1**. 
+- The hundreds of other processes on your computer have "vanished."
 
 ---
 
-## 3. The `setns` and `nsenter` Mechanics
+## 3. Behind the Scenes: The `/proc` Links
 
-How does `docker exec` work? It uses the `setns()` system call to join an existing namespace.
+How does Linux keep track of these universes? Every process has a directory in `/proc` that defines its reality.
 
 ```bash
-# See which namespaces your current shell belongs to:
+# Look at your current shell's universe IDs:
 ls -l /proc/self/ns/
 ```
-Each file listed (ipc, mnt, net, pid) is a symlink to a unique ID. If two processes have the same IDs, they are in the same "room."
+Each entry (net, pid, mnt) points to a unique inode number. If two processes have the same inode for `net`, they can "hear" each other on the network. If they differ, they are in different worlds.
 
 ---
 
-## 4. The "Root" of the Matter: Mount Namespaces
+## 4. Summary: The Mind-Shift
+A container **is not a thing**. A container is just a standard Linux process where the Kernel is lying to it about what the rest of the system looks like.
 
-The most common container trick is `chroot`. It changes the root directory for a process. Combined with a Mount Namespace, it creates a private filesystem.
-
-```bash
-# 1. Create a dummy root
-mkdir /tmp/fake-root
-cp -r /bin /lib /lib64 /tmp/fake-root/ # Minimal tools
-
-# 2. Enter the jail
-sudo chroot /tmp/fake-root /bin/sh
-```
-
-*In the next module, we will learn how to put this "isolated" process on a leash using Cgroups.*
+*In Chapter 20, we will learn how to put these "world-weary" processes on a resource leash using Cgroups.*
