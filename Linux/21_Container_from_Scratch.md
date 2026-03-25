@@ -73,4 +73,4 @@ Docker's job is simply to automate the commands you just ran. When you understan
 *Phase 7 complete. You now possess the keys to the most important technology in the modern cloud.*
 
 ---
-[<< Previous: Control Groups (cgroups)](./20_Control_Groups_cgroups.md) | [Home: Curriculum Map](./README.md)
+[<< Previous: Control Groups (cgroups)](./20_Control_Groups_cgroups.md) | [Home: Curriculum Map](./README.md) | [Next: VFS Internals >>](./22_VFS_Internals.md)

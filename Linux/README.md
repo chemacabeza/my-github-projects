@@ -4,7 +4,7 @@
   <img src="images/cover.png" alt="Linux Mastery Cover" width="800"/>
 </p>
 
-Welcome to the **Linux Mastery Guide**. This repository contains a complete, 12-part curriculum designed to take you from basic terminal survival to injecting custom eBPF probes directly into a live running Linux kernel.
+Welcome to the **Linux Mastery Guide**. This repository contains a complete, **21-part curriculum** designed to take you from basic terminal survival to injecting custom eBPF probes and building a container runner from scratch.
 
 This hardcore curriculum was synthesized from 15 professional-grade textbooks procured from a Humble Bundle collection, representing the absolute bibles of system administration and engineering: *UNIX and Linux System Administration Handbook*, *Systems Performance*, *BPF Performance Tools*, *Linux Kernel Development*, and *Advanced Programming in the UNIX Environment*.
 
@@ -60,6 +60,42 @@ This hardcore curriculum was synthesized from 15 professional-grade textbooks pr
 * [**19: Linux Namespaces - The Illusion of Isolation**](./19_Linux_Namespaces.md) - Virtualizing the system view via PID, Network, and Mount namespaces.
 * [**20: Control Groups (cgroups) - Resource Mastery**](./20_Control_Groups_cgroups.md) - Enforcing hard CPU/RAM limits via the `/sys/fs/cgroup` filesystem interface.
 * [**21: Creating a Container from Scratch**](./21_Container_from_Scratch.md) - Integrating Namespaces, Cgroups, and `chroot` into a single functional container runner from scratch (C/Bash).
+
+### Phase 8: VFS & Memory Management
+*Understand how Linux turns slow disks into fast virtual memory.*
+
+* [**22: Virtual Filesystem (VFS) Internals**](./22_VFS_Internals.md) - Superblocks, Inodes, Dentries, and the path-walk algorithm that makes every filesystem speak the same language.
+* [**23: Memory-Mapped I/O (`mmap`)**](./23_Memory_Mapped_IO.md) - Eliminating `read()`/`write()` overhead by mapping files directly into process address space.
+* [**24: Page Cache & Dirty Writeback**](./24_Page_Cache_Writeback.md) - The invisible RAM cache that makes your disk feel fast, and the dangers of dirty page loss.
+
+### Phase 9: Advanced Kernel Development
+*Extend the Linux Kernel itself with custom filesystems, packet interceptors, and device drivers.*
+
+* [**25: Writing a FUSE Filesystem**](./25_FUSE_Filesystem.md) - Build a custom filesystem in userspace that generates files on-the-fly.
+* [**26: Netfilter Hooks in C**](./26_Netfilter_Hooks_C.md) - Write kernel modules that intercept, inspect, and modify network packets in real-time.
+* [**27: Character Device Drivers**](./27_Device_Drivers.md) - Create a custom `/dev/` device with read, write, and ioctl operations.
+
+### Phase 10: Linux Security Architecture
+*The three pillars of kernel-level security enforcement.*
+
+* [**28: SELinux & AppArmor (MAC)**](./28_SELinux_AppArmor.md) - Mandatory Access Control: even root obeys the policy.
+* [**29: Seccomp-BPF**](./29_Seccomp_BPF.md) - Restricting which system calls a process can make (used by Docker & Chrome).
+* [**30: Linux Capabilities**](./30_Linux_Capabilities.md) - Replacing the all-or-nothing root model with fine-grained permissions.
+
+### Phase 11: High-Performance Networking
+*From traffic shaping to kernel-bypass packet processing at 100M+ packets/sec.*
+
+* [**31: Traffic Control (`tc`) & QoS**](./31_Traffic_Control_QoS.md) - Bandwidth shaping, latency simulation, and priority-based queuing.
+* [**32: XDP (eXpress Data Path)**](./32_XDP.md) - Processing packets at the NIC driver level using eBPF programs.
+* [**33: DPDK & AF_XDP**](./33_DPDK_AF_XDP.md) - Kernel-bypass networking for extreme throughput (telecom, HFT, 5G).
+
+### Phase 12: Production Linux Engineering
+*Operating, patching, and debugging Linux systems in production.*
+
+* [**34: Systemd Internals**](./34_Systemd_Internals.md) - Unit files, socket activation, journal, and service hardening.
+* [**35: Live Kernel Patching**](./35_Live_Kernel_Patching.md) - Applying security patches to a running kernel without rebooting.
+* [**36: Kdump & Crash Analysis**](./36_Kdump_Crash_Analysis.md) - Capturing and analyzing kernel crash dumps for post-mortem forensics.
+
 ---
 
 ## 🚀 Execution
