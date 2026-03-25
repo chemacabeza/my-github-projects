@@ -62,3 +62,6 @@ Without cgroups, "Cloud Computing" could not exist.
 When you pay for a "Medium Instance," the provider isn't giving you a whole computer; they are simply adding your process to a **Control Group** that limits you to 2 CPUs and 4GB of RAM.
 
 *In Chapter 21, we will merge Isolation and Governance to build a complete container from scratch.*
+
+---
+[<< Previous: Linux Namespaces](./19_Linux_Namespaces.md) | [Home: Curriculum Map](./README.md) | [Next: Creating a Container from Scratch >>](./21_Container_from_Scratch.md)

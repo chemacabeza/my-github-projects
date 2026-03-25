@@ -124,3 +124,6 @@ Inside this node, you have a "Target" server at the IP `target-server`. You can 
 ---
 
 *You have graduated from "shouting at the terminal" to "engineering the kernel's network stack." In Phase 7, we will explore containerization internals.*
+
+---
+[<< Previous: Socket Programming](./17_Socket_Programming.md) | [Home: Curriculum Map](./README.md) | [Next: Linux Namespaces >>](./19_Linux_Namespaces.md)

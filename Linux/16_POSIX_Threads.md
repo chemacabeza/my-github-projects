@@ -127,3 +127,6 @@ gcc threaded_app.c -o threaded_app -lpthread
 ```
 
 *Proceed to Chapter 17 to explore the world of Network Sockets and the TCP/IP stack.*
+
+---
+[<< Previous: Signals and Process Lifecycle](./15_Signals_and_Process_Lifecycle.md) | [Home: Curriculum Map](./README.md) | [Next: Socket Programming >>](./17_Socket_Programming.md)

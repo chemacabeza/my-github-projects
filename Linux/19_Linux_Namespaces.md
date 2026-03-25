@@ -68,3 +68,6 @@ Each entry (net, pid, mnt) points to a unique inode number. If two processes hav
 A container **is not a thing**. A container is just a standard Linux process where the Kernel is lying to it about what the rest of the system looks like.
 
 *In Chapter 20, we will learn how to put these "world-weary" processes on a resource leash using Cgroups.*
+
+---
+[<< Previous: Linux Firewalls](./18_Linux_Firewalls_iptables.md) | [Home: Curriculum Map](./README.md) | [Next: Control Groups (cgroups) >>](./20_Control_Groups_cgroups.md)

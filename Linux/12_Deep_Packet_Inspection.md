@@ -102,3 +102,6 @@ docker compose run tcpdump-sandbox
 # Warning: You are now blindly sniffing your actual host computer's NIC!
 tcpdump -i any -n -nn 'port 443'
 ```
+
+---
+[<< Previous: Systems Performance Metrics](./11_Systems_Performance_Metrics.md) | [Home: Curriculum Map](./README.md) | [Next: eBPF Observability >>](./13_eBPF_Observability.md)

@@ -134,3 +134,6 @@ htop
 # 3. Kill the stress processes using the PID you found
 kill -9 <PID>
 ```
+
+---
+[<< Previous: Bash Scripting Mastery](./04_Bash_Scripting_Mastery.md) | [Home: Curriculum Map](./README.md) | [Next: Networking & Security >>](./06_Networking_and_Security.md)

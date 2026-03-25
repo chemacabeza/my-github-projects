@@ -75,3 +75,6 @@ sudo resize2fs /dev/mapper/vg_data-database
 
 ### Summary
 Systems Performance Optimization entirely relies on understanding Virtual Memory mapping arrays, monitoring heavy disk Paging/Swapping activity, analyzing Inode exhaustion (millions of tiny empty files crashing the server), and utilizing flexible LVM pools to avoid static legacy outages.
+
+---
+[<< Previous: Kernel Module Development](./08_Kernel_Module_Development.md) | [Home: Curriculum Map](./README.md) | [Next: Unix Systems Programming >>](./10_Unix_Systems_Programming.md)

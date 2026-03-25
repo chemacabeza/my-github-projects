@@ -158,3 +158,6 @@ docker compose run cli-sandbox
 # Test your sed pipes!
 sed 's/ERROR/WARNING/g' /var/log/dummy_syslog.log
 ```
+
+---
+[<< Previous: The Linux Philosophy](./01_The_Linux_Philosophy.md) | [Home: Curriculum Map](./README.md) | [Next: Package & Service Mgmt >>](./03_Package_and_Service_Mgmt.md)

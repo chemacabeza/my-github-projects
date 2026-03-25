@@ -114,3 +114,6 @@ docker compose run strace-sandbox
 # Experiment! Watch exactly what the Kernel does when you curl Google:
 strace curl https://google.com
 ```
+
+---
+[<< Previous: Networking & Security](./06_Networking_and_Security.md) | [Home: Curriculum Map](./README.md) | [Next: Kernel Module Development >>](./08_Kernel_Module_Development.md)

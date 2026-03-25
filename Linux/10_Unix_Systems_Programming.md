@@ -161,3 +161,6 @@ docker compose run ipc-sandbox
 gcc pipe_example.c -o pipe_example
 ./pipe_example
 ```
+
+---
+[<< Previous: Memory & Storage Internals](./09_Memory_and_Storage_Internals.md) | [Home: Curriculum Map](./README.md) | [Next: Systems Performance Metrics >>](./11_Systems_Performance_Metrics.md)
