@@ -48,6 +48,11 @@ This hardcore curriculum was synthesized from 15 professional-grade textbooks pr
 * [**15: Signals and Process Lifecycle**](./15_Signals_and_Process_Lifecycle.md) - Physical UNIX process cloning via `fork()`, exact binary execution via `execve()`, and capturing Asynchronous hardware Signals safely with `sig_atomic_t`.
 * [**16: POSIX Threads (Pthreads)**](./16_POSIX_Threads.md) - Safe Multi-Core Parallel Native execution, avoiding Deadlocks utilizing extreme Mutex synchronization (`pthread_mutex_t`), and Condition Variables for Producer/Consumer modeling natively.
 * [**17: Socket Programming & TCP/IP**](./17_Socket_Programming.md) - Escaping the OS motherboard universally. The complete architectural `socket()`/`bind()`/`accept()` API, Network Byte order constraints natively, and UNIX Server/Client echoing dynamically natively.
+
+### Phase 6: Advanced Network Security
+*Master the kernel-level packet filtering engine that protects every Linux server on Earth.*
+
+* [**18: Linux Netfilter & iptables Architecture**](./18_Linux_Firewalls_iptables.md) - Deep-diving into the Kernel Hook points (Chains), Table hierarchies (`filter`, `nat`, `mangle`), and utilizing the `conntrack` state machine for sophisticated 'Bare Metal' rule engineering.
 ---
 
 ## 🚀 Execution
