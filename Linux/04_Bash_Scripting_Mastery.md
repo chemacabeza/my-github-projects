@@ -2,6 +2,9 @@
 
 Based on *Shell Programming in UNIX*, we transition from typing commands interactively to creating highly robust, automated shell scripts. Bash is the default shell for almost all Linux distributions.
 
+> [!TIP]
+> The **[bash](../bash)** folder at the root of this repository contains more material than in chapter 4.
+
 ---
 
 ## 1. The Shebang (`#!/bin/bash`)
