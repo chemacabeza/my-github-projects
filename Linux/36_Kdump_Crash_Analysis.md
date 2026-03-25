@@ -1,7 +1,7 @@
 # 36: Kdump & Crash Analysis
 
 <p align="center">
-  <img src="images/container_internals.png" alt="Kdump Architecture" width="800"/>
+  <img src="images/kdump_crash_analysis.png" alt="Kdump Crash Analysis Architecture" width="800"/>
 </p>
 
 When a Linux kernel panics, the screen fills with cryptic hex addresses and the system locks up. Without preparation, that information is **lost forever** on reboot.

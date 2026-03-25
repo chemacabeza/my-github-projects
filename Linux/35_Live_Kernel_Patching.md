@@ -1,7 +1,7 @@
 # 35: Live Kernel Patching
 
 <p align="center">
-  <img src="images/container_internals.png" alt="Live Patching Architecture" width="800"/>
+  <img src="images/live_kernel_patching.png" alt="Live Kernel Patching Architecture" width="800"/>
 </p>
 
 A critical security vulnerability is discovered in the Linux kernel. Traditionally, you must reboot to apply the fix. But your server handles 10,000 active connections — a reboot means downtime, dropped connections, and angry users.

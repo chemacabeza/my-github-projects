@@ -4,7 +4,7 @@
   <img src="images/cover.png" alt="Linux Mastery Cover" width="800"/>
 </p>
 
-Welcome to the **Linux Mastery Guide**. This repository contains a complete, **21-part curriculum** designed to take you from basic terminal survival to injecting custom eBPF probes and building a container runner from scratch.
+Welcome to the **Linux Mastery Guide**. This repository contains a complete, **36-part curriculum** spanning 12 phases, designed to take you from basic terminal survival to live kernel patching and kernel-bypass networking.
 
 This hardcore curriculum was synthesized from 15 professional-grade textbooks procured from a Humble Bundle collection, representing the absolute bibles of system administration and engineering: *UNIX and Linux System Administration Handbook*, *Systems Performance*, *BPF Performance Tools*, *Linux Kernel Development*, and *Advanced Programming in the UNIX Environment*.
 

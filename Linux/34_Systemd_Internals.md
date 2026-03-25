@@ -1,7 +1,7 @@
 # 34: Systemd Internals
 
 <p align="center">
-  <img src="images/container_internals.png" alt="Systemd Architecture" width="800"/>
+  <img src="images/systemd_internals.png" alt="Systemd Architecture" width="800"/>
 </p>
 
 `systemd` is PID 1 — the very first process the kernel launches after boot. It manages boot, services, logging, networking, timers, and more. Love it or hate it, you **must** understand it to operate any modern Linux system.
