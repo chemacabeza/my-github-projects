@@ -94,9 +94,44 @@ docker run --cap-add=ALL alpine sh
 
 The **Security Sandbox** includes `libcap2-bin` for capability management:
 
+**`docker-compose.yml`** — save this file in a new folder and run from there:
+
+```yaml
+services:
+  # Security sandbox with AppArmor, Seccomp, and Capabilities testing
+  security-node:
+    image: ubuntu:22.04
+    container_name: security-sandbox
+    cap_add:
+      - SYS_ADMIN
+      - NET_ADMIN
+      - NET_BIND_SERVICE
+    security_opt:
+      - apparmor:unconfined
+      - seccomp:unconfined
+    volumes:
+      - ./lab-work:/work
+    working_dir: /work
+    command: >
+      bash -c "apt-get update && apt-get install -y
+      gcc make
+      libseccomp-dev libcap2-bin
+      apparmor-utils apparmor-profiles
+      strace curl
+      && echo '--- SECURITY SANDBOX READY ---'
+      && sleep infinity"
+
+  # An unprivileged target to test restrictions against
+  restricted-app:
+    image: nginx:alpine
+    container_name: restricted-target
+```
+
 ```bash
-cd sandbox/security-lab
+# Start the sandbox
 docker compose up -d
+
+# Enter the container
 docker exec -it security-sandbox bash
 ```
 

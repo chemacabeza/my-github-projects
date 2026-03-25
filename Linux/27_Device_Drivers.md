@@ -156,9 +156,56 @@ sudo rm /dev/antigravity
 
 Device drivers require kernel headers matching the running kernel. Use a **Virtual Machine** for full kernel module testing, or explore `/dev/` devices in the sandbox:
 
+**`docker-compose.yml`** — save this file in a new folder and run from there:
+
+```yaml
+services:
+  # Full C development environment with kernel headers for VFS, mmap, FUSE, and module work
+  kernel-dev:
+    image: ubuntu:22.04
+    container_name: kernel-dev-sandbox
+    cap_add:
+      - SYS_ADMIN          # Required for mount operations and FUSE
+      - NET_ADMIN           # Required for Netfilter hooks
+    devices:
+      - /dev/fuse           # Required for FUSE filesystem mounting
+    security_opt:
+      - apparmor:unconfined  # Allow kernel-level experimentation
+    volumes:
+      - ./lab-work:/work
+    working_dir: /work
+    command: >
+      bash -c "apt-get update && apt-get install -y 
+      gcc make pkg-config strace ltrace
+      libfuse3-dev fuse3
+      linux-headers-generic
+      libseccomp-dev
+      iproute2 iputils-ping net-tools curl
+      && echo '--- KERNEL DEV SANDBOX READY ---'
+      && sleep infinity"
+    networks:
+      - lab-net
+
+  # A target node for network experiments
+  target:
+    image: alpine:latest
+    container_name: kernel-dev-target
+    command: >
+      sh -c "apk add --no-cache python3 curl && 
+            python3 -m http.server 80"
+    networks:
+      - lab-net
+
+networks:
+  lab-net:
+    driver: bridge
+```
+
 ```bash
-cd sandbox/kernel-dev-lab
+# Start the sandbox
 docker compose up -d
+
+# Enter the container
 docker exec -it kernel-dev-sandbox bash
 ```
 

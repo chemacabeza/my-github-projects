@@ -124,9 +124,34 @@ systemd-analyze security nginx.service
 
 The **Production Sandbox** provides a systemd-enabled environment:
 
+**`docker-compose.yml`** — save this file in a new folder and run from there:
+
+```yaml
+services:
+  # Systemd-enabled container for production engineering labs
+  production-node:
+    image: ubuntu:22.04
+    container_name: production-sandbox
+    privileged: true       # Required for full systemd boot
+    volumes:
+      - ./lab-work:/work
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    working_dir: /work
+    command: >
+      bash -c "apt-get update && apt-get install -y
+      systemd systemd-sysv
+      gcc make
+      kexec-tools
+      strace curl nano
+      && echo '--- PRODUCTION SANDBOX READY ---'
+      && sleep infinity"
+```
+
 ```bash
-cd sandbox/production-lab
+# Start the sandbox
 docker compose up -d
+
+# Enter the container
 docker exec -it production-sandbox bash
 ```
 

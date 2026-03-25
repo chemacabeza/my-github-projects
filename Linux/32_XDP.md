@@ -93,9 +93,56 @@ sudo ip link set dev eth0 xdpgeneric off
 
 The **Networking Sandbox** includes `clang`, `llvm`, and `libbpf-dev`:
 
+**`docker-compose.yml`** — save this file in a new folder and run from there:
+
+```yaml
+services:
+  # Networking sandbox with tc, XDP, and advanced packet tools
+  net-node:
+    image: ubuntu:22.04
+    container_name: networking-sandbox
+    cap_add:
+      - NET_ADMIN           # Required for tc, XDP, iptables
+      - SYS_ADMIN           # Required for BPF programs
+    volumes:
+      - ./lab-work:/work
+    working_dir: /work
+    command: >
+      bash -c "apt-get update && apt-get install -y
+      iproute2 iptables iputils-ping net-tools curl tcpdump
+      clang llvm libbpf-dev
+      gcc make
+      && echo '--- NETWORKING SANDBOX READY ---'
+      && sleep infinity"
+    networks:
+      lab-net:
+        ipv4_address: 172.28.0.10
+
+  # Traffic target for QoS and shaping experiments
+  traffic-target:
+    image: alpine:latest
+    container_name: traffic-target
+    command: >
+      sh -c "apk add --no-cache python3 iperf3 curl &&
+            iperf3 -s &
+            python3 -m http.server 80"
+    networks:
+      lab-net:
+        ipv4_address: 172.28.0.20
+
+networks:
+  lab-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
+```
+
 ```bash
-cd sandbox/networking-lab
+# Start the sandbox
 docker compose up -d
+
+# Enter the container
 docker exec -it networking-sandbox bash
 ```
 
