@@ -64,6 +64,7 @@ From Spring Core basics to advanced Hibernate and AspectJ deep dives:
 * [Apache Kafka Integration with Spring Boot](docs/Section-11-ApacheKafka.md)
 * [Spring Modulith — Introduction](docs/SpringModulith-Introduction.md)
 * [Model Context Protocol (MCP) with Spring Boot](docs/ModelContextProtocol-SpringBoot.md) — Exposing enterprise Java tools natively to LLMs
+* [High-Performance Microservices with gRPC and Spring Boot](docs/gRPC-SpringBoot.md)
 
 ---
 
