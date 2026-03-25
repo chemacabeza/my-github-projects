@@ -1,7 +1,7 @@
 # 29: Seccomp-BPF - Syscall Lockdown
 
 <p align="center">
-  <img src="images/container_internals.png" alt="Seccomp Architecture" width="800"/>
+  <img src="images/seccomp_bpf.png" alt="Seccomp Architecture" width="800"/>
 </p>
 
 Even with MAC (SELinux/AppArmor) controlling *which files* a process can access, the process can still call ~450 different system calls. A vulnerability could exploit any one of them.

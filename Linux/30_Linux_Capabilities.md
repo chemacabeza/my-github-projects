@@ -1,7 +1,7 @@
 # 30: Linux Capabilities - Replacing Root
 
 <p align="center">
-  <img src="images/container_internals.png" alt="Capabilities Architecture" width="800"/>
+  <img src="images/linux_capabilities.png" alt="Capabilities Architecture" width="800"/>
 </p>
 
 The traditional Unix model is binary: you are either `root` (can do everything) or a normal user (can do very little). This is extremely dangerous because a compromised `root` process has total control.

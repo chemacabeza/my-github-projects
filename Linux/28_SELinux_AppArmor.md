@@ -1,7 +1,7 @@
 # 28: SELinux & AppArmor - Mandatory Access Control
 
 <p align="center">
-  <img src="images/container_internals.png" alt="MAC Security Architecture" width="800"/>
+  <img src="images/selinux_apparmor.png" alt="MAC Security Architecture" width="800"/>
 </p>
 
 Traditional Linux permissions (`rwx`) are **Discretionary** — the file owner decides who gets access. But what if a compromised web server changes its own permissions? Game over.
