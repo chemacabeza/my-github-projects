@@ -1,0 +1,31 @@
+services:
+  # The "Firewall" node where you will run iptables commands
+  firewall-node:
+    image: alpine:latest
+    container_name: iptables-sandbox
+    cap_add:
+      - NET_ADMIN          # Critical: Allows the container to modify its own network stack
+    volumes:
+      - ./lab-work:/work   # A shared space for your scripts
+    working_dir: /work
+    command: >
+      sh -c "apk add --no-cache iptables iproute2 curl tcpdump && 
+            echo '--- IPTABLES SANDBOX READY ---' &&
+            sleep infinity"
+    networks:
+      - lab-net
+
+  # A "Victim" node to test if your rules are actually blocking traffic
+  target-node:
+    image: alpine:latest
+    container_name: target-server
+    command: >
+      sh -c "apk add --no-cache curl python3 && 
+            echo '--- TARGET SERVER READY ---' &&
+            python3 -m http.server 80"
+    networks:
+      - lab-net
+
+networks:
+  lab-net:
+    driver: bridge

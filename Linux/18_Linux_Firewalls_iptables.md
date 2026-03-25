@@ -104,4 +104,23 @@ iptables-save > /etc/iptables.rules
 iptables-restore < /etc/iptables.rules
 ```
 
+---
+
+## 7. EXPERT LAB: The IPTables Sandbox
+
+It is dangerous to experiment with firewalls on your main machine. One wrong command could lock you out of the internet. 
+
+We have provided a **Docker Sandbox** in the `sandbox/iptables-lab/` directory. This creates a two-node network where you can play "God" with the packets.
+
+### How to use it:
+1.  **Navigate to the lab:** `cd sandbox/iptables-lab`
+2.  **Start the environment:** `docker compose up -d`
+3.  **Enter the "Firewall" node:** `docker exec -it iptables-sandbox sh`
+
+Inside this node, you have a "Target" server at the IP `target-server`. You can practice blocking pings, web traffic, and setting up stateful rules without fear.
+
+*See the [Sandbox README](./sandbox/iptables-lab/README.md) for a list of experiments to try.*
+
+---
+
 *You have graduated from "shouting at the terminal" to "engineering the kernel's network stack." In Phase 7, we will explore containerization internals.*
