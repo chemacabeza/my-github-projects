@@ -118,4 +118,25 @@ This is how NAT routers, VPN tunnels, and traffic shapers work at the kernel lev
 *In Chapter 27, we will create a character device driver — making a custom `/dev/mydevice` file that your applications can talk to.*
 
 ---
+---
+
+## 🧪 Sandbox: Test Netfilter Hooks
+
+Use the **Kernel Dev Sandbox** (requires kernel headers on the host):
+
+```bash
+cd sandbox/kernel-dev-lab
+docker compose up -d
+docker exec -it kernel-dev-sandbox bash
+```
+
+> **Note:** Kernel module compilation requires matching kernel headers. If headers are not available inside the container, compile on your host machine or use a VM with `linux-headers-$(uname -r)` installed.
+
+**Test iptables rules instead (safe alternative):**
+```bash
+iptables -A INPUT -p icmp -j DROP
+ping -c 1 kernel-dev-target   # Should fail!
+iptables -D INPUT -p icmp -j DROP
+```
+
 [<< Previous: FUSE Filesystem](./25_FUSE_Filesystem.md) | [Home: Curriculum Map](./README.md) | [Next: Character Device Drivers >>](./27_Device_Drivers.md)

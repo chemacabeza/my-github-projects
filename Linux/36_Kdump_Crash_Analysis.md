@@ -106,4 +106,31 @@ You started at Chapter 1 learning what `ls` does. You are now capturing kernel c
 **You are a Linux Kernel Architect.**
 
 ---
+---
+
+## 🧪 Sandbox: Explore Crash Analysis Tools
+
+Kdump requires a real kernel. Use a **Virtual Machine** for crash trigger testing. In the **Production Sandbox**, you can explore diagnostics:
+
+```bash
+cd sandbox/production-lab
+docker compose up -d
+docker exec -it production-sandbox bash
+```
+
+**Safe diagnostic experiments:**
+```bash
+# View kernel ring buffer (the log that survives crashes)
+dmesg | tail -20
+
+# Check if SysRq is enabled
+cat /proc/sys/kernel/sysrq
+
+# View current memory map
+cat /proc/iomem | head -20
+
+# Inspect running process memory layout
+cat /proc/self/maps | head -10
+```
+
 [<< Previous: Live Kernel Patching](./35_Live_Kernel_Patching.md) | [Home: Curriculum Map](./README.md)

@@ -93,4 +93,36 @@ Key blocked syscalls: `mount`, `reboot`, `kexec_load`, `clock_settime`, `ptrace`
 *In Chapter 30, we explore Capabilities — the fine-grained replacement for the "all-or-nothing" root privilege model.*
 
 ---
+---
+
+## 🧪 Sandbox: Build a Seccomp Jail
+
+The **Security Sandbox** has `libseccomp-dev` ready to go:
+
+```bash
+cd sandbox/security-lab
+docker compose up -d
+docker exec -it security-sandbox bash
+```
+
+**Compile and test the sandbox program from this chapter:**
+```bash
+cat > /work/seccomp_demo.c << 'CEOF'
+#include <seccomp.h>
+#include <stdio.h>
+#include <unistd.h>
+int main() {
+    scmp_filter_ctx ctx = seccomp_init(SCMP_ACT_KILL);
+    seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(write), 0);
+    seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(exit_group), 0);
+    seccomp_load(ctx);
+    write(1, "I am sandboxed!\n", 16);
+    seccomp_release(ctx);
+    return 0;
+}
+CEOF
+gcc -o /work/seccomp_demo /work/seccomp_demo.c -lseccomp
+/work/seccomp_demo
+```
+
 [<< Previous: SELinux & AppArmor](./28_SELinux_AppArmor.md) | [Home: Curriculum Map](./README.md) | [Next: Linux Capabilities >>](./30_Linux_Capabilities.md)

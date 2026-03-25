@@ -77,4 +77,32 @@ sudo tc filter add dev eth0 parent 1: protocol ip u32 \
 *In Chapter 32, we push packet processing to the absolute limit with XDP.*
 
 ---
+---
+
+## 🧪 Sandbox: Practice Traffic Shaping
+
+The **Networking Sandbox** has `tc`, `iperf3`, and a traffic target ready:
+
+```bash
+cd sandbox/networking-lab
+docker compose up -d
+docker exec -it networking-sandbox bash
+```
+
+**Experiments:**
+```bash
+# Verify connectivity to the target
+ping -c 2 172.28.0.20
+
+# Add 200ms latency
+tc qdisc add dev eth0 root netem delay 200ms
+ping -c 3 172.28.0.20  # Notice the delay!
+
+# Remove the rule
+tc qdisc del dev eth0 root
+
+# Bandwidth test with iperf3
+iperf3 -c 172.28.0.20 -t 5
+```
+
 [<< Previous: Linux Capabilities](./30_Linux_Capabilities.md) | [Home: Curriculum Map](./README.md) | [Next: XDP (eXpress Data Path) >>](./32_XDP.md)

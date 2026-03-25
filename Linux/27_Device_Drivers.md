@@ -150,4 +150,28 @@ sudo rm /dev/antigravity
 *Phase 9 Complete. You now have the skills to extend the Linux Kernel itself. In Phase 10, we fortify: SELinux, Seccomp, and Linux Capabilities.*
 
 ---
+---
+
+## 🧪 Sandbox: Device Driver Testing
+
+Device drivers require kernel headers matching the running kernel. Use a **Virtual Machine** for full kernel module testing, or explore `/dev/` devices in the sandbox:
+
+```bash
+cd sandbox/kernel-dev-lab
+docker compose up -d
+docker exec -it kernel-dev-sandbox bash
+```
+
+**Safe experiments inside the container:**
+```bash
+# List existing character devices
+ls -la /dev/ | head -20
+
+# Read from a real device
+cat /dev/urandom | head -c 16 | xxd
+
+# See device major/minor numbers
+cat /proc/devices
+```
+
 [<< Previous: Netfilter Hooks in C](./26_Netfilter_Hooks_C.md) | [Home: Curriculum Map](./README.md) | [Next: SELinux & AppArmor >>](./28_SELinux_AppArmor.md)

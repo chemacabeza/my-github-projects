@@ -87,4 +87,28 @@ sudo ip link set dev eth0 xdpgeneric off
 *In Chapter 33, we explore the ultimate performance frontier: bypassing the kernel entirely.*
 
 ---
+---
+
+## 🧪 Sandbox: Compile XDP Programs
+
+The **Networking Sandbox** includes `clang`, `llvm`, and `libbpf-dev`:
+
+```bash
+cd sandbox/networking-lab
+docker compose up -d
+docker exec -it networking-sandbox bash
+```
+
+**Compile an XDP program (requires BPF support on host kernel):**
+```bash
+# Write the XDP C source to /work/xdp_drop.c (from this chapter)
+clang -O2 -target bpf -c /work/xdp_drop.c -o /work/xdp_drop.o
+
+# If BPF is available, attach it:
+# ip link set dev eth0 xdpgeneric obj /work/xdp_drop.o sec xdp
+
+# Test with iptables as a safe alternative:
+iptables -A INPUT -p udp -j DROP
+```
+
 [<< Previous: Traffic Control & QoS](./31_Traffic_Control_QoS.md) | [Home: Curriculum Map](./README.md) | [Next: DPDK & AF_XDP >>](./33_DPDK_AF_XDP.md)

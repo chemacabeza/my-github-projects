@@ -97,4 +97,28 @@ sudo aa-enforce /usr/sbin/nginx
 *In Chapter 29, we restrict which system calls a process is even allowed to make.*
 
 ---
+---
+
+## �� Sandbox: Practice MAC Policies
+
+The **Security Sandbox** comes with AppArmor tools pre-installed:
+
+```bash
+cd sandbox/security-lab
+docker compose up -d
+docker exec -it security-sandbox bash
+```
+
+**Experiment with AppArmor:**
+```bash
+# Check AppArmor status
+aa-status
+
+# View loaded profiles
+cat /etc/apparmor.d/usr.sbin.nginx 2>/dev/null || echo "Create your own profile!"
+
+# Test capability restrictions
+capsh --print
+```
+
 [<< Previous: Device Drivers](./27_Device_Drivers.md) | [Home: Curriculum Map](./README.md) | [Next: Seccomp-BPF >>](./29_Seccomp_BPF.md)

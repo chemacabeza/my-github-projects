@@ -129,4 +129,27 @@ fusermount3 -u /tmp/myfs
 *In Chapter 26, we go deeper — writing C code that intercepts network packets inside the kernel itself.*
 
 ---
+---
+
+## 🧪 Sandbox: Build Your FUSE Filesystem
+
+The **Kernel Dev Sandbox** comes pre-installed with `libfuse3-dev`:
+
+```bash
+cd sandbox/kernel-dev-lab
+docker compose up -d
+docker exec -it kernel-dev-sandbox bash
+```
+
+**Inside the container:**
+```bash
+# Copy the hello_fuse.c example from this chapter into /work/
+gcc -Wall /work/hello_fuse.c -o /work/hello_fuse $(pkg-config fuse3 --cflags --libs)
+mkdir /tmp/myfs
+/work/hello_fuse /tmp/myfs
+ls /tmp/myfs
+cat /tmp/myfs/hello.txt
+fusermount3 -u /tmp/myfs
+```
+
 [<< Previous: Page Cache & Writeback](./24_Page_Cache_Writeback.md) | [Home: Curriculum Map](./README.md) | [Next: Netfilter Hooks in C >>](./26_Netfilter_Hooks_C.md)

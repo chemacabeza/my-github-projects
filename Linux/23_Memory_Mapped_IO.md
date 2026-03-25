@@ -98,4 +98,38 @@ MongoDB, SQLite (in WAL mode), and many high-performance databases use `mmap()` 
 *In Chapter 24, we will explore the Page Cache — the invisible layer of RAM that makes your disk feel fast.*
 
 ---
+---
+
+## 🧪 Sandbox: Practice Memory-Mapped I/O
+
+Compile and test mmap programs in the **Kernel Dev Sandbox**:
+
+```bash
+cd sandbox/kernel-dev-lab
+docker compose up -d
+docker exec -it kernel-dev-sandbox bash
+```
+
+**Create and test `mmap_demo.c`:**
+```bash
+cat > /work/mmap_demo.c << 'CEOF'
+#include <stdio.h>
+#include <fcntl.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <unistd.h>
+int main() {
+    int fd = open("/etc/hostname", O_RDONLY);
+    struct stat sb; fstat(fd, &sb);
+    char *data = mmap(NULL, sb.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
+    close(fd);
+    printf("Hostname: %.*s\n", (int)sb.st_size, data);
+    munmap(data, sb.st_size);
+    return 0;
+}
+CEOF
+gcc -o /work/mmap_demo /work/mmap_demo.c
+/work/mmap_demo
+```
+
 [<< Previous: VFS Internals](./22_VFS_Internals.md) | [Home: Curriculum Map](./README.md) | [Next: Page Cache & Writeback >>](./24_Page_Cache_Writeback.md)

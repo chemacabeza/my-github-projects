@@ -109,4 +109,29 @@ MODULE_INFO(livepatch, "Y");
 *In Chapter 36, the final chapter, we learn to capture and analyze kernel crashes.*
 
 ---
+---
+
+## 🧪 Sandbox: Explore Live Patching Concepts
+
+Live kernel patching requires a real kernel. Use a **Virtual Machine** for full testing. In the **Production Sandbox**, you can explore the infrastructure:
+
+```bash
+cd sandbox/production-lab
+docker compose up -d
+docker exec -it production-sandbox bash
+```
+
+**Explore kernel patching status:**
+```bash
+# Check if livepatch is supported
+cat /proc/sys/kernel/livepatch 2>/dev/null || echo "Requires real kernel"
+
+# View kernel version info
+uname -r
+cat /proc/version
+
+# Explore ftrace (used by live patching)
+ls /sys/kernel/debug/tracing/ 2>/dev/null || echo "Mount debugfs first"
+```
+
 [<< Previous: Systemd Internals](./34_Systemd_Internals.md) | [Home: Curriculum Map](./README.md) | [Next: Kdump & Crash Analysis >>](./36_Kdump_Crash_Analysis.md)

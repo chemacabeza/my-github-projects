@@ -88,4 +88,31 @@ docker run --cap-add=ALL alpine sh
 *Phase 10 Complete. You have mastered the three pillars of Linux Security: MAC policies (SELinux/AppArmor), syscall filtering (Seccomp), and fine-grained root decomposition (Capabilities).*
 
 ---
+---
+
+## 🧪 Sandbox: Experiment with Capabilities
+
+The **Security Sandbox** includes `libcap2-bin` for capability management:
+
+```bash
+cd sandbox/security-lab
+docker compose up -d
+docker exec -it security-sandbox bash
+```
+
+**Experiments:**
+```bash
+# View your current capabilities
+cat /proc/self/status | grep Cap
+capsh --print
+
+# Set a capability on a binary
+cp /usr/bin/ping /work/my_ping
+setcap cap_net_raw=ep /work/my_ping
+getcap /work/my_ping
+
+# Test Docker capability flags:
+# docker run --cap-drop=ALL --cap-add=NET_ADMIN alpine ip link
+```
+
 [<< Previous: Seccomp-BPF](./29_Seccomp_BPF.md) | [Home: Curriculum Map](./README.md) | [Next: Traffic Control & QoS >>](./31_Traffic_Control_QoS.md)

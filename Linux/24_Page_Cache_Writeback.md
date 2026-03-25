@@ -97,4 +97,30 @@ echo 10 | sudo tee /proc/sys/vm/dirty_background_ratio
 *Phase 8 Complete. You now understand how Linux turns slow disks into fast virtual memory. In Phase 9, we will write kernel-level code: FUSE filesystems, Netfilter hooks, and device drivers.*
 
 ---
+---
+
+## 🧪 Sandbox: Observe the Page Cache
+
+Use the **Kernel Dev Sandbox** to see the cache in action:
+
+```bash
+cd sandbox/kernel-dev-lab
+docker compose up -d
+docker exec -it kernel-dev-sandbox bash
+```
+
+**Experiment:**
+```bash
+# Check current cache usage
+free -h
+
+# Time a cold read vs hot read
+time cat /usr/share/doc/gcc/README > /dev/null
+time cat /usr/share/doc/gcc/README > /dev/null
+
+# View dirty writeback settings
+cat /proc/sys/vm/dirty_writeback_centisecs
+cat /proc/sys/vm/dirty_ratio
+```
+
 [<< Previous: Memory-Mapped I/O](./23_Memory_Mapped_IO.md) | [Home: Curriculum Map](./README.md) | [Next: Writing a FUSE Filesystem >>](./25_FUSE_Filesystem.md)

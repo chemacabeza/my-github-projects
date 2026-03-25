@@ -118,4 +118,40 @@ systemd-analyze security nginx.service
 *In Chapter 35, we learn how to patch a running kernel without rebooting.*
 
 ---
+---
+
+## 🧪 Sandbox: Practice Systemd Operations
+
+The **Production Sandbox** provides a systemd-enabled environment:
+
+```bash
+cd sandbox/production-lab
+docker compose up -d
+docker exec -it production-sandbox bash
+```
+
+**Experiments:**
+```bash
+# Create a custom service unit
+cat > /etc/systemd/system/hello.service << EOF
+[Unit]
+Description=Hello World Service
+
+[Service]
+ExecStart=/bin/echo "Hello from systemd!"
+Type=oneshot
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# Manage it
+systemctl daemon-reload
+systemctl start hello
+journalctl -u hello
+
+# Analyze boot performance
+systemd-analyze blame 2>/dev/null || echo "Limited in container"
+```
+
 [<< Previous: DPDK & AF_XDP](./33_DPDK_AF_XDP.md) | [Home: Curriculum Map](./README.md) | [Next: Live Kernel Patching >>](./35_Live_Kernel_Patching.md)

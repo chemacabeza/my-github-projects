@@ -86,4 +86,30 @@ cat /proc/sys/fs/dentry-state
 *In Chapter 23, we will learn how the kernel uses memory-mapped I/O to bypass the `read()`/`write()` system call overhead entirely.*
 
 ---
+---
+
+## 🧪 Sandbox: Practice VFS Experiments
+
+All VFS experiments can be run safely inside the **Kernel Dev Sandbox**:
+
+```bash
+cd sandbox/kernel-dev-lab
+docker compose up -d
+docker exec -it kernel-dev-sandbox bash
+```
+
+**Try inside the container:**
+```bash
+# Create a file and inspect its inode
+echo "VFS Test" > /tmp/vfs.txt
+ls -i /tmp/vfs.txt
+
+# Create a hard link and verify shared inode
+ln /tmp/vfs.txt /tmp/vfs_link.txt
+ls -i /tmp/vfs.txt /tmp/vfs_link.txt
+
+# Inspect dentry cache stats
+cat /proc/sys/fs/dentry-state
+```
+
 [<< Previous: Container from Scratch](./21_Container_from_Scratch.md) | [Home: Curriculum Map](./README.md) | [Next: Memory-Mapped I/O >>](./23_Memory_Mapped_IO.md)

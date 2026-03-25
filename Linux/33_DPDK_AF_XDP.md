@@ -77,4 +77,29 @@ Key data structures:
 *Phase 11 Complete. You now understand the full spectrum from `iptables` (simple) to DPDK (nuclear). In Phase 12, we master production Linux operations.*
 
 ---
+---
+
+## 🧪 Sandbox: Explore Kernel-Bypass Concepts
+
+DPDK requires physical NIC access, but you can explore AF_XDP concepts in the **Networking Sandbox**:
+
+```bash
+cd sandbox/networking-lab
+docker compose up -d
+docker exec -it networking-sandbox bash
+```
+
+**Explore network interfaces and ring buffers:**
+```bash
+# View network interface statistics
+ip -s link show eth0
+
+# Watch packet counters in real-time
+watch -n 1 "cat /proc/net/dev"
+
+# Inspect socket buffer tuning
+cat /proc/sys/net/core/rmem_max
+cat /proc/sys/net/core/wmem_max
+```
+
 [<< Previous: XDP](./32_XDP.md) | [Home: Curriculum Map](./README.md) | [Next: Systemd Internals >>](./34_Systemd_Internals.md)
