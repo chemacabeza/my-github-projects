@@ -1,5 +1,9 @@
 # 04: Classes, Objects, and Resource Management
 
+<p align="center">
+  <img src="images/cpp_classes.png" alt="C++ Classes and Encapsulation" width="800"/>
+</p>
+
 This module initiates Phase 2, drawing heavy inspiration from Bjarne Stroustrup's designs and Stanley Lippman's "Inside the C++ Object Model". 
 
 C++ structures the concept of Object-Oriented Programming (OOP) around explicit control over an object’s lifetime: its **Construction**, **Copying**, **Moving**, and **Destruction**. 

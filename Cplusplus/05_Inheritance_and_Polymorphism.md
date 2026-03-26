@@ -1,5 +1,9 @@
 # 05: Inheritance and Polymorphism
 
+<p align="center">
+  <img src="images/cpp_inheritance.png" alt="C++ Inheritance and Polymorphism" width="800"/>
+</p>
+
 Inheritance allows us to model "is-a" relationships, extending existing classes to create derived versions. When combined with Virtual Functions, we unlock **Runtime Polymorphism**, allowing one interface to control many distinct types of objects.
 
 ---
