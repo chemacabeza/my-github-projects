@@ -1,5 +1,9 @@
 # 02: Pointers, References, and Memory Management
 
+<p align="center">
+  <img src="images/cpp_pointer.png" alt="C++ Pointer Memory Visualization" width="800"/>
+</p>
+
 This module bridges the gap between high-level logic and hardware manipulation. In C++, you have direct control over memory layout and allocation. Understanding this boundary is key to writing safe, lightning-fast code.
 
 ---
