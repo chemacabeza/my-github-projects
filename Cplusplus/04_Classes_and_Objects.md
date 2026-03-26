@@ -183,7 +183,7 @@ To experiment with the code snippets in this chapter, save them into a file name
   <img src="images/tux_linux.png" alt="Linux (Tux)" width="120"/>
 </p>
 
-**�� Linux (GCC or Clang):**
+**🐧 Linux (GCC or Clang):**
 ```bash
 # Using GCC (most common on Linux)
 g++ -std=c++20 -Wall -Wextra -O2 main.cpp -o main
