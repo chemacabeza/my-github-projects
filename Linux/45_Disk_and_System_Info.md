@@ -164,4 +164,103 @@ cat /proc/meminfo                          # Detailed memory info
 
 ---
 
+## 🧪 Hands-On Lab
+
+### Setup: Docker Sandbox
+
+```bash
+docker run -it --rm ubuntu:latest bash
+```
+
+---
+
+### Exercise 1: Check Disk Free Space
+> **Goal:** See how much space is available on each filesystem.
+
+```bash
+df -hT
+```
+✅ **Observe:** The overlay filesystem (root), tmpfs mounts, and their usage percentages.
+
+---
+
+### Exercise 2: Find Directory Sizes
+> **Goal:** Discover which directories consume the most space.
+
+```bash
+du -sh /usr/*  | sort -rh | head -10
+```
+✅ **Expected:** `/usr/lib` and `/usr/bin` are typically the largest. The output is sorted.
+
+---
+
+### Exercise 3: Create Files and Measure Usage
+> **Goal:** Create test data and see `du` reflect the change.
+
+```bash
+mkdir -p /root/lab45 && cd /root/lab45
+dd if=/dev/zero of=bigfile.bin bs=1M count=50 2>/dev/null
+du -sh .                          # Total size of the lab directory
+du -sh bigfile.bin                # Size of the single file
+```
+✅ **Expected:** Both `du` commands confirm approximately 50MB.
+
+---
+
+### Exercise 4: List Block Devices
+> **Goal:** View the container's disk layout.
+
+```bash
+lsblk 2>/dev/null || echo "lsblk not available in this container"
+cat /proc/partitions              # Alternative: kernel partition table
+```
+✅ **Observe:** The underlying host disk partitions visible from within the container.
+
+---
+
+### Exercise 5: View Memory Usage
+> **Goal:** Understand the `free` command output.
+
+```bash
+free -h
+```
+✅ **Key insight:** Focus on the `available` column — **not** `free`. Linux uses "free" RAM as disk cache (`buff/cache`), so `available` = truly usable memory.
+
+---
+
+### Exercise 6: System Identity with `uname`
+> **Goal:** Discover your system's kernel and architecture.
+
+```bash
+uname -a                          # All info in one line
+uname -r                          # Kernel version
+uname -m                          # Architecture (x86_64, aarch64)
+```
+✅ **Expected:** Full kernel version, hostname, and architecture type.
+
+---
+
+### Exercise 7: Check System Uptime
+> **Goal:** See how long the system has been running.
+
+```bash
+uptime
+cat /proc/uptime                  # Raw: seconds up, seconds idle
+```
+✅ **Observe:** The three load averages (1, 5, 15 min). Values above your CPU count = overloaded.
+
+---
+
+### Exercise 8: Explore `/proc` for System Info
+> **Goal:** Read system information directly from the kernel virtual filesystem.
+
+```bash
+cat /proc/cpuinfo | head -20      # CPU details
+cat /proc/meminfo | head -10      # Memory breakdown
+cat /etc/os-release               # Distribution info
+```
+✅ **Expected:** Low-level hardware info straight from the kernel, plus distro identification.
+
+---
+
 [<< Previous: User Management](./44_User_Management.md) | [Home: Curriculum Map](./README.md) | [Next: Process Management >>](./46_Process_Management.md)

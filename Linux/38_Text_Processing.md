@@ -171,4 +171,130 @@ find /etc -name "*.conf" -exec sed -i 's/\t/    /g' {} \;
 
 ---
 
+## 🧪 Hands-On Lab
+
+### Setup: Docker Sandbox
+
+```bash
+docker run -it --rm ubuntu:latest bash
+```
+
+Create the practice environment:
+
+```bash
+mkdir -p /root/lab38 && cd /root/lab38
+
+# Simulated web server access log
+cat > access.log << 'EOF'
+192.168.1.10 - - [26/Mar/2026:10:00:01] "GET /index.html HTTP/1.1" 200 5120
+10.0.0.5 - - [26/Mar/2026:10:00:02] "GET /api/users HTTP/1.1" 200 1024
+192.168.1.10 - - [26/Mar/2026:10:00:03] "POST /login HTTP/1.1" 401 512
+10.0.0.5 - - [26/Mar/2026:10:00:04] "GET /api/users HTTP/1.1" 200 1024
+172.16.0.1 - - [26/Mar/2026:10:00:05] "GET /admin HTTP/1.1" 403 256
+192.168.1.10 - - [26/Mar/2026:10:00:06] "GET /index.html HTTP/1.1" 200 5120
+10.0.0.5 - - [26/Mar/2026:10:00:07] "DELETE /api/users/42 HTTP/1.1" 500 128
+172.16.0.1 - - [26/Mar/2026:10:00:08] "GET /admin HTTP/1.1" 403 256
+192.168.1.10 - - [26/Mar/2026:10:00:09] "GET /dashboard HTTP/1.1" 200 8192
+10.0.0.5 - - [26/Mar/2026:10:00:10] "GET /api/health HTTP/1.1" 200 64
+EOF
+
+# Employee CSV
+cat > employees.csv << 'EOF'
+name,department,salary,city
+Alice,Engineering,95000,Madrid
+Bob,Marketing,72000,London
+Charlie,Engineering,88000,Berlin
+Diana,Marketing,76000,Madrid
+Eve,Engineering,102000,London
+Frank,Sales,68000,Berlin
+Grace,Engineering,97000,Madrid
+EOF
+```
+
+---
+
+### Exercise 1: Find Failed Requests
+> **Goal:** Use `grep` to find all non-200 HTTP responses.
+
+```bash
+grep -v '" 200 ' access.log
+```
+✅ **Expected:** Three lines: a 401, a 403, a 500, and another 403.
+
+---
+
+### Exercise 2: Count Requests Per IP
+> **Goal:** Build a pipeline to count hits per IP address.
+
+```bash
+awk '{print $1}' access.log | sort | uniq -c | sort -rn
+```
+✅ **Expected:** `192.168.1.10` has 4 hits, `10.0.0.5` has 4, `172.16.0.1` has 2.
+
+---
+
+### Exercise 3: Extract CSV Columns
+> **Goal:** Print only names and salaries from the CSV.
+
+```bash
+cut -d, -f1,3 employees.csv
+```
+✅ **Expected:** Two-column output: `name,salary` header followed by all employees.
+
+---
+
+### Exercise 4: Find High Earners
+> **Goal:** Use `awk` to find employees earning above 90,000.
+
+```bash
+awk -F, 'NR>1 && $3 > 90000 {print $1, $3}' employees.csv
+```
+✅ **Expected:** Alice (95000), Eve (102000), Grace (97000).
+
+---
+
+### Exercise 5: Replace Text In-Place with `sed`
+> **Goal:** Change the department "Marketing" to "Growth" in the CSV.
+
+```bash
+sed 's/Marketing/Growth/g' employees.csv
+```
+✅ **Expected:** Bob and Diana now show "Growth" instead of "Marketing". The original file is unchanged (no `-i`).
+
+---
+
+### Exercise 6: Transform Case with `tr`
+> **Goal:** Convert all department names to uppercase.
+
+```bash
+cut -d, -f2 employees.csv | tr 'a-z' 'A-Z'
+```
+✅ **Expected:** `DEPARTMENT`, `ENGINEERING`, `MARKETING`, etc.
+
+---
+
+### Exercise 7: Count Lines of Log
+> **Goal:** How many requests are in the access log?
+
+```bash
+wc -l access.log
+```
+✅ **Expected:** `10 access.log`.
+
+---
+
+### Exercise 8: Full Pipeline Challenge
+> **Goal:** Find the total salary of all Engineering employees.
+
+```bash
+grep "Engineering" employees.csv | cut -d, -f3 | paste -sd+ | bc
+```
+Or using `awk`:
+```bash
+awk -F, '$2=="Engineering" {sum+=$3} END {print sum}' employees.csv
+```
+✅ **Expected:** `382000` (95000 + 88000 + 102000 + 97000).
+
+---
+
 [<< Previous: File Viewing](./37_File_Viewing.md) | [Home: Curriculum Map](./README.md) | [Next: Permissions >>](./39_Permissions.md)

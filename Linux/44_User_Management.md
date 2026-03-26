@@ -144,4 +144,111 @@ sudo visudo
 
 ---
 
+## 🧪 Hands-On Lab
+
+### Setup: Docker Sandbox
+
+```bash
+docker run -it --rm ubuntu:latest bash
+```
+
+---
+
+### Exercise 1: Create a New User
+> **Goal:** Create a user with a home directory and bash shell.
+
+```bash
+useradd -m -s /bin/bash alice
+ls /home/alice/                    # Home directory created
+grep alice /etc/passwd             # Check the user entry
+```
+✅ **Expected:** Alice's home directory exists, and her entry appears in `/etc/passwd`.
+
+---
+
+### Exercise 2: Set a Password
+> **Goal:** Set and verify a password for the user.
+
+```bash
+passwd alice                       # Enter a password when prompted
+passwd -S alice                    # Show password status
+```
+✅ **Expected:** Password status shows `P` (password set).
+
+---
+
+### Exercise 3: Create a Group and Add Users
+> **Goal:** Create a developers group and add alice to it.
+
+```bash
+groupadd developers
+usermod -aG developers alice
+groups alice                       # Show alice's groups
+id alice                           # Full UID/GID details
+```
+✅ **Expected:** Alice belongs to both her primary group and `developers`.
+
+---
+
+### Exercise 4: Create a Second User
+> **Goal:** Create bob and add him to the same group.
+
+```bash
+useradd -m -s /bin/bash -G developers bob
+groups bob
+```
+✅ **Expected:** Bob is automatically in the `developers` group.
+
+---
+
+### Exercise 5: Inspect System Files
+> **Goal:** Read the user and group databases.
+
+```bash
+cat /etc/passwd | grep -E "alice|bob"     # User entries
+cat /etc/shadow | grep -E "alice|bob"     # Password hashes (root only)
+cat /etc/group | grep developers          # Group membership
+```
+✅ **Observe:** The structure — username, UID, GID, home dir, shell in passwd; hash in shadow.
+
+---
+
+### Exercise 6: Switch Users with `su`
+> **Goal:** Log in as alice.
+
+```bash
+su - alice                         # Full login shell
+whoami                             # Should say "alice"
+pwd                                # Should be /home/alice
+exit                               # Return to root
+```
+✅ **Expected:** You're now operating as alice with her home directory.
+
+---
+
+### Exercise 7: Lock and Unlock an Account
+> **Goal:** Disable and re-enable login for a user.
+
+```bash
+passwd -l bob                      # Lock bob's account
+passwd -S bob                      # Status: L (locked)
+su - bob                           # Should fail: authentication failure
+passwd -u bob                      # Unlock
+```
+✅ **Expected:** Locked accounts show `L` status and reject login.
+
+---
+
+### Exercise 8: Delete a User
+> **Goal:** Remove a user and their home directory.
+
+```bash
+userdel -r bob                     # Delete user + home dir
+ls /home/                          # bob's directory is gone
+grep bob /etc/passwd               # No entry
+```
+✅ **Expected:** Bob is completely removed from the system.
+
+---
+
 [<< Previous: File Management](./43_File_Management.md) | [Home: Curriculum Map](./README.md) | [Next: Disk & System Info >>](./45_Disk_and_System_Info.md)

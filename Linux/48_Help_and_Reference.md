@@ -198,4 +198,132 @@ Press `Ctrl+R` in the terminal to search history interactively:
 
 ---
 
+## 🧪 Hands-On Lab
+
+### Setup: Docker Sandbox
+
+```bash
+docker run -it --rm ubuntu:latest bash
+```
+
+Install man pages:
+
+```bash
+apt-get update > /dev/null 2>&1
+apt-get install -y man-db manpages > /dev/null 2>&1
+```
+
+---
+
+### Exercise 1: Read a Man Page
+> **Goal:** Open and navigate the manual for `ls`.
+
+```bash
+man ls
+```
+✅ **Try these:** `Space` (next page), `/SORT` (search for "SORT"), `n` (next match), `q` (quit).
+
+---
+
+### Exercise 2: Access Different Manual Sections
+> **Goal:** See that `passwd` has entries in multiple sections.
+
+```bash
+man 1 passwd                       # The command
+man 5 passwd                       # The file format
+```
+✅ **Key insight:** Section 1 describes *how to use* `passwd`. Section 5 describes the *file structure* of `/etc/passwd`.
+
+---
+
+### Exercise 3: One-Line Descriptions with `whatis`
+> **Goal:** Quickly find out what a command does.
+
+```bash
+whatis ls
+whatis grep
+whatis mount
+whatis bash
+```
+✅ **Expected:** One-line summaries with the manual section in parentheses.
+
+---
+
+### Exercise 4: Search by Keyword with `apropos`
+> **Goal:** Find commands when you don't know the name.
+
+```bash
+apropos "list directory"
+apropos "copy file"
+apropos "network interface"
+```
+✅ **Expected:** Matching man pages for each keyword. This is invaluable when you know *what* you want but not *which tool* does it.
+
+---
+
+### Exercise 5: Classify Commands with `type`
+> **Goal:** Understand what kind of thing each command is.
+
+```bash
+type cd                            # Shell builtin
+type ls                            # Often aliased
+type echo                          # Shell builtin
+type /usr/bin/env                  # External executable
+type type                          # Shell builtin (meta!)
+```
+✅ **Expected:** Each command classified as builtin, alias, or file path.
+
+---
+
+### Exercise 6: Find Executable Paths
+> **Goal:** Locate where binaries live.
+
+```bash
+which bash
+which ls
+which cat
+whereis bash                       # Binary + man page locations
+```
+✅ **Expected:** Absolute paths to each binary, and `whereis` additionally shows man page locations.
+
+---
+
+### Exercise 7: Create and Use Aliases
+> **Goal:** Build your own command shortcuts.
+
+```bash
+alias ll='ls -alFh'
+alias cls='clear'
+alias ..='cd ..'
+
+ll /etc/                           # Uses your alias
+alias                              # List all aliases
+unalias ll                         # Remove one alias
+```
+✅ **Expected:** `ll` shows detailed listings; `alias` displays all active shortcuts.
+
+---
+
+### Exercise 8: Search Command History
+> **Goal:** Navigate and reuse past commands.
+
+```bash
+# Run some commands first:
+echo "Hello World"
+ls /etc
+date
+cat /etc/hostname
+
+# Now explore history:
+history                            # Full history
+history 5                          # Last 5 commands
+!!                                 # Re-run the last command
+!echo                              # Re-run the last command starting with "echo"
+```
+✅ **Expected:** History shows all commands with numbers. `!!` and `!echo` replay previous commands.
+
+**Bonus:** Press `Ctrl+R` and type to search history interactively!
+
+---
+
 [<< Previous: System Control](./47_System_Control.md) | [Home: Curriculum Map](./README.md)

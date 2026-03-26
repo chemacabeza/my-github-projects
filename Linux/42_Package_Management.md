@@ -162,4 +162,103 @@ sudo dnf config-manager --add-repo https://repo.example.com/custom.repo
 
 ---
 
+## 🧪 Hands-On Lab
+
+### Setup: Docker Sandbox
+
+```bash
+docker run -it --rm ubuntu:latest bash
+```
+
+---
+
+### Exercise 1: Refresh the Package Index
+> **Goal:** Update the list of available packages.
+
+```bash
+apt update
+```
+✅ **Expected:** A list of repositories is fetched, ending with "Reading package lists... Done".
+
+---
+
+### Exercise 2: Search for a Package
+> **Goal:** Find packages related to a keyword.
+
+```bash
+apt search "text editor"
+```
+✅ **Expected:** A list of editors like `nano`, `vim`, `emacs`, etc.
+
+---
+
+### Exercise 3: Inspect a Package Before Installing
+> **Goal:** View package details without installing.
+
+```bash
+apt show curl
+```
+✅ **Observe:** Version, size, description, dependencies, and maintainer info.
+
+---
+
+### Exercise 4: Install and Verify a Package
+> **Goal:** Install `tree` and confirm it works.
+
+```bash
+apt install -y tree
+tree /etc/apt/
+```
+✅ **Expected:** `tree` is installed and displays the APT config directory structure.
+
+---
+
+### Exercise 5: Find Which Package Owns a File
+> **Goal:** Discover which package provides a specific binary.
+
+```bash
+dpkg -S /usr/bin/apt
+```
+✅ **Expected:** Shows `apt: /usr/bin/apt` — the `apt` package owns that file.
+
+---
+
+### Exercise 6: List Installed Packages
+> **Goal:** See everything installed in the container.
+
+```bash
+dpkg -l | head -20
+apt list --installed 2>/dev/null | wc -l
+```
+✅ **Expected:** A formatted table of packages, and a count of total installed packages.
+
+---
+
+### Exercise 7: Remove a Package Completely
+> **Goal:** Uninstall `tree` and clean up.
+
+```bash
+apt remove -y tree
+which tree                      # Should fail: not found
+apt autoremove -y               # Clean unused dependencies
+```
+✅ **Expected:** `tree` is removed; `which tree` returns nothing.
+
+---
+
+### Exercise 8: Install a `.deb` File Directly
+> **Goal:** Download and install a package manually with `dpkg`.
+
+```bash
+apt install -y wget > /dev/null 2>&1
+apt download hello 2>/dev/null
+ls *.deb
+dpkg -i hello_*.deb
+hello                           # Run the program
+dpkg -L hello                   # List files from the package
+```
+✅ **Expected:** The `hello` program prints "Hello, world!" and `dpkg -L` shows where its files were installed.
+
+---
+
 [<< Previous: Archiving](./41_Archiving.md) | [Home: Curriculum Map](./README.md) | [Next: File Management >>](./43_File_Management.md)

@@ -142,4 +142,141 @@ nl -s '. ' script.sh               # Custom separator: "1. line content"
 
 ---
 
+## 🧪 Hands-On Lab
+
+### Setup: Docker Sandbox
+
+```bash
+docker run -it --rm ubuntu:latest bash
+```
+
+Once inside the container, create the practice environment:
+
+```bash
+# Create sample files
+mkdir -p /root/lab37 && cd /root/lab37
+
+# A system log
+for i in $(seq 1 100); do echo "$(date -u +%Y-%m-%dT%H:%M:%S) [INFO] Processing request $i - status=200" >> server.log; done
+echo "$(date -u +%Y-%m-%dT%H:%M:%S) [ERROR] Connection refused to database" >> server.log
+for i in $(seq 102 200); do echo "$(date -u +%Y-%m-%dT%H:%M:%S) [INFO] Processing request $i - status=200" >> server.log; done
+
+# A short config file
+cat > app.conf << 'EOF'
+# Application Settings
+app.name=MyService
+app.port=8080
+app.debug=true
+# Database
+db.host=localhost
+db.port=5432
+db.name=production
+EOF
+
+# A script file
+cat > deploy.sh << 'SCRIPT'
+#!/bin/bash
+set -euo pipefail
+echo "Starting deployment..."
+echo "Pulling latest code..."
+echo "Running migrations..."
+echo "Restarting services..."
+echo "Deployment complete!"
+SCRIPT
+chmod +x deploy.sh
+```
+
+---
+
+### Exercise 1: Display a Whole File
+> **Goal:** Use `cat` to display the entire config file.
+
+```bash
+cat app.conf
+```
+✅ **Expected:** You see all lines including comments and key-value pairs.
+
+---
+
+### Exercise 2: Show Line Numbers
+> **Goal:** Display the config file with line numbers.
+
+```bash
+cat -n app.conf
+```
+✅ **Expected:** Each line is prefixed with its number (1–10).
+
+---
+
+### Exercise 3: View the First 5 Lines of a Log
+> **Goal:** Peek at the top of a large log file.
+
+```bash
+head -n 5 server.log
+```
+✅ **Expected:** Only the first 5 log entries appear.
+
+---
+
+### Exercise 4: View the Last 10 Lines
+> **Goal:** See the most recent log entries.
+
+```bash
+tail server.log
+```
+✅ **Expected:** The last 10 lines of the log are shown (including the ERROR entry near the end of the first batch).
+
+---
+
+### Exercise 5: Follow a Live Log
+> **Goal:** Simulate real-time log monitoring.
+
+Open a second tab by running:
+```bash
+# In the current shell, start tail in follow mode
+tail -f server.log &
+
+# Now append a new line and watch it appear
+echo "$(date -u +%Y-%m-%dT%H:%M:%S) [WARN] Disk space at 90%" >> server.log
+```
+✅ **Expected:** The new `WARN` line appears automatically after you append it.
+
+Stop the follow with: `kill %1`
+
+---
+
+### Exercise 6: Page Through a Long File
+> **Goal:** Use `less` to navigate a long file.
+
+```bash
+apt-get update > /dev/null 2>&1 && apt-get install -y less > /dev/null 2>&1
+less server.log
+```
+✅ **Try these keys:** `Space` (next page), `b` (back), `/ERROR` (search), `n` (next match), `q` (quit).
+
+---
+
+### Exercise 7: Reverse a File
+> **Goal:** View the log newest-first using `tac`.
+
+```bash
+tac server.log | head -5
+```
+✅ **Expected:** The 5 most recently appended lines appear first.
+
+---
+
+### Exercise 8: Number Only Non-Empty Lines
+> **Goal:** Use `nl` to number lines, skipping blanks.
+
+```bash
+# Add blank lines to test
+echo -e "Line A\n\nLine B\n\nLine C" > spaced.txt
+nl spaced.txt
+nl -ba spaced.txt
+```
+✅ **Expected:** First `nl` numbers only "Line A/B/C". With `-ba`, blanks get numbers too.
+
+---
+
 [Home: Curriculum Map](./README.md) | [Next: Text Processing >>](./38_Text_Processing.md)

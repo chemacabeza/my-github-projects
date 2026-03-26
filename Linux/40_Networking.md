@@ -151,4 +151,106 @@ netstat -rn                       # Routing table
 
 ---
 
+## 🧪 Hands-On Lab
+
+### Setup: Docker Sandbox
+
+```bash
+docker run -it --rm ubuntu:latest bash
+```
+
+Install networking tools:
+
+```bash
+apt-get update > /dev/null 2>&1
+apt-get install -y iputils-ping iproute2 curl dnsutils net-tools wget > /dev/null 2>&1
+cd /root
+```
+
+---
+
+### Exercise 1: Inspect Your Network Interfaces
+> **Goal:** Use `ip` to see your container's networking.
+
+```bash
+ip addr show
+```
+✅ **Observe:** You'll see `lo` (loopback, 127.0.0.1) and `eth0` (container IP, typically 172.x.x.x).
+
+---
+
+### Exercise 2: Show the Routing Table
+> **Goal:** Find your container's default gateway.
+
+```bash
+ip route show
+```
+✅ **Expected:** A `default via 172.x.x.1` line showing the Docker bridge gateway.
+
+---
+
+### Exercise 3: Test Connectivity with `ping`
+> **Goal:** Verify internet access from the container.
+
+```bash
+ping -c 3 google.com
+```
+✅ **Expected:** 3 packets sent, 3 received, with round-trip times displayed.
+
+---
+
+### Exercise 4: DNS Lookup with `dig`
+> **Goal:** Query DNS records for a domain.
+
+```bash
+dig +short google.com          # A record (IPv4)
+dig +short google.com AAAA     # AAAA record (IPv6)
+dig +short google.com MX       # Mail servers
+```
+✅ **Expected:** IP addresses and mail server entries for Google.
+
+---
+
+### Exercise 5: Check Listening Ports with `ss`
+> **Goal:** See if anything is listening inside the container.
+
+```bash
+ss -tuln
+```
+✅ **Expected:** Likely empty (no services running). The flags mean: TCP, UDP, Listening, Numeric.
+
+---
+
+### Exercise 6: Download a Web Page with `curl`
+> **Goal:** Fetch HTTP headers and body.
+
+```bash
+curl -I https://httpbin.org/get       # Headers only
+curl -s https://httpbin.org/get       # Body (JSON response)
+```
+✅ **Expected:** HTTP 200 status code, and a JSON body showing your request details.
+
+---
+
+### Exercise 7: Download a File with `wget`
+> **Goal:** Download and save a file.
+
+```bash
+wget -q -O test.html https://example.com
+head -5 test.html
+```
+✅ **Expected:** The first 5 lines of the example.com HTML page.
+
+---
+
+### Exercise 8: Reverse DNS Lookup
+> **Goal:** Find the hostname for an IP address.
+
+```bash
+dig -x 8.8.8.8 +short
+```
+✅ **Expected:** `dns.google.` — this is Google's public DNS server.
+
+---
+
 [<< Previous: Permissions](./39_Permissions.md) | [Home: Curriculum Map](./README.md) | [Next: Archiving >>](./41_Archiving.md)

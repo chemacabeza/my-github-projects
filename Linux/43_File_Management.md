@@ -164,4 +164,125 @@ du -sh directory/                          # Directory size (human-readable)
 
 ---
 
+## 🧪 Hands-On Lab
+
+### Setup: Docker Sandbox
+
+```bash
+docker run -it --rm ubuntu:latest bash
+```
+
+Create the practice environment:
+
+```bash
+mkdir -p /root/lab43 && cd /root/lab43
+mkdir -p project/{src,docs,tests}
+echo "print('hello')" > project/src/main.py
+echo "# Utilities" > project/src/utils.py
+echo "# API docs" > project/docs/api.md
+echo "# User guide" > project/docs/guide.md
+echo "test_main()" > project/tests/test_main.py
+echo "temp data" > project/cache.tmp
+echo "more temp" > project/debug.log
+```
+
+---
+
+### Exercise 1: Copy Files and Directories
+> **Goal:** Practice copying files with different options.
+
+```bash
+cp project/src/main.py backup_main.py         # Copy single file
+cp -r project/ project_backup/                 # Copy entire directory
+ls project_backup/src/                         # Verify contents
+```
+✅ **Expected:** `backup_main.py` and a complete `project_backup/` directory are created.
+
+---
+
+### Exercise 2: Move and Rename
+> **Goal:** Rename a file and move files between directories.
+
+```bash
+mv backup_main.py app.py                       # Rename
+mv app.py project/src/                         # Move to directory
+ls project/src/
+```
+✅ **Expected:** `app.py` now appears inside `project/src/`.
+
+---
+
+### Exercise 3: Safe Deletion
+> **Goal:** Delete files interactively.
+
+```bash
+rm -i project/cache.tmp                        # Confirm before deleting
+# Type 'y' to confirm
+rm project/debug.log                           # Direct delete
+ls project/
+```
+✅ **Expected:** Both temporary files are removed.
+
+---
+
+### Exercise 4: Create Nested Directories
+> **Goal:** Use `mkdir -p` to create a deep path in one command.
+
+```bash
+mkdir -p project/deploy/staging/configs
+ls -R project/deploy/
+```
+✅ **Expected:** The entire `deploy/staging/configs/` tree is created.
+
+---
+
+### Exercise 5: Find Files by Name and Type
+> **Goal:** Use `find` to locate files matching patterns.
+
+```bash
+find project/ -name "*.py"                     # All Python files
+find project/ -name "*.md" -type f             # All Markdown files
+find project/ -type d                          # All directories
+find project/ -empty                           # Empty files/dirs
+```
+✅ **Expected:** Each `find` returns the matching subset of the project tree.
+
+---
+
+### Exercise 6: Find + Execute
+> **Goal:** Use `find -exec` to perform actions on matched files.
+
+```bash
+find project/ -name "*.py" -exec wc -l {} \;   # Count lines per Python file
+find project/ -name "*.md" -exec cat {} \;      # Print all markdown content
+```
+✅ **Expected:** Line counts for each `.py` file; contents of each `.md` file.
+
+---
+
+### Exercise 7: Create and Inspect Symbolic Links
+> **Goal:** Create a symlink and understand how it works.
+
+```bash
+ln -s project/src/main.py link_to_main.py
+ls -l link_to_main.py                          # Shows the arrow: -> project/src/main.py
+cat link_to_main.py                            # Reads through the symlink
+rm project/src/main.py                         # Delete original
+cat link_to_main.py                            # Now it's a broken link!
+```
+✅ **Key insight:** Deleting the target breaks the symlink. It becomes a "dangling" link.
+
+---
+
+### Exercise 8: Inspect File Metadata with `stat`
+> **Goal:** Get detailed information about a file.
+
+```bash
+echo "hello" > /root/lab43/sample.txt
+stat /root/lab43/sample.txt
+```
+✅ **Observe:** Inode number, permission octal, size, block count, Access/Modify/Change timestamps.
+
+---
+
 [<< Previous: Package Management](./42_Package_Management.md) | [Home: Curriculum Map](./README.md) | [Next: User Management >>](./44_User_Management.md)

@@ -165,4 +165,132 @@ getfacl file.txt                   # Access Control Lists (if supported)
 
 ---
 
+## 🧪 Hands-On Lab
+
+### Setup: Docker Sandbox
+
+```bash
+docker run -it --rm ubuntu:latest bash
+```
+
+Create the practice environment:
+
+```bash
+mkdir -p /root/lab39 && cd /root/lab39
+
+# Create files with different purposes
+echo "#!/bin/bash\necho 'Hello from script'" > myscript.sh
+echo "DB_PASSWORD=s3cret" > credentials.txt
+echo "Welcome to the project" > readme.txt
+mkdir -p shared_project
+echo "Project code here" > shared_project/code.py
+
+# Create test users and groups
+useradd -m alice 2>/dev/null
+useradd -m bob 2>/dev/null
+groupadd developers 2>/dev/null
+```
+
+---
+
+### Exercise 1: Read Permission Strings
+> **Goal:** Inspect current permissions on your files.
+
+```bash
+ls -la
+```
+✅ **Observe:** Each file shows a 10-character permission string. Identify the owner, group, and others permissions.
+
+---
+
+### Exercise 2: Make a Script Executable
+> **Goal:** Use `chmod` to allow execution.
+
+```bash
+ls -l myscript.sh            # Before: -rw-r--r--
+chmod u+x myscript.sh
+ls -l myscript.sh            # After: -rwxr--r--
+./myscript.sh                # Now it runs!
+```
+✅ **Expected:** The script executes and prints "Hello from script".
+
+---
+
+### Exercise 3: Lock Down a Secrets File
+> **Goal:** Only the owner should be able to read credentials.
+
+```bash
+chmod 600 credentials.txt
+ls -l credentials.txt        # -rw-------
+```
+✅ **Verify:** `stat credentials.txt` should show Access: `(0600/-rw-------)`.
+
+---
+
+### Exercise 4: Octal Permission Math
+> **Goal:** Set exact permissions using octal notation.
+
+```bash
+chmod 755 myscript.sh        # Owner: rwx, Group: r-x, Others: r-x
+chmod 644 readme.txt         # Owner: rw-, Group: r--, Others: r--
+chmod 700 credentials.txt    # Owner: rwx, no access for anyone else
+ls -la
+```
+✅ **Verify** each file's permission string matches the octal values you set.
+
+---
+
+### Exercise 5: Change Ownership
+> **Goal:** Transfer a file to another user.
+
+```bash
+chown alice:developers readme.txt
+ls -l readme.txt             # alice developers
+chown -R bob:developers shared_project/
+ls -la shared_project/
+```
+✅ **Expected:** Ownership changes to the specified user and group.
+
+---
+
+### Exercise 6: Understand `umask`
+> **Goal:** See how `umask` affects new file permissions.
+
+```bash
+umask                         # Show current (e.g., 0022)
+touch test_default.txt
+ls -l test_default.txt        # Should be 644 (666 - 022)
+
+umask 0077
+touch test_private.txt
+ls -l test_private.txt        # Should be 600 (666 - 077)
+
+umask 0022                    # Reset to default
+```
+✅ **Key insight:** Higher umask = more restrictive default permissions.
+
+---
+
+### Exercise 7: Sticky Bit on a Shared Directory
+> **Goal:** Create a shared directory where users can only delete their own files.
+
+```bash
+mkdir /tmp/shared_lab
+chmod 1777 /tmp/shared_lab
+ls -ld /tmp/shared_lab        # drwxrwxrwt (note the 't')
+```
+✅ **Expected:** The sticky bit `t` appears in the last position, preventing users from deleting each other's files.
+
+---
+
+### Exercise 8: Inspect with `stat`
+> **Goal:** Get the complete metadata for a file.
+
+```bash
+stat myscript.sh
+```
+✅ **Observe:** The output shows size, blocks, inode, permissions in both octal and symbolic, timestamps (Access, Modify, Change), and owner/group IDs.
+
+---
+
 [<< Previous: Text Processing](./38_Text_Processing.md) | [Home: Curriculum Map](./README.md) | [Next: Networking >>](./40_Networking.md)

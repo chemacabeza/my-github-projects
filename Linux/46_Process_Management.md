@@ -168,4 +168,117 @@ pstree alice                               # Tree for specific user
 
 ---
 
+## 🧪 Hands-On Lab
+
+### Setup: Docker Sandbox
+
+```bash
+docker run -it --rm ubuntu:latest bash
+```
+
+Install tools:
+
+```bash
+apt-get update > /dev/null 2>&1 && apt-get install -y procps > /dev/null 2>&1
+```
+
+---
+
+### Exercise 1: View All Running Processes
+> **Goal:** Get a snapshot of every process.
+
+```bash
+ps aux
+ps -ef
+```
+✅ **Observe:** PID 1 is the container's init process (bash). Notice the columns: USER, PID, %CPU, %MEM, COMMAND.
+
+---
+
+### Exercise 2: Launch a Background Process
+> **Goal:** Start a long-running process and find it.
+
+```bash
+sleep 300 &                        # Start a 5-minute sleep in the background
+jobs                               # List background jobs
+ps aux | grep sleep                # Find it in the process list
+```
+✅ **Expected:** The `sleep` process appears with its PID in both outputs.
+
+---
+
+### Exercise 3: Kill a Process
+> **Goal:** Terminate the background sleep process.
+
+```bash
+kill %1                            # Kill by job number
+# OR: kill <PID>                   # Kill by PID
+jobs                               # Verify it's gone
+```
+✅ **Expected:** The job is terminated and no longer appears.
+
+---
+
+### Exercise 4: Process Priority with `nice`
+> **Goal:** Start a process with a lower priority.
+
+```bash
+nice -n 10 sleep 60 &
+ps -eo pid,ni,comm | grep sleep    # Show the nice value
+```
+✅ **Expected:** The `NI` column shows `10` for the sleep process.
+
+---
+
+### Exercise 5: Job Control (bg/fg)
+> **Goal:** Suspend and resume a process.
+
+```bash
+sleep 120                          # Start a foreground sleep
+# Press Ctrl+Z to suspend it
+jobs                               # Shows [1]+ Stopped
+bg %1                              # Resume in background
+jobs                               # Shows [1]+ Running
+fg %1                              # Bring back to foreground
+# Press Ctrl+C to kill it
+```
+✅ **Expected:** The process transitions between Stopped, Running (background), and foreground.
+
+---
+
+### Exercise 6: Use `pstree` to Visualize Processes
+> **Goal:** See the process hierarchy.
+
+```bash
+sleep 200 &
+sleep 201 &
+sleep 202 &
+pstree -p
+```
+✅ **Expected:** A tree showing `bash` as parent with child sleep processes and their PIDs.
+
+---
+
+### Exercise 7: Survive Logout with `nohup`
+> **Goal:** Start a process that persists beyond the shell.
+
+```bash
+nohup sleep 600 > /dev/null 2>&1 &
+ps aux | grep sleep
+# Even if you close this shell, the process would continue on a real system
+```
+✅ **Expected:** The sleep process runs detached, ignoring hangup signals.
+
+---
+
+### Exercise 8: Custom `ps` Output
+> **Goal:** Create a formatted process report.
+
+```bash
+ps -eo pid,ppid,user,%cpu,%mem,stat,start,time,comm --sort=-%mem | head -15
+```
+✅ **Observe:** A clean, sorted table of processes ranked by memory usage with custom columns.
+
+---
+
 [<< Previous: Disk & System Info](./45_Disk_and_System_Info.md) | [Home: Curriculum Map](./README.md) | [Next: System Control >>](./47_System_Control.md)
