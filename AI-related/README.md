@@ -508,6 +508,13 @@ The local installation includes the following models by default. Some are standa
     *   **Model ID**: 2784882
     *   **Source**: [Civitai](https://civitai.com/models/2476986?modelVersionId=2784882)
 
+43. `charlize_lora.safetensors`
+    *   **Type**: SDXL LoRA
+    *   **Description**: South African woman character (26 years old, 1.70m tall)
+    *   **Trigger Word**: `charlize`
+    *   **Model ID**: 2805114
+    *   **Source**: [Civitai](https://civitai.green/models/2495366?modelVersionId=2805114)
+
 
 ### Troubleshooting
 
