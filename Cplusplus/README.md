@@ -26,6 +26,7 @@ The chapters are specifically designed to strip away the abstractions, giving yo
 | **10** | [Assembly and Reversing](10_Assembly_and_Reversing.md) |
 | **11** | [Advanced Persistence](11_Advanced_Persistence.md) |
 | **12** | [Mastery Project](12_Mastery_Project.md) |
+| **13** | [Capstone Lab — Task Engine from Scratch](13_Capstone_Lab.md) |
 
 ---
 
