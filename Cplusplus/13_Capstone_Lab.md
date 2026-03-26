@@ -270,26 +270,60 @@ int main() {
 
 ## 🛠️ Compilation and Execution
 
+This project compiles and runs identically on **Linux** and **macOS (MacBook)**.
+
 ### Option A: Direct Compilation
 
+**🐧 Linux (GCC or Clang):**
 ```bash
+# Using GCC (most common on Linux)
 g++ -std=c++20 -Wall -Wextra -O2 -pthread main.cpp -o task_engine
+./task_engine
+
+# Or using Clang
+clang++ -std=c++20 -Wall -Wextra -O2 -pthread main.cpp -o task_engine
 ./task_engine
 ```
 
-### Option B: Using a Makefile
+**🍎 macOS (Apple Clang — ships with Xcode Command Line Tools):**
+```bash
+# Install compiler tools if not already present
+xcode-select --install
 
-Save as `Makefile`:
+# Apple Clang supports C++20. -pthread is implicit on macOS.
+clang++ -std=c++20 -Wall -Wextra -O2 main.cpp -o task_engine
+./task_engine
+
+# If you installed GCC via Homebrew (brew install gcc):
+g++-14 -std=c++20 -Wall -Wextra -O2 -pthread main.cpp -o task_engine
+./task_engine
+```
+
+> **Note:** On macOS, the default `g++` command is actually **Apple Clang**, not GNU GCC. If you installed GCC via Homebrew, use `g++-14` (or the version number you installed) to invoke real GCC explicitly.
+
+### Option B: Cross-Platform Makefile
+
+Save as `Makefile` — this auto-detects your OS and selects the right compiler flags:
 
 ```makefile
-CXX      = g++
-CXXFLAGS = -std=c++20 -Wall -Wextra -O2 -pthread
+# Cross-platform Makefile for Linux and macOS
+UNAME_S := $(shell uname -s)
+
+CXX      = clang++
+CXXFLAGS = -std=c++20 -Wall -Wextra -O2
 TARGET   = task_engine
 SRCS     = main.cpp
+HEADERS  = task.h factory.h engine.h
+
+# Linux requires explicit -pthread; macOS links it automatically
+ifeq ($(UNAME_S), Linux)
+    CXX      = g++
+    CXXFLAGS += -pthread
+endif
 
 all: $(TARGET)
 
-$(TARGET): $(SRCS) task.h factory.h engine.h
+$(TARGET): $(SRCS) $(HEADERS)
 	$(CXX) $(CXXFLAGS) $(SRCS) -o $(TARGET)
 
 run: $(TARGET)
@@ -297,6 +331,8 @@ run: $(TARGET)
 
 clean:
 	rm -f $(TARGET)
+
+.PHONY: all run clean
 ```
 
 ```bash
