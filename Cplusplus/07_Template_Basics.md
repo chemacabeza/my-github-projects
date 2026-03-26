@@ -110,17 +110,30 @@ Function and Class Templates are straightforward tools for reusability. However,
 
 To experiment with the code snippets in this chapter, save them into a file named `main.cpp` and compile using modern C++ standards.
 
-**Using GCC (`g++`):**
+**�� Linux (GCC or Clang):**
 ```bash
+# Using GCC (most common on Linux)
 g++ -std=c++20 -Wall -Wextra -O2 main.cpp -o main
 ./main
-```
 
-**Using Clang (`clang++`):**
-```bash
+# Or using Clang
 clang++ -std=c++20 -Wall -Wextra -O2 main.cpp -o main
 ./main
 ```
 
-*Note: The `-std=c++20` flag enables modern C++ features, `-Wall -Wextra` turns on important compiler warnings, and `-O2` applies standard optimizations.*
+**🍎 macOS (Apple Clang — ships with Xcode Command Line Tools):**
+```bash
+# Install compiler tools if not already present
+xcode-select --install
+
+# Apple Clang supports C++20
+clang++ -std=c++20 -Wall -Wextra -O2 main.cpp -o main
+./main
+
+# If you installed GCC via Homebrew (brew install gcc):
+g++-14 -std=c++20 -Wall -Wextra -O2 main.cpp -o main
+./main
+```
+
+> **Note:** On macOS, the default `g++` command is actually **Apple Clang**, not GNU GCC. If you installed GCC via Homebrew, use `g++-14` (or your installed version number) to invoke real GCC explicitly.
 
