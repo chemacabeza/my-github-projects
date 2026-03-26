@@ -4,7 +4,7 @@
   <img src="images/cover.png" alt="Linux Mastery Cover" width="800"/>
 </p>
 
-Welcome to the **Linux Mastery Guide**. This repository contains a complete, **36-part curriculum** spanning 12 phases, designed to take you from basic terminal survival to live kernel patching and kernel-bypass networking.
+Welcome to the **Linux Mastery Guide**. This repository contains a complete, **48-part curriculum** spanning 13 phases, designed to take you from basic terminal survival to live kernel patching and kernel-bypass networking.
 
 This hardcore curriculum was synthesized from 15 professional-grade textbooks procured from a Humble Bundle collection, representing the absolute bibles of system administration and engineering: *UNIX and Linux System Administration Handbook*, *Systems Performance*, *BPF Performance Tools*, *Linux Kernel Development*, and *Advanced Programming in the UNIX Environment*.
 
@@ -95,6 +95,22 @@ This hardcore curriculum was synthesized from 15 professional-grade textbooks pr
 * [**34: Systemd Internals**](./34_Systemd_Internals.md) - Unit files, socket activation, journal, and service hardening.
 * [**35: Live Kernel Patching**](./35_Live_Kernel_Patching.md) - Applying security patches to a running kernel without rebooting.
 * [**36: Kdump & Crash Analysis**](./36_Kdump_Crash_Analysis.md) - Capturing and analyzing kernel crash dumps for post-mortem forensics.
+
+### Phase 13: Essential Administration
+*The command-line toolkit every Linux administrator must have at their fingertips.*
+
+* [**37: File Viewing**](./37_File_Viewing.md) - Inspecting files with `cat`, `less`, `more`, `head`, `tail`, `tac`, and `nl`.
+* [**38: Text Processing**](./38_Text_Processing.md) - Transforming data with `grep`, `sed`, `awk`, `cut`, `sort`, `uniq`, `tr`, and `wc`.
+* [**39: Permissions**](./39_Permissions.md) - Controlling access with `chmod`, `chown`, `chgrp`, `umask`, SUID, SGID, and the Sticky Bit.
+* [**40: Networking**](./40_Networking.md) - Diagnostics and transfers with `ip`, `ss`, `ping`, `traceroute`, `dig`, `curl`, and `wget`.
+* [**41: Archiving & Compression**](./41_Archiving.md) - Bundling and compressing with `tar`, `gzip`, `bzip2`, `xz`, `zip`, and `rsync`.
+* [**42: Package Management**](./42_Package_Management.md) - Installing software with `apt`, `dpkg`, `dnf`, `rpm`, `snap`, and `flatpak`.
+* [**43: File Management**](./43_File_Management.md) - Operating on files with `cp`, `mv`, `rm`, `mkdir`, `find`, `locate`, `ln`, and `stat`.
+* [**44: User Management**](./44_User_Management.md) - Managing users and groups with `useradd`, `usermod`, `userdel`, `passwd`, and `sudo`.
+* [**45: Disk & System Info**](./45_Disk_and_System_Info.md) - Monitoring with `df`, `du`, `lsblk`, `fdisk`, `mount`, `uname`, `uptime`, and `free`.
+* [**46: Process Management**](./46_Process_Management.md) - Controlling processes with `ps`, `top`, `htop`, `kill`, `nice`, `bg`, `fg`, and `nohup`.
+* [**47: System Control**](./47_System_Control.md) - Managing services and scheduling with `systemctl`, `shutdown`, `reboot`, `cron`, and `timedatectl`.
+* [**48: Help & Reference**](./48_Help_and_Reference.md) - Finding answers with `man`, `info`, `apropos`, `whatis`, `type`, `which`, and `alias`.
 
 ---
 
