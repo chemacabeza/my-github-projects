@@ -274,10 +274,6 @@ This project compiles and runs identically on **Linux** and **macOS (MacBook)**.
 
 ### Option A: Direct Compilation
 
-<p align="center">
-  <img src="images/tux_linux.png" alt="Linux (Tux)" width="120"/>
-</p>
-
 **🐧 Linux (GCC or Clang):**
 ```bash
 # Using GCC (most common on Linux)
