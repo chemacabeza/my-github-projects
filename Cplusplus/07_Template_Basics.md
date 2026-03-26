@@ -102,3 +102,25 @@ int main() {
 
 ## Conclusion
 Function and Class Templates are straightforward tools for reusability. However, their true power comes when you try to manipulate *how* the compiler instantiates them using Specialization and Constexpr manipulation, leading to the realm of Template Metaprogramming (TMP). That is what we explore next in **08_Advanced_Templates.md**.
+
+
+---
+
+## 🛠️ Compilation and Execution
+
+To experiment with the code snippets in this chapter, save them into a file named `main.cpp` and compile using modern C++ standards.
+
+**Using GCC (`g++`):**
+```bash
+g++ -std=c++20 -Wall -Wextra -O2 main.cpp -o main
+./main
+```
+
+**Using Clang (`clang++`):**
+```bash
+clang++ -std=c++20 -Wall -Wextra -O2 main.cpp -o main
+./main
+```
+
+*Note: The `-std=c++20` flag enables modern C++ features, `-Wall -Wextra` turns on important compiler warnings, and `-O2` applies standard optimizations.*
+

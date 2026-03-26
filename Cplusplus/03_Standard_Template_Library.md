@@ -128,5 +128,27 @@ void algorithm_showcase() {
 }
 ```
 
+
+
+---
+
+## 🛠️ Compilation and Execution
+
+To experiment with the code snippets in this chapter, save them into a file named `main.cpp` and compile using modern C++ standards.
+
+**Using GCC (`g++`):**
+```bash
+g++ -std=c++20 -Wall -Wextra -O2 main.cpp -o main
+./main
+```
+
+**Using Clang (`clang++`):**
+```bash
+clang++ -std=c++20 -Wall -Wextra -O2 main.cpp -o main
+./main
+```
+
+*Note: The `-std=c++20` flag enables modern C++ features, `-Wall -Wextra` turns on important compiler warnings, and `-O2` applies standard optimizations.*
+
 ### Conclusion to The STL
 The Standard Template Library forces a generic mindset. By understanding that Containers hold data, Algorithms compute logic, and Iterators connect the two, you can begin reading advanced production C++ systems with ease.

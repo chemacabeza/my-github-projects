@@ -91,5 +91,27 @@ Student  Employee
 A `TA` would literally have two `name` variables.
 You solve this via **Virtual Inheritance** (`class Student : virtual public Person`), which forces the compiler to share a single base instance using hidden offset tables.
 
+
+
+---
+
+## 🛠️ Compilation and Execution
+
+To experiment with the code snippets in this chapter, save them into a file named `main.cpp` and compile using modern C++ standards.
+
+**Using GCC (`g++`):**
+```bash
+g++ -std=c++20 -Wall -Wextra -O2 main.cpp -o main
+./main
+```
+
+**Using Clang (`clang++`):**
+```bash
+clang++ -std=c++20 -Wall -Wextra -O2 main.cpp -o main
+./main
+```
+
+*Note: The `-std=c++20` flag enables modern C++ features, `-Wall -Wextra` turns on important compiler warnings, and `-O2` applies standard optimizations.*
+
 ### Conclusion to The Object Model
 C++ is a zero-overhead language until you use `virtual`. When you use `virtual`, you accept the hidden 8-byte `vptr` penalty and an extra pointer lookup per function call. Knowing exactly when you need static binding (Templates) vs dynamic binding (Polymorphism) is what elevates a developer to mastery.

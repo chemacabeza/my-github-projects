@@ -136,5 +136,27 @@ int main() {
 }
 ```
 
+
+
+---
+
+## 🛠️ Compilation and Execution
+
+To experiment with the code snippets in this chapter, save them into a file named `main.cpp` and compile using modern C++ standards.
+
+**Using GCC (`g++`):**
+```bash
+g++ -std=c++20 -Wall -Wextra -O2 main.cpp -o main
+./main
+```
+
+**Using Clang (`clang++`):**
+```bash
+clang++ -std=c++20 -Wall -Wextra -O2 main.cpp -o main
+./main
+```
+
+*Note: The `-std=c++20` flag enables modern C++ features, `-Wall -Wextra` turns on important compiler warnings, and `-O2` applies standard optimizations.*
+
 ### Conclusion
 By relying on heavy compile-time generation (the core C++ philosophy), ODB provides a type-safe, reflection-free ORM that executes incredibly fast, maintaining the performance standards expected by C++ engineers while delivering the high-level syntax of Java or C#.

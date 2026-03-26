@@ -99,3 +99,25 @@ If `throw` executes:
 4. It manually travels backward up the call stack, destroying all local stack variables (calling destructors for RAII!) until it hits the `catch` block.
 
 **Mastery Strategy:** Exceptions bloat the executable size dramatically with offset tables and slow down the "unhappy path" massively. Use `noexcept` on functions that cannot fail (like destructors and move constructors). The compiler will completely erase the `.eh_frame` generation for those functions, resulting in tight, rapid assembly.
+
+
+---
+
+## 🛠️ Compilation and Execution
+
+To experiment with the code snippets in this chapter, save them into a file named `main.cpp` and compile using modern C++ standards.
+
+**Using GCC (`g++`):**
+```bash
+g++ -std=c++20 -Wall -Wextra -O2 main.cpp -o main
+./main
+```
+
+**Using Clang (`clang++`):**
+```bash
+clang++ -std=c++20 -Wall -Wextra -O2 main.cpp -o main
+./main
+```
+
+*Note: The `-std=c++20` flag enables modern C++ features, `-Wall -Wextra` turns on important compiler warnings, and `-O2` applies standard optimizations.*
+

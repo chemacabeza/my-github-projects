@@ -69,3 +69,25 @@ class AnyContainer : private ThreadPolicy { ... };
 When you can write this class from scratch, correctly routing the virtual destructors through the Type Erasure mechanism to safely delete a polymorphic `std::string` nested behind a template inside a `unique_ptr`, you have achieved total mastery of the C++ Object Model and Language Specification.
 
 Happy coding.
+
+
+---
+
+## 🛠️ Compilation and Execution
+
+To experiment with the code snippets in this chapter, save them into a file named `main.cpp` and compile using modern C++ standards.
+
+**Using GCC (`g++`):**
+```bash
+g++ -std=c++20 -Wall -Wextra -O2 main.cpp -o main
+./main
+```
+
+**Using Clang (`clang++`):**
+```bash
+clang++ -std=c++20 -Wall -Wextra -O2 main.cpp -o main
+./main
+```
+
+*Note: The `-std=c++20` flag enables modern C++ features, `-Wall -Wextra` turns on important compiler warnings, and `-O2` applies standard optimizations.*
+

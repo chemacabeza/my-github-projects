@@ -172,5 +172,27 @@ int main() {
 }
 ```
 
+
+
+---
+
+## 🛠️ Compilation and Execution
+
+To experiment with the code snippets in this chapter, save them into a file named `main.cpp` and compile using modern C++ standards.
+
+**Using GCC (`g++`):**
+```bash
+g++ -std=c++20 -Wall -Wextra -O2 main.cpp -o main
+./main
+```
+
+**Using Clang (`clang++`):**
+```bash
+clang++ -std=c++20 -Wall -Wextra -O2 main.cpp -o main
+./main
+```
+
+*Note: The `-std=c++20` flag enables modern C++ features, `-Wall -Wextra` turns on important compiler warnings, and `-O2` applies standard optimizations.*
+
 ### Conclusion to Fundamentals
 To truly master C++, you must understand that every copy operation has a cost. By learning `const auto&` and reference syntax early, you adopt the mindset of a systems programmer. Next, we will dive into direct memory control in **02_Pointers_and_Memory.md**.
