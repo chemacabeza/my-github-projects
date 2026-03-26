@@ -99,6 +99,10 @@ You solve this via **Virtual Inheritance** (`class Student : virtual public Pers
 
 To experiment with the code snippets in this chapter, save them into a file named `main.cpp` and compile using modern C++ standards.
 
+<p align="center">
+  <img src="images/tux_linux.png" alt="Linux (Tux)" width="120"/>
+</p>
+
 **�� Linux (GCC or Clang):**
 ```bash
 # Using GCC (most common on Linux)
