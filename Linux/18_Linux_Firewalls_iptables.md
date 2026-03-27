@@ -178,5 +178,39 @@ iptables -F
 
 *You have graduated from "shouting at the terminal" to "engineering the kernel's network stack." In Phase 7, we will explore containerization internals.*
 
+
+## 🧪 Hands-On Lab: Basic Packet Filtering
+
+### Setup: Docker Sandbox
+```bash
+# Requires a container with NET_ADMIN capabilities
+docker run -it --rm --cap-add=NET_ADMIN ubuntu:latest bash
+apt-get update && apt-get install -y iptables iputils-ping
+```
+
+### Exercise 1: View Default Rules
+> **Goal:** Inspect the standard filter table.
+```bash
+iptables -L -n -v
+```
+✅ **Expected:** Shows the INPUT, FORWARD, and OUTPUT chains defaulting to ACCEPT.
+
+### Exercise 2: Block Local Pings
+> **Goal:** Drop ICMP requests on the loopback interface.
+```bash
+ping -c 1 127.0.0.1                     # Should succeed
+iptables -A INPUT -p icmp -j DROP
+ping -c 1 127.0.0.1                     # Should timeout/fail
+```
+✅ **Expected:** The ping hangs or fails. Check `iptables -L -n -v` to see the packet counter increment on the DROP rule!
+
+### Exercise 3: Flush the Rules
+> **Goal:** Restore connectivity.
+```bash
+iptables -D INPUT -p icmp -j DROP
+ping -c 1 127.0.0.1
+```
+✅ **Expected:** Pings immediately start succeeding again.
+
 ---
 [<< Previous: Socket Programming](./17_Socket_Programming.md) | [Home: Curriculum Map](./README.md) | [Next: Linux Namespaces >>](./19_Linux_Namespaces.md)

@@ -159,5 +159,44 @@ docker compose run cli-sandbox
 sed 's/ERROR/WARNING/g' /var/log/dummy_syslog.log
 ```
 
+
+## 🧪 Hands-On Lab: CLI Survival Skills
+
+### Setup: Docker Sandbox
+```bash
+docker run -it --rm ubuntu:latest bash
+```
+
+### Exercise 1: Navigation
+> **Goal:** Traverse directories quickly.
+```bash
+cd /var/log
+pwd
+cd -          # Jump back to previous directory
+pwd
+cd ~          # Jump to home directory
+```
+✅ **Expected:** You seamlessly bounce between `/var/log`, your starting directory, and `/root`.
+
+### Exercise 2: Wildcards (Globbing)
+> **Goal:** Use `*` and `?` to match files.
+```bash
+mkdir -p /root/lab02 && cd /root/lab02
+touch file1.txt file2.txt file10.txt image.png script.sh
+ls *.txt
+ls file?.txt
+```
+✅ **Expected:** `*.txt` matches three files. `file?.txt` matches *only* `file1.txt` and `file2.txt` (since `?` is exactly one character).
+
+### Exercise 3: I/O Redirection
+> **Goal:** Save command output to a file and append to it.
+```bash
+echo "Line 1" > output.txt
+echo "Line 2" >> output.txt
+date >> output.txt
+cat output.txt
+```
+✅ **Expected:** The file contains three lines, demonstrating `>` (overwrite) and `>>` (append).
+
 ---
 [<< Previous: The Linux Philosophy](./01_The_Linux_Philosophy.md) | [Home: Curriculum Map](./README.md) | [Next: Package & Service Mgmt >>](./03_Package_and_Service_Mgmt.md)

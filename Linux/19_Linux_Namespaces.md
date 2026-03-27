@@ -69,5 +69,43 @@ A container **is not a thing**. A container is just a standard Linux process whe
 
 *In Chapter 20, we will learn how to put these "world-weary" processes on a resource leash using Cgroups.*
 
+
+## 🧪 Hands-On Lab: Isolating Environments
+
+### Setup: Docker Sandbox
+*We must run a privileged container to create new namespaces inside it.*
+```bash
+docker run -it --rm --privileged ubuntu:latest bash
+apt-get update && apt-get install -y util-linux
+```
+
+### Exercise 1: Check Current Namespaces
+> **Goal:** Identify the namespaces the current shell belongs to.
+```bash
+ls -l /proc/self/ns/
+```
+✅ **Expected:** You see symbolic links for `cgroup`, `ipc`, `mnt`, `net`, `pid`, `user`, and `uts`.
+
+### Exercise 2: Create a UTS Namespace
+> **Goal:** Isolate the hostname from the parent shell.
+```bash
+hostname
+unshare --uts /bin/bash
+hostname isolated-box
+hostname
+exit  # Leave the namespace
+hostname
+```
+✅ **Expected:** Inside the `unshare` session, the hostname is `isolated-box`. Upon exiting, the original hostname is restored!
+
+### Exercise 3: Create a PID Namespace
+> **Goal:** Create an environment where your bash shell thinks it is PID 1.
+```bash
+unshare --pid --fork --mount-proc /bin/bash
+ps aux
+exit
+```
+✅ **Expected:** Isolation! `ps aux` shows only `bash` (PID 1) and `ps aux`. No other processes from the system are visible.
+
 ---
 [<< Previous: Linux Firewalls](./18_Linux_Firewalls_iptables.md) | [Home: Curriculum Map](./README.md) | [Next: Control Groups (cgroups) >>](./20_Control_Groups_cgroups.md)

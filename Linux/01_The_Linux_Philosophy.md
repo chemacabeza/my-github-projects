@@ -127,5 +127,36 @@ ls -l
 chmod 755 script.sh
 ```
 
+
+## 🧪 Hands-On Lab: The Filesystem Hierarchy
+
+### Setup: Docker Sandbox
+```bash
+docker run -it --rm ubuntu:latest bash
+```
+
+### Exercise 1: Explore the Root
+> **Goal:** See the top-level directories.
+```bash
+ls -l /
+```
+✅ **Expected:** You see directories like `/bin`, `/etc`, `/var`, `/home`, `/tmp`, and `/usr`.
+
+### Exercise 2: Identify "Everything is a File"
+> **Goal:** Inspect device files.
+```bash
+ls -l /dev/null /dev/zero /dev/random
+```
+✅ **Expected:** Look at the first character of the permissions (it's a `c` for character device, not a `-` for file).
+
+### Exercise 3: Temporary Files
+> **Goal:** Observe the volatile nature of `/tmp`.
+```bash
+echo "Important data" > /tmp/test.txt
+cat /tmp/test.txt
+# When the container stops, this file gets destroyed automatically.
+```
+✅ **Expected:** The file is easily created. On a real system, `/tmp` is wiped on reboot.
+
 ---
 [Home: Curriculum Map](./README.md) | [Next: Command Line Survival >>](./02_Command_Line_Survival.md)

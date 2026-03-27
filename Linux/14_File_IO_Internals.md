@@ -157,5 +157,37 @@ services:
 
 *Proceed to Chapter 15 to understand the explosive volatility of UNIX Asynchronous Signals and the violent lifecycle mapping how completely isolated processes are physically cloned.*
 
+
+## 🧪 Hands-On Lab: I/O Operations
+
+### Setup: Docker Sandbox
+```bash
+docker run -it --rm ubuntu:latest bash
+```
+
+### Exercise 1: Identifying File Descriptors
+> **Goal:** See the standard file descriptors (0, 1, 2) in action.
+```bash
+ls -l /proc/self/fd/
+```
+✅ **Expected:** Symbolic links mapping `0` (stdin), `1` (stdout), and `2` (stderr) to your terminal device (like `/dev/pts/0`).
+
+### Exercise 2: Creating a Named Pipe (FIFO)
+> **Goal:** Use a FIFO for inter-process communication without writing to disk.
+```bash
+mkfifo /tmp/mypipe
+echo "Hello Pipe" > /tmp/mypipe &
+cat /tmp/mypipe
+```
+✅ **Expected:** The `echo` command blocks until the `cat` command connects to the other end of the pipe and drains the data.
+
+### Exercise 3: Inspect Inode Information
+> **Goal:** See low-level filesystem metadata.
+```bash
+touch /tmp/hello.txt
+stat /tmp/hello.txt
+```
+✅ **Expected:** Shows the exact Inode number, size, blocks utilized, and precise timestamp arrays.
+
 ---
 [<< Previous: eBPF Observability](./13_eBPF_Observability.md) | [Home: Curriculum Map](./README.md) | [Next: Signals and Process Lifecycle >>](./15_Signals_and_Process_Lifecycle.md)

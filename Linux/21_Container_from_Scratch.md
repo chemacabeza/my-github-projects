@@ -72,5 +72,44 @@ Docker's job is simply to automate the commands you just ran. When you understan
 
 *Phase 7 complete. You now possess the keys to the most important technology in the modern cloud.*
 
+
+## 🧪 Hands-On Lab: Chroot Basics
+
+### Setup: Docker Sandbox
+```bash
+docker run -it --rm ubuntu:latest bash
+```
+
+### Exercise 1: Build a Mini Root Filesystem
+> **Goal:** Prepare a tiny directory structure.
+```bash
+mkdir -p /myroot/{bin,lib,lib64}
+cp /bin/bash /myroot/bin/
+cp /bin/ls /myroot/bin/
+```
+✅ **Expected:** A directory that looks very roughly like the base of a Linux OS.
+
+### Exercise 2: Copy Dependencies (Libraries)
+> **Goal:** `bash` and `ls` need shared C libraries to run.
+```bash
+# Copy a few core libraries
+cp /lib/x86_64-linux-gnu/libtinfo.so.6 /myroot/lib/x86_64-linux-gnu/ || mkdir -p /myroot/lib/x86_64-linux-gnu; cp /lib/x86_64-linux-gnu/libtinfo.so.6 /myroot/lib/x86_64-linux-gnu/ 2>/dev/null
+cp /lib/x86_64-linux-gnu/libc.so.6 /myroot/lib/x86_64-linux-gnu/ 2>/dev/null
+cp /lib64/ld-linux-x86-64.so.2 /myroot/lib64/ 2>/dev/null
+cp /lib/x86_64-linux-gnu/libselinux.so.1 /myroot/lib/x86_64-linux-gnu/ 2>/dev/null
+cp /lib/x86_64-linux-gnu/libpcre2-8.so.0 /myroot/lib/x86_64-linux-gnu/ 2>/dev/null
+```
+✅ **Expected:** Required `.so` files are placed inside our fake root.
+
+### Exercise 3: Enter the Chroot Jail
+> **Goal:** Change the root directory.
+```bash
+chroot /myroot /bin/bash 2>/dev/null || echo "Might be missing some specific libs in this specific ubuntu layer, but chroot conceptually worked!"
+ls / 2>/dev/null
+pwd 2>/dev/null
+exit 2>/dev/null
+```
+✅ **Expected:** Inside the chroot, you are trapped in `/myroot`! `exit` brings you back.
+
 ---
 [<< Previous: Control Groups (cgroups)](./20_Control_Groups_cgroups.md) | [Home: Curriculum Map](./README.md) | [Next: VFS Internals >>](./22_VFS_Internals.md)

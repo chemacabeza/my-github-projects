@@ -141,5 +141,39 @@ systemctl status nginx
 journalctl -f
 ```
 
+
+## 🧪 Hands-On Lab: Software Installation
+
+### Setup: Docker Sandbox
+```bash
+docker run -it --rm ubuntu:latest bash
+```
+
+### Exercise 1: Update the Package Cache
+> **Goal:** Fetch the latest software lists.
+```bash
+apt-get update
+```
+✅ **Expected:** APT downloads the latest package indices from Ubuntu's servers.
+
+### Exercise 2: Search and Install
+> **Goal:** Find and install a network utility.
+```bash
+apt-cache search curl | grep download
+apt-get install -y curl
+curl --version
+```
+✅ **Expected:** `curl` is identified, installed, and reports its version.
+
+### Exercise 3: View Service Status (Simulated)
+> **Goal:** Check the status of the cron service.
+```bash
+apt-get install -y cron
+service cron status
+service cron start
+service cron status
+```
+✅ **Expected:** Initially inactive (or unrecognized), then shown as started/running. *(Note: Docker doesn't run full systemd by default, so we use `service` instead of `systemctl`).*
+
 ---
 [<< Previous: Command Line Survival](./02_Command_Line_Survival.md) | [Home: Curriculum Map](./README.md) | [Next: Bash Scripting Mastery >>](./04_Bash_Scripting_Mastery.md)

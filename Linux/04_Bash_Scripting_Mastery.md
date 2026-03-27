@@ -153,5 +153,60 @@ docker compose run bash-sandbox
 ./test.sh
 ```
 
+
+## 🧪 Hands-On Lab: Writing Your First Scripts
+
+### Setup: Docker Sandbox
+```bash
+docker run -it --rm ubuntu:latest bash
+mkdir -p /root/lab04 && cd /root/lab04
+```
+
+### Exercise 1: Variables and Quotes
+> **Goal:** Understand single vs. double quotes.
+```bash
+cat > vars.sh << 'EOF'
+#!/bin/bash
+NAME="Linux"
+echo "Double quotes: Hello $NAME"
+echo 'Single quotes: Hello $NAME'
+EOF
+chmod +x vars.sh
+./vars.sh
+```
+✅ **Expected:** Double quotes expand the variable (`Hello Linux`), single quotes treat it literally (`Hello $NAME`).
+
+### Exercise 2: If/Else Conditionals
+> **Goal:** Check if a file exists.
+```bash
+cat > check.sh << 'EOF'
+#!/bin/bash
+if [ -f "/etc/passwd" ]; then
+    echo "Password file exists!"
+else
+    echo "File not found."
+fi
+EOF
+chmod +x check.sh
+./check.sh
+```
+✅ **Expected:** Prints "Password file exists!".
+
+### Exercise 3: Loops
+> **Goal:** Use a `for` loop to generate files.
+```bash
+cat > loop.sh << 'EOF'
+#!/bin/bash
+for i in {1..5}; do
+    touch "report_${i}.txt"
+    echo "Created report_${i}.txt"
+done
+EOF
+chmod +x loop.sh
+./loop.sh
+ls report_*.txt
+```
+✅ **Expected:** Five files are successfully created and listed.
+
 ---
 [<< Previous: Package & Service Mgmt](./03_Package_and_Service_Mgmt.md) | [Home: Curriculum Map](./README.md) | [Next: Process & Resource Mgmt >>](./05_Process_and_Resource_Management.md)

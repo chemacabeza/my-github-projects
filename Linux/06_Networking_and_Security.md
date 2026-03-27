@@ -150,5 +150,36 @@ ip addr show
 ufw status
 ```
 
+
+## 🧪 Hands-On Lab: Network Troubleshooting
+
+### Setup: Docker Sandbox
+```bash
+docker run -it --rm ubuntu:latest bash
+apt-get update && apt-get install -y iproute2 iputils-ping dnsutils netcat-traditional openssh-client
+```
+
+### Exercise 1: Finding Your IP
+> **Goal:** Inspect local network config.
+```bash
+ip addr show eth0
+```
+✅ **Expected:** Shows the IPv4 address (e.g., `172.17.x.x`) assigned to the container.
+
+### Exercise 2: Port Scanning with Netcat
+> **Goal:** Check if a port is open on a remote server.
+```bash
+nc -zv 8.8.8.8 53
+```
+✅ **Expected:** Reports that the connection to Google's DNS server on port 53 (UDP/TCP) succeeded.
+
+### Exercise 3: SSH Key Generation
+> **Goal:** Create an ed25519 keypair for secure authentication.
+```bash
+ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519 -N ""
+cat ~/.ssh/id_ed25519.pub
+```
+✅ **Expected:** A public key string that you would normally place in `~/.ssh/authorized_keys` on a remote server.
+
 ---
 [<< Previous: Process & Resource Mgmt](./05_Process_and_Resource_Management.md) | [Home: Curriculum Map](./README.md) | [Next: The Linux Kernel >>](./07_The_Linux_Kernel.md)

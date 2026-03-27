@@ -115,5 +115,36 @@ docker compose run strace-sandbox
 strace curl https://google.com
 ```
 
+
+## 🧪 Hands-On Lab: Probing the Kernel
+
+### Setup: Docker Sandbox
+```bash
+docker run -it --rm ubuntu:latest bash
+apt-get update && apt-get install -y kmod pciutils
+```
+
+### Exercise 1: Kernel Version
+> **Goal:** Identify the running kernel architecture.
+```bash
+uname -a
+uname -r
+```
+✅ **Expected:** Shows the exact kernel release string (e.g., `6.5.0-xx-generic`) inherited from the Docker host machine.
+
+### Exercise 2: View Kernel Boot Parameters
+> **Goal:** Read the command line passed to the kernel at boot.
+```bash
+cat /proc/cmdline
+```
+✅ **Expected:** Options like `ro quiet splash` or similar, depending on the host OS.
+
+### Exercise 3: Inspect Loaded Modules
+> **Goal:** View dynamically loaded kernel modules.
+```bash
+lsmod | head -10
+```
+✅ **Expected:** A list of modules (drivers, filesystems) currently loaded in the host kernel.
+
 ---
 [<< Previous: Networking & Security](./06_Networking_and_Security.md) | [Home: Curriculum Map](./README.md) | [Next: Kernel Module Development >>](./08_Kernel_Module_Development.md)

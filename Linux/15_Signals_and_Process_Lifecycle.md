@@ -156,5 +156,52 @@ services:
 
 *Proceed to Chapter 16 to fundamentally comprehend explicitly manipulating Parallel Thread Execution comprehensively structuring Native POSIX Threads natively comprehensively flawlessly natively bypassing isolated memory limits natively natively.*
 
+
+## 🧪 Hands-On Lab: Signals in Action
+
+### Setup: Docker Sandbox
+```bash
+docker run -it --rm ubuntu:latest bash
+```
+
+### Exercise 1: The SIGHUP Signal
+> **Goal:** See what happens when a terminal disconnects.
+```bash
+sleep 300 &
+PID=$!
+ps -p $PID
+kill -SIGHUP $PID
+ps -p $PID || echo "Process terminated."
+```
+✅ **Expected:** SIGHUP (Hangup) causes the process to terminate. This is why `nohup` is needed!
+
+### Exercise 2: Pause and Resume (SIGSTOP/SIGCONT)
+> **Goal:** Freeze a process in place.
+```bash
+cat > counter.sh << 'EOF'
+#!/bin/bash
+while true; do echo -n "."; sleep 1; done
+EOF
+chmod +x counter.sh
+./counter.sh &
+PID=$!
+sleep 3
+echo " Pausing..."
+kill -SIGSTOP $PID
+sleep 5
+echo " Resuming..."
+kill -SIGCONT $PID
+sleep 3
+kill -9 $PID
+```
+✅ **Expected:** The process outputs dots, stops for 5 seconds on SIGSTOP, and resumes on SIGCONT.
+
+### Exercise 3: Listing All Signals
+> **Goal:** See every documented POSIX signal.
+```bash
+kill -l
+```
+✅ **Expected:** A numbered list of all signals (e.g., `1) SIGHUP`, `9) SIGKILL`, `15) SIGTERM`).
+
 ---
 [<< Previous: File I/O Internals](./14_File_IO_Internals.md) | [Home: Curriculum Map](./README.md) | [Next: POSIX Threads >>](./16_POSIX_Threads.md)

@@ -162,5 +162,36 @@ gcc pipe_example.c -o pipe_example
 ./pipe_example
 ```
 
+
+## 🧪 Hands-On Lab: System Calls via strace
+
+### Setup: Docker Sandbox
+```bash
+docker run -it --rm ubuntu:latest bash
+apt-get update && apt-get install -y strace
+```
+
+### Exercise 1: Trace a Simple Command
+> **Goal:** Watch the kernel system calls an application makes.
+```bash
+strace echo "Hello Syscalls" > /dev/null
+```
+✅ **Expected:** A flood of output. You will see `execve`, `mmap`, `openat`, and finally the `write` system call outputting "Hello Syscalls".
+
+### Exercise 2: Trace File Operations
+> **Goal:** See exactly what `cat` does under the hood.
+```bash
+echo "data" > test.txt
+strace -e openat,read,write,close cat test.txt
+```
+✅ **Expected:** By filtering with `-e`, you clearly see `cat` opening the file, reading it, writing it to stdout (fd 1), and closing it.
+
+### Exercise 3: Count System Calls
+> **Goal:** Profile an application's kernel interaction.
+```bash
+strace -c ls /
+```
+✅ **Expected:** A clean summary table showing which system calls `ls` spent the most time executing.
+
 ---
 [<< Previous: Memory & Storage Internals](./09_Memory_and_Storage_Internals.md) | [Home: Curriculum Map](./README.md) | [Next: Systems Performance Metrics >>](./11_Systems_Performance_Metrics.md)

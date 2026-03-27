@@ -129,5 +129,35 @@ docker compose run perf-sandbox
 perf top
 ```
 
+
+## 🧪 Hands-On Lab: Basic Performance Profiling
+
+### Setup: Docker Sandbox
+```bash
+docker run -it --rm ubuntu:latest bash
+apt-get update && apt-get install -y sysstat
+```
+
+### Exercise 1: Use `vmstat` for System Health
+> **Goal:** Monitor memory, swap, IO, and CPU at once.
+```bash
+vmstat 1 5
+```
+✅ **Expected:** Prints a single line of metrics every second for 5 seconds. Look at the `id` (idle) and `wa` (IO wait) columns under CPU.
+
+### Exercise 2: Collect CPU Stats with `mpstat`
+> **Goal:** View per-core CPU utilization.
+```bash
+mpstat -P ALL 1 2
+```
+✅ **Expected:** Detailed CPU usage breakdown (user, sys, iowait, idle) for every individual CPU core.
+
+### Exercise 3: Use Time to Measure Execution
+> **Goal:** Benchmark a simple command.
+```bash
+time find / -name "*.conf" > /dev/null 2>&1
+```
+✅ **Expected:** Output showing `real` (wall-clock time), `user` (CPU time in userspace), and `sys` (CPU time in kernel space).
+
 ---
 [<< Previous: Unix Systems Programming](./10_Unix_Systems_Programming.md) | [Home: Curriculum Map](./README.md) | [Next: Deep Packet Inspection >>](./12_Deep_Packet_Inspection.md)

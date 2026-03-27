@@ -135,5 +135,42 @@ htop
 kill -9 <PID>
 ```
 
+
+## 🧪 Hands-On Lab: Understanding Processes
+
+### Setup: Docker Sandbox
+```bash
+docker run -it --rm ubuntu:latest bash
+apt-get update && apt-get install -y procps stress
+```
+
+### Exercise 1: The Process Tree
+> **Goal:** Visualize parent-child relationships.
+```bash
+ps -ef --forest
+```
+✅ **Expected:** A hierarchical view where you can see `bash` (PID 1) running the `ps` command.
+
+### Exercise 2: Background Jobs
+> **Goal:** Push a process to the background.
+```bash
+sleep 100 > /dev/null &
+jobs
+```
+✅ **Expected:** The terminal returns immediately, and `jobs` shows `[1]+ Running sleep 100 &`.
+
+### Exercise 3: Process Substitution
+> **Goal:** Compare the output of two commands without making temporary files.
+```bash
+echo -e "A
+B
+C" > list1.txt
+echo -e "A
+C
+D" > list2.txt
+diff <(sort list1.txt) <(sort list2.txt)
+```
+✅ **Expected:** Uses `<()` to pipe output directly into `diff`. It shows `< B` and `> D`.
+
 ---
 [<< Previous: Bash Scripting Mastery](./04_Bash_Scripting_Mastery.md) | [Home: Curriculum Map](./README.md) | [Next: Networking & Security >>](./06_Networking_and_Security.md)

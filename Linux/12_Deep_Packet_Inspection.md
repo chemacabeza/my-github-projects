@@ -103,5 +103,42 @@ docker compose run tcpdump-sandbox
 tcpdump -i any -n -nn 'port 443'
 ```
 
+
+## 🧪 Hands-On Lab: Packet Capture Basics
+
+### Setup: Docker Sandbox
+```bash
+docker run -it --rm ubuntu:latest bash
+apt-get update && apt-get install -y tcpdump curl
+```
+
+### Exercise 1: Capture Traffic to a Specific Host
+> **Goal:** Use `tcpdump` to snag packets heading to example.com.
+```bash
+tcpdump -n host example.com &
+sleep 2
+curl -s http://example.com > /dev/null
+kill %1
+```
+✅ **Expected:** You see the TCP handshake (SYN, SYN-ACK, ACK) and the HTTP traffic. The `-n` flag prevents slow DNS resolution of output IPs.
+
+### Exercise 2: Filter by Port
+> **Goal:** Listen only for DNS traffic.
+```bash
+tcpdump -n port 53 &
+sleep 2
+ping -c 1 google.com > /dev/null
+kill %1
+```
+✅ **Expected:** You see the UDP DNS query A and AAAA packets.
+
+### Exercise 3: Save and Read PCAP Files
+> **Goal:** Save a trace for later analysis.
+```bash
+tcpdump -w trace.pcap -c 10   # Capture exactly 10 packets and stop
+tcpdump -r trace.pcap -n      # Read them back
+```
+✅ **Expected:** The packets are written to a binary file and then successfully read back.
+
 ---
 [<< Previous: Systems Performance Metrics](./11_Systems_Performance_Metrics.md) | [Home: Curriculum Map](./README.md) | [Next: eBPF Observability >>](./13_eBPF_Observability.md)

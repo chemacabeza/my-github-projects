@@ -76,5 +76,34 @@ sudo resize2fs /dev/mapper/vg_data-database
 ### Summary
 Systems Performance Optimization entirely relies on understanding Virtual Memory mapping arrays, monitoring heavy disk Paging/Swapping activity, analyzing Inode exhaustion (millions of tiny empty files crashing the server), and utilizing flexible LVM pools to avoid static legacy outages.
 
+
+## 🧪 Hands-On Lab: Memory Visibility
+
+### Setup: Docker Sandbox
+```bash
+docker run -it --rm ubuntu:latest bash
+```
+
+### Exercise 1: Decode /proc/meminfo
+> **Goal:** Check raw hardware memory counters.
+```bash
+cat /proc/meminfo | head -10
+```
+✅ **Expected:** Highly detailed byte-level counters for `MemTotal`, `MemFree`, `MemAvailable`, and `Buffers`/`Cached`.
+
+### Exercise 2: View Swap Usage
+> **Goal:** See if the system is utilizing swap space.
+```bash
+cat /proc/swaps
+```
+✅ **Expected:** A list of active swap partitions or files, their totals, and their used amounts.
+
+### Exercise 3: Process Memory Map
+> **Goal:** See exactly how memory is laid out for a running process.
+```bash
+cat /proc/$$/maps | head -10
+```
+✅ **Expected:** The virtual memory layout for your current `bash` shell (`$$` evaluates to the current PID), showing executable segments, heaps, and shared libraries.
+
 ---
 [<< Previous: Kernel Module Development](./08_Kernel_Module_Development.md) | [Home: Curriculum Map](./README.md) | [Next: Unix Systems Programming >>](./10_Unix_Systems_Programming.md)

@@ -337,5 +337,37 @@ make
 insmod mastery_device.ko
 ```
 
+
+## 🧪 Hands-On Lab: Syslog and Kernel Messages
+
+*Note: True kernel module compilation requires a full VM, but we can explore the kernel message buffer in a standard container.*
+
+### Setup: Docker Sandbox
+```bash
+docker run -it --rm ubuntu:latest bash
+apt-get update && apt-get install -y kmod
+```
+
+### Exercise 1: Read the Kernel Ring Buffer
+> **Goal:** View hardware initialization and driver logs.
+```bash
+dmesg | head -20
+```
+✅ **Expected:** The first messages the kernel prints during host boot (e.g., CPU detection, memory setup).
+
+### Exercise 2: Filter Kernel Logs
+> **Goal:** Find specific hardware events.
+```bash
+dmesg | grep -i usb
+```
+✅ **Expected:** Kernel logs detailing USB controller initialization and connected devices.
+
+### Exercise 3: Check Module Info
+> **Goal:** Inspect metadata for a specific kernel module (if available on host).
+```bash
+modinfo overlay || echo "Module not found in path"
+```
+✅ **Expected:** Details about the overlay filesystem module, including author, description, and parameters.
+
 ---
 [<< Previous: The Linux Kernel](./07_The_Linux_Kernel.md) | [Home: Curriculum Map](./README.md) | [Next: Memory & Storage Internals >>](./09_Memory_and_Storage_Internals.md)

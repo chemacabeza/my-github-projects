@@ -142,5 +142,37 @@ biolatency-bpfcc
 python3 trace_clone.py
 ```
 
+
+## 🧪 Hands-On Lab: BPF Concepts
+
+*Note: True eBPF injection requires a privileged host, but we can inspect BPF-related filesystems.*
+
+### Setup: Docker Sandbox
+```bash
+docker run -it --rm ubuntu:latest bash
+apt-get update && apt-get install -y bpfcc-tools bpftrace 2>/dev/null || echo "Tools not fully supported in this restricted container"
+```
+
+### Exercise 1: Check the BPF Filesystem
+> **Goal:** See where BPF programs are pinned.
+```bash
+ls -l /sys/fs/bpf
+```
+✅ **Expected:** A mounted filesystem designed to hold persistent BPF map data.
+
+### Exercise 2: Verify JIT Compilation
+> **Goal:** Check if the kernel is compiling BPF to native machine code for performance.
+```bash
+cat /proc/sys/net/core/bpf_jit_enable
+```
+✅ **Expected:** A value of `1` or `2`, indicating that the BPF Just-In-Time compiler is active.
+
+### Exercise 3: Review Kernel Tracepoints
+> **Goal:** See the hooks where BPF programs attach.
+```bash
+ls /sys/kernel/tracing/events/syscalls/ | head -10
+```
+✅ **Expected:** A list of system call entry/exit points that can be instrumented safely by eBPF.
+
 ---
 [<< Previous: Deep Packet Inspection](./12_Deep_Packet_Inspection.md) | [Home: Curriculum Map](./README.md) | [Next: File I/O Internals >>](./14_File_IO_Internals.md)
