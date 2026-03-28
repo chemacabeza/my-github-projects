@@ -70,10 +70,25 @@ cat /proc/sys/vm/dirty_ratio
 If the power goes out while dirty pages are still in RAM, **that data is lost forever**. This is why databases use `fsync()` — it forces the kernel to flush dirty pages to disk *right now*.
 
 ```c
-int fd = open("critical.db", O_WRONLY);
-write(fd, data, sizeof(data));
-fsync(fd);  // BLOCK until the data is physically on disk
-close(fd);
+#include <fcntl.h>
+#include <unistd.h>
+
+int main() {
+    char data[] = "critical data transaction";
+    int fd = open("critical.db", O_WRONLY | O_CREAT, 0644);
+    
+    write(fd, data, sizeof(data));
+    fsync(fd);  // BLOCK until the data is physically on disk
+    
+    close(fd);
+    return 0;
+}
+```
+
+```bash
+# Compile and execute the fsync writer
+gcc flush_test.c -o flush_test
+./flush_test
 ```
 
 ---

@@ -58,6 +58,11 @@ int sfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
 connect(sfd, res->ai_addr, res->ai_addrlen);
 ```
 
+```bash
+# Networking/Socket C files don't require external linking on Linux
+gcc client_lookup.c -o client_lookup
+```
+
 ---
 
 ## 4. UNIX Domain Sockets (`AF_UNIX`)

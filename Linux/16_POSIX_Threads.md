@@ -35,10 +35,13 @@ void* worker(void* arg) {
     for(int i = 0; i < 1000000; i++) {
         pthread_mutex_lock(&mtx);   // Acquire ownership
         shared_resource++;          // CRITICAL SECTION
-        pthread_mutex_unlock(&mtx); // Release ownership
-    }
     return NULL;
 }
+```
+
+```bash
+# Compile and link the POSIX threads library
+gcc posix_mutex.c -o posix_mutex -lpthread
 ```
 
 ### Deadlocks
