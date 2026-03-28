@@ -25,20 +25,9 @@
 
 ## 2. High-Level Architecture
 
-```
-┌──────────┐     WebSocket     ┌──────────────┐
-│  Client  │ ◄───────────────► │  Chat Server │
-└──────────┘                   └──────┬───────┘
-                                      │
-                          ┌───────────┼───────────┐
-                          ▼           ▼           ▼
-                    [Message    [Presence    [Push
-                     Queue]     Service]    Notification]
-                          │           │
-                          ▼           ▼
-                    [Message    [Status
-                     Store]     Store (Redis)]
-```
+<p align="center">
+  <img src="images/sd_chat_arch.png" alt="Chat System Architecture" width="700"/>
+</p>
 
 ---
 
