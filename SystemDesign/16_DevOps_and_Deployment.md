@@ -52,21 +52,9 @@ Dockerfile ──build──→ Image ──run──→ Container
 
 ## 3. Kubernetes
 
-```
-┌─────────────── KUBERNETES CLUSTER ────────────────┐
-│                                                    │
-│  ┌──── Node 1 ────┐    ┌──── Node 2 ────┐        │
-│  │ ┌─Pod─┐ ┌─Pod─┐│    │ ┌─Pod─┐ ┌─Pod─┐│        │
-│  │ │App A│ │App B││    │ │App A│ │App C││        │
-│  │ └─────┘ └─────┘│    │ └─────┘ └─────┘│        │
-│  └─────────────────┘    └─────────────────┘        │
-│                                                    │
-│  Service ──→ Load balances across Pods             │
-│  Ingress ──→ Routes external traffic               │
-│  ConfigMap ──→ Configuration without rebuild       │
-│  Secret ──→ Sensitive data (passwords, keys)       │
-└────────────────────────────────────────────────────┘
-```
+<p align="center">
+  <img src="images/sd_kubernetes.png" alt="Kubernetes Cluster Architecture" width="700"/>
+</p>
 
 | K8s Object | Purpose |
 | :--- | :--- |
