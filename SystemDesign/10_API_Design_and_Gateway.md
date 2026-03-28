@@ -14,12 +14,9 @@
 
 An API gateway is the **single entry point** for all client requests:
 
-```
-Mobile App ─┐                  ┌── User Service
-Web Client ─┤── API GATEWAY ───┤── Order Service
-IoT Device ─┘                  ├── Payment Service
-                               └── Notification Service
-```
+<p align="center">
+  <img src="images/sd_api_gateway.png" alt="API Gateway Architecture" width="700"/>
+</p>
 
 | Responsibility | Description |
 | :--- | :--- |
