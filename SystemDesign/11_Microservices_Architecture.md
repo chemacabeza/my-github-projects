@@ -12,14 +12,9 @@
 
 ## 1. Monolith vs Microservices
 
-```
-MONOLITH:                          MICROSERVICES:
-┌──────────────────────┐           ┌──────┐ ┌──────┐ ┌──────┐
-│   All code in one    │           │ User │ │Order │ │ Pay  │
-│   deployable unit    │    →      │ Svc  │ │ Svc  │ │ Svc  │
-│   Single database    │           └──┬───┘ └──┬───┘ └──┬───┘
-└──────────────────────┘              │DB1│    │DB2│    │DB3│
-```
+<p align="center">
+  <img src="images/sd_monolith_micro.png" alt="Monolith vs Microservices" width="700"/>
+</p>
 
 | Aspect | Monolith | Microservices |
 | :--- | :--- | :--- |
