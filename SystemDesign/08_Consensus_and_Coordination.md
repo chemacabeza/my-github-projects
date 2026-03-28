@@ -1,0 +1,145 @@
+# 08: Consensus & Coordination
+
+<p align="center">
+  <img src="images/sd_consensus.png" alt="Consensus and Coordination" width="800"/>
+</p>
+
+## 🎯 The Big Goal
+
+> **After this chapter, you'll understand how distributed nodes agree on a single truth — leader election, distributed locks, and consensus algorithms like Raft and Paxos.**
+
+---
+
+## 1. The Consensus Problem
+
+In a distributed system, nodes must agree on a value even when some nodes fail or messages are delayed. This is **consensus** — the most fundamental problem in distributed computing.
+
+```
+Node 1: "The leader is A"
+Node 2: "The leader is A"    ← AGREEMENT ✅
+Node 3: "The leader is A"
+
+Node 1: "The leader is A"
+Node 2: "The leader is B"    ← SPLIT BRAIN ⛔
+Node 3: "The leader is A"
+```
+
+---
+
+## 2. Raft Consensus Algorithm
+
+Raft is the most understandable consensus algorithm (designed as a simpler alternative to Paxos):
+
+### Three Roles:
+| Role | Responsibility |
+| :--- | :--- |
+| **Leader** | Handles all client requests, replicates to followers |
+| **Follower** | Passively accepts logs from leader |
+| **Candidate** | Temporarily during elections |
+
+### Leader Election:
+```
+1. Followers wait for heartbeats from leader
+2. If heartbeat timeout ──→ Follower becomes Candidate
+3. Candidate requests votes from all nodes
+4. If majority vote YES ──→ Candidate becomes Leader
+5. New leader sends heartbeats to prevent new elections
+```
+
+### Log Replication:
+```
+Client ──→ Leader: "set x=5"
+Leader ──→ Appends to own log
+Leader ──→ Sends AppendEntries to all followers
+Followers ──→ Append to their logs, acknowledge
+Leader ──→ Once majority acknowledge: COMMIT
+Leader ──→ Respond to client: "OK"
+```
+
+---
+
+## 3. Quorum — The Majority Rule
+
+A quorum ensures at least one node has the latest data:
+
+```
+N = 5 nodes
+Quorum = ⌈N/2⌉ + 1 = 3
+
+Write must be confirmed by 3 nodes  ┐
+Read must query 3 nodes             ├── Overlap guarantees freshness
+                                    ┘
+```
+
+| Cluster Size | Quorum | Failures Tolerated |
+| :--- | :--- | :--- |
+| 3 nodes | 2 | 1 failure |
+| 5 nodes | 3 | 2 failures |
+| 7 nodes | 4 | 3 failures |
+
+> 💡 **Why odd numbers?** Even clusters (4 nodes, quorum=3) tolerate the same failures as N-1 (3 nodes, quorum=2) but cost more.
+
+---
+
+## 4. Distributed Coordination Services
+
+### ZooKeeper
+| Feature | Purpose |
+| :--- | :--- |
+| **Configuration Management** | Store shared config, automatic updates |
+| **Service Discovery** | Register and find services |
+| **Distributed Locks** | Coordinate access to shared resources |
+| **Leader Election** | Elect a leader among competing nodes |
+| **Group Membership** | Track which nodes are alive |
+
+### etcd
+- **Used by:** Kubernetes (stores all cluster state)
+- **Protocol:** Raft consensus
+- **Interface:** HTTP/gRPC API with watch capabilities
+
+---
+
+## 5. Distributed Locks
+
+### Requirements:
+1. **Mutual Exclusion:** Only one client holds the lock
+2. **Deadlock-Free:** Locks auto-expire (TTL)
+3. **Fault-Tolerant:** Works even if some nodes fail
+
+### Redlock Algorithm (Redis):
+```
+1. Get current time
+2. Try to acquire lock on N (e.g., 5) Redis instances
+3. Lock acquired if: majority (3/5) succeed AND total time < TTL
+4. If failed: release all locks and retry
+```
+
+---
+
+## 6. Heartbeats and Failure Detection
+
+```
+Node A ──heartbeat──→ Node B (every 1 second)
+Node A ──heartbeat──→ Node B
+Node A ──heartbeat──→ Node B
+Node A ── ✗ ── Node B ?? (missed 3 heartbeats)
+Node B: "Node A is DEAD" ──→ trigger failover
+```
+
+| Parameter | Effect |
+| :--- | :--- |
+| Short timeout | Fast detection, more false positives |
+| Long timeout | Slow detection, fewer false positives |
+
+---
+
+## 📝 Key Interview Talking Points
+
+- **Raft** is the go-to consensus algorithm — know the leader election flow
+- Always use **odd-numbered** clusters (3, 5, 7)
+- ZooKeeper/etcd for coordination; Redis for distributed locks (with caveats)
+- Heartbeats detect failures but have an inherent accuracy/speed trade-off
+
+---
+
+[<< Previous: Transactions](./07_Transactions_and_Concurrency.md) | [Home: Curriculum Map](./README.md) | [Next: Message Queues >>](./09_Message_Queues_and_Streaming.md)
