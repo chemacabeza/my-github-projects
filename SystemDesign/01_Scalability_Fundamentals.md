@@ -31,22 +31,9 @@ Scalability is a system's ability to handle **increased load** by adding resourc
 
 These are the two fundamental approaches to scaling:
 
-```
-VERTICAL SCALING                    HORIZONTAL SCALING
-(Scale Up)                          (Scale Out)
-
-┌─────────────┐                     ┌──────┐ ┌──────┐ ┌──────┐
-│             │                     │Server│ │Server│ │Server│
-│   BIGGER    │                     │  1   │ │  2   │ │  3   │
-│   SERVER    │                     └──┬───┘ └──┬───┘ └──┬───┘
-│             │                        │        │        │
-│  64 cores   │                     ┌──┴────────┴────────┴──┐
-│  512GB RAM  │                     │    LOAD BALANCER       │
-│  10TB SSD   │                     └───────────┬───────────┘
-│             │                                 │
-└─────────────┘                          ┌──────┴──────┐
-                                         │   USERS     │
-```
+<p align="center">
+  <img src="images/sd_vertical_horizontal.png" alt="Vertical vs Horizontal Scaling" width="700"/>
+</p>
 
 | Aspect | Vertical Scaling | Horizontal Scaling |
 | :--- | :--- | :--- |
