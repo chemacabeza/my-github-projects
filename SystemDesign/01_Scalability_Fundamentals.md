@@ -76,12 +76,9 @@ A load balancer distributes incoming traffic across multiple servers:
 
 A CDN caches content at **edge locations** close to users worldwide:
 
-```
-Without CDN:  User (Tokyo) ──── 200ms ──── Origin (New York)
-
-With CDN:     User (Tokyo) ──── 10ms ──── Edge (Tokyo) ──── Origin (New York)
-                                            └── cached content served instantly
-```
+<p align="center">
+  <img src="images/sd_cdn_arch.png" alt="Content Delivery Network Architecture" width="700"/>
+</p>
 
 | CDN Strategy | When to Use |
 | :--- | :--- |
