@@ -30,33 +30,17 @@ STREAM:   [Events] ──→ Process EACH event ──→ [Result]   (real-time)
 
 The foundational batch processing model:
 
-```
-INPUT DATA           MAP PHASE              SHUFFLE           REDUCE PHASE
-┌──────────┐    ┌─────────────────┐    ┌──────────┐    ┌─────────────────┐
-│ Log file │    │ Extract key-val │    │ Group by │    │ Aggregate       │
-│ 1 TB     │───→│ (url, 1)       │───→│ key      │───→│ (url, count)    │
-│          │    │ (url, 1)       │    │          │    │                 │
-└──────────┘    └─────────────────┘    └──────────┘    └─────────────────┘
-
-Example: Count page views
-MAP:     "/home" → 1, "/about" → 1, "/home" → 1
-SHUFFLE: "/home" → [1, 1], "/about" → [1]
-REDUCE:  "/home" → 2, "/about" → 1
-```
+<p align="center">
+  <img src="images/sd_mapreduce.png" alt="MapReduce Processing Model" width="700"/>
+</p>
 
 ---
 
 ## 3. ETL (Extract-Transform-Load)
 
-```
-EXTRACT          TRANSFORM              LOAD
-┌──────┐        ┌──────────────┐       ┌──────────────┐
-│ APIs │───┐    │ Clean        │       │ Data         │
-│ DBs  │───┤───→│ Validate     │──────→│ Warehouse    │
-│ Files│───┘    │ Aggregate    │       │ (BigQuery,   │
-│ Logs │        │ Join         │       │  Redshift)   │
-└──────┘        └──────────────┘       └──────────────┘
-```
+<p align="center">
+  <img src="images/sd_etl_pipeline.png" alt="ETL Pipeline" width="700"/>
+</p>
 
 ---
 
