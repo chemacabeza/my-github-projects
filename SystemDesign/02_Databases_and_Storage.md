@@ -101,12 +101,9 @@ With index:     B-Tree lookup → ~5 milliseconds
 
 Replication copies data across multiple servers for **availability and read performance**:
 
-```
-          ┌──────────┐
-Writes ───┤ PRIMARY  ├──── Replication ──── REPLICA 1 (reads)
-          └──────────┘                 └── REPLICA 2 (reads)
-                                       └── REPLICA 3 (reads)
-```
+<p align="center">
+  <img src="images/sd_db_replication.png" alt="Database Replication Strategies" width="700"/>
+</p>
 
 | Strategy | Writes | Reads | Consistency |
 | :--- | :--- | :--- | :--- |
