@@ -326,4 +326,4 @@ history 5                          # Last 5 commands
 
 ---
 
-[<< Previous: System Control](./47_System_Control.md) | [Home: Curriculum Map](./README.md)
+[<< Previous: System Control](./47_System_Control.md) | [Home: Curriculum Map](./README.md) | [Next: Boot Process & GRUB >>](./49_Boot_Process_and_GRUB.md)

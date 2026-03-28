@@ -4,7 +4,7 @@
   <img src="images/cover.png" alt="Linux Mastery Cover" width="800"/>
 </p>
 
-Welcome to the **Linux Mastery Guide**. This repository contains a complete, **48-part curriculum** spanning 13 phases, designed to take you from basic terminal survival to live kernel patching and kernel-bypass networking.
+Welcome to the **Linux Mastery Guide**. This repository contains a complete, **60-part curriculum** spanning 15 phases, designed to take you from basic terminal survival to live kernel patching, kernel-bypass networking, and production infrastructure management.
 
 This hardcore curriculum was synthesized from 15 professional-grade textbooks procured from a Humble Bundle collection, representing the absolute bibles of system administration and engineering: *UNIX and Linux System Administration Handbook*, *Systems Performance*, *BPF Performance Tools*, *Linux Kernel Development*, and *Advanced Programming in the UNIX Environment*.
 
@@ -111,6 +111,26 @@ This hardcore curriculum was synthesized from 15 professional-grade textbooks pr
 * [**46: Process Management**](./46_Process_Management.md) - Controlling processes with `ps`, `top`, `htop`, `kill`, `nice`, `bg`, `fg`, and `nohup`.
 * [**47: System Control**](./47_System_Control.md) - Managing services and scheduling with `systemctl`, `shutdown`, `reboot`, `cron`, and `timedatectl`.
 * [**48: Help & Reference**](./48_Help_and_Reference.md) - Finding answers with `man`, `info`, `apropos`, `whatis`, `type`, `which`, and `alias`.
+
+### Phase 14: Infrastructure Services
+*Running and securing the services that power real Linux infrastructure.*
+
+* [**49: The Boot Process & GRUB**](./49_Boot_Process_and_GRUB.md) - BIOS/UEFI firmware, GRUB2 configuration and recovery, initramfs, kernel parameters, and the full startup chain to `systemd`.
+* [**50: System Logging**](./50_System_Logging.md) - `journalctl` structured queries, syslog facilities and severities, `rsyslog`, `logrotate`, and persistent journal storage.
+* [**51: Vim Mastery**](./51_Vim_Mastery.md) - Modal editing philosophy, Normal/Insert/Visual modes, the Verb-Noun grammar (`dw`, `ciw`), macros, `.vimrc`, and search/replace.
+* [**52: Storage Management**](./52_Storage_Management.md) - Partitioning (`fdisk`, `parted`), LVM (PV/VG/LV), software RAID with `mdadm`, NFS/SMB mounts, and `/etc/fstab`.
+* [**53: DNS & DHCP**](./53_DNS_and_DHCP.md) - DNS resolution hierarchy, record types (A/AAAA/MX/CNAME), `dig`, the DHCP DORA handshake, and `systemd-resolved`.
+* [**54: Web Servers (Apache & Nginx)**](./54_Web_Servers.md) - Virtual hosts, server blocks, reverse proxy configuration, TLS with Let's Encrypt, and access logging.
+
+### Phase 15: DevOps & Security Hardening
+*Modern operational practices and comprehensive security posture.*
+
+* [**55: SSH Deep Dive**](./55_SSH_Deep_Dive.md) - Ed25519 key-based auth, `~/.ssh/config`, local/remote port forwarding, ProxyJump, agent forwarding, and `sshd_config` hardening.
+* [**56: Virtualization (KVM/QEMU)**](./56_Virtualization.md) - Hardware-assisted virtualization, the KVM/QEMU/libvirt stack, `virsh`, `virt-install`, snapshots, qcow2, and cloud-init.
+* [**57: Git Version Control**](./57_Git_Version_Control.md) - `init`/`clone`, branching strategies, merge vs rebase, undoing mistakes, `.gitignore`, tags, and collaborative workflows.
+* [**58: Regular Expressions**](./58_Regular_Expressions.md) - BRE/ERE syntax, character classes, quantifiers, anchors, groups, backreferences, and practical `grep`/`sed` patterns.
+* [**59: Linux Hardening**](./59_Linux_Hardening.md) - System updates, user policy, SSH lockdown, `ufw`/`firewalld`, `fail2ban`, Lynis auditing, and `sysctl` kernel hardening.
+* [**60: Troubleshooting Methodology**](./60_Troubleshooting.md) - Systematic CPU/memory/disk/network diagnosis framework, boot recovery, the USE Method, and rescue mode.
 
 ---
 
