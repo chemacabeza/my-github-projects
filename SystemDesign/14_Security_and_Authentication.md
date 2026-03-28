@@ -23,18 +23,9 @@
 
 The industry standard for **delegated authorization**:
 
-```
-User ──→ Client App ──→ "Login with Google"
-  │                         │
-  │ 1. Redirect to Google   │
-  │──────────────────────→  │
-  │ 2. User grants consent  │
-  │←──────────────────────  │
-  │ 3. Auth code returned   │
-  │         │               │
-  │         └──→ 4. Exchange code for Access Token (server-to-server)
-  │              5. Use Access Token to call Google APIs
-```
+<p align="center">
+  <img src="images/sd_oauth2_flow.png" alt="OAuth 2.0 Authorization Code Flow" width="700"/>
+</p>
 
 ### OAuth 2.0 Flows:
 | Flow | Use Case | Security |
