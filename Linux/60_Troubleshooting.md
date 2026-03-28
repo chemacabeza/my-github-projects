@@ -216,4 +216,4 @@ ping -c 1 8.8.8.8 2>/dev/null && echo "Internet: OK" || echo "Internet: FAIL"
 
 ---
 
-[<< Previous: Linux Hardening](./59_Linux_Hardening.md) | [Home: Curriculum Map](./README.md)
+[<< Previous: Linux Hardening](./59_Linux_Hardening.md) | [Home: Curriculum Map](./README.md) | [Next: Sed Stream Editor >>](./61_Sed_Stream_Editor.md)

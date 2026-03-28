@@ -4,9 +4,9 @@
   <img src="images/cover.png" alt="Linux Mastery Cover" width="800"/>
 </p>
 
-Welcome to the **Linux Mastery Guide**. This repository contains a complete, **60-part curriculum** spanning 15 phases, designed to take you from basic terminal survival to live kernel patching, kernel-bypass networking, and production infrastructure management.
+Welcome to the **Linux Mastery Guide**. This repository contains a complete, **68-part curriculum** spanning 17 phases, designed to take you from basic terminal survival to live kernel patching, kernel-bypass networking, production infrastructure management, and cybersecurity operations.
 
-This hardcore curriculum was synthesized from 15 professional-grade textbooks procured from a Humble Bundle collection, representing the absolute bibles of system administration and engineering: *UNIX and Linux System Administration Handbook*, *Systems Performance*, *BPF Performance Tools*, *Linux Kernel Development*, and *Advanced Programming in the UNIX Environment*.
+This hardcore curriculum was synthesized from **34 professional-grade textbooks** covering system administration, kernel internals, shell programming, cybersecurity, and performance engineering: *UNIX and Linux System Administration Handbook*, *Systems Performance*, *BPF Performance Tools*, *Linux Kernel Development*, *Advanced Programming in the UNIX Environment*, *Bash Cookbook*, *Sed & Awk*, *Effective Awk Programming*, *Cybersecurity Ops with Bash*, and *The Linux Programming Interface*.
 
 ---
 
@@ -131,6 +131,22 @@ This hardcore curriculum was synthesized from 15 professional-grade textbooks pr
 * [**58: Regular Expressions**](./58_Regular_Expressions.md) - BRE/ERE syntax, character classes, quantifiers, anchors, groups, backreferences, and practical `grep`/`sed` patterns.
 * [**59: Linux Hardening**](./59_Linux_Hardening.md) - System updates, user policy, SSH lockdown, `ufw`/`firewalld`, `fail2ban`, Lynis auditing, and `sysctl` kernel hardening.
 * [**60: Troubleshooting Methodology**](./60_Troubleshooting.md) - Systematic CPU/memory/disk/network diagnosis framework, boot recovery, the USE Method, and rescue mode.
+
+### Phase 16: Advanced Text Processing & Shell Mastery
+*Deep dives into the power tools that make Unix unique.*
+
+* [**61: The Sed Stream Editor**](./61_Sed_Stream_Editor.md) - Addressing, substitution, pattern space vs hold space, branching, and multi-command sed scripts.
+* [**62: Awk Programming**](./62_Awk_Programming.md) - Field processing, `BEGIN`/`END` blocks, associative arrays, `printf`, conditionals, loops, and report generation.
+* [**63: Advanced Bash**](./63_Advanced_Bash.md) - Traps and signal handling, arrays, parameter expansion, process substitution, here-documents, and debugging with `set -x`.
+* [**64: Shell Environment & Customization**](./64_Shell_Environment.md) - Login vs non-login shells, `.bashrc`/`.profile`, PATH, PS1 prompt customization, `shopt`, and reusable shell functions.
+
+### Phase 17: Cybersecurity Operations
+*Building a security operations center from the command line.*
+
+* [**65: Cybersecurity Operations with Bash**](./65_Cybersecurity_Bash.md) - Data collection, log analysis pipelines, real-time monitoring, filesystem integrity checking, and account auditing.
+* [**66: Reconnaissance & Forensics**](./66_Reconnaissance_Forensics.md) - Port scanning, banner grabbing, DNS recon, hash verification, script obfuscation detection, and volatile evidence collection.
+* [**67: inotify & File Event Monitoring**](./67_inotify_File_Monitoring.md) - The `inotify` kernel subsystem, `inotifywait`, auto-reload triggers, build watchers, and security change detection.
+* [**68: ACLs & Extended Attributes**](./68_ACLs_Extended_Attributes.md) - POSIX ACLs with `setfacl`/`getfacl`, the ACL mask, default (inherited) ACLs, and `xattr` metadata with `setfattr`/`getfattr`.
 
 ---
 
