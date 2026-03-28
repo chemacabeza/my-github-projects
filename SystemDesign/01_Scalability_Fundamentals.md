@@ -150,6 +150,20 @@ Databases are usually the first bottleneck:
 
 ---
 
+## 🤔 Reflection Questions
+
+1. **You're building a social media app that just went viral overnight — traffic jumped from 1,000 to 100,000 users.** Which would you scale first: the web servers, the database, or the caching layer? Why does the order matter?
+
+2. **A stateful design stores user sessions on each server.** What happens if a server crashes at 3 AM? How would a stateless design change the recovery story, and what new components would you need to introduce?
+
+3. **Your team argues: "Let's just buy a bigger server."** Under what circumstances is vertical scaling actually the better choice? When does it become a trap, and how would you convince your team to invest in horizontal scaling infrastructure early?
+
+4. **You're asked to design a system that must handle both read-heavy and write-heavy workloads.** Can a single scaling strategy (e.g., replicas or shards) handle both? What happens if you pick the wrong one?
+
+5. **CDNs solve latency for static content, but what about dynamic content** like real-time dashboards or personalized feeds? How would you deliver fast experiences for data that changes every second?
+
+---
+
 ## 📝 Key Interview Talking Points
 
 - Always start with a single server and explain *why* you need to scale each component

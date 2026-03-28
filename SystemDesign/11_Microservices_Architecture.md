@@ -87,6 +87,20 @@ SERVICE REGISTRY (Consul, etcd):
 
 ---
 
+## 🤔 Reflection Questions
+
+1. **"We should rewrite our monolith as microservices."** Your startup has a team of 5 engineers and 10,000 users. Is this the right move right now? What would you need to see in terms of team size, traffic, and pain points before recommending the migration?
+
+2. **The circuit breaker for your payment service is OPEN, and all payment calls fail-fast.** But some payment providers are still healthy — only one is down. How would you make the circuit breaker more fine-grained without adding unmanageable complexity?
+
+3. **Each microservice owns its own database, but you need to join data from Users, Orders, and Products for a report.** How do you generate this report without violating the "no shared database" rule? What patterns help solve cross-service data queries?
+
+4. **Your microservices use synchronous REST calls in a chain: A→B→C→D.** If D is slow, the latency cascades back through all services. How does this "distributed monolith" problem negate the benefits of microservices? What communication pattern would you recommend instead?
+
+5. **Service discovery shows 20 instances of OrderService, but 3 are unhealthy and returning errors.** How does the service registry detect and remove unhealthy instances? What happens to in-flight requests during deregistration?
+
+---
+
 ## 📝 Key Interview Talking Points
 
 - Start with a monolith; extract microservices when team/scale demands it

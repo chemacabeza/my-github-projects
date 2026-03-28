@@ -108,6 +108,20 @@ On request: grab next unused key from pool → assign to URL
 
 ---
 
+## 🤔 Reflection Questions
+
+1. **Your URL shortener generates Base62 sequential IDs, and a competitor notices the pattern** — they can guess all recently created short URLs and access potentially private links. How would you make short URLs unpredictable without sacrificing the simplicity of sequential generation?
+
+2. **Two users submit the same long URL at the same millisecond.** Should they get the same short URL or different ones? What are the implications of each approach for caching, analytics, and link ownership?
+
+3. **Your URL shortener handles 1 billion redirects per day, and your database can't keep up.** Which requests should go to cache vs. database? How do you decide the TTL for cached entries when some URLs are accessed once and others millions of times?
+
+4. **A short URL links to a phishing site.** Users blame your platform. How would you design a safety layer that scans destination URLs without adding latency to the redirect? What happens if a legitimate URL gets flagged?
+
+5. **Custom aliases like `short.url/my-brand` are popular, but they introduce a new collision space** with auto-generated codes. How do you prevent a user's custom alias from conflicting with a future auto-generated one? What reservation strategies would you use?
+
+---
+
 ## 📝 Key Interview Talking Points
 
 - Start with requirements and math (100M writes/day = ~1150 writes/sec)

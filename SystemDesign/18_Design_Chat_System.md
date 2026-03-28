@@ -109,6 +109,20 @@ Disconnect:       → TTL expires → status OFFLINE
 
 ---
 
+## 🤔 Reflection Questions
+
+1. **Your chat system uses WebSockets, but a user switches from WiFi to cellular mid-conversation.** The WebSocket connection drops and reconnects on a different server. How do you ensure messages sent during the switch are not lost, and the user sees them in order?
+
+2. **A group chat has 10,000 members.** If you fan out a single message to all members' feeds, that's 10,000 writes per message. How does this "group chat bomb" problem scale differently than 1-on-1 chat? What architectural changes are needed for large groups?
+
+3. **End-to-end encryption means the server cannot read messages.** But users want to search their message history. How can you implement server-side search over encrypted messages? Is this even feasible, or must search be client-side only?
+
+4. **Presence (online/offline) uses Redis with a 30-second TTL heartbeat.** But a user closes their laptop without gracefully disconnecting. For 30 seconds, they appear "online" to everyone. Is this acceptable? How would you design a faster detection mechanism?
+
+5. **Read receipts require notifying the sender when each recipient reads a message.** In a group of 500 people, this creates 500 notification events per message read. How would you design this without overwhelming the system? Would you aggregate or throttle receipts?
+
+---
+
 ## 📝 Key Interview Talking Points
 
 - WebSocket for real-time; push notifications for offline users

@@ -86,6 +86,20 @@ POST /users           → Creates NEW user each time  ❌ NOT Idempotent
 
 ---
 
+## 🤔 Reflection Questions
+
+1. **Your API gateway handles authentication, rate limiting, routing, and logging — all in a single component.** What happens when this gateway crashes? How is it different from the monolith you were trying to escape? What strategies keep the gateway from becoming a single point of failure?
+
+2. **A mobile client hits your rate limiter at 100 requests per minute.** But the user is making legitimate requests across 3 features simultaneously. How would you design more granular rate limiting that doesn't punish power users while still protecting against abuse?
+
+3. **Your team chose URL-based versioning (`/api/v1/users`), and now v1 has 200 endpoints.** Marketing wants v2 for new clients while keeping v1 alive for existing ones. How do you maintain two versions without doubling your codebase? Would a different versioning strategy have been better?
+
+4. **Cursor-based pagination is fast, but a product manager says "users need to jump to page 50."** How would you handle this requirement? Is there a hybrid approach that gives both page-jumping and the consistency of cursors?
+
+5. **A POST request creates an order, but the network times out before the response reaches the client.** The client retries, and now there are two identical orders. How does an idempotency key solve this, and where should it be generated — client or server? What are the edge cases?
+
+---
+
 ## 📝 Key Interview Talking Points
 
 - API gateway is the front door — handles auth, rate limiting, routing

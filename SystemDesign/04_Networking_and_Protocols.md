@@ -138,6 +138,20 @@ TLS encrypts communication between client and server:
 
 ---
 
+## 🤔 Reflection Questions
+
+1. **A mobile banking app needs to display real-time transaction notifications.** Would you choose WebSockets, SSE, or long polling? How does the fact that mobile connections are unreliable affect your choice?
+
+2. **Your API uses REST and mobile clients complain about slow load times** because they need 5 separate API calls to render one screen. Would migrating to GraphQL solve this? What new problems might it introduce?
+
+3. **DNS caches entries for hours, but you need to fail over to a backup server within 60 seconds.** How does DNS TTL create a tension between reliability and performance? What strategies can you use to work around this?
+
+4. **You're choosing between gRPC and REST for internal service-to-service communication.** gRPC is faster, but your team is more experienced with REST. How would you weigh performance gains against operational complexity and team expertise?
+
+5. **HTTPS adds latency due to the TLS handshake.** For a system serving millions of short-lived API calls, how significant is this overhead? What optimizations exist to minimize it, and when might you consider *not* using HTTPS?
+
+---
+
 ## 📝 Key Interview Talking Points
 
 - REST is the default for public APIs; gRPC for internal microservice communication

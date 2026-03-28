@@ -135,6 +135,20 @@ When adding/removing nodes, data must be redistributed:
 
 ---
 
+## 🤔 Reflection Questions
+
+1. **Your application uses asynchronous replication for performance, but a leader node crashes before replicating the latest writes.** Those writes are lost forever. How would you design a system that balances write speed with durability guarantees?
+
+2. **You're sharding by user ID, but a single celebrity account generates 100x more traffic than average users.** How does this "hot partition" problem affect your system? What partitioning strategies would you use to mitigate it?
+
+3. **Consistent hashing minimizes data movement when nodes join or leave.** But what happens when all the data for a popular key happens to land on the weakest node? How do virtual nodes solve this, and what trade-offs do they introduce?
+
+4. **Your multi-leader replication setup has two leaders in different data centers that both accept a write to the same row at the same time.** How do you decide which write "wins"? Is Last-Write-Wins always safe? What data could you lose?
+
+5. **Adding a new shard to a hash-based partition scheme requires rehashing all keys.** During rebalancing, what happens to reads and writes? How would you design a zero-downtime rebalancing process?
+
+---
+
 ## 📝 Key Interview Talking Points
 
 - Replication = copies of same data → fault tolerance and read scaling

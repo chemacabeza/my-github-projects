@@ -88,6 +88,20 @@ Score = w₁(recency) + w₂(likes) + w₃(comments) + w₄(shares)
 
 ---
 
+## 🤔 Reflection Questions
+
+1. **A celebrity with 50 million followers posts an update.** Fan-out on write would create 50 million cache entries. Fan-out on read would make every follower wait. How does the hybrid approach handle this, and where exactly do you draw the line between "normal" and "celebrity"?
+
+2. **Your ranking algorithm optimizes for engagement (likes, comments, shares), and the feed is filled with controversial content** because controversy drives engagement. How do you balance algorithmic ranking with responsible content curation? Should "engagement" even be the primary ranking signal?
+
+3. **A user follows 5,000 accounts, and their feed cache has room for only 500 posts.** How do you decide which 500 posts to pre-compute? What happens when the user scrolls past those 500 — do you switch from push to pull seamlessly?
+
+4. **Two users in the same household see completely different feeds.** How does feed personalization create "filter bubbles"? Should you intentionally inject diverse or opposing viewpoints? What are the ethical implications for a system designer?
+
+5. **Your feed shows a post from 2 hours ago at the top because it has high engagement, but the user already saw it.** How do you prevent "stale" but popular content from dominating the feed? What signals indicate that a user has already consumed a piece of content?
+
+---
+
 ## 📝 Key Interview Talking Points
 
 - Always mention the **hybrid fan-out approach** (push for normal, pull for celebrities)

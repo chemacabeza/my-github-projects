@@ -93,6 +93,20 @@ CANARY:
 
 ---
 
+## 🤔 Reflection Questions
+
+1. **Your canary deployment sends 5% of traffic to the new version, and metrics look good.** But the 5% were all from the same region, and a bug only affects users in Europe. How would you design a canary that catches region-specific or user-segment-specific bugs?
+
+2. **Docker "works on my machine" is the slogan, but your container runs fine locally and crashes in production.** What differences between local and production environments (OS, network, memory limits, secrets) could cause this? How does your Dockerfile design prevent it?
+
+3. **Kubernetes HPA auto-scales your pods based on CPU usage.** But your app is I/O-bound, not CPU-bound — CPU stays at 10% while users experience timeouts. What custom metrics would you use for scaling, and how does this change your monitoring strategy?
+
+4. **Blue-green deployment gives instant rollback, but it requires running two full copies of your infrastructure.** For a system with 200 pods, that's 400 pods during deployment. How would you justify this cost, or what alternative strategy would you use?
+
+5. **Your CI pipeline takes 45 minutes to run all tests.** Developers start skipping the pipeline and pushing directly. How would you balance test coverage with developer velocity? What techniques (parallelization, test selection, caching) would you apply?
+
+---
+
 ## 📝 Key Interview Talking Points
 
 - CI/CD automates the path from code commit to production

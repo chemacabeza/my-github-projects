@@ -96,6 +96,20 @@ When eventual consistency leads to conflicts:
 
 ---
 
+## 🤔 Reflection Questions
+
+1. **Your banking app uses a CP database, but during a network partition, users can't check their balance.** Angry customers flood support. Was CP the right choice? How would you explain the trade-off to a non-technical product manager?
+
+2. **An e-commerce site uses eventual consistency for its product catalog.** A customer sees an item in stock, adds it to their cart, but at checkout the item is gone. How would you minimize this kind of user frustration while keeping the benefits of AP design?
+
+3. **"We'll use strong consistency everywhere to be safe."** What would this decision cost in terms of latency, availability, and infrastructure? Can you think of a scenario where strong consistency actually makes the user experience *worse*?
+
+4. **Two users in different countries edit the same document simultaneously** in a collaborative editor. How do CRDTs solve this differently than a locking mechanism? Why is the CRDT approach more appropriate for global-scale systems?
+
+5. **Your system uses ACID transactions for payments but BASE for the social feed.** Where do you draw the boundary between the two? What happens at the seam — when a payment triggers a feed notification?
+
+---
+
 ## 📝 Key Interview Talking Points
 
 - Network partitions are unavoidable — the real choice is CP vs AP

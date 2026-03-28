@@ -100,6 +100,20 @@ OPTIMISTIC:   Read (version=1) → Modify → Commit IF version still = 1
 
 ---
 
+## 🤔 Reflection Questions
+
+1. **Your e-commerce system uses Serializable isolation for all transactions but Black Friday traffic causes massive lock contention and timeouts.** Could you safely lower the isolation level? Which anomalies would you accept, and which are catastrophic for an order system?
+
+2. **A Saga's "Refund Card" compensating transaction fails — the payment gateway is down.** Now you have a charged customer, a cancelled order, and a stuck saga. How would you design a system that handles compensating transaction failures gracefully?
+
+3. **Two-Phase Commit guarantees atomicity, but the coordinator is a single point of failure.** What happens if the coordinator crashes *after* sending PREPARE but *before* sending COMMIT? How do participants know whether to commit or abort?
+
+4. **Your team uses optimistic locking because "most of our workload is reads."** But during a flash sale, hundreds of users try to purchase the same item simultaneously. How does optimistic locking behave under sudden contention, and when should you switch strategies?
+
+5. **A choreography-based Saga has 8 steps, and debugging which step failed is nearly impossible.** At what point of complexity should you switch from choreography to orchestration? What are the architectural implications of that switch?
+
+---
+
 ## 📝 Key Interview Talking Points
 
 - Use **2PC** only within a single database cluster; use **Sagas** across microservices

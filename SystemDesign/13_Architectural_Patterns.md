@@ -109,6 +109,20 @@ Level 4: CODE               "What's inside each component?"
 
 ---
 
+## 🤔 Reflection Questions
+
+1. **CQRS separates read and write models, but now you have two data stores that must stay in sync.** What happens when the event that updates the read model is delayed by 5 seconds? How do you explain to users why the data they just saved doesn't appear immediately?
+
+2. **Event sourcing stores every event forever, and your system generates 10 million events per day.** After a year, replaying all events to rebuild state takes hours. What strategies (snapshots, compaction) help, and what trade-offs do they introduce?
+
+3. **Your team wants to use serverless (Lambda/Cloud Functions) for a REST API that handles 50K requests per second.** Would cold starts be a problem? At what scale does serverless become more expensive than dedicated servers?
+
+4. **The C4 model describes architecture at 4 zoom levels, but your team disagrees on where to draw the boundaries** between "containers" and "components." How do you decide what counts as a separate container vs. a component within one? Why does this distinction matter?
+
+5. **A monolith, microservices, and event-driven architecture each have different debugging experiences.** Compare what happens when a bug causes incorrect data: how do you trace the issue in each architecture? Which one gives you the best "time-travel debugging" capability?
+
+---
+
 ## 📝 Key Interview Talking Points
 
 - Start monolith → extract microservices as needed

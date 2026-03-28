@@ -109,6 +109,20 @@ Kafka is a distributed event streaming platform, not just a message queue:
 
 ---
 
+## 🤔 Reflection Questions
+
+1. **Your payment service uses a message queue to decouple order processing, but a message is delivered twice** due to a network retry. The customer is charged twice. How would you design the consumer to be idempotent, and why can't the queue itself guarantee exactly-once delivery?
+
+2. **Kafka guarantees ordering within a partition, but your topic has 10 partitions.** A user sends messages A→B→C, and they arrive as B→A→C. How would you ensure strict ordering for a single user's messages while still using multiple partitions for throughput?
+
+3. **Your team debates: "Should we use RabbitMQ or Kafka?"** The system processes both real-time notifications and daily analytics batches. How would the choice differ for each use case? Could you use both?
+
+4. **A dead letter queue (DLQ) contains 50,000 messages that failed processing.** What strategy would you use to investigate, fix, and replay them? How do you prevent the DLQ from becoming a "graveyard" that nobody monitors?
+
+5. **Event-driven architecture sounds elegant, but debugging is hard** — an event published by Service A triggers Service B, which triggers C, which triggers D. How do you trace the root cause when Service D produces a wrong result? What observability tools would you need?
+
+---
+
 ## 📝 Key Interview Talking Points
 
 - Use message queues when services should be **decoupled** and **resilient to failures**

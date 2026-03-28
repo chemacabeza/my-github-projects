@@ -106,6 +106,20 @@ Protocol: HLS (HTTP Live Streaming) or DASH
 
 ---
 
+## 🤔 Reflection Questions
+
+1. **A creator uploads a 4K video that takes 2 hours to transcode into all quality levels.** During those 2 hours, the video is "processing" and can't be watched. How would you design the pipeline to let viewers start watching with *at least* one quality while transcoding continues in the background?
+
+2. **80% of your videos are watched fewer than 10 times, but they're still stored on expensive CDN edge servers.** How would you design a "hot/cold" storage strategy that keeps popular videos close to users while saving costs on long-tail content? What's the risk of a cold video suddenly going viral?
+
+3. **Adaptive bitrate streaming switches quality based on bandwidth, but a user on a train experiences rapid bandwidth fluctuations.** The player oscillates between 240p and 1080p every few seconds, causing a terrible experience. How would you smooth these transitions?
+
+4. **Your recommendation engine creates a "rabbit hole" effect** — users keep watching increasingly extreme content because the algorithm optimizes for watch time. How do you design a recommendation system that balances user engagement with platform responsibility?
+
+5. **Pre-signed URLs allow clients to upload directly to S3, bypassing your servers.** But what if someone uploads malicious content, malware, or a 100GB file? How do you validate uploads when your server never sees the file during the upload process?
+
+---
+
 ## 📝 Key Interview Talking Points
 
 - Pre-signed URLs for client-direct upload (don't bottleneck through app servers)

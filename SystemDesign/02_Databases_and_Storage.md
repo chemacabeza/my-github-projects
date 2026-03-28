@@ -138,6 +138,20 @@ Sharding splits data across multiple databases, each holding a **subset** of the
 
 ---
 
+## 🤔 Reflection Questions
+
+1. **You're designing a new e-commerce platform.** The product catalog has complex relationships (categories, variants, reviews), but the shopping cart needs blazing-fast reads. Would you use one database or two? What happens when they need to share data?
+
+2. **"Just add an index on every column and queries will be fast."** Why is this advice dangerous? Think about what happens during a Black Friday sale with millions of writes per second.
+
+3. **Your database has 500 million rows and queries are slow.** How would you decide between adding read replicas vs. sharding? What questions would you ask about the workload before choosing?
+
+4. **A NoSQL database promises infinite scalability and flexible schemas.** But six months later, your team is writing complex application-level JOINs. What went wrong in the original decision, and how would you avoid this trap?
+
+5. **Single-leader replication means all writes go through one node.** What happens when that node is in Virginia but most of your users are in Tokyo? How does this architectural constraint influence the rest of your system design?
+
+---
+
 ## 📝 Key Interview Talking Points
 
 - Start with SQL unless you have a specific reason for NoSQL

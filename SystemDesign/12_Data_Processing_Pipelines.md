@@ -84,6 +84,20 @@ RAW DATA ───────────┤
 
 ---
 
+## 🤔 Reflection Questions
+
+1. **Your batch ETL pipeline runs nightly, but the business now wants "near-real-time" dashboards updated every 5 minutes.** Can you just run the batch job more frequently, or do you need a fundamentally different architecture? What are the costs of each approach?
+
+2. **MapReduce is conceptually elegant, but Spark has largely replaced it.** What specific limitations of MapReduce made Spark necessary? Think about iterative algorithms like machine learning — why does writing intermediate results to disk kill performance?
+
+3. **Your streaming pipeline processes credit card transactions in real-time, but an event arrives 30 seconds late** due to mobile network delays. The 1-minute window already closed. How do watermarks and late-arrival policies handle this? Is it acceptable to miss some events?
+
+4. **Lambda Architecture maintains two separate pipelines (batch + speed) that must produce the same results.** Why is this operationally painful? How does Kappa Architecture (stream-only) simplify things, and what does it sacrifice?
+
+5. **Your ETL pipeline silently corrupts data** — a transformation step trims leading zeros from ZIP codes, turning "01234" into "1234". The bug isn't caught for 3 months. How would you design data validation and quality checks to catch such issues early?
+
+---
+
 ## 📝 Key Interview Talking Points
 
 - Batch for daily analytics; stream for real-time monitoring

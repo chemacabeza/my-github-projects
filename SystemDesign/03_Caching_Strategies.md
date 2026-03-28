@@ -138,6 +138,20 @@ Redis is an in-memory data structure store used as cache, message broker, and mo
 
 ---
 
+## 🤔 Reflection Questions
+
+1. **A user updates their profile picture, but their friends still see the old one for 5 minutes.** Which caching strategy caused this? How would you redesign the cache invalidation to make the update appear instantly without sacrificing read performance?
+
+2. **Your Redis cache holds 10 million keys and just ran out of memory.** You need to choose an eviction policy. How would you decide between LRU and LFU? What data about your access patterns would change your answer?
+
+3. **Write-back caching offers the fastest writes, but what if the cache crashes before flushing to the database?** How would you design a system that gets the speed benefits of write-back without risking data loss? Is this even possible?
+
+4. **Your system uses cache-aside, and a cache stampede just took down your database** — hundreds of servers simultaneously got a cache miss and hammered the DB. What mechanisms would you put in place to prevent this from happening again?
+
+5. **"We should cache everything to make the system fast."** Why might caching make your system *harder* to reason about and debug? Think about the hidden costs of maintaining cache consistency across multiple services.
+
+---
+
 ## 📝 Key Interview Talking Points
 
 - Always mention **cache-aside** as the default strategy

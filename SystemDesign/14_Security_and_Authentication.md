@@ -88,6 +88,20 @@ HASHING:      "password123" ──hash──→ "$2b$12$..." (irreversible)
 
 ---
 
+## 🤔 Reflection Questions
+
+1. **Your JWT access token has a 1-hour expiry, but a user's account was compromised 5 minutes ago.** You need to revoke the token immediately, but JWTs are stateless — there's no server-side session to invalidate. What approaches exist, and how do they undermine the "stateless" benefit of JWT?
+
+2. **OAuth 2.0 is for authorization, not authentication.** Yet many apps use "Login with Google" via OAuth. What's the difference between OAuth and OpenID Connect? What could go wrong if you rely solely on OAuth for user identity?
+
+3. **A developer stores API keys in a `.env` file committed to GitHub.** The repo is public. What is the blast radius of this mistake? What automated safeguards should be in place to prevent this from ever reaching production?
+
+4. **Your system uses symmetric encryption (AES) for data at rest and asymmetric encryption (RSA) for data in transit.** Why not use asymmetric for everything? What makes symmetric encryption essential for large-scale data, despite needing to share the key securely?
+
+5. **Rate limiting protects against DDoS, but a sophisticated attacker uses 10,000 different IP addresses.** Per-IP rate limiting is useless. What other signals (user tokens, fingerprints, behavior patterns) could you use? When does "rate limiting" become "fraud detection"?
+
+---
+
 ## 📝 Key Interview Talking Points
 
 - OAuth 2.0 is for **authorization** (not authentication) — use OpenID Connect for auth

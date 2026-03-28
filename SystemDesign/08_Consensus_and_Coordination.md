@@ -133,6 +133,20 @@ Node B: "Node A is DEAD" ──→ trigger failover
 
 ---
 
+## 🤔 Reflection Questions
+
+1. **A Raft cluster with 5 nodes loses 3 nodes simultaneously.** The remaining 2 cannot form a quorum. Your entire system is down. Is this a design flaw in Raft, or a reasonable trade-off? How would you protect against this scenario?
+
+2. **Your distributed lock in Redis expires while the process holding it is still working** (GC pause, slow network). Now two processes think they hold the lock. How does this violate safety, and what does Martin Kleppmann's critique of Redlock teach us?
+
+3. **Heartbeat timeout is set to 1 second.** A brief network congestion causes missed heartbeats, triggering a false failover. The old leader comes back and now you have two leaders (split brain). How would you prevent this, and what is the cost of a longer timeout?
+
+4. **ZooKeeper uses consensus internally, but consensus algorithms are complex and slow.** Why not just use a single database to store configuration and leader information? What failure scenarios would make the single-database approach dangerous?
+
+5. **Your system needs to elect a leader among 100 nodes across 5 data centers.** How does network latency between data centers affect consensus? Would you run one large Raft group or multiple smaller ones? What are the trade-offs?
+
+---
+
 ## 📝 Key Interview Talking Points
 
 - **Raft** is the go-to consensus algorithm — know the leader election flow

@@ -109,6 +109,20 @@ Error Budget: 43,200 × 0.001 = 43.2 minutes of downtime allowed
 
 ---
 
+## 🤔 Reflection Questions
+
+1. **Your dashboard shows all green — CPU is fine, memory is fine, error rate is low.** But users are complaining about slow page loads. What is your monitoring missing? How do metrics, logs, and traces each reveal different aspects of this problem?
+
+2. **You set an SLO of 99.99% availability (52 minutes of downtime per year).** Your team wants to deploy new features weekly. How does your error budget influence deployment frequency? What happens when the budget is exhausted — do you freeze all deployments?
+
+3. **Your distributed tracing shows a request took 3 seconds, but each individual service responded in under 100ms.** Where did the other 2.7 seconds go? What "invisible" costs between services (DNS resolution, connection pooling, serialization) could explain this?
+
+4. **Structured logging (JSON) makes logs searchable and filterable, but your developers find them unreadable during local development.** How do you balance human readability in development with machine parsability in production?
+
+5. **An on-call engineer is paged at 3 AM for the 5th time this week — and every time it was a false alarm.** How does alert fatigue lead to real incidents being missed? What principles would you apply to reduce noise while keeping critical alerts reliable?
+
+---
+
 ## 📝 Key Interview Talking Points
 
 - Use **structured logging** (JSON) for searchability
