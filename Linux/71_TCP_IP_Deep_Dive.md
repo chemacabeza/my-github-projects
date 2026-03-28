@@ -90,23 +90,9 @@ echo 1 > /proc/sys/net/ipv4/tcp_tw_reuse
 
 The receiver controls how fast the sender transmits:
 
-```
-Sender                              Receiver
-  |                                    |
-  |------- data (1000 bytes) --------->|
-  |                                    | Buffer: [1000/8000]
-  |<------ ACK, window=7000 ----------|
-  |                                    |
-  |------- data (4000 bytes) --------->|
-  |                                    | Buffer: [5000/8000]
-  |<------ ACK, window=3000 ----------|
-  |                                    |
-  |  (slow down, buffer filling up!)   |
-  |                                    | Buffer: [8000/8000]
-  |<------ ACK, window=0 -------------|
-  |                                    |
-  |  *** SENDER STOPS (zero window) ***|
-```
+<p align="center">
+  <img src="images/linux_tcp_sliding_window.png" alt="TCP Flow Control Sliding Window" width="700"/>
+</p>
 
 | Concept | Description |
 | :--- | :--- |
