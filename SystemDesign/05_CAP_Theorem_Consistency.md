@@ -14,20 +14,9 @@
 
 In any distributed system, you can only guarantee **two out of three** properties:
 
-```
-           CONSISTENCY
-              /\
-             /  \
-            /    \
-           /  CP  \
-          /________\
-         /\        /\
-        /  \  CA  /  \
-       / AP \    /    \
-      /______\  /______\
-  PARTITION        AVAILABILITY
-  TOLERANCE
-```
+<p align="center">
+  <img src="images/sd_cap_triangle.png" alt="CAP Theorem Triangle" width="700"/>
+</p>
 
 | Property | Definition | Example |
 | :--- | :--- | :--- |
