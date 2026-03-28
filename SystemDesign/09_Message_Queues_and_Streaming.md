@@ -55,12 +55,9 @@ Publisher ──→ [Topic] ──→ Subscriber A
 
 Kafka is a distributed event streaming platform, not just a message queue:
 
-```
-Producers ──→ [Topic: orders] ──→ Consumer Group A (Order Processing)
-              Partition 0: ███████
-              Partition 1: ███████  ──→ Consumer Group B (Analytics)
-              Partition 2: ███████
-```
+<p align="center">
+  <img src="images/sd_kafka_arch.png" alt="Apache Kafka Architecture" width="700"/>
+</p>
 
 | Feature | Detail |
 | :--- | :--- |

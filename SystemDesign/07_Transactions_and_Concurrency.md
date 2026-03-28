@@ -45,21 +45,9 @@ A transaction wraps multiple operations into an atomic unit: **all succeed or al
 
 ## 3. Distributed Transactions: Two-Phase Commit (2PC)
 
-```
-                    COORDINATOR
-                    ┌────────┐
-         Phase 1:   │PREPARE?│
-         ┌──────────┤        ├──────────┐
-         │          └────────┘          │
-         ▼                              ▼
-    ┌─────────┐                   ┌─────────┐
-    │ Node A  │                   │ Node B  │
-    │ "YES"   │                   │ "YES"   │
-    └────┬────┘                   └────┬────┘
-         │          ┌────────┐          │
-         └──────────┤COMMIT! ├──────────┘
-         Phase 2:   └────────┘
-```
+<p align="center">
+  <img src="images/sd_two_phase_commit.png" alt="Two-Phase Commit Protocol" width="700"/>
+</p>
 
 | Pros | Cons |
 | :--- | :--- |
