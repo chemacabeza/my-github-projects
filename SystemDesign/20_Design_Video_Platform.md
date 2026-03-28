@@ -24,29 +24,9 @@
 
 ## 2. High-Level Architecture
 
-```
-┌──────────┐      ┌──────────┐      ┌──────────────────────────┐
-│  Client  │─────→│ API GW   │─────→│     Upload Service       │
-└──────────┘      └──────────┘      └──────────┬───────────────┘
-                                               │ store raw
-                                               ▼
-                                        [Object Storage (S3)]
-                                               │
-                                    ┌──────────┴──────────┐
-                                    ▼                     ▼
-                            [Transcoding]         [Thumbnail Gen]
-                            [Service]             [Service]
-                                    │                     │
-                                    ▼                     ▼
-                          [Transcoded Storage]    [Thumbnail Storage]
-                                    │
-                                    ▼
-                              [CDN (Global)]
-                                    │
-                                    ▼
-                             [Video Player]
-                          (Adaptive Bitrate)
-```
+<p align="center">
+  <img src="images/sd_video_arch.png" alt="Video Platform Architecture" width="700"/>
+</p>
 
 ---
 
@@ -105,24 +85,18 @@ Protocol: HLS (HTTP Live Streaming) or DASH
 | **View counts** | Redis → PostgreSQL | Real-time counter, periodic flush |
 
 ### CDN Architecture:
-```
-User (Tokyo) ──→ Edge (Tokyo): Cached? ──→ YES: Serve instantly
-                                        ──→ NO: Fetch from Origin → Cache → Serve
-```
+
+<p align="center">
+  <img src="images/sd_video_cdn.png" alt="CDN Architecture for Video Streaming" width="700"/>
+</p>
 
 ---
 
 ## 6. Recommendations Engine
 
-```
-┌─────────────┐     ┌──────────────────┐     ┌────────────────┐
-│ User watches │────→│ Interaction Data │────→│ ML Pipeline    │
-│ likes, subs  │     │ (Kafka → Spark)  │     │ (TensorFlow)   │
-└─────────────┘     └──────────────────┘     └────────┬───────┘
-                                                       │
-                                                       ▼
-                                              [Personalized Feed]
-```
+<p align="center">
+  <img src="images/sd_video_recommend.png" alt="Recommendations Engine Pipeline" width="700"/>
+</p>
 
 | Technique | How | Example |
 | :--- | :--- | :--- |
