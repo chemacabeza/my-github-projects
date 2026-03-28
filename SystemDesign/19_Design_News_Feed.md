@@ -52,19 +52,9 @@ Bob opens app → Compute feed on-the-fly
 
 ## 3. Architecture
 
-```
-┌────────┐     ┌──────────┐     ┌──────────────┐     ┌────────────┐
-│ Client │────→│ API GW   │────→│ Post Service │────→│ Post DB    │
-└────────┘     └──────────┘     └──────┬───────┘     └────────────┘
-                                       │
-                                       ▼
-                                [Fan-out Worker]
-                                       │
-              ┌────────────────────────┼────────────────────┐
-              ▼                        ▼                    ▼
-        [Feed Cache]           [Feed Cache]          [Feed Cache]
-         (Bob)                  (Carol)               (Dave)
-```
+<p align="center">
+  <img src="images/sd_newsfeed_arch.png" alt="News Feed Architecture" width="700"/>
+</p>
 
 ---
 
