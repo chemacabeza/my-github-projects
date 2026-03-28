@@ -4,7 +4,7 @@
   <img src="images/cover.png" alt="Linux Mastery Cover" width="800"/>
 </p>
 
-Welcome to the **Linux Mastery Guide**. This repository contains a complete, **68-part curriculum** spanning 17 phases, designed to take you from basic terminal survival to live kernel patching, kernel-bypass networking, production infrastructure management, and cybersecurity operations.
+Welcome to the **Linux Mastery Guide**. This repository contains a complete, **74-part curriculum** spanning 20 phases, designed to take you from basic terminal survival to live kernel patching, kernel-bypass networking, production infrastructure management, and cybersecurity operations.
 
 This hardcore curriculum was synthesized from **34 professional-grade textbooks** covering system administration, kernel internals, shell programming, cybersecurity, and performance engineering: *UNIX and Linux System Administration Handbook*, *Systems Performance*, *BPF Performance Tools*, *Linux Kernel Development*, *Advanced Programming in the UNIX Environment*, *Bash Cookbook*, *Sed & Awk*, *Effective Awk Programming*, *Cybersecurity Ops with Bash*, and *The Linux Programming Interface*.
 
@@ -147,6 +147,24 @@ This hardcore curriculum was synthesized from **34 professional-grade textbooks*
 * [**66: Reconnaissance & Forensics**](./66_Reconnaissance_Forensics.md) - Port scanning, banner grabbing, DNS recon, hash verification, script obfuscation detection, and volatile evidence collection.
 * [**67: inotify & File Event Monitoring**](./67_inotify_File_Monitoring.md) - The `inotify` kernel subsystem, `inotifywait`, auto-reload triggers, build watchers, and security change detection.
 * [**68: ACLs & Extended Attributes**](./68_ACLs_Extended_Attributes.md) - POSIX ACLs with `setfacl`/`getfacl`, the ACL mask, default (inherited) ACLs, and `xattr` metadata with `setfattr`/`getfattr`.
+
+### Phase 18: Advanced Systems Programming
+*The boundaries between the OS Kernel and the Database Engine.*
+
+* [**69: I/O Multiplexing — epoll**](./69_IO_Multiplexing_epoll.md) - The C10K problem, `select`, `poll`, `epoll`, event-driven non-blocking architectures, and `io_uring`.
+* [**70: Shared Memory & Advanced IPC**](./70_Shared_Memory_IPC.md) - Eliminating data copies via POSIX shared memory, Semaphores, Message Queues, and `mmap`.
+
+### Phase 19: TCP/IP Protocol Mastery
+*The structural foundation of the Internet, unpacked packet by packet.*
+
+* [**71: TCP/IP Protocol Deep Dive**](./71_TCP_IP_Deep_Dive.md) - The 3-way handshake, sliding windows, congestion control algorithms (Reno vs BBR), UDP, and ICMP.
+* [**72: Daemon Design & Session Management**](./72_Daemon_Design.md) - The classic double-fork architecture, `setsid`, PID files, signal handling (`SIGHUP`/`SIGTERM`), and systemd integration.
+
+### Phase 20: Performance Engineering
+*Scientific approaches to identifying bottlenecks using Brenda Gregg's methodologies.*
+
+* [**73: Advanced Performance Analysis & Profiling**](./73_Advanced_Performance.md) - The USE Method, CPU Flame Graphs, p99 latency percentiles, memory profiling with Valgrind, and I/O schedulers.
+* [**74: Kernel Scheduler & Interrupt Handling**](./74_Kernel_Scheduler_Interrupts.md) - The Completely Fair Scheduler (CFS), Real-Time policies, CPU Affinity/NUMA, and Top-Half vs Bottom-Half hardware interrupts.
 
 ---
 
