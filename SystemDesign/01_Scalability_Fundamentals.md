@@ -52,13 +52,9 @@ These are the two fundamental approaches to scaling:
 
 A load balancer distributes incoming traffic across multiple servers:
 
-```
-              ┌───────────────┐
-  Users ──────┤ LOAD BALANCER ├──────┬──── Server 1
-              └───────────────┘      ├──── Server 2
-                                     ├──── Server 3
-                                     └──── Server N
-```
+<p align="center">
+  <img src="images/sd_load_balancer.png" alt="Load Balancer Architecture" width="700"/>
+</p>
 
 ### Load Balancing Algorithms:
 
