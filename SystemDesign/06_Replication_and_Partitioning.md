@@ -24,11 +24,9 @@
 
 ### Single-Leader (Master-Slave)
 
-```
-  ALL WRITES ──→ [LEADER] ──replication──→ [FOLLOWER 1] ← reads
-                                       └→ [FOLLOWER 2] ← reads
-                                       └→ [FOLLOWER 3] ← reads
-```
+<p align="center">
+  <img src="images/sd_single_leader.png" alt="Single-Leader Replication" width="700"/>
+</p>
 
 | Aspect | Detail |
 | :--- | :--- |
@@ -40,11 +38,9 @@
 
 ### Multi-Leader
 
-```
-  [LEADER A] ←──writes/reads──→ [LEADER B]
-      │                             │
-      └── replication ──────────────┘
-```
+<p align="center">
+  <img src="images/sd_multi_leader.png" alt="Multi-Leader Replication" width="700"/>
+</p>
 
 | Pros | Cons |
 | :--- | :--- |
@@ -83,15 +79,9 @@
 
 When data is too large for one server, split it across multiple:
 
-```
-┌──────────────────────────────────┐
-│         ALL USER DATA            │
-├──────────┬──────────┬────────────┤
-│ Shard 1  │ Shard 2  │ Shard 3   │
-│ A-H      │ I-P      │ Q-Z       │
-│ Server 1 │ Server 2 │ Server 3  │
-└──────────┴──────────┴────────────┘
-```
+<p align="center">
+  <img src="images/sd_sharding.png" alt="Database Sharding" width="700"/>
+</p>
 
 ### Partitioning Strategies:
 
@@ -104,20 +94,9 @@ When data is too large for one server, split it across multiple:
 
 ### Consistent Hashing
 
-```
-        Node A
-         ╱╲
-    ────╱  ╲────
-   │  ╱    ╲  │
-   │╱   Ring  ╲│
-   ╱     ○     ╲
-  ╱    keys     ╲
- Node D ──────── Node B
-        ╲      ╱
-         ╲    ╱
-          ╲  ╱
-         Node C
-```
+<p align="center">
+  <img src="images/sd_consistent_hash.png" alt="Consistent Hashing" width="700"/>
+</p>
 
 When a node is added/removed, only **K/N keys** need to move (K = total keys, N = nodes).
 
