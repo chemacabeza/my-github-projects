@@ -115,11 +115,10 @@ STATELESS (Good for Scaling):
 Databases are usually the first bottleneck:
 
 ### Read Replicas:
-```
-  Writes ──── Primary DB ──── Replication ──── Replica 1 (reads)
-                                          └── Replica 2 (reads)
-                                          └── Replica 3 (reads)
-```
+
+<p align="center">
+  <img src="images/sd_read_replicas.png" alt="Read Replica Architecture" width="700"/>
+</p>
 
 ### Sharding:
 ```
