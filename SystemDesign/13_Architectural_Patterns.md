@@ -53,13 +53,9 @@ Event Producer ──→ [Event Bus / Broker] ──→ Event Consumer A
 
 Separate the **write model** from the **read model**:
 
-```
-                WRITE SIDE                    READ SIDE
-Client ──→ [Command Handler] ──→ Write DB   [Query Handler] ──→ Read DB ──→ Client
-                │                                ▲
-                └── Events ─────────────────────┘
-                    (sync read models)
-```
+<p align="center">
+  <img src="images/sd_cqrs.png" alt="CQRS Pattern" width="700"/>
+</p>
 
 | Aspect | Traditional | CQRS |
 | :--- | :--- | :--- |
