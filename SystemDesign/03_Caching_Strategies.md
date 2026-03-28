@@ -26,19 +26,9 @@ Local memory:       <0.1ms
 
 ## 2. The Cache Hierarchy
 
-```
-┌──────────────────────────────────────────┐
-│ L1: Browser Cache        (< 1ms)         │  ← Closest to user
-├──────────────────────────────────────────┤
-│ L2: CDN Cache            (10-50ms)       │
-├──────────────────────────────────────────┤
-│ L3: Application Cache    (1-5ms)         │  ← Redis, Memcached
-├──────────────────────────────────────────┤
-│ L4: Database Cache       (10-50ms)       │  ← Query cache
-├──────────────────────────────────────────┤
-│ L5: Database (Disk)      (100-500ms)     │  ← Slowest
-└──────────────────────────────────────────┘
-```
+<p align="center">
+  <img src="images/sd_cache_hierarchy.png" alt="Cache Hierarchy Pyramid" width="700"/>
+</p>
 
 ---
 
