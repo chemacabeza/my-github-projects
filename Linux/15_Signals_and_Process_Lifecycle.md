@@ -134,6 +134,17 @@ int main() {
 }
 ```
 
+```bash
+# Compile the signal handling daemon
+gcc signal_daemon.c -o signal_daemon
+
+# Run it in the background
+./signal_daemon &
+
+# Send SIGINT securely (like pressing Ctrl+C) to trigger graceful shutdown
+kill -SIGINT $!
+```
+
 ---
 
 ## 5. Containerized Execution (MacBook / Linux)

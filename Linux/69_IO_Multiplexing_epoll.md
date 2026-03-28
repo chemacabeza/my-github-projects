@@ -213,6 +213,17 @@ int main() {
 }
 ```
 
+```bash
+# Compile the epoll server
+gcc epoll_server.c -o epoll_server
+
+# Run the server
+./epoll_server
+
+# In another terminal, test it with netcat
+# nc 127.0.0.1 8080
+```
+
 ---
 
 ## 5. io_uring — The Future (Linux 5.1+)

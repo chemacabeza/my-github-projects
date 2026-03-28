@@ -53,10 +53,23 @@ When you open a file possessing `O_APPEND`, the kernel physically guarantees tha
 
 ```c
 #include <fcntl.h>
+#include <unistd.h>
 
-// Strictly atomic appending! Safe across 10,000 independent parallel processes natively.
-int fd = open("server.log", O_WRONLY | O_APPEND);
-write(fd, "Log entry\n", 10);
+int main() {
+    // Strictly atomic appending! Safe across 10,000 independent parallel processes natively.
+    int fd = open("server.log", O_WRONLY | O_APPEND | O_CREAT, 0644);
+    if (fd != -1) {
+        write(fd, "Log entry\n", 10);
+        close(fd);
+    }
+    return 0;
+}
+```
+
+```bash
+# Compile and run the atomic append example
+gcc atomic_append.c -o atomic_append
+./atomic_append
 ```
 
 ### Exclusive File Creation (The `O_EXCL` Flag)

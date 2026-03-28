@@ -101,6 +101,20 @@ MODULE_LICENSE("GPL");
 MODULE_INFO(livepatch, "Y");
 ```
 
+```bash
+# Create a Makefile for the kernel module
+echo "obj-m += my_livepatch.o" > Makefile
+
+# Compile the kernel module (requires linux-headers)
+make -C /lib/modules/$(uname -r)/build M=$(pwd) modules
+
+# Load the live patch into the running kernel
+sudo insmod my_livepatch.ko
+
+# Check dmesg to verify it was applied
+dmesg | tail
+```
+
 > [!IMPORTANT]
 > Live patching is not a replacement for regular kernel updates. It's a **bridge** that keeps you secure until your next scheduled maintenance window.
 
