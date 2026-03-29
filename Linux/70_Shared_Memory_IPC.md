@@ -152,6 +152,11 @@ data->counter++;
 sem_post(&data->sem);
 ```
 
+```bash
+# Compile semaphore examples (requires -pthread to link the threading library)
+gcc sem_example.c -o sem_example -pthread
+```
+
 ---
 
 ## 5. POSIX Message Queues

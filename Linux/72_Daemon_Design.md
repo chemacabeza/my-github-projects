@@ -106,6 +106,11 @@ int main(void) {
 }
 ```
 
+```bash
+# Compile the classic Unix double-fork daemon
+gcc my_daemon.c -o my_daemon
+```
+
 ### Why Each Step Matters
 
 | Step | Why |
@@ -156,6 +161,11 @@ int write_pidfile(void) {
     // Keep fd open — lock persists until process exits
     return 0;
 }
+```
+
+```bash
+# Compile the PID locking mechanism
+gcc daemon_lock.c -o daemon_lock
 ```
 
 ---
@@ -211,6 +221,11 @@ while (!shutdown_requested) {
 }
 syslog(LOG_INFO, "Shutting down gracefully");
 cleanup();
+```
+
+```bash
+# Compile the signal-aware daemon securely
+gcc signal_daemon.c -o signal_daemon
 ```
 
 ```bash

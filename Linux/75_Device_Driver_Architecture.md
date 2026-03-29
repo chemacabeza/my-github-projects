@@ -54,6 +54,13 @@ struct file_operations my_fops = {
 };
 ```
 
+```bash
+# Unlike userspace C, device drivers use the Kernel Build System (Kbuild)
+# You need a single-line Makefile: obj-m += my_device.o
+# Then compile against the running kernel explicitly:
+make -C /lib/modules/$(uname -r)/build M=$PWD modules
+```
+
 ### The ioctl() System Call
 When standard `read`/`write` are insufficient, `ioctl` (Input/Output Control) allows sending custom commands to the driver, like changing baud rates or querying hardware status.
 
