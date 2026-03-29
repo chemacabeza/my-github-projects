@@ -1,5 +1,10 @@
 # Chapter 4: Basics
 
+<p align="center">
+  <img src="../../images/bash_04_builtins.png" alt="Chapter Cover" width="800"/>
+</p>
+
+
 In this chapter we are going to introduce the basics of Bash scripting. We will first introduce you to the structure of a Bash script.
 
 After that you will learn your first 3 commands to read from and write information to the screen.

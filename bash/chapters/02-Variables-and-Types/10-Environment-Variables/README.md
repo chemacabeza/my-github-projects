@@ -1,5 +1,10 @@
 # Chapter 10: Environment Variables
 
+<p align="center">
+  <img src="../../images/bash_10_env_vars.png" alt="Chapter Cover" width="800"/>
+</p>
+
+
 **Environment Variables** are a fundamental concept in operating systems and software development. They are dynamic values that provide essential information about the system environment or influence how processes behave. In Bash, environment variables are used to store configuration settings, system information, and user-defined values. These variables can be accessed by processes and programs to retrieve information or modify behavior.
 
 In this chapter we are going to learn about the commands “`env`”, “`export`” and will revisit the “`declare`” command.

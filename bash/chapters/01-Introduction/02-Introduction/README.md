@@ -1,5 +1,10 @@
 # Chapter 2: Introduction
 
+<p align="center">
+  <img src="../../images/bash_02_running_commands.png" alt="Chapter Cover" width="800"/>
+</p>
+
+
 If you go into the Internet and ask around you will see that several terms appear when asking about Bash. Some of them are:
 * Terminal
 * Terminal Window

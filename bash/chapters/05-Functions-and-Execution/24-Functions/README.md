@@ -1,5 +1,10 @@
 # Chapter 24: Functions
 
+<p align="center">
+  <img src="../../images/bash_24_functions.png" alt="Chapter Cover" width="800"/>
+</p>
+
+
 Now that we have learnt the basic blocks of Bash we are going to add another layer of abstraction that are… the functions.
 
 In Bash scripting, functions serve as essential building blocks that allow for the modularization and organization of code. A function in Bash is a self-contained block of code that performs a specific task, and it can be invoked or called from anywhere within the script. This modular approach not only enhances code readability but also promotes code reuse, making scripts more efficient and maintainable.

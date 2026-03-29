@@ -1,5 +1,10 @@
 # Chapter 20: Here Documents
 
+<p align="center">
+  <img src="../../images/bash_20_here_documents.png" alt="Chapter Cover" width="800"/>
+</p>
+
+
 ## Introduction
 
 A **Here Document** (commonly referred to as "*HereDoc*") is a powerful feature in Bash that allows you to embed a block of text or commands directly within a script, treating it as though it were a separate file. This feature acts as a multiline string or file literal, making it especially useful for sending input streams to commands or programs.

@@ -1,5 +1,10 @@
 # Chapter 15: List constructs - Combining commands with `&&` and `||`
 
+<p align="center">
+  <img src="../../images/bash_15_lists.png" alt="Chapter Cover" width="800"/>
+</p>
+
+
 Up until now we have been executing commands one at a time. Did you know that you can combine them using the “`&&`” and “`||`” operators?
 
 Let’s see how to use them, shall we?

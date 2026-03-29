@@ -1,5 +1,10 @@
 # Chapter 26: Processes
 
+<p align="center">
+  <img src="../../images/bash_26_processes.png" alt="Chapter Cover" width="800"/>
+</p>
+
+
 ## What is a Process?
 
 In software engineering, a **Process** is essentially a program in action. Unlike a static program—such as a script or a binary file stored on disk—a process is dynamic, representing the live execution of that program in memory. When a program is launched, the operating system (in our case, Linux) loads the program’s code and data into memory, allocates it the necessary resources, and assigns it a unique identifier called a **Process ID (PID)**. The process also includes crucial execution details, such as its current state, program counter, register values, open files, and allocated memory.

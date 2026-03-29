@@ -1,5 +1,10 @@
 # Chapter 11: Arrays and loops
 
+<p align="center">
+  <img src="../../images/bash_11_arrays.png" alt="Chapter Cover" width="800"/>
+</p>
+
+
 ## Introduction
 
 Bash scripting introduces arrays and loops as essential constructs, facilitating the manipulation and processing of data within scripts. Arrays, the cornerstone of structured data storage in Bash, come in two main types: indexed arrays and associative arrays. Indexed arrays employ numerical indices to represent elements, starting from zero, while associative arrays use user-defined keys for a more versatile and human-readable approach to data organization. This diversity enables scriptwriters to choose the array type that best fits the nature of their data, making Bash scripts adaptable to various scenarios.

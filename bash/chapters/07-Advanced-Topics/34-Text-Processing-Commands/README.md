@@ -1,6 +1,9 @@
 
 # Chapter 34: Text Processing Commands
 
+<p align="center">
+  <img src="../../images/bash_34_text_processing.png" alt="Chapter Cover" width="800"/>
+</p>
 ## Introduction
 
 

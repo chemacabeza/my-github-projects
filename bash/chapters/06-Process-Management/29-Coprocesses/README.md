@@ -1,5 +1,10 @@
 # Chapter 29: Coprocesses
 
+<p align="center">
+  <img src="../../images/bash_29_coprocesses.png" alt="Chapter Cover" width="800"/>
+</p>
+
+
 ## Introduction
 
 Coprocesses in Bash are a powerful mechanism that allows you to execute commands **asynchronously** while maintaining a direct communication channel with them. Introduced in Bash version 4, coprocesses enable a script to run a background command or pipeline while interacting with it through dedicated input and output streams. This feature is particularly useful when you need to exchange data dynamically with a running command without blocking your script.

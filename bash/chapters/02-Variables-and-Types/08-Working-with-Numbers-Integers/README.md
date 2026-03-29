@@ -1,5 +1,10 @@
 # Chapter 8: Working with Numbers - Integers
 
+<p align="center">
+  <img src="../../images/bash_08_integers.png" alt="Chapter Cover" width="800"/>
+</p>
+
+
 Bash, by default, primarily operates on integer numerical values. It can perform various arithmetic operations like addition, subtraction, multiplication, and division with integer numbers. These operations are particularly useful for tasks like counting, indexing, and basic mathematical calculations in scripting and automation. Bash's support for integer arithmetic makes it a handy tool for many system-level operations and scripting tasks.
 
 However, Bash does not provide native support for floating-point arithmetic by default. Floating-point numbers include decimal fractions and are used to represent real numbers with high precision. These numbers are essential in scientific computing, financial calculations, and various other domains where precise numerical representations are required. Bash's omission of native support for floating-point arithmetic is largely because it is designed as a lightweight, text-based shell scripting language, and the inclusion of floating-point arithmetic would introduce complexity and potentially slow down the execution of scripts.

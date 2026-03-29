@@ -1,5 +1,10 @@
 # Chapter 31: Configuration Files & Types of Shell
 
+<p align="center">
+  <img src="../../images/bash_05_environment.png" alt="Chapter Cover" width="800"/>
+</p>
+
+
 ## Introduction
 
 Bash includes a collection of configuration files that are executed before the shell becomes available for use. However, the specific configuration files that are applied depend on the type of shell you are using, whether it’s a login shell, interactive shell, or a non-interactive shell. Each type follows a different set of rules for loading configuration files.

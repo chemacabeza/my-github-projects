@@ -1,5 +1,10 @@
 # Chapter 23: Execution of commands
 
+<p align="center">
+  <img src="../../images/bash_23_command_execution.png" alt="Chapter Cover" width="800"/>
+</p>
+
+
 In Bash there are a few ways to execute a command and it depends on the purpose that you have in mind.
 
 If you want to execute a command without saving the result, you can just add the command with the necessary options (if any) in a line and the command will just be executed.

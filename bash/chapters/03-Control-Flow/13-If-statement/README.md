@@ -1,5 +1,10 @@
 # Chapter 10: if / elif / else statements
 
+<p align="center">
+  <img src="../../images/bash_13_if_stmt.png" alt="Chapter Cover" width="800"/>
+</p>
+
+
 In Bash, the “`if`”, “`elif`”, and “`else`” statements are fundamental constructs used for conditional execution of commands. These statements provide the means to make decisions within a script or in the command-line environment, enabling you to create dynamic and responsive scripts that respond to specific conditions.
 
 In the next sections we will speak about the three statements.

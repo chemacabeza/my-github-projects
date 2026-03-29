@@ -1,5 +1,10 @@
 # Chapter 31: Brace Expansion
 
+<p align="center">
+  <img src="../../images/bash_31_brace_expansion.png" alt="Chapter Cover" width="800"/>
+</p>
+
+
 Brace expansion in Bash is a powerful feature that enables you to generate multiple strings or file paths with minimal typing. By using curly braces "`{}`" and placing a comma-separated list or a sequence inside them, you can create multiple combinations in a single expression, making it a helpful tool for automating repetitive tasks, such as batch renaming files or creating directories.
 
 For example, "`{A,B,C}`" will expand to "`A B C`", while "`{1..3}`" will expand to "`1 2 3`". Combining expansions, such as "`file{1..3}.txt`", results in "`file1.txt file2.txt file3.txt`". You can even nest brace expansions, like "`file{A,B}{1,2}`", to produce combinations such as "`fileA1 fileA2 fileB1 fileB2`".

@@ -1,5 +1,10 @@
 # Chapter 18: I/O Redirections
 
+<p align="center">
+  <img src="../../images/bash_18_io_redirections.png" alt="Chapter Cover" width="800"/>
+</p>
+
+
 In a previous chapter, we explored the concept of processes, the file descriptors associated with them, and the intricate relationship between the two. These concepts form the foundation of understanding how data flows within a Bash environment.
 
 In this chapter, we delve into the topic of redirection—a powerful mechanism that allows you to connect a process's file descriptors to other programs or files. Redirection enables you to reroute standard input, output, and error streams, offering a flexible way to handle data interactions between processes and external resources.

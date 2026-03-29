@@ -1,5 +1,10 @@
 # Chapter 9: Working with Numbers - Floating-point numbers
 
+<p align="center">
+  <img src="../../images/bash_09_floats.png" alt="Chapter Cover" width="800"/>
+</p>
+
+
 In Bash, working with floating-point numbers can be a bit tricky because Bash’s built-in arithmetic only supports **integer operations**. This means that directly performing calculations involving decimals or fractions is not possible using the default arithmetic capabilities of Bash (`$((...))` or `let`), which are limited to whole numbers.
 
 To handle floating-point numbers, you need to use external tools like `bc` (an arbitrary precision calculator) or `printf` (a format string utility). These tools extend Bash's capability to handle real numbers and precision-based arithmetic.

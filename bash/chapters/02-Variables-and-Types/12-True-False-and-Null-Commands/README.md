@@ -1,5 +1,10 @@
 # Chapter 12: True, False and Null Commands
 
+<p align="center">
+  <img src="../../images/bash_12_commands.png" alt="Chapter Cover" width="800"/>
+</p>
+
+
 In Bash, the "`true`", "`false`", and null commands play essential roles in scripting by providing fundamental control over conditional logic and flow.
 
 The "`true`" command is a built-in Bash command that does nothing but return an exit status of 0, which represents success. It's often used in scripts or loops where an infinite loop is needed, or as a placeholder in conditions that require a positive (true) result. For example, in a while loop, "`while true; do ... done`" creates a loop that continues indefinitely until it's explicitly stopped.

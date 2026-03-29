@@ -1,5 +1,10 @@
 # Chapter 11: `case-esac` statement
 
+<p align="center">
+  <img src="../../images/bash_14_case_stmt.png" alt="Chapter Cover" width="800"/>
+</p>
+
+
 In Bash scripting, the “`case-esac`” statement is a powerful and flexible construct that facilitates the implementation of conditional branching and decision-making logic. It's particularly useful when you need to evaluate a variable or expression against multiple possible values and execute different code blocks based on the matching conditions. Think of the “`case-esac`” statement as a versatile alternative to a series of “`if-elif-else`” statements, designed to simplify and enhance the readability of your scripts.
 
 The “`case-esac`” statement simplifies the process of handling multiple conditional cases in a Bash script. With “`case`”, you can efficiently compare a variable or expression to a list of patterns and execute a code block corresponding to the first match. This is especially handy when you have a variable that can take on various values, and you want to perform different actions based on those values.

@@ -1,5 +1,10 @@
 # Chapter 33: Programmable Completion
 
+<p align="center">
+  <img src="../../images/bash_33_completion.png" alt="Chapter Cover" width="800"/>
+</p>
+
+
 ## Introduction
 
 Programmable completion, or autocompletion, is a powerful feature that enhances command-line efficiency by suggesting or completing commands, arguments, filenames, and other elements as you type. It simplifies interactions with the terminal, helping users enter commands quickly and accurately while minimizing manual effort.

@@ -1,5 +1,10 @@
 # Chapter 25: Aliases
 
+<p align="center">
+  <img src="../../images/bash_25_aliases.png" alt="Chapter Cover" width="800"/>
+</p>
+
+
 ## Introduction
 
 Aliases in Bash are shortcuts that allow you to define custom command substitutions or abbreviations for frequently used commands. They simplify and speed up your workflow by reducing the need to type lengthy or complex commands repeatedly. An alias essentially maps a user-defined name to a specific command or sequence of commands, making it an invaluable tool for enhancing efficiency and productivity in the command line.

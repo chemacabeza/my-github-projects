@@ -1,5 +1,10 @@
 # Chapter 28: Jobs
 
+<p align="center">
+  <img src="../../images/bash_28_jobs.png" alt="Chapter Cover" width="800"/>
+</p>
+
+
 ## Introduction
 
 In Bash, *jobs* represent the commands or processes that you execute from the shell. These jobs can run either in the foreground, where they take over your terminal until completion, or in the background, where they continue to run while freeing your terminal for other tasks. The ability to manage jobs is a powerful feature of Bash that enhances multitasking and productivity on the command line.

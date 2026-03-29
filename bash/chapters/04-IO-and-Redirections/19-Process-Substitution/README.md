@@ -1,5 +1,10 @@
 # Chapter 19: Process Substitution
 
+<p align="center">
+  <img src="../../images/bash_19_process_substitution.png" alt="Chapter Cover" width="800"/>
+</p>
+
+
 ## Introduction
 
 Process substitution is a powerful redirection technique that allows the input or output of a command (or set of commands) to be treated as if it were a temporary file.

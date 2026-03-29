@@ -1,5 +1,10 @@
 # Chapter 30: Regular Expressions and Globbing
 
+<p align="center">
+  <img src="../../images/bash_30_regex.png" alt="Chapter Cover" width="800"/>
+</p>
+
+
 Regular expressions, or regex, in Bash are a powerful tool for pattern matching and string manipulation. They allow you to search, replace, and validate strings based on complex patterns. Learning regex is crucial for any developer working with text processing in Bash, as it enables efficient data extraction and automation of tasks like log parsing, input validation, and file manipulation. With regular expressions, you can define precise patterns to match specific parts of strings, which makes it easier to handle repetitive tasks without writing verbose code.
 
 Understanding regular expressions can significantly enhance your scripting capabilities in Bash, making you more efficient and enabling you to tackle complex tasks with fewer lines of code. Some key use cases include:

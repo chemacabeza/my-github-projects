@@ -1,5 +1,10 @@
 # Chapter 3: Pre-Scripting Basics
 
+<p align="center">
+  <img src="../../images/bash_03_terminal.png" alt="Chapter Cover" width="800"/>
+</p>
+
+
 If you noticed, the "Hello World!" script that we wrote in the previous chapter the very first line looks like this.
 
 ```bash

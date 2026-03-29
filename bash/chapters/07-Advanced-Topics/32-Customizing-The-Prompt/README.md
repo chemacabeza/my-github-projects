@@ -1,5 +1,10 @@
 # Chapter 32: Customizing The Prompt
 
+<p align="center">
+  <img src="../../images/bash_32_prompt.png" alt="Chapter Cover" width="800"/>
+</p>
+
+
 ## Introduction
 
 The **prompt** in Bash is the text displayed in your terminal, signaling that the shell is ready to receive and execute commands. It is the interface between you and the Bash shell, making it a fundamental part of the user experience.

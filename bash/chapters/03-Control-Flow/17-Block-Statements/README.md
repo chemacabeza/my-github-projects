@@ -1,5 +1,10 @@
 # Chapter 17: Block Statements
 
+<p align="center">
+  <img src="../../images/bash_17_block_statements.png" alt="Chapter Cover" width="800"/>
+</p>
+
+
 In Bash, block statements enable you to group multiple commands or code structures together for cohesive execution. They serve a range of purposes, such as creating conditional constructs, managing loops, or executing multiple commands as a single unit. Blocks are particularly useful when you want to apply logic like conditionals or loops to more than one command without writing each command individually.
 
 ## Types of Block Statements

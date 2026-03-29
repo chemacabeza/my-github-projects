@@ -1,5 +1,10 @@
 # Chapter 22: Navigation and file/folder related commands
 
+<p align="center">
+  <img src="../../images/bash_22_navigation.png" alt="Chapter Cover" width="800"/>
+</p>
+
+
 In Bash, navigating and managing your Linux distribution involves a variety of commands that enable you to explore directories, manipulate files, and search for specific content. At the core of navigating the file system is the `pwd` command, which prints the current working directory, and `cd`, which allows you to move between directories. The `ls` command lists the contents of a directory, helping you view files and subdirectories at your current location. Together, these commands form the basic tools for navigating your Linux system.
 
 Managing directories involves creating and deleting them with commands like `mkdir` (make a directory) and `rmdir` (remove an empty directory). For file creation and manipulation, `touch` creates new empty files, while `mv` moves or renames them, and `rm` removes files. If you want to view the contents of a file, the `cat` command can print it to the terminal. These commands are crucial for file and directory management, helping you control the structure and organization of your Linux environment.

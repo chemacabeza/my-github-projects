@@ -1,5 +1,10 @@
 # Chapter 17: The select statement
 
+<p align="center">
+  <img src="../../images/bash_16_select.png" alt="Chapter Cover" width="800"/>
+</p>
+
+
 The "`select`" statement in Bash is a powerful feature for creating simple interactive menus within scripts. It allows you to present a list of choices to the user, and based on their input, the script can execute different commands. The syntax is similar to a "`for`" loop, but instead of looping through a range of values, it loops through the options you define and waits for user input.
 
 ## Syntax

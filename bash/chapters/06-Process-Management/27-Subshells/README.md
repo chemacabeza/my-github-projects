@@ -1,5 +1,10 @@
 # Chapter 27: Subshells
 
+<p align="center">
+  <img src="../../images/bash_27_subshells.png" alt="Chapter Cover" width="800"/>
+</p>
+
+
 ## What is a Subshell?
 
 In Bash, a **Subshell** is a separate shell instance launched as a child process by the current shell or a script, running independently yet within the environment of the parent script. This isolation allows it to execute commands without affecting the main shell’s variables, settings, or working directory, which is particularly useful for temporary tasks or isolated test commands. To create a subshell, enclose the commands in parentheses, like the following.
