@@ -166,6 +166,30 @@ This hardcore curriculum was synthesized from **34 professional-grade textbooks*
 * [**73: Advanced Performance Analysis & Profiling**](./73_Advanced_Performance.md) - The USE Method, CPU Flame Graphs, p99 latency percentiles, memory profiling with Valgrind, and I/O schedulers.
 * [**74: Kernel Scheduler & Interrupt Handling**](./74_Kernel_Scheduler_Interrupts.md) - The Completely Fair Scheduler (CFS), Real-Time policies, CPU Affinity/NUMA, and Top-Half vs Bottom-Half hardware interrupts.
 
+### Phase 21: Advanced Architecture & Security Operations
+*Bridging hardware interactions with definitive compliance, forensics, and penetration testing methodologies.*
+
+* [**75: Linux Device Driver Architecture**](./75_Device_Driver_Architecture.md) - Kernel space VFS, Character vs Block devices, Top/Bottom Half IRQ handling, and DMA.
+* [**76: Linux Developer Toolchain**](./76_Developer_Toolchain.md) - GCC compilation pipeline, Static vs Shared linking, GDB, Valgrind, and Strace.
+* [**77: Linux Audit & Compliance**](./77_Audit_Compliance.md) - Pluggable Authentication Modules (PAM), `auditd` kernel tracking, and File Integrity Monitoring (AIDE).
+* [**78: Linux for Penetration Testing**](./78_Penetration_Testing.md) - Nmap reconnaissance, Metasploit integration, Reverse shells, and Privilege Escalation.
+* [**79: Digital Forensics & Incident Response**](./79_Digital_Forensics_IR.md) - Managing the Order of Volatility, executing bit-for-bit `dd` imaging, and tracking MACB timelines.
+
+### Phase 22: Productivity & Software Dynamics
+*Scaling command-line proficiency to building automated recipes and tracking sub-millisecond execution latency.*
+
+* [**80: Shell Scripting Cookbook**](./80_Shell_Scripting_Cookbook.md) - Implementing `set -euo pipefail`, parallelized `xargs` processing, and REST API native JSON parsing with `jq`.
+* [**81: Developer Environment Mastery**](./81_Developer_Environment.md) - Terminal multiplexing via `tmux`, fuzzy finding (`fzf`), modern Rust replacements (`rg`/`bat`), and dotfile symlinking with GNU Stow.
+* [**82: Software Dynamics & Latency Tracing**](./82_Software_Dynamics.md) - Nanosecond latency profiling, CPU Flame Graphs, branch mispredictions, and executing `perf` analysis.
+
+### Phase 23: The GNU Build Ecosystem & Power Tools
+*Automating source code portability seamlessly and mastering the absolute depths of UNIX piping.*
+
+* [**83: GNU Build System (Autotools)**](./83_GNU_Autotools.md) - Configuring `m4` macros, analyzing system dependencies via `configure.ac`, and explicitly generating portable Makefiles.
+* [**84: GNU Make Mastery**](./84_GNU_Make_Mastery.md) - Building massive Directed Acyclic Dependency Graphs, employing Automatic Variables flawlessly, and optimizing with Pattern Rules.
+* [**85: UNIX Power Tools**](./85_UNIX_Power_Tools.md) - The absolute Capstone. Synthesizing Process Substitution seamlessly across networks dynamically to parse inherently anything on the command line perfectly.
+
+
 ---
 
 ## 🚀 Execution
