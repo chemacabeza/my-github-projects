@@ -4,7 +4,7 @@
   <img src="images/cover.png" alt="Linux Mastery Cover" width="800"/>
 </p>
 
-Welcome to the **Linux Mastery Guide**. This repository contains a complete, **74-part curriculum** spanning 20 phases, designed to take you from basic terminal survival to live kernel patching, kernel-bypass networking, production infrastructure management, and cybersecurity operations.
+Welcome to the **Linux Mastery Guide**. This repository contains a complete, **85-part curriculum** spanning 23 phases, designed to take you from basic terminal survival to live kernel patching, kernel-bypass networking, cybersecurity operations, forensics, latency tracing, and absolute mastery of the GNU Build Ecosystem and UNIX power tools.
 
 This hardcore curriculum was synthesized from **34 professional-grade textbooks** covering system administration, kernel internals, shell programming, cybersecurity, and performance engineering: *UNIX and Linux System Administration Handbook*, *Systems Performance*, *BPF Performance Tools*, *Linux Kernel Development*, *Advanced Programming in the UNIX Environment*, *Bash Cookbook*, *Sed & Awk*, *Effective Awk Programming*, *Cybersecurity Ops with Bash*, and *The Linux Programming Interface*.
 
