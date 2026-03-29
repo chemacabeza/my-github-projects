@@ -1,7 +1,7 @@
 # Chapter 11: Arrays and loops
 
 <p align="center">
-  <img src="../../images/bash_11_arrays.png" alt="Chapter Cover" width="800"/>
+  <img src="../../../images/bash_11_arrays.png" alt="Chapter Cover" width="800"/>
 </p>
 
 

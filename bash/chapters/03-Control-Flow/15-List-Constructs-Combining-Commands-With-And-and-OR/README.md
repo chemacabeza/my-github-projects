@@ -1,7 +1,7 @@
 # Chapter 15: List constructs - Combining commands with `&&` and `||`
 
 <p align="center">
-  <img src="../../images/bash_15_lists.png" alt="Chapter Cover" width="800"/>
+  <img src="../../../images/bash_15_lists.png" alt="Chapter Cover" width="800"/>
 </p>
 
 

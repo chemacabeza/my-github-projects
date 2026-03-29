@@ -1,7 +1,7 @@
 # Chapter 21: Here Strings
 
 <p align="center">
-  <img src="../../images/bash_21_here_strings.png" alt="Chapter Cover" width="800"/>
+  <img src="../../../images/bash_21_here_strings.png" alt="Chapter Cover" width="800"/>
 </p>
 
 

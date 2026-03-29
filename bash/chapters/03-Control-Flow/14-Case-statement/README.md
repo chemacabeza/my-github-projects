@@ -1,7 +1,7 @@
 # Chapter 11: `case-esac` statement
 
 <p align="center">
-  <img src="../../images/bash_14_case_stmt.png" alt="Chapter Cover" width="800"/>
+  <img src="../../../images/bash_14_case_stmt.png" alt="Chapter Cover" width="800"/>
 </p>
 
 

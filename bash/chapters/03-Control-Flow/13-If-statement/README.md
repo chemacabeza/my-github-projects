@@ -1,7 +1,7 @@
 # Chapter 10: if / elif / else statements
 
 <p align="center">
-  <img src="../../images/bash_13_if_stmt.png" alt="Chapter Cover" width="800"/>
+  <img src="../../../images/bash_13_if_stmt.png" alt="Chapter Cover" width="800"/>
 </p>
 
 

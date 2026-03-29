@@ -1,7 +1,7 @@
 # Chapter 20: Here Documents
 
 <p align="center">
-  <img src="../../images/bash_20_here_documents.png" alt="Chapter Cover" width="800"/>
+  <img src="../../../images/bash_20_here_documents.png" alt="Chapter Cover" width="800"/>
 </p>
 
 

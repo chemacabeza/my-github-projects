@@ -1,7 +1,7 @@
 # Chapter 31: Brace Expansion
 
 <p align="center">
-  <img src="../../images/bash_31_brace_expansion.png" alt="Chapter Cover" width="800"/>
+  <img src="../../../images/bash_31_brace_expansion.png" alt="Chapter Cover" width="800"/>
 </p>
 
 

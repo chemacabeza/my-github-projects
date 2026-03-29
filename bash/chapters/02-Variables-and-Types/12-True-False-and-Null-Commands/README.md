@@ -1,7 +1,7 @@
 # Chapter 12: True, False and Null Commands
 
 <p align="center">
-  <img src="../../images/bash_12_commands.png" alt="Chapter Cover" width="800"/>
+  <img src="../../../images/bash_12_commands.png" alt="Chapter Cover" width="800"/>
 </p>
 
 

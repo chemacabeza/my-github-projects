@@ -1,7 +1,7 @@
 # Chapter 25: Aliases
 
 <p align="center">
-  <img src="../../images/bash_25_aliases.png" alt="Chapter Cover" width="800"/>
+  <img src="../../../images/bash_25_aliases.png" alt="Chapter Cover" width="800"/>
 </p>
 
 

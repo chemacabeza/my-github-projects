@@ -1,7 +1,7 @@
 # Chapter 26: Processes
 
 <p align="center">
-  <img src="../../images/bash_26_processes.png" alt="Chapter Cover" width="800"/>
+  <img src="../../../images/bash_26_processes.png" alt="Chapter Cover" width="800"/>
 </p>
 
 

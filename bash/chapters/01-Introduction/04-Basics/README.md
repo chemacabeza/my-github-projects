@@ -1,7 +1,7 @@
 # Chapter 4: Basics
 
 <p align="center">
-  <img src="../../images/bash_04_builtins.png" alt="Chapter Cover" width="800"/>
+  <img src="../../../images/bash_04_builtins.png" alt="Chapter Cover" width="800"/>
 </p>
 
 

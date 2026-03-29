@@ -1,7 +1,7 @@
 # Chapter 7: Working with Strings
 
 <p align="center">
-  <img src="../../images/bash_07_strings.png" alt="Chapter Cover" width="800"/>
+  <img src="../../../images/bash_07_strings.png" alt="Chapter Cover" width="800"/>
 </p>
 
 

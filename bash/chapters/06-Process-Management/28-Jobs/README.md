@@ -1,7 +1,7 @@
 # Chapter 28: Jobs
 
 <p align="center">
-  <img src="../../images/bash_28_jobs.png" alt="Chapter Cover" width="800"/>
+  <img src="../../../images/bash_28_jobs.png" alt="Chapter Cover" width="800"/>
 </p>
 
 

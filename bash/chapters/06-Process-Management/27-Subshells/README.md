@@ -1,7 +1,7 @@
 # Chapter 27: Subshells
 
 <p align="center">
-  <img src="../../images/bash_27_subshells.png" alt="Chapter Cover" width="800"/>
+  <img src="../../../images/bash_27_subshells.png" alt="Chapter Cover" width="800"/>
 </p>
 
 

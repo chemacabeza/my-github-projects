@@ -1,7 +1,7 @@
 # Chapter 18: I/O Redirections
 
 <p align="center">
-  <img src="../../images/bash_18_io_redirections.png" alt="Chapter Cover" width="800"/>
+  <img src="../../../images/bash_18_io_redirections.png" alt="Chapter Cover" width="800"/>
 </p>
 
 

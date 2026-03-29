@@ -1,7 +1,7 @@
 # Chapter 6: Variables
 
 <p align="center">
-  <img src="../../images/bash_06_variables.png" alt="Chapter Cover" width="800"/>
+  <img src="../../../images/bash_06_variables.png" alt="Chapter Cover" width="800"/>
 </p>
 
 

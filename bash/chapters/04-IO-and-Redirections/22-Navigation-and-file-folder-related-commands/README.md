@@ -1,7 +1,7 @@
 # Chapter 22: Navigation and file/folder related commands
 
 <p align="center">
-  <img src="../../images/bash_22_navigation.png" alt="Chapter Cover" width="800"/>
+  <img src="../../../images/bash_22_navigation.png" alt="Chapter Cover" width="800"/>
 </p>
 
 

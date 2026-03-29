@@ -1,7 +1,7 @@
 # Chapter 17: Block Statements
 
 <p align="center">
-  <img src="../../images/bash_17_block_statements.png" alt="Chapter Cover" width="800"/>
+  <img src="../../../images/bash_17_block_statements.png" alt="Chapter Cover" width="800"/>
 </p>
 
 

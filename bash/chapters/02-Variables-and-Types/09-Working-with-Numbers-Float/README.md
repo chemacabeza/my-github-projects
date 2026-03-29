@@ -1,7 +1,7 @@
 # Chapter 9: Working with Numbers - Floating-point numbers
 
 <p align="center">
-  <img src="../../images/bash_09_floats.png" alt="Chapter Cover" width="800"/>
+  <img src="../../../images/bash_09_floats.png" alt="Chapter Cover" width="800"/>
 </p>
 
 

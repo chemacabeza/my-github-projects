@@ -1,7 +1,7 @@
 # Chapter 19: Process Substitution
 
 <p align="center">
-  <img src="../../images/bash_19_process_substitution.png" alt="Chapter Cover" width="800"/>
+  <img src="../../../images/bash_19_process_substitution.png" alt="Chapter Cover" width="800"/>
 </p>
 
 

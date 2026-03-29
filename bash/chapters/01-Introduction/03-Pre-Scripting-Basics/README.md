@@ -1,7 +1,7 @@
 # Chapter 3: Pre-Scripting Basics
 
 <p align="center">
-  <img src="../../images/bash_03_terminal.png" alt="Chapter Cover" width="800"/>
+  <img src="../../../images/bash_03_terminal.png" alt="Chapter Cover" width="800"/>
 </p>
 
 

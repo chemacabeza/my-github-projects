@@ -1,7 +1,7 @@
 # Chapter 8: Working with Numbers - Integers
 
 <p align="center">
-  <img src="../../images/bash_08_integers.png" alt="Chapter Cover" width="800"/>
+  <img src="../../../images/bash_08_integers.png" alt="Chapter Cover" width="800"/>
 </p>
 
 

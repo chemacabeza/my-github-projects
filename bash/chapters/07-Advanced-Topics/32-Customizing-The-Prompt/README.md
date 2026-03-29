@@ -1,7 +1,7 @@
 # Chapter 32: Customizing The Prompt
 
 <p align="center">
-  <img src="../../images/bash_32_prompt.png" alt="Chapter Cover" width="800"/>
+  <img src="../../../images/bash_32_prompt.png" alt="Chapter Cover" width="800"/>
 </p>
 
 

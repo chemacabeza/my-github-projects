@@ -1,7 +1,7 @@
 # Chapter 10: Environment Variables
 
 <p align="center">
-  <img src="../../images/bash_10_env_vars.png" alt="Chapter Cover" width="800"/>
+  <img src="../../../images/bash_10_env_vars.png" alt="Chapter Cover" width="800"/>
 </p>
 
 

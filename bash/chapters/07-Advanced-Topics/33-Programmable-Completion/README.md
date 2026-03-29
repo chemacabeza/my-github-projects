@@ -1,7 +1,7 @@
 # Chapter 33: Programmable Completion
 
 <p align="center">
-  <img src="../../images/bash_33_completion.png" alt="Chapter Cover" width="800"/>
+  <img src="../../../images/bash_33_completion.png" alt="Chapter Cover" width="800"/>
 </p>
 
 

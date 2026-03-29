@@ -1,7 +1,7 @@
 # Chapter 1: Motivation and Disclaimer
 
 <p align="center">
-  <img src="../../images/bash_01_what_is.png" alt="Chapter Cover" width="800"/>
+  <img src="../../../images/bash_01_what_is.png" alt="Chapter Cover" width="800"/>
 </p>
 
 
