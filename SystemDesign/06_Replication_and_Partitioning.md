@@ -117,14 +117,39 @@ When adding/removing nodes, data must be redistributed:
 ## 🤔 Reflection Questions
 
 1. **Your application uses asynchronous replication for performance, but a leader node crashes before replicating the latest writes.** Those writes are lost forever. How would you design a system that balances write speed with durability guarantees?
+<details>
+<summary>💡 View Answer</summary>
+
+Use **semi-synchronous replication**: the leader waits for at least *one* follower to acknowledge the write before responding to the client, while the remaining followers replicate asynchronously. This guarantees that if the leader crashes, at least one other node has the latest data. As Kleppmann describes in DDIA Chapter 5, this approach balances the speed of async replication with the durability guarantee that data exists on more than one node. For critical data, you can also use the `acks=all` setting in Kafka to ensure all in-sync replicas confirm.
+</details>
 
 2. **You're sharding by user ID, but a single celebrity account generates 100x more traffic than average users.** How does this "hot partition" problem affect your system? What partitioning strategies would you use to mitigate it?
+<details>
+<summary>💡 View Answer</summary>
+
+A hot partition overwhelms a single node's CPU, memory, and disk I/O while other shards sit idle — defeating the purpose of sharding entirely. Mitigation strategies: 1) **Key salting**: append a random suffix to the celebrity's user ID (e.g., `celebrity_1`, `celebrity_2`, ..., `celebrity_10`) to spread their data across 10 shards. Reads must fan out and merge results. 2) **Dedicated shard**: route known hot keys to a higher-capacity node specifically provisioned for them. 3) **Aggressive caching**: cache the celebrity's data in Redis so reads never hit the shard. As Alex Xu notes, Instagram handles this by caching celebrity feeds entirely in memory.
+</details>
 
 3. **Consistent hashing minimizes data movement when nodes join or leave.** But what happens when all the data for a popular key happens to land on the weakest node? How do virtual nodes solve this, and what trade-offs do they introduce?
+<details>
+<summary>💡 View Answer</summary>
+
+In basic consistent hashing, each physical node owns one arc of the hash ring, leading to uneven distribution if nodes are placed poorly. **Virtual nodes** solve this by assigning each physical node 100–200 positions on the ring. This statistically guarantees even data distribution regardless of hash placement. The trade-off is increased metadata: the routing table grows proportionally with virtual nodes, and rebalancing now involves transferring data from many small ranges rather than one large one. As described in DDIA, DynamoDB and Cassandra both use virtual nodes as their default partitioning strategy.
+</details>
 
 4. **Your multi-leader replication setup has two leaders in different data centers that both accept a write to the same row at the same time.** How do you decide which write "wins"? Is Last-Write-Wins always safe? What data could you lose?
+<details>
+<summary>💡 View Answer</summary>
+
+**Last-Write-Wins (LWW)** uses timestamps to pick the "latest" write, but as Kleppmann warns in DDIA, clock skew between data centers means the "latest" timestamp might not reflect the actual causal order. You can silently lose writes that were logically later but had an earlier timestamp. LWW is only safe for data where losing a concurrent write is acceptable (e.g., a user's last-seen timestamp). For critical data, use **version vectors** or **CRDTs** that track causality and merge concurrent writes instead of discarding one. Multi-leader replication fundamentally trades consistency for availability — you must design your conflict resolution strategy before deploying it.
+</details>
 
 5. **Adding a new shard to a hash-based partition scheme requires rehashing all keys.** During rebalancing, what happens to reads and writes? How would you design a zero-downtime rebalancing process?
+<details>
+<summary>💡 View Answer</summary>
+
+During naive rehashing (key % N → key % N+1), nearly every key maps to a different shard, requiring massive data migration during which reads may return stale data and writes may target the wrong shard. For zero-downtime rebalancing: 1) Use **consistent hashing** so only keys adjacent to the new node must move (~1/N of total data). 2) Implement **double-read**: during migration, if a key is not found on the new shard, fall back to the old shard. 3) Use a background migration process that copies data incrementally while the system remains live. Kafka uses a similar approach with its partition reassignment tool, which transfers data between brokers without stopping producers or consumers.
+</details>
 
 ---
 

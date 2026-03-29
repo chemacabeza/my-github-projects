@@ -83,7 +83,18 @@ sequenceDiagram
 ## 🤔 Reflection Questions
 
 1. **What happens if a service goes down during Choreography?** Are the events lost, or do they wait patiently intelligently in the queue?
+<details>
+<summary>💡 View Answer</summary>
+
+If the service goes down, the events are **not lost** — they wait safely in the message broker (Kafka, RabbitMQ). The broker retains messages until a consumer acknowledges them. When the service comes back up, it resumes consuming from where it left off (Kafka tracks the consumer's offset). This is the key advantage of event-driven choreography: temporal decoupling. As *Building Event-Driven Microservices* (Bellemare) explains, the broker acts as a buffer that absorbs failures, allowing services to process events at their own pace without data loss.
+</details>
+
 2. **Why is Eventual Consistency acceptable for dropping a "Like" on a photo, but unacceptable for a bank transaction?**
+<details>
+<summary>💡 View Answer</summary>
+
+A "Like" has zero financial impact — if it takes 2 seconds for the like count to update for other users, nobody is harmed. The worst case is a brief stale count. A bank transaction directly affects money: if a withdrawal is processed with a stale balance (eventual consistency), the account could overdraw, causing real financial loss. As Kleppmann explains in DDIA, the choice between consistency models must be driven by the **business impact of stale data**. Social interactions tolerate staleness; financial operations require strong consistency because incorrect state has legal and monetary consequences.
+</details>
 
 ---
 

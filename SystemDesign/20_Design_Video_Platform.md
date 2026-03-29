@@ -109,14 +109,39 @@ Protocol: HLS (HTTP Live Streaming) or DASH
 ## 🤔 Reflection Questions
 
 1. **A creator uploads a 4K video that takes 2 hours to transcode into all quality levels.** During those 2 hours, the video is "processing" and can't be watched. How would you design the pipeline to let viewers start watching with *at least* one quality while transcoding continues in the background?
+<details>
+<summary>💡 View Answer</summary>
+
+Use a **priority-based transcoding pipeline**: transcode the lowest quality first (360p takes ~5 minutes for a typical video), then 720p, then 1080p, and finally 4K. As soon as the first quality level is ready, mark the video as "watchable" and serve it via adaptive bitrate streaming with only 360p available. As higher qualities complete, add them to the manifest file (HLS/DASH) dynamically. The player automatically detects new quality levels and offers them to the viewer. As Alex Xu's YouTube design explains, this is how real video platforms work — you often notice only low quality is available immediately after upload, with HD appearing minutes later.
+</details>
 
 2. **80% of your videos are watched fewer than 10 times, but they're still stored on expensive CDN edge servers.** How would you design a "hot/cold" storage strategy that keeps popular videos close to users while saving costs on long-tail content? What's the risk of a cold video suddenly going viral?
+<details>
+<summary>💡 View Answer</summary>
+
+Implement a **tiered storage architecture**: 1) **Hot tier** (CDN edge + SSD origin): videos with >100 views/day are cached at edge locations globally. 2) **Warm tier** (standard S3): videos with 10-100 views/day are stored in origin servers but not pushed to CDN edges — cached on-demand at the first edge request. 3) **Cold tier** (S3 Glacier/archive): videos with <10 views/month are moved to cheap deep storage. The risk of a cold video going viral: the first viewers experience higher latency (origin fetch + CDN cache population), but within seconds the CDN caches the content at the edge. To mitigate: monitor trending signals (social media shares) and proactively pre-warm the CDN before the traffic spike hits.
+</details>
 
 3. **Adaptive bitrate streaming switches quality based on bandwidth, but a user on a train experiences rapid bandwidth fluctuations.** The player oscillates between 240p and 1080p every few seconds, causing a terrible experience. How would you smooth these transitions?
+<details>
+<summary>💡 View Answer</summary>
+
+Apply **hysteresis** to quality switching: require bandwidth to be stable above a threshold for N seconds (e.g., 10 seconds) before upgrading quality, but downgrade immediately when bandwidth drops. This creates an asymmetric switching policy — slow to upgrade, fast to downgrade — preventing rapid oscillation. Additionally, increase the **buffer target** for unstable connections: if the player maintains 30 seconds of buffered video (instead of the default 10), brief bandwidth dips are completely absorbed by the buffer without any quality change. Modern ABR algorithms (like BBA — Buffer-Based Approach) use buffer level as the primary signal rather than raw bandwidth measurements.
+</details>
 
 4. **Your recommendation engine creates a "rabbit hole" effect** — users keep watching increasingly extreme content because the algorithm optimizes for watch time. How do you design a recommendation system that balances user engagement with platform responsibility?
+<details>
+<summary>💡 View Answer</summary>
+
+1) **Diversify recommendations**: ensure each recommendation batch includes content from different categories, preventing narrow rabbit holes. 2) **User satisfaction modeling**: train on explicit signals ("Was this recommendation helpful?") rather than just watch time — a user might watch a disturbing video to completion out of shock, not satisfaction. 3) **Break notifications**: after N consecutive videos, suggest a break ("You've been watching for 2 hours"). 4) **Quality scoring**: boost authoritative sources and penalize content flagged for misinformation regardless of watch-time performance. Architecturally, this means the recommendation pipeline must support multi-objective optimization, not just a single "maximize watch time" objective function.
+</details>
 
 5. **Pre-signed URLs allow clients to upload directly to S3, bypassing your servers.** But what if someone uploads malicious content, malware, or a 100GB file? How do you validate uploads when your server never sees the file during the upload process?
+<details>
+<summary>💡 View Answer</summary>
+
+1) **Pre-signed URL constraints**: when generating the pre-signed URL, set a maximum `Content-Length` (e.g., 10GB) and allowed `Content-Type` (video/*). S3 rejects uploads that violate these constraints. 2) **Post-upload validation**: configure an S3 event notification (or Lambda trigger) that fires when the upload completes. This trigger invokes a validation pipeline that: checks the actual file type (magic bytes, not just extension), scans for malware (ClamAV), and verifies the video is playable (FFprobe). 3) **Quarantine bucket**: upload to a "pending" bucket. Only after validation passes, move the file to the "approved" bucket and begin transcoding. Malicious or oversized files are deleted from quarantine automatically.
+</details>
 
 ---
 

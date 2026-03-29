@@ -103,14 +103,39 @@ OPTIMISTIC:   Read (version=1) → Modify → Commit IF version still = 1
 ## 🤔 Reflection Questions
 
 1. **Your e-commerce system uses Serializable isolation for all transactions but Black Friday traffic causes massive lock contention and timeouts.** Could you safely lower the isolation level? Which anomalies would you accept, and which are catastrophic for an order system?
+<details>
+<summary>💡 View Answer</summary>
+
+Yes, lower to **Read Committed** or **Repeatable Read**. At Read Committed, you accept non-repeatable reads (a product price might change between two reads in the same transaction) — this is fine for browsing. The anomaly you absolutely cannot accept is a **Lost Update**: two customers simultaneously buying the last item and both succeeding. Prevent this with **optimistic locking** (version columns) even at lower isolation levels. As DDIA Chapter 7 explains, Serializable isolation uses either actual serial execution, 2PL (two-phase locking), or serializable snapshot isolation — all of which devastate throughput under high contention.
+</details>
 
 2. **A Saga's "Refund Card" compensating transaction fails — the payment gateway is down.** Now you have a charged customer, a cancelled order, and a stuck saga. How would you design a system that handles compensating transaction failures gracefully?
+<details>
+<summary>💡 View Answer</summary>
+
+The saga orchestrator must implement **persistent retry with exponential backoff**. The failed compensating action is stored in a durable outbox/retry table. A background scheduler retries the refund every 30s, then 1m, then 5m, with a maximum retry count. If all retries are exhausted, the saga enters a **"requires human intervention"** state and alerts the operations team via PagerDuty. As *Software Architecture: The Hard Parts* (Neal Ford) explains, compensating transactions must be designed to be **idempotent** — retrying a refund that already succeeded must not refund twice.
+</details>
 
 3. **Two-Phase Commit guarantees atomicity, but the coordinator is a single point of failure.** What happens if the coordinator crashes *after* sending PREPARE but *before* sending COMMIT? How do participants know whether to commit or abort?
+<details>
+<summary>💡 View Answer</summary>
+
+This is the fundamental flaw of 2PC: if the coordinator crashes between PREPARE and COMMIT, all participants are **stuck holding locks indefinitely** (called the "in-doubt" state) because they don't know the final decision. They cannot unilaterally abort (another participant might have committed) or commit (the coordinator might have decided to abort). The participants must wait for the coordinator to recover. This is why DDIA strongly advises against 2PC in modern distributed systems — it's a blocking protocol. Modern systems use Sagas or consensus-based approaches (like Kafka transactions in KRaft mode) instead.
+</details>
 
 4. **Your team uses optimistic locking because "most of our workload is reads."** But during a flash sale, hundreds of users try to purchase the same item simultaneously. How does optimistic locking behave under sudden contention, and when should you switch strategies?
+<details>
+<summary>💡 View Answer</summary>
+
+Under high contention, optimistic locking causes **massive retry storms**. Every concurrent write reads the same version number, but only one succeeds — the other 99 get a version conflict, must re-read, and retry. This creates wasted work proportional to the square of concurrent writers. Switch to **pessimistic locking** (SELECT FOR UPDATE) for known hot items during flash sales, or use a **queue-based approach**: serialize purchase requests through a message queue so they're processed one at a time, eliminating contention entirely. The pattern should be chosen per-operation, not globally.
+</details>
 
 5. **A choreography-based Saga has 8 steps, and debugging which step failed is nearly impossible.** At what point of complexity should you switch from choreography to orchestration? What are the architectural implications of that switch?
+<details>
+<summary>💡 View Answer</summary>
+
+Switch to **orchestration** when the saga has more than 3–4 steps, involves conditional branching, or requires complex compensating transactions. As *Building Event-Driven Microservices* (Bellemare) explains, choreography works for simple linear flows where each service publishes an event and the next service reacts. Beyond that, the flow becomes invisible — no single place in the codebase shows the complete business process. Orchestration introduces a central **Saga Coordinator** service that explicitly defines the workflow, making it debuggable, auditable, and testable. The trade-off is that the orchestrator becomes a single point of ownership (not failure — it should be stateless and horizontally scaled).
+</details>
 
 ---
 

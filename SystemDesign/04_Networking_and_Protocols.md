@@ -141,14 +141,39 @@ TLS encrypts communication between client and server:
 ## 🤔 Reflection Questions
 
 1. **A mobile banking app needs to display real-time transaction notifications.** Would you choose WebSockets, SSE, or long polling? How does the fact that mobile connections are unreliable affect your choice?
+<details>
+<summary>💡 View Answer</summary>
+
+**Server-Sent Events (SSE)** is the best choice for mobile banking notifications. The data flow is strictly unidirectional (server → phone), which matches SSE perfectly. SSE runs over standard HTTP/2, which handles reconnection automatically when a mobile device switches between WiFi and cellular. WebSockets require a full handshake on every reconnect and are overkill for one-way push notifications. Long polling wastes battery life with constant reconnection cycles. SSE also passes through corporate proxies and firewalls more reliably than WebSockets.
+</details>
 
 2. **Your API uses REST and mobile clients complain about slow load times** because they need 5 separate API calls to render one screen. Would migrating to GraphQL solve this? What new problems might it introduce?
+<details>
+<summary>💡 View Answer</summary>
+
+Yes, GraphQL solves the **under-fetching problem** by letting the client request exactly the data it needs in a single query. However, it introduces serious backend challenges: 1) The **N+1 query problem** — a single GraphQL query can trigger hundreds of database calls unless you implement DataLoader batching. 2) **No HTTP caching** — GraphQL uses POST requests, which CDNs cannot cache by default, unlike REST's GET endpoints. 3) **Security complexity** — deeply nested queries can be weaponized for denial-of-service attacks. As *Mastering API Architecture* explains, you need query depth limiting and cost analysis.
+</details>
 
 3. **DNS caches entries for hours, but you need to fail over to a backup server within 60 seconds.** How does DNS TTL create a tension between reliability and performance? What strategies can you use to work around this?
+<details>
+<summary>💡 View Answer</summary>
+
+Low DNS TTL (e.g., 30 seconds) enables fast failover because clients re-resolve the hostname frequently and will discover the backup server quickly. However, low TTL increases DNS query volume, adding latency to every new connection and load on DNS servers. The workaround is to use a **health-check-aware DNS service** (like AWS Route 53) that actively monitors endpoints and removes unhealthy IPs from DNS responses. Alternatively, use an **Anycast IP** where multiple servers share the same IP address and BGP routing handles failover at the network level — no DNS change needed.
+</details>
 
 4. **You're choosing between gRPC and REST for internal service-to-service communication.** gRPC is faster, but your team is more experienced with REST. How would you weigh performance gains against operational complexity and team expertise?
+<details>
+<summary>💡 View Answer</summary>
+
+For internal service-to-service communication, **gRPC** offers significant advantages: binary serialization (Protocol Buffers) is 5–10x faster than JSON, HTTP/2 multiplexing eliminates head-of-line blocking, and strongly typed contracts prevent API drift. However, if your team lacks gRPC experience, the debugging overhead is real — binary payloads are not human-readable, and tooling (interceptors, load balancers) is less mature. A pragmatic middle ground: use REST for external-facing APIs (better browser/tooling support) and adopt gRPC gradually for internal high-throughput paths where the latency savings justify the learning curve.
+</details>
 
 5. **HTTPS adds latency due to the TLS handshake.** For a system serving millions of short-lived API calls, how significant is this overhead? What optimizations exist to minimize it, and when might you consider *not* using HTTPS?
+<details>
+<summary>💡 View Answer</summary>
+
+A full TLS 1.2 handshake adds 2 round-trips (~100ms on a 50ms connection). At millions of short-lived calls, this overhead is significant. Key optimizations: 1) **TLS 1.3** reduces the handshake to 1 round-trip, and supports **0-RTT resumption** for repeat connections. 2) **Connection pooling/keep-alive** amortizes the handshake cost across thousands of requests per connection. 3) **Session tickets** allow clients to skip the full handshake on reconnection. You should *never* skip HTTPS for external traffic. The only case for plain HTTP is internal service-to-service communication within a private VPC with network-level encryption (e.g., AWS VPC encryption or a service mesh like Istio providing mTLS).
+</details>
 
 ---
 

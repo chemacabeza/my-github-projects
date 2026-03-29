@@ -56,7 +56,18 @@ The event log can never be changed or deleted. It acts as the ultimate single so
 ## 🤔 Reflection Questions
 
 1. **What happens if the Read database goes down in a CQRS system?** Can users still submit orders? How does separating concerns improve availability?
+<details>
+<summary>💡 View Answer</summary>
+
+Yes — users can still submit orders because the **Write side is completely independent** of the Read side. Orders are accepted by the write database, and events are queued for the read model. When the read database recovers, it replays the queued events and catches up. This is the core availability benefit of CQRS: a read-side failure doesn't block writes, and a write-side failure doesn't block reads (the read model serves stale but available data). As the *CQRS Journey Guide* explains, separating read and write concerns means each side can fail, scale, and recover independently.
+</details>
+
 2. **Replaying 10 million events to calculate a bank balance is slow.** How can you optimize Event Sourcing to avoid replaying the entire log every single time? (Hint: Snapshots).
+<details>
+<summary>💡 View Answer</summary>
+
+Create **periodic snapshots** of the aggregate state. For example, every 1,000 events, save the current bank balance as a snapshot: "Balance = $5,432.10 at Event #50,000." To calculate the current balance, load the latest snapshot and replay only the events *after* it (e.g., events 50,001 to 50,047 — just 47 events instead of 50,047). This reduces rebuild time from minutes to milliseconds. As Kleppmann notes in DDIA, this is analogous to database checkpoints — periodically materializing state so you don't replay the entire WAL on every recovery.
+</details>
 
 ---
 

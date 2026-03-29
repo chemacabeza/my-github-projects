@@ -145,14 +145,39 @@ Databases are usually the first bottleneck:
 ## 🤔 Reflection Questions
 
 1. **You're building a social media app that just went viral overnight — traffic jumped from 1,000 to 100,000 users.** Which would you scale first: the web servers, the database, or the caching layer? Why does the order matter?
+<details>
+<summary>💡 View Answer</summary>
+
+Scale the **web servers first** via horizontal scaling behind a load balancer — they are stateless and cheapest to clone. Next, add a **caching layer** (Redis) to absorb repeated read queries before they hit the database. The database is scaled last because it holds state, making sharding and replication the most complex and risky operation. As Alex Xu's scaling roadmap shows, order matters because each tier shields the tier behind it from load.
+</details>
 
 2. **A stateful design stores user sessions on each server.** What happens if a server crashes at 3 AM? How would a stateless design change the recovery story, and what new components would you need to introduce?
+<details>
+<summary>💡 View Answer</summary>
+
+If a stateful server crashes, every user pinned to that server instantly loses their session and is logged out. A **stateless design** externalizes session data into a shared store like Redis or Memcached. Now any surviving server can serve any user by reading the session from the shared store. You need to introduce a **load balancer** (to distribute traffic freely) and a **distributed session cache** (Redis cluster). As described in *Designing Data-Intensive Applications*, removing state from application servers is a prerequisite for elastic horizontal scaling.
+</details>
 
 3. **Your team argues: "Let's just buy a bigger server."** Under what circumstances is vertical scaling actually the better choice? When does it become a trap, and how would you convince your team to invest in horizontal scaling infrastructure early?
+<details>
+<summary>💡 View Answer</summary>
+
+Vertical scaling is genuinely better for small teams with simple workloads where operational complexity matters more than raw capacity — a single powerful database server is far easier to manage than a sharded cluster. It becomes a trap when you hit the hardware ceiling (you cannot buy infinite RAM) and when it creates a **single point of failure** with no redundancy. Convince the team by showing that horizontal scaling provides both capacity growth *and* fault tolerance simultaneously, which vertical scaling can never offer.
+</details>
 
 4. **You're asked to design a system that must handle both read-heavy and write-heavy workloads.** Can a single scaling strategy (e.g., replicas or shards) handle both? What happens if you pick the wrong one?
+<details>
+<summary>💡 View Answer</summary>
+
+No single strategy handles both well. **Read replicas** absorb read load by cloning data to follower nodes, but every write still hits the single leader — so they don't help write throughput at all. **Sharding** distributes writes across multiple nodes, but makes cross-shard reads (like joins) extremely expensive. As Kleppmann explains in DDIA, the correct approach is to combine both: shard the database for write distribution, then add read replicas *within each shard* for read scaling.
+</details>
 
 5. **CDNs solve latency for static content, but what about dynamic content** like real-time dashboards or personalized feeds? How would you deliver fast experiences for data that changes every second?
+<details>
+<summary>💡 View Answer</summary>
+
+For dynamic, real-time content, CDNs alone are insufficient. You use **edge computing** (running lightweight logic at CDN nodes), **WebSocket connections** for server-push updates, and aggressive **short-TTL caching** (cache for 1–5 seconds) combined with cache invalidation on write. For personalized feeds, Alex Xu's design recommends pre-computing feeds via fan-out-on-write into per-user caches (Redis), so the "read" is always fast even though the underlying data is dynamic.
+</details>
 
 ---
 

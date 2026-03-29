@@ -53,7 +53,18 @@ A good diagram doesn't show everything. It shows **exactly enough** to understan
 ## 🤔 Reflection Questions
 
 1. **Why is it useless to show a CEO exactly how the EmailService component talks to the UserRepository?** How does the C4 model protect against oversharing?
+<details>
+<summary>💡 View Answer</summary>
+
+A CEO cares about business outcomes: "Which systems do our customers interact with? What external partners do we depend on?" Showing them class-level component interactions is noise that obscures the strategic picture. The C4 model protects against oversharing by providing **four explicit zoom levels**: Level 1 (Context) for executives, Level 2 (Container) for architects, Level 3 (Component) for developers, Level 4 (Code) for deep implementation details. As Simon Brown explains in *The C4 Model*, each audience gets exactly the detail they need — no more, no less. The CEO sees Level 1; the developer sees Level 3.
+</details>
+
 2. **If you were a new developer joining the team on day one, which C4 level would immediately help you understand where to write your SQL query?**
+<details>
+<summary>💡 View Answer</summary>
+
+**Level 3 (Component Diagram)**. It shows the internal structure of a specific container — for example, the backend application broken into components like UserController, OrderService, PaymentGateway, and **UserRepository**. The UserRepository component is where SQL queries live. Level 1 is too high-level (just "Backend System"). Level 2 shows containers (the API server, the database) but not internal components. Level 4 (Code) is too granular — it shows individual classes and methods. Level 3 is the sweet spot: it tells you which component owns data access and how it connects to the database container.
+</details>
 
 ---
 

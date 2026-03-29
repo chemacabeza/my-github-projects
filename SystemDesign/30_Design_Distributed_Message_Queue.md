@@ -62,7 +62,18 @@ Servers will catch on fire. Hard drives will die. What happens to the message lo
 ## 🤔 Reflection Questions
 
 1. **Why does Kafka use purely Sequential Writes (appending to a file) instead of Random Writes (inserting into a SQL table)?**
+<details>
+<summary>💡 View Answer</summary>
+
+Sequential writes on spinning disks are **600x faster** than random writes, and even on SSDs they are 2-4x faster due to reduced write amplification. When Kafka appends to a log file, the disk head never needs to seek — it writes continuously in a straight line. A SQL INSERT, by contrast, requires updating B-Tree indexes, locating free pages, and writing to multiple random disk locations. As *Kafka: The Definitive Guide* explains, Kafka deliberately chose an append-only log because it transforms disk I/O from the system's bottleneck into its strength — achieving millions of writes per second on commodity hardware.
+</details>
+
 2. **If you have a Topic with exactly 3 Partitions, but you start up 4 instances of your Consumer App, what happens to the 4th instance?** (Hint: Does it sit idle, or do two apps read the same partition?)
+<details>
+<summary>💡 View Answer</summary>
+
+The 4th consumer instance **sits completely idle**. Kafka's consumer group protocol assigns each partition to exactly *one* consumer within a group — no partition is ever shared between two consumers. With 3 partitions and 4 consumers, three consumers each get one partition, and the fourth gets nothing. It remains in the group as a standby — if one of the three active consumers crashes, the idle consumer automatically takes over its partition (rebalancing). As *Kafka: The Definitive Guide* explains, the maximum parallelism of a consumer group equals the number of partitions. To use that 4th consumer, you must increase the topic's partition count to at least 4.
+</details>
 
 ---
 

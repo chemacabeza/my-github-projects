@@ -53,7 +53,18 @@ If your architecture makes it hard to code, it's a bad architecture.
 ## 🤔 Reflection Questions
 
 1. **Imagine adding a fitness function that fails a build if code execution takes over 200ms.** How does this structurally prevent the system from getting slowly bloated over 3 years?
+<details>
+<summary>💡 View Answer</summary>
+
+The fitness function acts as an **automated architectural guardrail** that runs in CI on every commit. Without it, performance degrades gradually — each commit adds 1ms of latency, and after 3 years nobody notices until the system is 10x slower. With the 200ms threshold, any commit that pushes latency above 200ms **breaks the build immediately**, forcing the developer to fix or optimize before merging. As *Building Evolutionary Architectures* (Ford, Parsons, Kua) explains, fitness functions are the architectural equivalent of unit tests — they make architectural requirements measurable, automated, and impossible to silently violate.
+</details>
+
 2. **If your Cycle Time jumps from 1 day to 3 weeks over a year, what does this mathematically prove about your codebase?**
+<details>
+<summary>💡 View Answer</summary>
+
+It mathematically proves that your codebase has accumulated **structural coupling** — changes that should be isolated to one module now require touching multiple modules, code reviews take longer, merge conflicts increase, and testing requires more integration time. As *Software Architecture Metrics* explains, Cycle Time is a proxy for architectural health: a healthy, well-decomposed architecture has short cycle times because changes are isolated. When cycle time grows 21x (1 day → 3 weeks), it proves the architecture has degraded — boundaries have been violated, dependencies have tangled, and the system resists change. This is the exact signal that triggers architectural refactoring.
+</details>
 
 ---
 

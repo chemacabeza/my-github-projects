@@ -59,7 +59,18 @@ graph TD
 ## 🤔 Reflection Questions
 
 1. **What happens if the Search Fragment breaks?** Does the entire e-commerce site crash, or just the search bar?
+<details>
+<summary>💡 View Answer</summary>
+
+Just the search bar breaks — the rest of the site continues functioning normally. This is the core resilience benefit of Micro Frontends: each fragment is **independently deployed and isolated**. If the Search Fragment throws a JavaScript error, it's contained within its own iframe or Web Component boundary. The Product Catalog, Cart, and Checkout fragments are unaffected. As Luca Mezzalira explains in *Building Micro-Frontends*, this failure isolation is why micro frontends are superior to a monolithic frontend — a bug in one team's code cannot take down another team's feature.
+</details>
+
 2. **If each team builds their own UI, how do you prevent the website from looking like a Frankenstein monster?** (Hint: Design Systems).
+<details>
+<summary>💡 View Answer</summary>
+
+You enforce visual consistency through a **shared Design System** — a library of reusable UI components (buttons, forms, typography, colors) that all teams must use. The Design System is maintained by a dedicated platform team and distributed as an npm package. Each micro frontend imports and uses these shared components instead of creating their own. As *Building Micro-Frontends* emphasizes, the Design System is the "contract" that guarantees visual coherence across independently developed fragments. Without it, each team's UI diverges over time, creating a disjointed user experience.
+</details>
 
 ---
 

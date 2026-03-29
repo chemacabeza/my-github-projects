@@ -96,14 +96,39 @@ CANARY:
 ## 🤔 Reflection Questions
 
 1. **Your canary deployment sends 5% of traffic to the new version, and metrics look good.** But the 5% were all from the same region, and a bug only affects users in Europe. How would you design a canary that catches region-specific or user-segment-specific bugs?
+<details>
+<summary>💡 View Answer</summary>
+
+Design a **stratified canary** that samples traffic proportionally from each region, device type, and user tier. Instead of randomly routing 5% of global traffic, route 5% from *each region* (5% of US traffic, 5% of EU traffic, 5% of APAC traffic). Additionally, use **feature flags** with user-segment targeting to expose the new code to a representative cross-section. Monitor canary metrics *per-region* — if EU error rates spike while US is fine, the canary catches the bug. This approach is more complex to implement but dramatically increases the canary's ability to detect segment-specific issues.
+</details>
 
 2. **Docker "works on my machine" is the slogan, but your container runs fine locally and crashes in production.** What differences between local and production environments (OS, network, memory limits, secrets) could cause this? How does your Dockerfile design prevent it?
+<details>
+<summary>💡 View Answer</summary>
+
+Common causes: 1) **Memory limits** — production Kubernetes pods have resource limits (512MB); locally Docker defaults to unlimited. The app OOM-kills in production. 2) **Secrets** — `.env` files exist locally but production uses vault-injected secrets. A missing `DB_PASSWORD` crashes the app. 3) **Network** — locally all services are on `localhost`; production requires DNS-based service discovery. 4) **Base image differences** — `FROM node:latest` gives different OS versions over time. Prevention: use **multi-stage builds** with pinned base image versions, set explicit memory/CPU limits in `docker-compose.yml` to mirror production, and never bake secrets into images — always inject them at runtime.
+</details>
 
 3. **Kubernetes HPA auto-scales your pods based on CPU usage.** But your app is I/O-bound, not CPU-bound — CPU stays at 10% while users experience timeouts. What custom metrics would you use for scaling, and how does this change your monitoring strategy?
+<details>
+<summary>💡 View Answer</summary>
+
+For I/O-bound applications, scale on **custom metrics**: 1) **Request queue depth** — if requests waiting in the queue exceed a threshold, scale up. 2) **p99 response latency** — if latency crosses an SLO threshold, add pods. 3) **Active connection count** — proxy metrics from Envoy/Nginx. 4) **Kafka consumer lag** — if a consumer falls behind, add more consumer instances. Kubernetes supports custom metrics via the **Metrics Server + Prometheus Adapter**, which feeds custom metrics into HPA. This fundamentally changes monitoring: you must instrument these application-level metrics, not just rely on infrastructure metrics like CPU/memory.
+</details>
 
 4. **Blue-green deployment gives instant rollback, but it requires running two full copies of your infrastructure.** For a system with 200 pods, that's 400 pods during deployment. How would you justify this cost, or what alternative strategy would you use?
+<details>
+<summary>💡 View Answer</summary>
+
+Justify blue-green when **rollback speed is critical** and the cost is acceptable (e.g., financial trading platforms where a bad deployment costs millions per minute). For cost-sensitive systems, use **rolling deployments**: update pods incrementally (e.g., 10 at a time), so at peak you run ~210 pods, not 400. Even cheaper: **canary deployments** with automatic rollback — run only 5-10 extra pods. The trade-off is rollback speed: blue-green switches traffic instantly (DNS/load balancer flip), while rolling deployments take minutes to roll back by redeploying the old version. A pragmatic middle ground is a **small blue-green** targeting just the most critical services, with rolling deployments for everything else.
+</details>
 
 5. **Your CI pipeline takes 45 minutes to run all tests.** Developers start skipping the pipeline and pushing directly. How would you balance test coverage with developer velocity? What techniques (parallelization, test selection, caching) would you apply?
+<details>
+<summary>💡 View Answer</summary>
+
+1) **Parallelization**: split tests across 10 CI runners — 45 minutes becomes ~5 minutes. 2) **Test selection**: only run tests affected by the changed files (using coverage maps or dependency analysis). A change to `UserService.java` doesn't need to run `PaymentService` tests. 3) **Caching**: cache dependency downloads (npm, Maven) and Docker layers between runs. 4) **Test pyramid enforcement**: most tests should be fast unit tests (milliseconds); integration and E2E tests run only on merge to main, not on every push. 5) **Mandatory pipeline**: block merges if the pipeline hasn't passed — never allow direct pushes to main. Make the pipeline fast enough that skipping it isn't tempting. Target: under 10 minutes for PR pipelines.
+</details>
 
 ---
 

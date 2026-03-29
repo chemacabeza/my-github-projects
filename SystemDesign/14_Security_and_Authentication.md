@@ -91,14 +91,39 @@ HASHING:      "password123" ──hash──→ "$2b$12$..." (irreversible)
 ## 🤔 Reflection Questions
 
 1. **Your JWT access token has a 1-hour expiry, but a user's account was compromised 5 minutes ago.** You need to revoke the token immediately, but JWTs are stateless — there's no server-side session to invalidate. What approaches exist, and how do they undermine the "stateless" benefit of JWT?
+<details>
+<summary>💡 View Answer</summary>
+
+Three approaches: 1) **Token blocklist**: maintain a Redis set of revoked token IDs (jti). Every request checks this set before accepting the JWT. This works but reintroduces server-side state — partially defeating JWT's stateless advantage. 2) **Short-lived tokens**: reduce JWT expiry to 5 minutes and use refresh tokens. A compromised access token expires quickly. Revoke the refresh token to prevent renewal. 3) **Token versioning**: store a `token_version` per user in the database. Increment it on compromise. JWTs with an older version are rejected. All approaches trade some statelessness for security — the reality is that pure stateless JWT with no revocation mechanism is inherently insecure for sensitive applications.
+</details>
 
 2. **OAuth 2.0 is for authorization, not authentication.** Yet many apps use "Login with Google" via OAuth. What's the difference between OAuth and OpenID Connect? What could go wrong if you rely solely on OAuth for user identity?
+<details>
+<summary>💡 View Answer</summary>
+
+**OAuth 2.0** grants access to resources ("this app can read your Google Drive files") but never tells the app *who the user is*. **OpenID Connect (OIDC)** is a layer on top of OAuth that adds an **ID Token** — a JWT containing the user's identity (email, name, subject ID). If you use raw OAuth without OIDC, you might receive an access token that grants access to a user's resources but doesn't prove the user's identity — an attacker could swap tokens. OIDC's ID token is cryptographically signed and contains the authenticated user's identity, making "Login with Google" secure. Always use OIDC for authentication, not raw OAuth.
+</details>
 
 3. **A developer stores API keys in a `.env` file committed to GitHub.** The repo is public. What is the blast radius of this mistake? What automated safeguards should be in place to prevent this from ever reaching production?
+<details>
+<summary>💡 View Answer</summary>
+
+The blast radius is catastrophic: automated bots scan GitHub for API keys within seconds of a push. AWS keys can be used to spin up crypto-mining instances, Stripe keys can process fraudulent charges, and database credentials expose all customer data. Safeguards: 1) **Pre-commit hooks** (e.g., git-secrets, truffleHog) that scan for key patterns before allowing a commit. 2) **CI pipeline scanning** as a second layer. 3) **GitHub secret scanning** alerts. 4) **Secrets management** (HashiCorp Vault, AWS Secrets Manager) — keys should never exist in source code at all. 5) **Key rotation capability** — if a key leaks, you must be able to rotate it instantly without downtime. As *The Clean Coder* emphasizes, security is a professional responsibility, not an afterthought.
+</details>
 
 4. **Your system uses symmetric encryption (AES) for data at rest and asymmetric encryption (RSA) for data in transit.** Why not use asymmetric for everything? What makes symmetric encryption essential for large-scale data, despite needing to share the key securely?
+<details>
+<summary>💡 View Answer</summary>
+
+Asymmetric encryption (RSA) is **1000x slower** than symmetric encryption (AES) because it involves computationally expensive mathematical operations (modular exponentiation). Encrypting 1TB of database backups with RSA would take hours; AES does it in minutes. The standard practice is a **hybrid approach**: use RSA to securely exchange a symmetric AES key (this is exactly what TLS does during the handshake), then use AES for the actual bulk data encryption. Symmetric encryption's only challenge — securely sharing the key — is elegantly solved by RSA. This is why TLS uses asymmetric for key exchange and symmetric for data transfer.
+</details>
 
 5. **Rate limiting protects against DDoS, but a sophisticated attacker uses 10,000 different IP addresses.** Per-IP rate limiting is useless. What other signals (user tokens, fingerprints, behavior patterns) could you use? When does "rate limiting" become "fraud detection"?
+<details>
+<summary>💡 View Answer</summary>
+
+Beyond IP-based limiting: 1) **User/API-key based limiting** — rate limit by authenticated identity, not IP. 2) **Device fingerprinting** — TLS fingerprint (JA3), browser characteristics, screen resolution combinations. 3) **Behavioral analysis** — legitimate users browse, read, click; bots request at machine-speed with no pauses. 4) **CAPTCHA challenges** triggered by suspicious velocity. 5) **Geographic impossibility** — a user in London making requests from Tokyo 1 second later. Rate limiting becomes "fraud detection" when you're analyzing behavioral patterns over time rather than simple request counts. At that point, you're building an anomaly detection ML model, not a counter. As Alex Xu describes, large-scale systems like Cloudflare combine all these signals into a threat score.
+</details>
 
 ---
 

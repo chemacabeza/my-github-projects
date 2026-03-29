@@ -112,14 +112,39 @@ Kafka is a distributed event streaming platform, not just a message queue:
 ## 🤔 Reflection Questions
 
 1. **Your payment service uses a message queue to decouple order processing, but a message is delivered twice** due to a network retry. The customer is charged twice. How would you design the consumer to be idempotent, and why can't the queue itself guarantee exactly-once delivery?
+<details>
+<summary>💡 View Answer</summary>
+
+The queue cannot guarantee exactly-once because of the **Two Generals Problem**: it can never know if its ACK was lost or if the consumer truly crashed. So it must redeliver (at-least-once). Make the consumer idempotent by storing each processed `message_id` in an ACID database table. Before processing, check: `SELECT 1 FROM processed WHERE id = ?`. If it exists, silently acknowledge and skip. Kafka achieves exactly-once *within its ecosystem* using idempotent producers (sequence numbers per partition) and transactional APIs, as described in *Kafka: The Definitive Guide*.
+</details>
 
 2. **Kafka guarantees ordering within a partition, but your topic has 10 partitions.** A user sends messages A→B→C, and they arrive as B→A→C. How would you ensure strict ordering for a single user's messages while still using multiple partitions for throughput?
+<details>
+<summary>💡 View Answer</summary>
+
+Set the **partition key** to the user's ID. Kafka hashes the partition key to deterministically route all messages for the same user to the exact same partition. Since ordering is guaranteed within a partition, User A's messages always arrive as A→B→C on that partition. Other users' messages are distributed across different partitions for parallelism. As *Kafka: The Definitive Guide* explains, the partition key is the fundamental mechanism for balancing ordering guarantees with throughput scaling.
+</details>
 
 3. **Your team debates: "Should we use RabbitMQ or Kafka?"** The system processes both real-time notifications and daily analytics batches. How would the choice differ for each use case? Could you use both?
+<details>
+<summary>💡 View Answer</summary>
+
+**RabbitMQ** excels at traditional message queuing: routing, per-message acknowledgment, and immediate deletion after consumption — perfect for real-time notifications where each notification is processed exactly once and discarded. **Kafka** excels at streaming and log retention: messages persist for days/weeks, allowing multiple consumers to replay the same data — perfect for analytics batches that need to reprocess historical data. Yes, you can and often should use both: RabbitMQ for task-queue semantics, Kafka as the durable event backbone. As *Making Sense of Stream Processing* argues, the log-based approach (Kafka) is fundamentally different from the message-broker approach (RabbitMQ) — they solve different problems.
+</details>
 
 4. **A dead letter queue (DLQ) contains 50,000 messages that failed processing.** What strategy would you use to investigate, fix, and replay them? How do you prevent the DLQ from becoming a "graveyard" that nobody monitors?
+<details>
+<summary>💡 View Answer</summary>
+
+First, **classify the failures**: sample messages to identify patterns (malformed data? downstream timeout? schema change?). Fix the root cause in the consumer code. Then **replay** the DLQ messages by re-publishing them to the original topic (ensuring the consumer is now idempotent so replays are safe). To prevent the DLQ from becoming a graveyard: set up **automated alerts** that fire when the DLQ depth exceeds a threshold (e.g., >100 messages). Include DLQ depth in your dashboards alongside normal queue metrics. As *Building Event-Driven Microservices* recommends, treat DLQ monitoring as a first-class operational concern, not an afterthought.
+</details>
 
 5. **Event-driven architecture sounds elegant, but debugging is hard** — an event published by Service A triggers Service B, which triggers C, which triggers D. How do you trace the root cause when Service D produces a wrong result? What observability tools would you need?
+<details>
+<summary>💡 View Answer</summary>
+
+You need **distributed tracing** (OpenTelemetry/Jaeger). Inject a unique `correlation_id` (trace ID) into the first event. Every downstream service propagates this ID through all events and logs. When Service D fails, search by the trace ID to reconstruct the complete causal chain: A→B→C→D. Additionally, implement **event schemas** with versioning (Avro/Protobuf with a Schema Registry) so contract-breaking changes are caught at publish time, not at the confused consumer. As *Flow Architectures* (Urquhart) emphasizes, observability in event-driven systems requires deliberate instrumentation — it does not emerge naturally.
+</details>
 
 ---
 

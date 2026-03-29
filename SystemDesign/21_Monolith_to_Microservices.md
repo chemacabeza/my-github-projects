@@ -81,7 +81,18 @@ Splitting the code is easy. Splitting the database is hard.
 ## 🤔 Reflection Questions
 
 1. **Why is the "Big Bang" rewrite considered dangerous?** What risks do you face when throwing away a monolith all at once?
+<details>
+<summary>💡 View Answer</summary>
+
+As Sam Newman explains in *Monolith to Microservices*, a Big Bang rewrite attempts to replace a massive, battle-tested system in one deployment. The risks are enormous: 1) **Feature parity takes years** — the old system has thousands of edge cases baked in over time. 2) **No safe rollback** — if the new system fails in production, you can't revert to the old one because data formats and schemas have diverged. 3) **Business starvation** — the team spends years rewriting instead of delivering new features. The Strangler Fig Pattern avoids all of this by migrating incrementally.
+</details>
+
 2. **How does an API Gateway act as the enabler for the Strangler Fig Pattern?** What happens if the gateway goes down?
+<details>
+<summary>💡 View Answer</summary>
+
+The API Gateway is the single entry point that routes traffic: old endpoints go to the monolith, new endpoints go to the microservice. This routing-level control enables incremental migration — you can move one endpoint at a time without the client knowing. If the gateway goes down, **everything goes down** — it becomes a Single Point of Failure. To prevent this, the gateway must be stateless, horizontally scaled behind a load balancer, and deployed across multiple availability zones. As *Mastering API Architecture* emphasizes, the gateway must be the thinnest, most resilient layer in your entire stack.
+</details>
 
 ---
 

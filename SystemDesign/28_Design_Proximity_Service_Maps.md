@@ -55,7 +55,18 @@ Now that you have Geohashes, how do you handle scale?
 ## 🤔 Reflection Questions
 
 1. **Why is it a terrible idea to shard servers based on City Names instead of Geohashes?** Think about the load on the "New York" server versus the "Wyoming" server.
+<details>
+<summary>💡 View Answer</summary>
+
+City-based sharding creates **massive hot partitions**. The "New York" shard handles millions of location queries (8.3 million residents + millions of tourists), while the "Wyoming" shard sits nearly idle (580,000 residents in an area 100x larger). This is the classic hot partition problem: load is distributed by population density, not geographic area. **Geohash-based sharding** solves this by dividing the Earth into equal-sized grid cells. Dense areas like Manhattan generate many small geohash cells (more partitions), while sparse areas like Wyoming generate fewer large cells — naturally balancing load. As Alex Xu's proximity service design explains, geohash length determines cell size, and the system uses shorter geohashes for sparse regions and longer ones for dense areas.
+</details>
+
 2. **If a driver is constantly moving (like Uber), how do you prevent the Quadtree from constantly breaking and rebuilding every second?**
+<details>
+<summary>💡 View Answer</summary>
+
+You don't update the Quadtree in real-time — that would be far too expensive. Instead, use a **dual-layer architecture**: 1) The Quadtree is rebuilt periodically (every 5-15 minutes) for static or slowly-changing data (restaurants, gas stations). 2) For rapidly moving objects (drivers), store their current position in a **fast in-memory store** (Redis with geospatial indexes using `GEOADD`/`GEORADIUS`). The driver's app sends GPS updates every 3-5 seconds, and Redis updates the position in O(log N). Proximity queries combine the static Quadtree results with real-time Redis positions. As Alex Xu's design shows, this separation of static and dynamic data is essential for location-based systems.
+</details>
 
 ---
 

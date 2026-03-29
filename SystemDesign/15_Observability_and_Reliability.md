@@ -112,14 +112,39 @@ Error Budget: 43,200 × 0.001 = 43.2 minutes of downtime allowed
 ## 🤔 Reflection Questions
 
 1. **Your dashboard shows all green — CPU is fine, memory is fine, error rate is low.** But users are complaining about slow page loads. What is your monitoring missing? How do metrics, logs, and traces each reveal different aspects of this problem?
+<details>
+<summary>💡 View Answer</summary>
+
+You're missing **latency percentiles** (p95, p99). Average response time might be 100ms, but 5% of users experience 3-second responses — and they're the ones complaining. **Metrics** reveal the p99 latency spike. **Logs** show which specific requests are slow and what parameters they carry. **Traces** reveal *where* in the request chain the time is spent — perhaps DNS resolution, a slow database query, or a downstream service. This is the "Three Pillars of Observability" — metrics tell you *something* is wrong, logs tell you *what* happened, traces tell you *where* the bottleneck is. You need all three.
+</details>
 
 2. **You set an SLO of 99.99% availability (52 minutes of downtime per year).** Your team wants to deploy new features weekly. How does your error budget influence deployment frequency? What happens when the budget is exhausted — do you freeze all deployments?
+<details>
+<summary>💡 View Answer</summary>
+
+The **error budget** is the inverse of the SLO: 0.01% = 52 minutes/year of allowed downtime. Each deployment risks consuming some of this budget (through bugs, rollback time, etc.). If deployments are reliable (canary + automated rollback), you can deploy weekly without exhausting the budget. If a bad deployment burns 30 minutes of your 52-minute annual budget in February, you've consumed 58% — the team must drastically slow down or improve deployment safety. When the budget is exhausted, yes — **freeze feature deployments** and focus exclusively on reliability improvements. This is the core of Google's SRE practice: the error budget creates an objective, data-driven negotiation between velocity and stability.
+</details>
 
 3. **Your distributed tracing shows a request took 3 seconds, but each individual service responded in under 100ms.** Where did the other 2.7 seconds go? What "invisible" costs between services (DNS resolution, connection pooling, serialization) could explain this?
+<details>
+<summary>💡 View Answer</summary>
+
+The 2.7 seconds hides in the **gaps between spans**: 1) **DNS resolution** — the first call to a service might require a DNS lookup (10–100ms). 2) **TCP + TLS handshake** — establishing a new connection costs 1–3 round-trips if connection pooling is misconfigured. 3) **Serialization/deserialization** — converting objects to JSON and back at each service boundary. 4) **Queue wait time** — if requests are queued behind other work. 5) **Garbage collection pauses** in the JVM. 6) **Network latency** between services in different availability zones. The fix: ensure connection pools are warmed, use gRPC (binary serialization, persistent HTTP/2 connections), and instrument the gaps between spans, not just the spans themselves.
+</details>
 
 4. **Structured logging (JSON) makes logs searchable and filterable, but your developers find them unreadable during local development.** How do you balance human readability in development with machine parsability in production?
+<details>
+<summary>💡 View Answer</summary>
+
+Use **environment-aware log formatting**: in local development, output logs as pretty-printed, colored text (e.g., `2024-01-15 INFO [UserService] User 123 logged in`). In production, output the same log as structured JSON (`{"timestamp":"...","level":"INFO","service":"UserService","userId":123,"action":"login"}`). Most logging frameworks (Logback, Winston, Serilog) support this via configuration profiles — the application code writes the same structured log event, and the formatter is swapped based on the environment. This gives developers readable output locally while giving log aggregation systems (ELK, Datadog) parsable JSON in production.
+</details>
 
 5. **An on-call engineer is paged at 3 AM for the 5th time this week — and every time it was a false alarm.** How does alert fatigue lead to real incidents being missed? What principles would you apply to reduce noise while keeping critical alerts reliable?
+<details>
+<summary>💡 View Answer</summary>
+
+Alert fatigue causes engineers to mentally "tune out" alerts, slow their response time, or mute notifications entirely — so when a real incident occurs, it's either missed or responded to slowly. Principles to fix it: 1) **Every alert must be actionable** — if the response is "acknowledge and go back to sleep," the alert shouldn't exist. 2) **Alert on symptoms (user impact), not causes** — alert on "p99 latency > 2s" rather than "CPU > 80%" (high CPU might be fine). 3) **Aggregate flapping alerts** — if an alert fires and resolves 5 times in 10 minutes, send one summary, not 10 pages. 4) **Review alert quality monthly** — measure false-positive rate and delete or tune noisy alerts. Google's SRE book states that a healthy on-call rotation should have no more than 2 actionable pages per shift.
+</details>
 
 ---
 

@@ -91,14 +91,39 @@ Score = w₁(recency) + w₂(likes) + w₃(comments) + w₄(shares)
 ## 🤔 Reflection Questions
 
 1. **A celebrity with 50 million followers posts an update.** Fan-out on write would create 50 million cache entries. Fan-out on read would make every follower wait. How does the hybrid approach handle this, and where exactly do you draw the line between "normal" and "celebrity"?
+<details>
+<summary>💡 View Answer</summary>
+
+The **hybrid approach** uses fan-out-on-write for normal users (pre-compute feeds into follower caches) and fan-out-on-read for celebrities (fetch their posts at read time and merge into the timeline). The threshold is typically based on follower count — users with >10,000 followers are treated as "celebrities." When a normal user opens their feed, the system loads pre-computed entries from their cache AND fetches recent posts from followed celebrities, merging them in real-time. As Alex Xu's news feed design details, Twitter/X uses exactly this hybrid model because fan-out-on-write for 50M followers would take minutes and consume massive storage, while fan-out-on-read for all users would make every feed load slow.
+</details>
 
 2. **Your ranking algorithm optimizes for engagement (likes, comments, shares), and the feed is filled with controversial content** because controversy drives engagement. How do you balance algorithmic ranking with responsible content curation? Should "engagement" even be the primary ranking signal?
+<details>
+<summary>💡 View Answer</summary>
+
+No — engagement alone is a dangerous primary signal because it conflates attention with value. Balance it with: 1) **Content quality signals** — fact-check scores, source credibility, original content vs. reshares. 2) **User satisfaction surveys** — periodically ask users "Was this feed valuable?" and train the algorithm on satisfaction, not just clicks. 3) **Diversity injection** — algorithmically ensure the feed contains content from varied topics and viewpoints, not just the most polarizing. 4) **Demotion signals** — reduce reach of content flagged as misleading regardless of engagement. This is an architectural decision, not just a product one: the ranking pipeline must support multiple weighted signals, not a single engagement score.
+</details>
 
 3. **A user follows 5,000 accounts, and their feed cache has room for only 500 posts.** How do you decide which 500 posts to pre-compute? What happens when the user scrolls past those 500 — do you switch from push to pull seamlessly?
+<details>
+<summary>💡 View Answer</summary>
+
+Pre-compute the **top 500 ranked posts** using affinity scores (how often the user interacts with each account), recency, and predicted engagement. When the user scrolls past the pre-computed 500, the system seamlessly switches to **on-demand fetching**: query the timeline database for older posts, rank them in real-time, and paginate using cursor-based pagination. The user doesn't notice the switch — the initial load is instant (cache), and subsequent pages have a slight delay (database query). This is the "waterfall" pattern: fast cache for the head, database for the tail. Pre-computation focuses on the posts most likely to be seen (the top of the feed).
+</details>
 
 4. **Two users in the same household see completely different feeds.** How does feed personalization create "filter bubbles"? Should you intentionally inject diverse or opposing viewpoints? What are the ethical implications for a system designer?
+<details>
+<summary>💡 View Answer</summary>
+
+Personalization creates filter bubbles by reinforcing existing preferences — the algorithm shows you what you've liked before, narrowing your worldview over time. As a system designer, you face an ethical trade-off: maximum personalization maximizes engagement but can radicalize users. Responsible approaches: 1) **Serendipity injection** — intentionally include 10-20% of content outside the user's usual interests. 2) **Transparency** — let users see *why* each post appears ("Because you follow X" / "Trending in your area"). 3) **User control** — provide explicit knobs for "show me more diverse content." The architectural implication is that the ranking pipeline must support content diversity as a first-class optimization objective alongside engagement.
+</details>
 
 5. **Your feed shows a post from 2 hours ago at the top because it has high engagement, but the user already saw it.** How do you prevent "stale" but popular content from dominating the feed? What signals indicate that a user has already consumed a piece of content?
+<details>
+<summary>💡 View Answer</summary>
+
+Track **impression history** per user: record which post IDs have been rendered on the user's screen (via client-side tracking beacons). When ranking the feed, demote or exclude posts the user has already seen. Additional staleness signals: 1) **Time decay** — reduce a post's score exponentially as it ages, regardless of engagement. 2) **Scroll-past detection** — if the user scrolled past a post without interacting, it's been "consumed." 3) **Session boundaries** — posts shown in the previous session get lower priority. Store impression history in a compact structure (Bloom filter per user) that allows O(1) "has this user seen this post?" lookups without storing every post ID explicitly.
+</details>
 
 ---
 

@@ -90,14 +90,39 @@ SERVICE REGISTRY (Consul, etcd):
 ## 🤔 Reflection Questions
 
 1. **"We should rewrite our monolith as microservices."** Your startup has a team of 5 engineers and 10,000 users. Is this the right move right now? What would you need to see in terms of team size, traffic, and pain points before recommending the migration?
+<details>
+<summary>💡 View Answer</summary>
+
+No — this is premature. As Sam Newman argues in *Monolith to Microservices*, a startup with 5 engineers and 10K users should focus on product-market fit, not distributed systems complexity. Microservices add operational overhead (CI/CD per service, monitoring, distributed tracing, service discovery) that overwhelms small teams. Migrate when: 1) Team size exceeds ~15 engineers and deployment conflicts become frequent. 2) Specific components need independent scaling (e.g., the image processing service is CPU-heavy while the API is I/O-heavy). 3) Release velocity is bottlenecked by monolithic deployments. Start with a modular monolith — clean domain boundaries that can be extracted later.
+</details>
 
 2. **The circuit breaker for your payment service is OPEN, and all payment calls fail-fast.** But some payment providers are still healthy — only one is down. How would you make the circuit breaker more fine-grained without adding unmanageable complexity?
+<details>
+<summary>💡 View Answer</summary>
+
+Use **per-provider circuit breakers** instead of a single circuit breaker for the entire payment service. Each payment provider (Stripe, PayPal, Adyen) gets its own circuit breaker instance. If Stripe is down, only the Stripe circuit opens — PayPal and Adyen continue processing normally. The payment service routes new requests to healthy providers. This is the **bulkhead pattern** applied at the integration level: isolating failures to the specific downstream dependency that's failing. As *Microservices: Up and Running* explains, circuit breakers should be scoped to the specific external dependency, not to the entire service.
+</details>
 
 3. **Each microservice owns its own database, but you need to join data from Users, Orders, and Products for a report.** How do you generate this report without violating the "no shared database" rule? What patterns help solve cross-service data queries?
+<details>
+<summary>💡 View Answer</summary>
+
+Three approaches: 1) **CQRS with event streaming**: each service publishes domain events to Kafka. A dedicated reporting service consumes all events and builds a denormalized read model optimized for cross-domain queries (as described in the *CQRS Journey Guide*). 2) **API Composition**: a gateway service calls all three services' APIs and joins the data in application code — simple but slow for large datasets. 3) **Data Lake**: stream all events into a central analytics store (BigQuery, Snowflake) where analysts run arbitrary SQL joins. The CQRS approach is the most architecturally clean because each service remains autonomous while the report service independently materializes the view it needs.
+</details>
 
 4. **Your microservices use synchronous REST calls in a chain: A→B→C→D.** If D is slow, the latency cascades back through all services. How does this "distributed monolith" problem negate the benefits of microservices? What communication pattern would you recommend instead?
+<details>
+<summary>💡 View Answer</summary>
+
+Synchronous chains recreate the monolith's coupling in distributed form — you get all the complexity of microservices with none of the resilience benefits. If D has a 2-second latency spike, A's response time is at least 2 seconds plus the overhead of B and C. Replace synchronous chains with **asynchronous event-driven communication**: A publishes an event to Kafka, B and C process it independently and in parallel, and D reacts when its prerequisites are met. As *Building Event-Driven Microservices* (Bellemare) explains, async communication decouples services temporally — Service A doesn't wait for D to finish, eliminating cascading latency entirely. Use synchronous calls only for operations that genuinely require an immediate response.
+</details>
 
 5. **Service discovery shows 20 instances of OrderService, but 3 are unhealthy and returning errors.** How does the service registry detect and remove unhealthy instances? What happens to in-flight requests during deregistration?
+<details>
+<summary>💡 View Answer</summary>
+
+The service registry uses **health checks** — each instance periodically sends a heartbeat (e.g., HTTP GET `/health` every 10 seconds). If 3 consecutive health checks fail, the registry marks the instance as unhealthy and stops routing new requests to it. For in-flight requests already sent to unhealthy instances: the client-side load balancer (or service mesh sidecar) implements **retry with a different instance** — if the first attempt fails, it automatically retries on a healthy instance. During graceful deregistration, the instance first stops accepting new requests, completes in-flight requests (connection draining), then deregisters. This prevents abrupt connection termination.
+</details>
 
 ---
 

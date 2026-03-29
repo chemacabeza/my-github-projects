@@ -57,7 +57,18 @@ There are two primary ways:
 ## 🤔 Reflection Questions
 
 1. **Why do we never use Two-Phase Commits (2PC) in highly scalable cloud architectures?**
+<details>
+<summary>💡 View Answer</summary>
+
+Two-Phase Commit is a **blocking protocol** — if the coordinator crashes between the PREPARE and COMMIT phases, all participants hold locks indefinitely, waiting for a decision that may never come. This makes 2PC fundamentally incompatible with high-availability systems. As *Software Architecture: The Hard Parts* (Neal Ford) explains, 2PC also adds significant latency (two network round-trips for every transaction) and creates a single point of failure (the coordinator). Modern distributed architectures use **Sagas** with compensating transactions instead — they sacrifice atomicity for availability and scalability.
+</details>
+
 2. **Writing a compensating transaction sounds scary.** What happens if the refund fails while trying to undo the payment? How do you prevent endless loops?
+<details>
+<summary>💡 View Answer</summary>
+
+Compensating transactions must be designed to be **idempotent** — retrying a refund that already succeeded must not refund twice. If the refund fails (payment gateway is down), the Saga orchestrator stores the failed state in a persistent retry queue with **exponential backoff** (retry after 30s, 1m, 5m, 30m). A maximum retry count prevents infinite loops. If all retries fail, the Saga enters a **"requires human intervention"** state and alerts the operations team. As *Software Architecture: The Hard Parts* emphasizes, every compensating transaction must handle its own failure gracefully — there is no automatic "undo for undos."
+</details>
 
 ---
 
