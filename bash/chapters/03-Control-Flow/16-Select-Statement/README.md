@@ -1,4 +1,4 @@
-# Chapter 17: The select statement
+# Chapter 16: The select statement
 
 <p align="center">
   <img src="../../../images/bash_16_select.png" alt="Chapter Cover" width="800"/>

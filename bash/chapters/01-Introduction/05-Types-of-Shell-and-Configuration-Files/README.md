@@ -1,4 +1,4 @@
-# Chapter 31: Configuration Files & Types of Shell
+# Chapter 5: Configuration Files & Types of Shell
 
 <p align="center">
   <img src="../../../images/bash_05_environment.png" alt="Chapter Cover" width="800"/>

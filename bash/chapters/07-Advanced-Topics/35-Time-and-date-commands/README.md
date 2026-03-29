@@ -1,4 +1,4 @@
-# Chapter 8: `time` and `date` commands
+# Chapter 35: `time` and `date` commands
 
 <p align="center">
   <img src="../../../images/bash_35_time_date.png" alt="Chapter Cover" width="800"/>

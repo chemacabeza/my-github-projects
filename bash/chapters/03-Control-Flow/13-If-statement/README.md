@@ -1,4 +1,4 @@
-# Chapter 10: if / elif / else statements
+# Chapter 13: if / elif / else statements
 
 <p align="center">
   <img src="../../../images/bash_13_if_stmt.png" alt="Chapter Cover" width="800"/>
