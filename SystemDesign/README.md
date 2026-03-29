@@ -4,9 +4,9 @@
   <img src="images/sd_cover.png" alt="System Design Mastery" width="800"/>
 </p>
 
-Welcome to the **System Design Mastery Guide**. This repository contains a complete, **20-chapter curriculum** spanning 5 phases, designed to take you from fundamental concepts to designing real-world systems at scale.
+Welcome to the **System Design Mastery Guide**. This repository contains a complete, **31-chapter curriculum** spanning 8 phases, designed to take you from fundamental concepts to designing real-world systems at scale.
 
-This curriculum was synthesized from **9 professional-grade textbooks**: *Designing Data-Intensive Applications* (Kleppmann), *System Design Interview Volumes 1 & 2* (Alex Xu), *ByteByteGo Big Archive 2023*, *AlgoMaster System Design Handbook*, *The C4 Model* (Simon Brown), *CQRS Journey Guide*, *Microservices for Java Developers*, and *The Clean Coder*.
+This curriculum was synthesized from **over 30 professional-grade textbooks**: *Designing Data-Intensive Applications* (Kleppmann), *System Design Interview Volumes 1 & 2* (Alex Xu), *ByteByteGo Big Archive 2023*, *AlgoMaster System Design Handbook*, *The C4 Model* (Simon Brown), *CQRS Journey Guide*, *Making Sense of Stream Processing* (Confluent), *Mastering Kafka Streams and ksqlDB*, *Kafka: The Definitive Guide*, and *The Clean Coder*.
 
 ---
 
@@ -51,6 +51,29 @@ This curriculum was synthesized from **9 professional-grade textbooks**: *Design
 * [**18: Design a Chat System**](./18_Design_Chat_System.md) - WebSocket, message delivery, group chat fan-out, presence (heartbeats), and message storage.
 * [**19: Design a News Feed**](./19_Design_News_Feed.md) - Fan-out on write vs read, hybrid approach, ranking algorithms, and feed cache (Redis sorted sets).
 * [**20: Design a Video Platform**](./20_Design_Video_Platform.md) - Upload pipeline, transcoding, adaptive bitrate (HLS/DASH), CDN, and recommendation engine.
+
+### Phase 6: Advanced Architectural Patterns
+*Focusing heavily on breaking down legacy monoliths securely and establishing robust decoupled microservice boundaries intelligently.*
+
+* [**21: Monolith to Microservices**](./21_Monolith_to_Microservices.md) - The Strangler Fig Pattern, Anti-Corruption Layers, and Domain-Driven Design Contexts.
+* [**22: Event-Driven Microservices Architectures**](./22_Event_Driven_Microservices.md) - Flow Architectures, Event Choreography vs Orchestration, and Log vs Broker.
+* [**23: CQRS & Event Sourcing**](./23_CQRS_and_Event_Sourcing.md) - Segregating Reads from Writes, materialized views, and replaying event ledgers.
+* [**24: Micro-Frontends & Web Architecture**](./24_Micro_Frontends_Web_Architecture.md) - Scaling frontend organizational models, Module Federation, and vertical slicing.
+
+### Phase 7: Modern Trade-Off Analysis & Governance
+*Managing distributed complexity optimally securely accurately exactly flawlessly.*
+
+* [**25: Software Architecture: The Hard Parts**](./25_Software_Architecture_Hard_Parts.md) - Distributed Transactions, Saga Pattern, Two-Phase Commits (2PC).
+* [**26: Evolutionary Architectures & Metrics**](./26_Evolutionary_Architectures_Metrics.md) - Building Fitness Functions to prevent drift, cycle time, and technical debt.
+* [**27: Visualising Software Architecture (C4 Model)**](./27_Visualising_Software_Architecture_C4.md) - Scaling diagrams using Context, Containers, Components, Code flexibly.
+
+### Phase 8: Advanced Real-World System Designs
+*Drawing directly structurally from System Design Interview Volume 2 and Data-Intensive Applications.*
+
+* [**28: Design a Proximity Service (Maps)**](./28_Design_Proximity_Service_Maps.md) - Geohashes, Quadtrees, and calculating geospatial overlap intelligently.
+* [**29: Design a Metrics Monitoring System**](./29_Design_Metrics_Monitoring_System.md) - Time-series databases (TSDB), push vs pull models, and ingestion pipelines powerfully.
+* [**30: Design a Distributed Message Queue**](./30_Design_Distributed_Message_Queue.md) - Write-Ahead Logs (WAL), replication strategies, partitioning, and exact offsets.
+* [**31: Apache Kafka Deep Dive**](./31_Apache_Kafka_Deep_Dive.md) - Deep dive into Zero-Copy transfers, OS PageCache exploitation, and immutable distributed commit logs natively.
 
 ---
 
