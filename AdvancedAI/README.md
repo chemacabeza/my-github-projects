@@ -21,18 +21,18 @@ This is a comprehensive, senior-level systems engineering guide synthesized from
 *   [04: Graph Representation Learning (Node Embeddings & Random Walks)](./04_Graph_Representation_Learning.md)
 *   [05: Applied Graph Neural Networks (Message Passing architectures)](./05_Graph_Neural_Networks.md)
 
-### Phase 3: Natural Language & Generators *(Coming Soon)*
-*   06: NLP for Social Media & Unstructured Text
-*   07: Conversational AI & Dialogue State Systems
-*   08: Deep Learning for Text Production
+### Phase 3: Natural Language & Generators
+*   [06: NLP for Social Media & Unstructured Text](./06_NLP_for_Social_Media.md)
+*   [07: Conversational AI & Dialogue State Systems](./07_Conversational_AI.md)
+*   [08: Deep Learning for Text Production](./08_DL_for_Text_Production.md)
 
-### Phase 4: Applied Systems & Biometrics *(Coming Soon)*
-*   09: Multi-Modal Face Presentation Attack Detection
-*   10: Autonomous Vehicle Perception Architecture
+### Phase 4: Applied Systems & Biometrics
+*   [09: Multi-Modal Face Presentation Attack Detection](./09_Face_Presentation_Attack_Detection.md)
+*   [10: Autonomous Vehicle Perception Architecture](./10_Autonomous_Vehicle_Perception.md)
 
-### Phase 5: Symbolic AI & Project Governance *(Coming Soon)*
-*   11: Logic Programming & PDDL (Planning Domain Definition Language)
-*   12: Why AI Projects Fail: Structural and Deployment Pitfalls
+### Phase 5: Symbolic AI & Project Governance
+*   [11: Logic Programming & PDDL (Planning Domain Definition Language)](./11_Logic_Programming_and_PDDL.md)
+*   [12: Why AI Projects Fail: Structural and Deployment Pitfalls](./12_Why_AI_Projects_Fail.md)
 
 ---
 
