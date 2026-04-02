@@ -86,6 +86,19 @@ Score = w₁(recency) + w₂(likes) + w₃(comments) + w₄(shares)
 | **Social Graph** | Graph DB or adjacency table | Who follows whom |
 | **Media** | Object Storage (S3) + CDN | Images, videos |
 
+### 🔧 Deep Dive: The Redis Feed Cache
+How do you actually store a feed in memory so it loads in <200ms? Use **Redis Sorted Sets**.
+*   **Key:** `feed:user:123`
+*   **Value:** `post_id`
+*   **Score:** The ranking score (or simply the Unix timestamp for chronological feeds).
+When you need to render the feed, you call `ZREVRANGE feed:user:123 0 20` to get the top 20 most relevant posts in `O(log(N) + M)` time. Because the values are just `post_ids`, the memory footprint is extremely small, allowing you to cache thousands of posts per user.
+
+### 🔧 Deep Dive: The Cache Stampede (Thundering Herd)
+What happens when a massive celebrity (e.g., Elon Musk with 150M followers) makes a post? If you use "Fan-out on Read," 10 million active users query the database simultaneously when their cache is empty, instantly crashing your database.
+**Mitigation:** 
+1.  **Mutex Locks:** Protect the database lookup. Only the *very first* request is allowed to query the database to build the celebrity's timeline. The other 9,999,999 requests must wait a few milliseconds for the first thread to populate the Redis cache.
+2.  **Probabilistic Early Expiration:** Instead of letting the cache naturally expire and trigger a stampede, workers detect "hot" keys and asynchronously re-populate the cache *before* it expires in the background.
+
 ---
 
 ## 🤔 Reflection Questions

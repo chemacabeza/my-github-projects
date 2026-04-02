@@ -44,6 +44,13 @@
 6. Push to CDN edge servers
 ```
 
+### 🔧 Deep Dive: The Transcoding DAG (Directed Acyclic Graph)
+Transcoding is not just running an `ffmpeg` script. Modern platforms treat transcoding as a distributed graph of microservices. 
+1.  **Split:** The 4K source video is split into 10-second chunks.
+2.  **Parallelize:** If a video is 10 minutes long, it has 60 chunks. We spin up 60 Docker containers, each transcoding its chunk into 5 different resolutions simultaneously.
+3.  **Merge:** A final worker stitches the transcoded chunks back together. 
+What used to take hours on a single machine now takes minutes across a distributed worker pool orchestrated by systems like Netflix's Conductor or AWS Step Functions.
+
 ### Why Pre-signed URLs?
 ```
 Traditional:  Client → App Server → S3       (server bottleneck)
@@ -71,6 +78,13 @@ Protocol: HLS (HTTP Live Streaming) or DASH
 | :--- | :--- | :--- |
 | **HLS** | Apple | `.m3u8` manifest + `.ts` segments |
 | **DASH** | MPEG | `.mpd` manifest + `.m4s` segments |
+
+### 🔧 Deep Dive: Buffer-Based Approach (BBA)
+How does the player know when to switch quality? Older algorithms measured raw network throughput, but network speed fluctuates wildly, causing the player to panic and drop quality constantly. 
+Modern players use the **Buffer-Based Approach (BBA)**. The algorithm ignores the network speed and looks *only* at the local video buffer:
+*   If the buffer is **< 5 seconds**, we are starving -> Switch to 360p immediately.
+*   If the buffer is **growing (> 20 seconds)**, we have excess capacity -> Upgrade to 1080p.
+This produces a vastly smoother viewing experience without rapid oscillation.
 
 ---
 

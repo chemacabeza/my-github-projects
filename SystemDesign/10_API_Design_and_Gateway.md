@@ -28,6 +28,11 @@ An API gateway is the **single entry point** for all client requests:
 | **Request/Response Transformation** | Format conversion |
 | **Logging & Monitoring** | Centralized observability |
 
+### 🔧 Deep Dive: Edge Gateway vs. Service Mesh
+It is crucial to distinguish between an **API Gateway** and a **Service Mesh** (like Istio or Envoy). 
+*   **API Gateway (North-South Traffic):** Handles traffic entering the cluster from the outside world. It focuses on coarse-grained auth, public rate limiting, and routing external requests.
+*   **Service Mesh (East-West Traffic):** Handles internal traffic *between* microservices. It runs as a sidecar proxy alongside each service, managing fine-grained mutual TLS (mTLS), internal retries, and distributed tracing. Don't use a gateway to manage internal service-to-service calls!
+
 ---
 
 ## 2. Rate Limiting Algorithms
@@ -48,6 +53,11 @@ TOKEN BUCKET:
   5 requests arrive → bucket empty → RATE LIMITED (429)
   Wait 1 second → refill 1 token → [🪙]
 ```
+
+### 🔧 Deep Dive: Distributed Rate Limiting Challenges
+Running a rate limiter on a single server is trivial. Running it across a distributed cluster causes **Race Conditions**.
+If User A has 1 token left, and two requests hit Server 1 and Server 2 at the exact same millisecond, both servers read `tokens=1`, both allow the request, and both write back `tokens=0`. The user just bypassed the limit!
+**The Solution:** Use an in-memory datastore like **Redis**. To prevent the race condition without using slow database locks, execute the rate-limit logic inside a **Redis Lua Script**. Lua scripts run atomically in Redis—while the script executes, no other operations can run, guaranteeing exact counters even at 100,000 QPS.
 
 ---
 

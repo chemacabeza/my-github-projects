@@ -48,6 +48,11 @@ Then: Full-duplex, persistent connection
 | **HTTP** | Client → Server | Profile updates, history |
 | **Push Notification** | Server → Client (offline) | FCM/APNs when app is closed |
 
+### 🔧 Deep Dive: Why not Long Polling or SSE?
+*   **Long Polling:** The client opens an HTTP connection and holds it open until the server has new data. **Flaw:** High HTTP overhead. Every message requires establishing a new TCP connection and sending full HTTP headers. For millions of users, this wastes massive bandwidth.
+*   **Server-Sent Events (SSE):** A persistent connection where the server pushes data. **Flaw:** It is strictly unidirectional (Server → Client). The client still needs a separate HTTP call to send messages.
+*   **WebSockets:** After the initial HTTP handshake, it degrades into a raw, persistent, full-duplex TCP stream. Negligible overhead (a few bytes per frame) makes it the only viable choice for massive-scale chat systems in both directions.
+
 ---
 
 ## 4. Message Flow
@@ -80,7 +85,7 @@ Alice sends to Group (100 members):
 ┌──────────────────────────────────────────────┐
 │ messages                                      │
 ├──────────────────────────────────────────────┤
-│ message_id    UUID  (sorted by time)         │
+│ message_id    BIGINT (Snowflake ID)          │
 │ channel_id    UUID  (conversation/group)     │
 │ sender_id     UUID                           │
 │ content       TEXT (encrypted)               │
@@ -91,6 +96,10 @@ Alice sends to Group (100 members):
 ```
 
 **Database Choice:** Cassandra or HBase — optimized for write-heavy, time-series data with partition key = channel_id.
+
+### 🔧 Deep Dive: Message Ordering and Distributed IDs
+You cannot rely on `created_at` timestamps to order messages correctly! Server clocks across a data center can drift by milliseconds (NTP synchronization is not perfect). If two users send a message at the exact same time, relying on the local server clock will scramble the order.
+**The Solution:** Use a distributed ID generator like **Twitter Snowflake**. It generates 64-bit integers where the first 41 bits represent a timestamp, ensuring IDs are universally sortable over time, with the remaining bits handling data-center, machine, and sequence IDs to prevent collisions. Your `message_id` becomes your absolute source of chronological truth.
 
 ---
 
