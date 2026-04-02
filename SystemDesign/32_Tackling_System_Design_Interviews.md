@@ -82,6 +82,39 @@ When discussing your design, proactively bring up these exact trade-offs:
 
 ---
 
+## 4. 🏋️ Practice Exercises
+
+To master the System Design Interview, you must practice applying the 4-step framework to real-world problems. Try to design the following systems on a whiteboard before checking the solutions.
+
+### Exercise 1: Design a Global Chat System (WhatsApp/Messenger)
+**The Scenario:** You need to design a 1-on-1 and group chat system for 50 million daily active users. 
+**Practice Focus:** Step 3 (Deep Dive). How do you handle maintaining millions of persistent open connections? How do you ensure messages are sent reliably when users go offline?
+<details>
+<summary>💡 View Answer</summary>
+
+See Chapter [18: Design a Chat System](./18_Design_Chat_System.md). You should have proposed **WebSockets** for persistent bi-directional connections, a **Presence Service** relying on periodic heartbeats to track online status, and a **Key-Value Store** (like HBase or Cassandra) to store the massive volume of small, sequential message data.
+</details>
+
+### Exercise 2: Design a News Feed (Twitter/Facebook)
+**The Scenario:** Design a system that displays a continuously updating feed of posts from the people a user follows. You have 300 million DAU.
+**Practice Focus:** Step 4 (Deep Dive & Trade-offs). A celebrity with 10 million followers makes a post. How do you prevent your system from crashing when trying to push that post to 10 million individual feeds simultaneously?
+<details>
+<summary>💡 View Answer</summary>
+
+See Chapter [19: Design a News Feed](./19_Design_News_Feed.md). This focuses purely on the **Fan-out on Write vs Fan-out on Read** problem. You should propose a **Hybrid Approach**: Pre-compute feeds (push model) for regular users, but use an on-demand pull model for celebrities with massive follower counts to prevent the "thundering herd" problem and massive unnecessary compute overhead.
+</details>
+
+### Exercise 3: Design an API Rate Limiter
+**The Scenario:** Your company exposes an API, and you need to prevent single users from abusing it and bringing down the servers. Limit requests to X per second per user.
+**Practice Focus:** Step 1 (Scope) and Step 3 (Deep Dive). Which algorithm should you use? Where should the rate limiter live in the architecture?
+<details>
+<summary>💡 View Answer</summary>
+
+See Chapter [10: API Design & Gateway](./10_API_Design_and_Gateway.md). You should place the rate limiter at the **API Gateway** level (before requests hit internal services). You should discuss algorithms like **Token Bucket** (for bursty traffic) or **Sliding Window Log** (for high accuracy). You would use an in-memory cache like **Redis** to keep track of request counters due to its extreme speed and built-in atomic operations.
+</details>
+
+---
+
 ## 🤔 Reflection Questions
 
 1. **You are asked to design a globally distributed highly available system. The interviewer asks: If a network partition occurs between your US and EU data centers, how do you handle incoming user writes?**
