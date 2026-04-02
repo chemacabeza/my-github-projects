@@ -240,4 +240,4 @@ No — PostgreSQL cannot use Zero-Copy for queries because it must **transform d
 
 ---
 
-[<< Previous: Distributed Message Queue](./30_Design_Distributed_Message_Queue.md) | [Home: System Design Curriculum](./README.md)
+[<< Previous: Distributed Message Queue](./30_Design_Distributed_Message_Queue.md) | [Home: System Design Curriculum](./README.md) | [Next: Tackling System Design Interviews >>](./32_Tackling_System_Design_Interviews.md)
