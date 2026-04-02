@@ -1,8 +1,6 @@
 # Advanced AI & Machine Learning Architecture
 
-<p align="center">
-  <img src="images/adv_ai_cover.jpg" alt="Advanced AI Architecture" width="800"/>
-</p>
+![Advanced AI Architecture](./images/adv_ai_cover.jpg)
 
 Welcome to the **Advanced AI Curriculum**. This path dives into the deepest technical layers of modern artificial intelligence systems. We are moving far beyond running pip install and basic python scripts. This curriculum focuses on how massive neural networks are compiled, accelerated, decentralized, and secured at a planetary scale.
 
