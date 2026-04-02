@@ -60,6 +60,10 @@ On request: grab next unused key from pool → assign to URL
 | **Hash + Truncate** | Not guessable | Collisions possible |
 | **Pre-generated** | Fast, no collisions | Requires key management |
 
+### 🔧 Deep Dive: Why exactly Base62 and 7 characters?
+Base62 uses [a-z, A-Z, 0-9], which provides 62 possible characters. If we use a short URL length of 7 characters, the math is `62 ^ 7 = 3.5 trillion` combinations. 
+If we generate 100 million URLs a day: `3.5 trillion / (100 million * 365) = ~95 years`. 7 characters is the perfect mathematical sweet spot between being incredibly short for users and providing nearly a century of collision-free runway.
+
 ---
 
 ## 4. Database Design
@@ -105,6 +109,10 @@ On request: grab next unused key from pool → assign to URL
 | **Write scaling** | Pre-generated key pool, partitioned DB |
 | **Analytics** | Async write to analytics DB via message queue |
 | **Availability** | Multi-region deployment with DNS failover |
+
+### 🔧 Deep Dive: Defeating Cache Penetration with Bloom Filters
+What happens if a malicious user randomly generates millions of non-existent short URLs (e.g., `short.url/zzzzz1`)? The requests will miss the Redis cache and hit the database directly, attempting to find a URL that doesn't exist. At scale, this "cache penetration" attack will destroy the database.
+**The Mitigation:** Place a **Bloom Filter** inside the API Gateway or right before the cache. A Bloom Filter is a highly space-efficient probabilistic data structure. It can definitively tell you "this short code DOES NOT exist" in `O(1)` time using almost zero memory. If the Bloom filter says a URL doesn't exist, the gateway instantly returns a 404 without ever touching the cache or database.
 
 ---
 

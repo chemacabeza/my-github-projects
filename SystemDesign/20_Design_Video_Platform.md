@@ -79,6 +79,10 @@ Protocol: HLS (HTTP Live Streaming) or DASH
 | **HLS** | Apple | `.m3u8` manifest + `.ts` segments |
 | **DASH** | MPEG | `.mpd` manifest + `.m4s` segments |
 
+### 🔧 Deep Dive: Audio/Video Synchronization (PTS)
+When we chunk a 4K video into 10-second segments across DASH/HLS, how do we guarantee the audio and video stay perfectly lip-synced on the client's screen, especially if network packets drop or buffer?
+Inside the container format (like MPEG-TS), every single frame is encoded with a **Presentation Time Stamp (PTS)** clock reference. Even if the video and audio chunks are fetched asynchronously from different CDN servers, the client's media player uses the PTS hardware clocks to perfectly align the temporal timeline before painting pixels to the glass.
+
 ### 🔧 Deep Dive: Buffer-Based Approach (BBA)
 How does the player know when to switch quality? Older algorithms measured raw network throughput, but network speed fluctuates wildly, causing the player to panic and drop quality constantly. 
 Modern players use the **Buffer-Based Approach (BBA)**. The algorithm ignores the network speed and looks *only* at the local video buffer:

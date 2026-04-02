@@ -28,6 +28,10 @@ An API gateway is the **single entry point** for all client requests:
 | **Request/Response Transformation** | Format conversion |
 | **Logging & Monitoring** | Centralized observability |
 
+### 🔧 Deep Dive: Stateless Auth at the Gateway (JWT)
+If your API Gateway has to check the database for a session token on *every single request*, the database becomes a massive bottleneck.
+**The Solution:** Use **JSON Web Tokens (JWT)**. The client logs in once, and the Auth Service returns a JWT signed with a private cryptographic key. For all subsequent requests, the API Gateway uses the corresponding public key to verify the token's cryptographic signature *in-memory*. It securely verifies identity and permissions immediately, completely eliminating the database from the validation path.
+
 ### 🔧 Deep Dive: Edge Gateway vs. Service Mesh
 It is crucial to distinguish between an **API Gateway** and a **Service Mesh** (like Istio or Envoy). 
 *   **API Gateway (North-South Traffic):** Handles traffic entering the cluster from the outside world. It focuses on coarse-grained auth, public rate limiting, and routing external requests.

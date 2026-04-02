@@ -86,6 +86,10 @@ Score = w₁(recency) + w₂(likes) + w₃(comments) + w₄(shares)
 | **Social Graph** | Graph DB or adjacency table | Who follows whom |
 | **Media** | Object Storage (S3) + CDN | Images, videos |
 
+### 🔧 Deep Dive: Traversing the Social Graph
+Storing "who follows who" in a traditional relational database (PostgreSQL) using an adjacency list (`follower_id, followee_id`) works at small scale. But what if you need to suggest "Friends of Friends of Friends" to build the feed? In SQL, that requires an exponentially slow self-JOIN.
+**The Solution:** Use a **Graph Database** (like Neo4j or Amazon Neptune). They use a concept called *Index-Free Adjacency*, meaning every node physically stores direct memory pointers to its neighbors in RAM. Traversing a network of 1 million connections to find mutual friends drops from seconds in SQL down to milliseconds in a Graph database.
+
 ### 🔧 Deep Dive: The Redis Feed Cache
 How do you actually store a feed in memory so it loads in <200ms? Use **Redis Sorted Sets**.
 *   **Key:** `feed:user:123`

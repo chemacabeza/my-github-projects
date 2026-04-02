@@ -97,6 +97,10 @@ Alice sends to Group (100 members):
 
 **Database Choice:** Cassandra or HBase — optimized for write-heavy, time-series data with partition key = channel_id.
 
+### 🔧 Deep Dive: End-to-End Encryption (E2EE) Architecture
+In modern systems, the `content` field in the database is pure encrypted gibberish. Utilizing algorithms like the **Signal Protocol (Double Ratchet)**, the encryption keys rotate on *every single message*. 
+**Crucial Architectural Impact:** Because the Chat Server only routes opaque ciphertexts, it fundamentally breaks server-side search. If a user wants to search their chat history for the word "hello", the server cannot execute a SQL `LIKE` query. The client app must download the ciphertexts, decrypt them locally on the device, and maintain a local embedded database (like SQLite) to perform the search entirely offline.
+
 ### 🔧 Deep Dive: Message Ordering and Distributed IDs
 You cannot rely on `created_at` timestamps to order messages correctly! Server clocks across a data center can drift by milliseconds (NTP synchronization is not perfect). If two users send a message at the exact same time, relying on the local server clock will scramble the order.
 **The Solution:** Use a distributed ID generator like **Twitter Snowflake**. It generates 64-bit integers where the first 41 bits represent a timestamp, ensuring IDs are universally sortable over time, with the remaining bits handling data-center, machine, and sequence IDs to prevent collisions. Your `message_id` becomes your absolute source of chronological truth.
