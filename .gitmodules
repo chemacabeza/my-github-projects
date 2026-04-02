@@ -13,3 +13,6 @@
 [submodule "test-ai-asistant"]
 	path = test-ai-asistant
 	url = git@github.com:chemacabeza/test-ai-asistant.git
+[submodule "ai_and_MachineLearning"]
+	path = ai_and_MachineLearning
+	url = https://github.com/chemacabeza/ai_and_MachineLearning.git

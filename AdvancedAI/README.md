@@ -41,3 +41,11 @@ Every chapter follows a strict structure:
 3.  **Architecture Diagrams** - High-fidelity blueprints.
 4.  **Deep Dives** - Extremely technical, highly specific implementations.
 5.  **Reflection Questions** - Interview-grade scenarios to test your understanding.
+
+---
+
+## 🔗 Related Repositories
+
+Looking for a **beginner-friendly** introduction to AI and Machine Learning? Check out:
+
+*   🎓 **[AI & Machine Learning — Beginner Course](https://github.com/chemacabeza/ai_and_MachineLearning)** — A hands-on, 6-chapter curriculum covering Deep Learning fundamentals, Federated Learning, Reinforcement Learning, Conversational AI & NLP, Support Vector Machines, and Multi-Agent Systems. Every chapter includes fully Dockerized exercises you can run immediately.

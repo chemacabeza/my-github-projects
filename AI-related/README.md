@@ -647,3 +647,8 @@ The local installation includes the following models by default. Some are standa
 * [Flux Step by Step - AI Influencers & Fanvue Models FAST](courses/Flux_Step_by_Step/README.md)
 * [Realistic AI Images with Stable Diffusion & Fooocus](courses/Realistic_AI_Images_with_Stable_Diffusion_and_Fooocus/README.md)
 * [Expert Tips & Advanced Workflows](courses/ExpertTips_AdvancedWorkflows/README.md)
+
+## 🔗 RELATED REPOSITORIES
+
+* 🎓 **[AI & Machine Learning — Beginner Course](https://github.com/chemacabeza/ai_and_MachineLearning)** — A hands-on, 6-chapter curriculum covering Deep Learning, Federated Learning, Reinforcement Learning, NLP, SVMs, and Multi-Agent Systems. Fully Dockerized.
+* 🧠 **[Advanced AI & Machine Learning Architecture](../AdvancedAI/README.md)** — A senior-level, 12-chapter systems engineering guide covering compilers, graph networks, biometrics, symbolic AI, and MLOps.
