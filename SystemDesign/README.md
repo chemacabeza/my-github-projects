@@ -4,7 +4,7 @@
   <img src="images/sd_cover.png" alt="System Design Mastery" width="800"/>
 </p>
 
-Welcome to the **System Design Mastery Guide**. This repository contains a complete, **31-chapter curriculum** spanning 8 phases, designed to take you from fundamental concepts to designing real-world systems at scale.
+Welcome to the **System Design Mastery Guide**. This repository contains a complete, **32-chapter curriculum** spanning 8 phases, designed to take you from fundamental concepts to designing real-world systems at scale.
 
 This curriculum was synthesized from **over 30 professional-grade textbooks**: *Designing Data-Intensive Applications* (Kleppmann), *System Design Interview Volumes 1 & 2* (Alex Xu), *ByteByteGo Big Archive 2023*, *AlgoMaster System Design Handbook*, *The C4 Model* (Simon Brown), *CQRS Journey Guide*, *Making Sense of Stream Processing* (Confluent), *Mastering Kafka Streams and ksqlDB*, *Kafka: The Definitive Guide*, and *The Clean Coder*.
 

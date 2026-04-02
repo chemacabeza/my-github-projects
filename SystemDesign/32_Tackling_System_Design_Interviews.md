@@ -1,7 +1,7 @@
 # 32: Tackling System Design Interviews
 
 <p align="center">
-  <img src="images/sys_interview_framework.png" alt="System Design Interview Framework" width="100%"/>
+  <img src="images/sys_interview_framework.jpg" alt="System Design Interview Framework" width="100%"/>
 </p>
 
 ## 🎯 The Big Goal
@@ -17,7 +17,7 @@ A System Design interview is not about finding the "perfect" architecture. It is
 The key to success is structure. Never jump straight into drawing boxes. Follow this proven 4-step framework based on *System Design Interview – An Insider's Guide* (Alex Xu).
 
 <p align="center">
-  <img src="images/sd_interview_4steps.png" alt="4-Step Interview Framework" width="80%"/>
+  <img src="images/sd_interview_4steps.jpg" alt="4-Step Interview Framework" width="80%"/>
 </p>
 
 ### Step 1: Understand the Problem and Establish Design Scope (3-10 minutes)
@@ -50,7 +50,7 @@ Summarize your architecture and proactively discuss its limitations.
 Interviewers often ask for quick math to justify your design decisions. You must know these baseline numbers by heart.
 
 <p align="center">
-  <img src="images/sd_interview_estimation.png" alt="Estimation Cheat Sheet" width="70%"/>
+  <img src="images/sd_interview_estimation.jpg" alt="Estimation Cheat Sheet" width="70%"/>
 </p>
 
 ### The Golden Numbers to Memorize
@@ -71,7 +71,7 @@ Always assume a **10:1 Read-to-Write ratio** for most consumer applications unle
 The most important part of the interview is acknowledging that every choice has a cost. There is no right answer, only appropriate compromises.
 
 <p align="center">
-  <img src="images/sd_interview_tradeoffs.png" alt="Architecture Trade-Offs" width="80%"/>
+  <img src="images/sd_interview_tradeoffs.jpg" alt="Architecture Trade-Offs" width="80%"/>
 </p>
 
 When discussing your design, proactively bring up these exact trade-offs:
