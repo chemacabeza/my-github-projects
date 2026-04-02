@@ -1,7 +1,7 @@
 # 20: Design a Video Platform
 
 <p align="center">
-  <img src="images/sd_video_platform.png" alt="Video Platform Design" width="800"/>
+  <img src="images/sd_video_platform.jpg" alt="Video Platform Design" width="800"/>
 </p>
 
 ## 🎯 The Big Goal
@@ -25,7 +25,7 @@
 ## 2. High-Level Architecture
 
 <p align="center">
-  <img src="images/sd_video_arch.png" alt="Video Platform Architecture" width="700"/>
+  <img src="images/sd_video_arch.jpg" alt="Video Platform Architecture" width="700"/>
 </p>
 
 ---
@@ -101,7 +101,7 @@ This produces a vastly smoother viewing experience without rapid oscillation.
 ### CDN Architecture:
 
 <p align="center">
-  <img src="images/sd_video_cdn.png" alt="CDN Architecture for Video Streaming" width="700"/>
+  <img src="images/sd_video_cdn.jpg" alt="CDN Architecture for Video Streaming" width="700"/>
 </p>
 
 ---
@@ -109,7 +109,7 @@ This produces a vastly smoother viewing experience without rapid oscillation.
 ## 6. Recommendations Engine
 
 <p align="center">
-  <img src="images/sd_video_recommend.png" alt="Recommendations Engine Pipeline" width="700"/>
+  <img src="images/sd_video_recommend.jpg" alt="Recommendations Engine Pipeline" width="700"/>
 </p>
 
 | Technique | How | Example |
