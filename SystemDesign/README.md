@@ -74,6 +74,7 @@ This curriculum was synthesized from **over 30 professional-grade textbooks**: *
 * [**29: Design a Metrics Monitoring System**](./29_Design_Metrics_Monitoring_System.md) - Time-series databases (TSDB), push vs pull models, and ingestion pipelines powerfully.
 * [**30: Design a Distributed Message Queue**](./30_Design_Distributed_Message_Queue.md) - Write-Ahead Logs (WAL), replication strategies, partitioning, and exact offsets.
 * [**31: Apache Kafka Deep Dive**](./31_Apache_Kafka_Deep_Dive.md) - Deep dive into Zero-Copy transfers, OS PageCache exploitation, and immutable distributed commit logs natively.
+* [**32: Tackling System Design Interviews**](./32_Tackling_System_Design_Interviews.md) - Systematic 4-step framework, back-of-the-envelope estimation, and navigating architecture trade-offs.
 
 ---
 
