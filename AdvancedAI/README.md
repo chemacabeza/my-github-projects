@@ -17,9 +17,9 @@ This is a comprehensive, senior-level systems engineering guide synthesized from
 *   [02: Efficient Processing of DNNs (Pruning & Quantization)](./02_Efficient_DNN_Processing.md)
 *   [03: Federated Learning (Decentralized Training)](./03_Federated_Learning.md)
 
-### Phase 2: Graph Networks & Theoretical AI *(Coming Soon)*
-*   04: Graph Representation Learning
-*   05: Applied Graph Neural Networks
+### Phase 2: Graph Networks & Theoretical AI
+*   [04: Graph Representation Learning (Node Embeddings & Random Walks)](./04_Graph_Representation_Learning.md)
+*   [05: Applied Graph Neural Networks (Message Passing architectures)](./05_Graph_Neural_Networks.md)
 
 ### Phase 3: Natural Language & Generators *(Coming Soon)*
 *   06: NLP for Social Media & Unstructured Text

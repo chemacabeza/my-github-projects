@@ -61,4 +61,58 @@ You rely on standardized intermediate representations like **ONNX** (Open Neural
 
 ---
 
+## 💻 Reproducible Code: PyTorch 2.0 Compiler
+
+To see Operator Fusion in action, you can use PyTorch's `torch.compile()`. This JIT compiles your standard Python graphing code down to optimized kernels using OpenAI's Triton.
+
+### `compile_demo.py`
+```python
+import torch
+import time
+
+def my_network(x):
+    # Multiple chained operations that typically require trips to VRAM
+    return torch.sin(x) + torch.cos(x) * torch.relu(x)
+
+# Create a random tensor on the GPU
+x = torch.randn(10000, 10000, device="cuda")
+
+# 1. Uncompiled (Eager Mode)
+start = time.time()
+res_uncompiled = my_network(x)
+torch.cuda.synchronize()
+print(f"Uncompiled Time: {time.time() - start:.4f} seconds")
+
+# 2. Compiled Mode (Triggers Operator Fusion)
+compiled_network = torch.compile(my_network)
+
+# Warmup to allow compiler to build the kernels
+compiled_network(x) 
+
+start = time.time()
+res_compiled = compiled_network(x)
+torch.cuda.synchronize()
+print(f"Compiled Time:   {time.time() - start:.4f} seconds")
+```
+
+### 🐳 Run it with Docker
+You will need a machine with Nvidia drivers installed and the NVIDIA Container Toolkit.
+
+**Create `Dockerfile`:**
+```dockerfile
+FROM pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime
+WORKDIR /app
+COPY compile_demo.py /app/
+CMD ["python", "compile_demo.py"]
+```
+
+**Execute:**
+```bash
+docker build -t ai-compiler-demo .
+docker run --gpus all ai-compiler-demo
+```
+*Notice how the compiled execution time drops significantly because the GPU is no longer bottlenecked by moving intermediate memory between operations.*
+
+---
+
 [Home: Curriculum Map](./README.md) | [Next: Efficient DNN Processing >>](./02_Efficient_DNN_Processing.md)

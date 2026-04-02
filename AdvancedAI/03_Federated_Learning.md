@@ -70,4 +70,68 @@ Because the server is mathematically blind to the user's raw data (due to privac
 
 ---
 
+## 💻 Reproducible Code: Federated Learning with `flwr`
+
+Flower (`flwr`) is the industry standard framework for Federated Learning. Below is a simplified Edge Client that would run on a user's local smartphone. It trains a PyTorch model and pushes *only the gradients* to the central server.
+
+### `fl_client.py`
+```python
+import flwr as fl
+import torch
+import torch.nn as nn
+
+# 1. Define Standard Local Model
+class SimpleModel(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.fc = nn.Linear(10, 2)
+    def forward(self, x):
+        return self.fc(x)
+
+model = SimpleModel()
+
+# 2. Define Federated Client Protocol
+class FlowerClient(fl.client.NumPyClient):
+    def get_parameters(self, config):
+        # Return local model weights to the server
+        return [val.cpu().numpy() for _, val in model.state_dict().items()]
+
+    def fit(self, parameters, config):
+        # Update local model with server's parameters
+        params_dict = zip(model.state_dict().keys(), parameters)
+        state_dict = {k: torch.tensor(v) for k, v in params_dict}
+        model.load_state_dict(state_dict, strict=True)
+        
+        # --- TRAINING WOULD HAPPEN HERE ON LOCAL DATA ---
+        print("Training locally on private data... (Simulation)")
+        
+        # Return updated weights, number of local examples, and metrics
+        return self.get_parameters(config={}), 100, {}
+
+# 3. Start client and connect to centralized orchestrator 
+if __name__ == "__main__":
+    print("Starting Federated Edge Client...")
+    # fl.client.start_numpy_client(server_address="127.0.0.1:8080", client=FlowerClient())
+    print("Code is ready! (Uncomment line above when orchestrator is running)")
+```
+
+### 🐳 Run it with Docker
+
+**Create `Dockerfile`:**
+```dockerfile
+FROM python:3.9-slim
+WORKDIR /app
+RUN pip install flwr torch numpy
+COPY fl_client.py /app/
+CMD ["python", "fl_client.py"]
+```
+
+**Execute:**
+```bash
+docker build -t federated-edge-client .
+docker run federated-edge-client
+```
+
+---
+
 [<< Previous: Efficient DNN Processing](./02_Efficient_DNN_Processing.md) | [Home: Curriculum Map](./README.md)
