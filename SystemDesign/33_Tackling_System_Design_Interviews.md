@@ -1,4 +1,4 @@
-# 32: Tackling System Design Interviews
+# 33: Tackling System Design Interviews
 
 <p align="center">
   <img src="images/sys_interview_framework.jpg" alt="System Design Interview Framework" width="100%"/>
@@ -113,6 +113,15 @@ See Chapter [19: Design a News Feed](./19_Design_News_Feed.md). This focuses pur
 See Chapter [10: API Design & Gateway](./10_API_Design_and_Gateway.md). You should place the rate limiter at the **API Gateway** level (before requests hit internal services). You should discuss algorithms like **Token Bucket** (for bursty traffic) or **Sliding Window Log** (for high accuracy). You would use an in-memory cache like **Redis** to keep track of request counters due to its extreme speed and built-in atomic operations.
 </details>
 
+### Exercise 4: Design a Load Balancer Strategy for a Stateful Application
+**The Scenario:** You have a multiplayer gaming service where users connect via WebSockets to a specific game server. You need to distribute incoming game connections.
+**Practice Focus:** Step 3 (Deep Dive). Do you use Layer 4 or Layer 7 load balancing? How does the load balancer know which backend server to send a reconnecting player to?
+<details>
+<summary>💡 View Answer</summary>
+
+See Chapter [32: Load Balancers Deep Dive](./32_Load_Balancers.md). You should propose a **Layer 4 Load Balancer** since game traffic often uses raw TCP or UDP, which Layer 7 (HTTP) balancers don't handle natively. To ensure returning players connect to the specific server running their game match, you must avoid Round Robin and instead implement an **IP Hash** or rely on a centralized session manager (like Redis) while maintaining sticky sessions so the TCP connection is pinned to the correct backend node.
+</details>
+
 ---
 
 ## 🤔 Reflection Questions
@@ -151,4 +160,4 @@ First, identify the read/write ratio. URL shorteners are incredibly heavily read
 
 ---
 
-[<< Previous: Apache Kafka Deep Dive](./31_Apache_Kafka_Deep_Dive.md) | [Home: System Design Curriculum](./README.md) | [Next: Load Balancers Deep Dive >>](./33_Load_Balancers.md)
+[<< Previous: Load Balancers Deep Dive](./32_Load_Balancers.md) | [Home: System Design Curriculum](./README.md)

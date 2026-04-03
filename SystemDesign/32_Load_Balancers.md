@@ -1,4 +1,4 @@
-# 33: Load Balancers Deep Dive
+# 32: Load Balancers Deep Dive
 
 <p align="center">
   <img src="images/sd_load_balancers.png" alt="Load Balancers" width="800"/>
@@ -186,6 +186,6 @@ Companies solve this by running multiple Load Balancers in an **Active-Passive**
 
 <div align="center">
 
-[← Previous Chapter: Tackling System Design Interviews](../32_Tackling_System_Design_Interviews.md) · [📚 Back to Course Overview](../README.md)
+[<< Previous: Apache Kafka Deep Dive](./31_Apache_Kafka_Deep_Dive.md) | [Home: System Design Curriculum](./README.md) | [Next: Tackling System Design Interviews >>](./33_Tackling_System_Design_Interviews.md)
 
 </div>
