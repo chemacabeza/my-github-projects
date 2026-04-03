@@ -16,3 +16,6 @@
 [submodule "ai_and_MachineLearning"]
 	path = ai_and_MachineLearning
 	url = https://github.com/chemacabeza/ai_and_MachineLearning.git
+[submodule "CyberSecurity"]
+	path = CyberSecurity
+	url = https://github.com/chemacabeza/CyberSecurity
