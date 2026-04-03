@@ -24,6 +24,19 @@ Associations define the relationships between different domain objects. In a com
 *   **Multiplicity:** Reduce multiplicity where possible. Instead of a many-to-many relationship, can it be simplified to a one-to-many or a one-to-one?
 *   **Elimination:** If an association doesn't strictly serve a business use case, remove it. Only model what is necessary.
 
+### 💻 Java Code: Unidirectional Association
+```java
+public class Customer {
+    private CustomerId id;
+    private List<Order> orders; // Customer knows about Orders
+}
+
+public class Order {
+    private OrderId id;
+    private CustomerId customerId; // Order only holds an ID, not the whole Customer object
+}
+```
+
 ## 🆔 Entities vs. 💎 Value Objects
 
 <div align="center">
@@ -38,12 +51,41 @@ An **Entity** is an object defined by a unique identity that persists over time,
 *   **Mutability:** Its inner state can change over its lifecycle.
 *   **Example:** A `User`, an `Account`, a `Vehicle`. Two vehicles with the exact same make, model, and color are still different vehicles (different VINs).
 
+### 💻 Java Code: Entity
+```java
+public class User {
+    private final UserId id; // Unchanging identity
+    private String email;    // Mutable state
+    
+    public User(UserId id, String email) {
+        this.id = id;
+        this.email = email;
+    }
+    
+    public void updateEmail(String newEmail) {
+        this.email = newEmail;
+    }
+}
+```
+
 ### Value Objects (Value Matters)
 A **Value Object** is an object defined solely by its attributes. It measures, quantifies, or describes something in the domain.
 *   **No Identity:** It does not have an ID.
 *   **Immutability:** Once created, it cannot be changed. If a value needs to change, you replace the entire object.
 *   **Structural Equality:** Two Value Objects are considered equal if all their fields hold the exact same values.
 *   **Example:** `Money`, `Address`, `Color`, `DateRange`. If two people live at "123 Main St", they share the same address value, even if they are different Entities.
+
+### 💻 Java Code: Value Object
+```java
+// By using a Java Record, we get immutability and structural equality for free!
+public record Address(String street, String city, String zipCode) {
+    public Address {
+        if (street == null || street.isBlank()) {
+            throw new IllegalArgumentException("Street cannot be blank");
+        }
+    }
+}
+```
 
 ## 🛡️ Aggregates & ⚙️ Factories
 
@@ -57,11 +99,39 @@ An **Aggregate** is a cluster of domain objects (Entities and Value Objects) tha
 *   **Enforcing Invariants:** The Root is responsible for enforcing all business rules (invariants) for the entire cluster. You cannot modify inner entities directly; you must ask the Root to perform the action.
 *   **Transaction Boundary:** A database transaction should only modify one Aggregate at a time. This guarantees consistency without locking the entire database.
 
+### 💻 Java Code: Aggregate Root
+```java
+public class Order { // The Aggregate Root
+    private OrderId id;
+    private List<OrderItem> items; // Inner entities
+    
+    public void addItem(Product product, int quantity) {
+        // The Root enforces the invariants before modifying state
+        if (quantity <= 0) throw new IllegalArgumentException("Invalid quantity");
+        this.items.add(new OrderItem(product.getId(), quantity));
+    }
+}
+```
+
 ### Factories
 When creating an Aggregate becomes too complex (e.g., it requires assembling many nested Entities and Value Objects, or fetching data from an external service just for creation), encapsulate that creation logic in a **Factory**.
 *   A Factory's sole responsibility is to instantiate complex objects.
 *   It ensures that the created object starts in a valid state.
 *   It keeps the Domain Model clean by moving "how to build the object" out of the object itself.
+
+### 💻 Java Code: Factory
+```java
+public class OrderFactory {
+    // Encapsulates the complex creation process
+    public static Order createFromCheckout(ShoppingCart cart, Customer customer) {
+        Order order = new Order(new OrderId(UUID.randomUUID()), customer.getId());
+        for (CartItem item : cart.getItems()) {
+            order.addItem(item.getProduct(), item.getQuantity());
+        }
+        return order;
+    }
+}
+```
 
 ## 🌩️ Services & 📁 Modules
 
@@ -75,11 +145,37 @@ Sometimes, an operation doesn't naturally belong to any single Entity or Value O
 *   **Domain Service:** Contains pure business logic that orchestrates multiple domain objects (e.g., a `FundsTransferService` that coordinates moving money between two `Account` aggregates).
 *   **Application Service:** Contains no business logic. It orchestrates the use case workflow: receive a request, fetch objects from the database, call a Domain Service or an Aggregate, and save the result. It acts as the bridge between the outside world (UI/API) and the Domain Model.
 
+### 💻 Java Code: Application Service Orchestration
+```java
+@Service
+public class TransferApplicationService {
+    @Transactional // Transaction boundary
+    public void execute(String fromId, String toId, BigDecimal amount) {
+        // 1. Fetch
+        Account from = repository.findById(fromId);
+        Account to = repository.findById(toId);
+        
+        // 2. Delegate to Domain Logic
+        domainService.transfer(from, to, new Money(amount));
+        
+        // 3. Save
+        repository.saveAll(from, to);
+    }
+}
+```
+
 ### Modules (Packages/Namespaces)
 **Modules** are essential for organizing related domain concepts together and reducing cognitive load. 
 *   A Module should be cohesive (things inside it belong together) and have low coupling with other Modules.
 *   They provide clear boundaries. You design the interfaces between Modules as carefully as you design the interfaces of individual classes.
 *   In Java, these map directly to packages (e.g., `com.ecommerce.billing` vs `com.ecommerce.shipping`).
+
+### 💻 Java Code: Modules
+```java
+// Defining clear module boundaries using Java packages
+package com.mycompany.ecommerce.billing; // Billing Module
+package com.mycompany.ecommerce.shipping; // Shipping Module
+```
 
 ## 🗄️ Repositories
 
@@ -90,6 +186,21 @@ Sometimes, an operation doesn't naturally belong to any single Entity or Value O
 A **Repository** acts as a collection-like interface to access Domain Objects. It provides the illusion that all objects are stored in an in-memory collection.
 *   **Only for Aggregate Roots:** You only create Repositories for Aggregate Roots. You do not create a Repository for every inner Entity. Saving an Aggregate Root saves the entire cluster.
 *   **Separation of Concerns:** The Domain Layer defines the Repository *interface* (the pure contract). The Infrastructure Layer provides the concrete *implementation* (e.g., SQL queries, MongoDB connections). This hides the persistence complexity completely from the domain logic.
+
+### 💻 Java Code: Repository Pattern
+```java
+// --- Lives in the Domain Layer ---
+public interface OrderRepository {
+    Optional<Order> findById(OrderId id);
+    void save(Order order);
+}
+
+// --- Lives in the Infrastructure Layer ---
+@Repository
+public class PostgresOrderRepository implements OrderRepository {
+    // Implements the SQL mapping details here...
+}
+```
 
 ---
 
