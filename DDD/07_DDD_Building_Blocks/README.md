@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="cover.png" alt="DDD Building Blocks" width="800"/>
+  <img src="images/cover.png" alt="DDD Building Blocks" width="800"/>
 </div>
 
 # Chapter 7: The Building Blocks of Domain-Driven Design
@@ -15,7 +15,7 @@ Here is a detailed breakdown of each core building block.
 ## 🔗 Associations
 
 <div align="center">
-  <img src="associations.png" alt="Associations in DDD" width="600"/>
+  <img src="images/associations.png" alt="Associations in DDD" width="600"/>
 </div>
 
 Associations define the relationships between different domain objects. In a complex model, associations can quickly become a tangled web, making the system difficult to understand and maintain. DDD provides guidelines to simplify them:
@@ -27,7 +27,7 @@ Associations define the relationships between different domain objects. In a com
 ## 🆔 Entities vs. 💎 Value Objects
 
 <div align="center">
-  <img src="entities_value_objects.png" alt="Entities vs Value Objects" width="800"/>
+  <img src="images/entities_value_objects.png" alt="Entities vs Value Objects" width="800"/>
 </div>
 
 The two most fundamental elements of a domain model are Entities and Value Objects. Deciding which one to use is critical.
@@ -48,7 +48,7 @@ A **Value Object** is an object defined solely by its attributes. It measures, q
 ## 🛡️ Aggregates & ⚙️ Factories
 
 <div align="center">
-  <img src="aggregates_factories.png" alt="Aggregates and Factories" width="800"/>
+  <img src="images/aggregates_factories.png" alt="Aggregates and Factories" width="800"/>
 </div>
 
 ### Aggregates
@@ -66,7 +66,7 @@ When creating an Aggregate becomes too complex (e.g., it requires assembling man
 ## 🌩️ Services & 📁 Modules
 
 <div align="center">
-  <img src="services_modules.png" alt="Services and Modules" width="800"/>
+  <img src="images/services_modules.png" alt="Services and Modules" width="800"/>
 </div>
 
 ### Services (Domain & Application)
@@ -84,7 +84,7 @@ Sometimes, an operation doesn't naturally belong to any single Entity or Value O
 ## 🗄️ Repositories
 
 <div align="center">
-  <img src="repositories.png" alt="Repository Pattern" width="800"/>
+  <img src="images/repositories.png" alt="Repository Pattern" width="800"/>
 </div>
 
 A **Repository** acts as a collection-like interface to access Domain Objects. It provides the illusion that all objects are stored in an in-memory collection.
