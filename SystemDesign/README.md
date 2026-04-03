@@ -75,6 +75,7 @@ This curriculum was synthesized from **over 30 professional-grade textbooks**: *
 * [**30: Design a Distributed Message Queue**](./30_Design_Distributed_Message_Queue.md) - Write-Ahead Logs (WAL), replication strategies, partitioning, and exact offsets.
 * [**31: Apache Kafka Deep Dive**](./31_Apache_Kafka_Deep_Dive.md) - Deep dive into Zero-Copy transfers, OS PageCache exploitation, and immutable distributed commit logs natively.
 * [**32: Tackling System Design Interviews**](./32_Tackling_System_Design_Interviews.md) - Systematic 4-step framework, back-of-the-envelope estimation, and navigating architecture trade-offs.
+* [**33: Load Balancers Deep Dive**](./33_Load_Balancers.md) - Layer 4 vs 7, routing algorithms, health checks, and Docker NGINX implementations.
 
 ---
 

@@ -151,4 +151,4 @@ First, identify the read/write ratio. URL shorteners are incredibly heavily read
 
 ---
 
-[<< Previous: Apache Kafka Deep Dive](./31_Apache_Kafka_Deep_Dive.md) | [Home: System Design Curriculum](./README.md)
+[<< Previous: Apache Kafka Deep Dive](./31_Apache_Kafka_Deep_Dive.md) | [Home: System Design Curriculum](./README.md) | [Next: Load Balancers Deep Dive >>](./33_Load_Balancers.md)
