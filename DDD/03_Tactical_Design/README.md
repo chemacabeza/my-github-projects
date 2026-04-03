@@ -117,3 +117,20 @@ class OrderItem {
     OrderItem(...) { ... } 
 }
 ```
+
+
+---
+
+## �� Reflection Questions
+
+<details>
+<summary>💡 View Answer: Can an Entity contain other Entities?</summary>
+
+Yes! An Aggregate is a cluster of Entities and Value Objects. The outer wrapper is called the Aggregate Root (which is an Entity), and it can hold inner Entities. Crucially, the outside world can only reference the Root ID, not the inner Entity IDs.
+</details>
+
+<details>
+<summary>💡 View Answer: Can an Aggregate Root contain a reference to another Aggregate Root?</summary>
+
+It should strictly hold a reference to the **ID** of the other Aggregate Root, not the actual Java object itself. This prevents developers from accidentally modifying multiple Aggregates in the same database transaction, which breaks the consistency rule.
+</details>

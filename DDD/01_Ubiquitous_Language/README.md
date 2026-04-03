@@ -97,3 +97,20 @@ To handle this, DDD divides the world into two spaces:
     - **Generic Subdomain:** Problems every company has. Buy these off the shelf! (e.g., Authentication/Identity, Accounting).
 
 2. **The Solution Space (Bounded Contexts):** How we design the software to solve the problems. (Covered in Chapter 2).
+
+
+---
+
+## 🤔 Reflection Questions
+
+<details>
+<summary>💡 View Answer: Are all domain models supposed to be Rich Domain Models?</summary>
+
+No! If a bounded context is a generic or supporting subdomain that just does simple CRUD (Create, Read, Update, Delete), an Anemic Domain Model is perfectly fine and often faster to build. You should only spend the high effort to build a Rich Domain Model for your **Core Domain** where the business rules are genuinely complex and provide a competitive advantage.
+</details>
+
+<details>
+<summary>💡 View Answer: Why shouldn't we use a single Ubiquitous Language for the entire company?</summary>
+
+It is impossible to force a large organization to agree on a single unified definition for every concept. Trying to build an "Enterprise Data Model" leads to massive monolithic classes that are fragile and impossible to maintain. A Ubiquitous Language is only valid *within the strict boundary of a specific Bounded Context*.
+</details>

@@ -97,3 +97,20 @@ public class TransferApplicationService {
     }
 }
 ```
+
+
+---
+
+## 🤔 Reflection Questions
+
+<details>
+<summary>💡 View Answer: Is it acceptable for a Domain Service to call a Repository?</summary>
+
+No! Domain Services should be pure logic. If you pass a Repository into a Domain Service, you are mixing infrastructure concerns with pure business rules. Repositories should only be invoked by Application Services, which fetch the data and then hand it to the Domain Service or Aggregate.
+</details>
+
+<details>
+<summary>💡 View Answer: Why shouldn't Application Services contain business logic (e.g. `if (order.total > 1000)`)?</summary>
+
+If you put `if (order.total > 1000)` in the Application Service, you are draining behavior away from the rich `Order` aggregate, slowly turning it into an Anemic Domain Model. The Application Service's only job is: fetch data, tell the domain to act, and save data.
+</details>

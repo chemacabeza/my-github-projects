@@ -98,3 +98,20 @@ To fix this, you must use the **Transactional Outbox Pattern**:
 1. Save the `Order` entity to the database.
 2. In the *exact same SQL transaction*, save the `OrderPlacedEvent` as JSON to a separate `Outbox` table in the same database.
 3. A background process reads the `Outbox` table and safely publishes the events to Kafka.
+
+
+---
+
+## 🤔 Reflection Questions
+
+<details>
+<summary>💡 View Answer: Why do we need the Outbox Pattern instead of just doing `kafka.publish()` inside our Application Service?</summary>
+
+If you do `repository.save(order)` and then `kafka.publish(event)`, the application might crash in the millisecond between those two lines. The order is saved, but the event is permanently lost, leaving the rest of the microservices completely out of sync. The Outbox pattern guarantees 100% reliability by saving both in the same atomic database commit.
+</details>
+
+<details>
+<summary>💡 View Answer: Should Domain Events contain the full payload of the Aggregate, or just the IDs?</summary>
+
+It depends on the architecture. **Event Notification** (just IDs) requires the consumer to call back (REST GET) to fetch the full data, which adds coupling and latency. **Event-Carried State Transfer** includes the full state (e.g., the items, the prices) in the event payload, allowing the consumer to function completely autonomously without calling back.
+</details>

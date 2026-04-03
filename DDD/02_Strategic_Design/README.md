@@ -96,3 +96,20 @@ public class LegacyBillingTranslator {
     }
 }
 ```
+
+
+---
+
+## 🤔 Reflection Questions
+
+<details>
+<summary>💡 View Answer: What is the main difference between a Shared Kernel and a Customer/Supplier relationship?</summary>
+
+In a **Shared Kernel**, the codebase is literally shared and owned by both teams. If one team changes it, it breaks the other, so they must collaborate closely. In **Customer/Supplier**, the Supplier develops and owns the API completely, but agrees to prioritize the needs of the Customer team.
+</details>
+
+<details>
+<summary>💡 View Answer: When should you avoid building an Anti-Corruption Layer (ACL)?</summary>
+
+An ACL adds significant development overhead and maintenance. You should avoid it if the external system is very stable, well-designed, and its model already aligns very closely with your internal Ubiquitous Language (e.g., Conformist pattern), or if the integration is low-value and not worth the engineering cost.
+</details>
