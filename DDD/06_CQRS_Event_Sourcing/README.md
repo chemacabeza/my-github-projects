@@ -133,6 +133,6 @@ Yes, extremely difficult! If you want to run a query like "Find all users whose 
 
 <div align="center">
 
-[← Previous Chapter: Domain Events](../05_Domain_Events/) · [📚 Back to Course Overview](../README.md)
+[← Previous Chapter: Domain Events](../05_Domain_Events/) · [📚 Back to Course Overview](../README.md) · [Next Chapter: DDD Building Blocks →](../07_DDD_Building_Blocks/)
 
 </div>

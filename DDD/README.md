@@ -19,6 +19,7 @@ When building complex enterprise software, technology isn't the hardest part—*
 | **04** | [Repositories & Services](04_Repositories_Services/) | Application Orchestration, Domain Services, and persistence. |
 | **05** | [Domain Events](05_Domain_Events/) | Eventually consistent side-effects and decoupling boundaries. |
 | **06** | [CQRS & Event Sourcing](06_CQRS_Event_Sourcing/) | Separating reads from writes and treating events as truth. |
+| **07** | [DDD Building Blocks](07_DDD_Building_Blocks/) | A visual encyclopedia of all core concepts and their relationships. |
 
 ---
 
