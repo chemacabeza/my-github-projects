@@ -195,3 +195,5 @@ Interested in collaboration or discussing opportunities?
 **Engineering Manager @ Klarna | Former Amadeus, NCR | Based in Berlin**
 
 *Building scalable systems, exploring AI frontiers, and sharing knowledge through code.*
+
+- [Domain Driven Design (DDD) Course](DDD/README.md) - Learn how to tackle complexity in the heart of software using Ubiquitous Language, Strategic Design, and Tactical Java patterns.
