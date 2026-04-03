@@ -114,3 +114,11 @@ No! Domain Services should be pure logic. If you pass a Repository into a Domain
 
 If you put `if (order.total > 1000)` in the Application Service, you are draining behavior away from the rich `Order` aggregate, slowly turning it into an Anemic Domain Model. The Application Service's only job is: fetch data, tell the domain to act, and save data.
 </details>
+
+---
+
+<div align="center">
+
+[← Previous Chapter: Tactical Design](../03_Tactical_Design/) · [📚 Back to Course Overview](../README.md) · [Next Chapter: Domain Events →](../05_Domain_Events/)
+
+</div>

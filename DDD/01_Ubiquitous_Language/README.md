@@ -114,3 +114,11 @@ No! If a bounded context is a generic or supporting subdomain that just does sim
 
 It is impossible to force a large organization to agree on a single unified definition for every concept. Trying to build an "Enterprise Data Model" leads to massive monolithic classes that are fragile and impossible to maintain. A Ubiquitous Language is only valid *within the strict boundary of a specific Bounded Context*.
 </details>
+
+---
+
+<div align="center">
+
+[📚 Back to Course Overview](../README.md) · [Next Chapter: Strategic Design →](../02_Strategic_Design/)
+
+</div>

@@ -134,3 +134,11 @@ Yes! An Aggregate is a cluster of Entities and Value Objects. The outer wrapper 
 
 It should strictly hold a reference to the **ID** of the other Aggregate Root, not the actual Java object itself. This prevents developers from accidentally modifying multiple Aggregates in the same database transaction, which breaks the consistency rule.
 </details>
+
+---
+
+<div align="center">
+
+[← Previous Chapter: Strategic Design](../02_Strategic_Design/) · [📚 Back to Course Overview](../README.md) · [Next Chapter: Repositories & Services →](../04_Repositories_Services/)
+
+</div>

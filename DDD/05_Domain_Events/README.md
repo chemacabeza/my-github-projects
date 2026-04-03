@@ -115,3 +115,11 @@ If you do `repository.save(order)` and then `kafka.publish(event)`, the applicat
 
 It depends on the architecture. **Event Notification** (just IDs) requires the consumer to call back (REST GET) to fetch the full data, which adds coupling and latency. **Event-Carried State Transfer** includes the full state (e.g., the items, the prices) in the event payload, allowing the consumer to function completely autonomously without calling back.
 </details>
+
+---
+
+<div align="center">
+
+[← Previous Chapter: Repositories & Services](../04_Repositories_Services/) · [📚 Back to Course Overview](../README.md) · [Next Chapter: CQRS & Event Sourcing →](../06_CQRS_Event_Sourcing/)
+
+</div>

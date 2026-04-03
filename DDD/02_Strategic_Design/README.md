@@ -113,3 +113,11 @@ In a **Shared Kernel**, the codebase is literally shared and owned by both teams
 
 An ACL adds significant development overhead and maintenance. You should avoid it if the external system is very stable, well-designed, and its model already aligns very closely with your internal Ubiquitous Language (e.g., Conformist pattern), or if the integration is low-value and not worth the engineering cost.
 </details>
+
+---
+
+<div align="center">
+
+[← Previous Chapter: Ubiquitous Language](../01_Ubiquitous_Language/) · [📚 Back to Course Overview](../README.md) · [Next Chapter: Tactical Design →](../03_Tactical_Design/)
+
+</div>

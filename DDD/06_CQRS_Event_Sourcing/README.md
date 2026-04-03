@@ -128,3 +128,11 @@ Database views are a form of CQRS! However, true physical CQRS is useful when th
 
 Yes, extremely difficult! If you want to run a query like "Find all users whose name is John," you cannot easily query an Event log. This is why Event Sourcing is almost *always* paired with CQRS. The Event Store handles the commands and writes, while a dedicated Read Model (like a standard SQL table) is projected from the events specifically to answer those queries.
 </details>
+
+---
+
+<div align="center">
+
+[← Previous Chapter: Domain Events](../05_Domain_Events/) · [📚 Back to Course Overview](../README.md)
+
+</div>
