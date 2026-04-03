@@ -82,7 +82,37 @@ When discussing your design, proactively bring up these exact trade-offs:
 
 ---
 
-## 4. 🏋️ Practice Exercises
+## 4. 🧰 The Ultimate System Design Toolkit
+
+When you reach Step 3 (Deep Dive) in an interview, you must identify bottlenecks and propose solutions. Use this toolkit—synthesized from the previous 32 chapters—to pick the exact right tool for the job.
+
+### Data Storage & Ingestion Bottlenecks
+*   **"Our database is overwhelmed by reads!"** 
+    👉 **Solution:** Introduce a distributed cache like Redis (See Chapter [03: Caching Strategies](./03_Caching_Strategies.md)) and implement read-replicas (See Chapter [06: Replication](./06_Replication_and_Partitioning.md)).
+*   **"Our database is overwhelmed by writes!"** 
+    👉 **Solution:** Shard the database (See Chapter [02: Databases](./02_Databases_and_Storage.md)) or buffer the writes using a durable message queue like Kafka (See Chapter [31: Kafka Deep Dive](./31_Apache_Kafka_Deep_Dive.md)).
+*   **"We need to store massive flat files (Videos/Images)."** 
+    👉 **Solution:** Object Storage (Amazon S3) with a CDN (See Chapter [01: Scalability](./01_Scalability_Fundamentals.md)). Never store blobs in a database.
+
+### Networking & Routing Bottlenecks
+*   **"One node is taking all the traffic!"** 
+    👉 **Solution:** Add a Layer 4 or Layer 7 Load Balancer with a smart algorithm like Least Connections or IP Hashing (See Chapter [32: Load Balancers](./32_Load_Balancers.md)).
+*   **"Users in Asia are experiencing high latency to our US servers."** 
+    👉 **Solution:** Global DNS routing, edge CDNs, and multi-region active-active database replication.
+*   **"Clients are continuously polling our server to check for updates, wasting bandwidth."** 
+    👉 **Solution:** Switch to WebSockets or Server-Sent Events (SSE) for persistent bi-directional communication (See Chapter [04: Networking & Protocols](./04_Networking_and_Protocols.md)).
+
+### Microservice & Architecture Bottlenecks
+*   **"Our monolith is too large for teams to deploy independently."** 
+    👉 **Solution:** Transition to Microservices using the Strangler Fig pattern and Domain-Driven Design boundaries (See Chapter [21: Monolith to Microservices](./21_Monolith_to_Microservices.md)).
+*   **"We need complex queries across multiple microservice databases."** 
+    👉 **Solution:** Implement CQRS (Command Query Responsibility Segregation) to separate write schemas from heavily optimized read views, updated via event sourcing (See Chapter [23: CQRS](./23_CQRS_and_Event_Sourcing.md)).
+*   **"A downstream microservice crashed and is cascading failures across the system."** 
+    👉 **Solution:** Implement the Circuit Breaker pattern and sensible rate limiting at the API Gateway (See Chapter [10: API Gateway](./10_API_Design_and_Gateway.md) and [11: Microservices](./11_Microservices_Architecture.md)).
+
+---
+
+## 5. 🏋️ Practice Exercises
 
 To master the System Design Interview, you must practice applying the 4-step framework to real-world problems. Try to design the following systems on a whiteboard before checking the solutions.
 
