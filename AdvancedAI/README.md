@@ -38,6 +38,12 @@ This is a comprehensive, senior-level systems engineering guide synthesized from
 *   [15: Building Multiagent Systems](./15_Building_Multiagent_Systems.md)
 *   [16: AI Agents in Action (RAG & Enterprise Architecture)](./16_AI_Agents_in_Action.md)
 
+### Phase 7: Deep Learning Foundations & Engineering
+*   [17: Neural Networks From Scratch](./17_Neural_Networks_From_Scratch.md)
+*   [18: Theoretical Foundations of Deep Learning](./18_Theoretical_Foundations_of_Deep_Learning.md)
+*   [19: Hands-On TensorFlow Architecture](./19_Hands_On_TensorFlow_Architecture.md)
+*   [20: Dive Into PyTorch Architecture](./20_Dive_Into_PyTorch_Architecture.md)
+
 ---
 
 **How to Use This Guide:**  

@@ -163,6 +163,6 @@ Pure semantic vector search is dangerous for exact identifiers. You must use **H
 
 <div align="center">
 
-| [<< Previous: Building Multiagent Systems](./15_Building_Multiagent_Systems.md) | [Home: Curriculum Map](./README.md) |
+| [<< Previous: Building Multiagent Systems](./15_Building_Multiagent_Systems.md) | [Home: Curriculum Map](./README.md) | [Next: Neural Networks From Scratch >>](./17_Neural_Networks_From_Scratch.md) |
 
 </div>
