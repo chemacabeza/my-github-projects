@@ -1,4 +1,6 @@
 <div align="center">
+  <img src="images/ddd_course_cover.png" alt="Domain-Driven Design Blueprint" width="800"/>
+  <br/>
   <h1>🏛️ Domain-Driven Design (DDD)</h1>
   <p><i>Tackling Complexity in the Heart of Software</i></p>
 </div>
