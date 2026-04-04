@@ -186,6 +186,6 @@ Companies solve this by running multiple Load Balancers in an **Active-Passive**
 
 <div align="center">
 
-[<< Previous: Apache Kafka Deep Dive](./31_Apache_Kafka_Deep_Dive.md) | [Home: System Design Curriculum](./README.md) | [Next: Tackling System Design Interviews >>](./33_Tackling_System_Design_Interviews.md)
+[<< Previous: Apache Kafka Deep Dive](./31_Apache_Kafka_Deep_Dive.md) | [Home: System Design Curriculum](./README.md) | [Next: Content Delivery Networks >>](./33_Content_Delivery_Networks.md)
 
 </div>

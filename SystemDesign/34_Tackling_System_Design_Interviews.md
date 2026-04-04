@@ -1,4 +1,4 @@
-# 33: Tackling System Design Interviews
+# 34: Tackling System Design Interviews
 
 <p align="center">
   <img src="images/sys_interview_framework.jpg" alt="System Design Interview Framework" width="100%"/>
@@ -97,8 +97,8 @@ When you reach Step 3 (Deep Dive) in an interview, you must identify bottlenecks
 ### Networking & Routing Bottlenecks
 *   **"One node is taking all the traffic!"** 
     👉 **Solution:** Add a Layer 4 or Layer 7 Load Balancer with a smart algorithm like Least Connections or IP Hashing (See Chapter [32: Load Balancers](./32_Load_Balancers.md)).
-*   **"Users in Asia are experiencing high latency to our US servers."** 
-    👉 **Solution:** Global DNS routing, edge CDNs, and multi-region active-active database replication.
+*   **"Users in Asia are experiencing high latency to our US servers when fetching images."** 
+    👉 **Solution:** Implement a Content Delivery Network (CDN) to cache static assets globally at the edge (See Chapter [33: Content Delivery Networks](./33_Content_Delivery_Networks.md)).
 *   **"Clients are continuously polling our server to check for updates, wasting bandwidth."** 
     👉 **Solution:** Switch to WebSockets or Server-Sent Events (SSE) for persistent bi-directional communication (See Chapter [04: Networking & Protocols](./04_Networking_and_Protocols.md)).
 
@@ -190,4 +190,4 @@ First, identify the read/write ratio. URL shorteners are incredibly heavily read
 
 ---
 
-[<< Previous: Load Balancers Deep Dive](./32_Load_Balancers.md) | [Home: System Design Curriculum](./README.md)
+[<< Previous: Content Delivery Networks (CDN)](./33_Content_Delivery_Networks.md) | [Home: System Design Curriculum](./README.md)
