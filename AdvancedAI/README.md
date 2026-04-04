@@ -32,6 +32,12 @@ This is a comprehensive, senior-level systems engineering guide synthesized from
 *   [11: Logic Programming & PDDL (Planning Domain Definition Language)](./11_Logic_Programming_and_PDDL.md)
 *   [12: Why AI Projects Fail: Structural and Deployment Pitfalls](./12_Why_AI_Projects_Fail.md)
 
+### Phase 6: AI Agents & Reinforcement Learning
+*   [13: Foundations of Computational Agents](./13_Foundations_of_Computational_Agents.md)
+*   [14: Reinforcement Learning Fundamentals](./14_Reinforcement_Learning_Fundamentals.md)
+*   [15: Building Multiagent Systems](./15_Building_Multiagent_Systems.md)
+*   [16: AI Agents in Action (RAG & Enterprise Architecture)](./16_AI_Agents_in_Action.md)
+
 ---
 
 **How to Use This Guide:**  
