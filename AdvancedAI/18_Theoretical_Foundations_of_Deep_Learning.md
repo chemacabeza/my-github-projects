@@ -160,7 +160,25 @@ To run this:
 
 ---
 
-## 3. Step-by-Step Code Breakdown: Analyzing Momentum Math
+## 3. Theoretical Deep Dive: Regularization & Priors
+
+A central theme in Goodfellow's *Deep Learning* is that optimizing for Training Loss alone guarantees **Overfitting**. The true goal of machine learning is generalization (performing well on unseen Test Data). We achieve this via Regularization.
+
+Regularization is mathematically defined as any modification to the learning algorithm that is intended to reduce its generalization error, but not its training error.
+
+### L2 Regularization (Weight Decay) vs. L1 Regularization (Sparsity)
+The most common regularization is modifying the Objective Function by adding a parameter penalty: `Loss = OriginalLoss + Penalty`.
+
+*   **L2 Regularization:** Adds the squared magnitude of the weights to the loss function. Mathematically, this corresponds to putting a **Gaussian Prior** belief on the weights, pushing them asymptotically closer to zero, but rarely exactly zero. It penalizes massive spike weights, creating smoother, more distributed feature mappings.
+*   **L1 Regularization:** Adds the absolute magnitude of the weights. Mathematically, this corresponds to a **Laplace Prior**. The calculus of the absolute value function aggressively forces less important weights to become *exactly zero*. This creates **Sparsity**, essentially performing automatic feature selection and deleting irrelevant input dimensions.
+
+### Early Stopping as Implicit Regularization
+When training a very deep network, if we monitor the Validation Error, it usually drops in a U-shape, eventually rising again as the model begins severely overfitting.
+Simply stopping the training when Validation Error hits its lowest point (Early Stopping) is functionally the most common regularizer in Deep Learning. Goodfellow proves mathematically that bounding the number of training iterations with Early Stopping has the exact same theoretical effect as an L2 Weight Penalty: it restricts the volume of the parameter space that the optimizer is allowed to reach.
+
+---
+
+## 4. Step-by-Step Code Breakdown: Analyzing Momentum Math
 
 Let's break down exactly how the Adam Optimization logic works in the Python code above.
 

@@ -160,7 +160,23 @@ To run this:
 
 ---
 
-## 3. Step-by-Step Code Breakdown: The NumPy Calculus
+## 3. Theoretical Deep Dive: Maximum Likelihood Estimation
+
+In basic tutorials, the Loss Function is often glossed over as a simple "error calculation" (like Mean Squared Error). However, modern deep learning (as formulated by Ian Goodfellow and Yoshua Bengio) roots neural networks strictly in **Information Theory** and **Probability**.
+
+Training a neural network is mathematically identical to **Maximum Likelihood Estimation (MLE)**. 
+We are not just "lowering an error score." We are asking the math: *"Given this dataset, what is the most highly probable configuration of weights (`W`) that would likely produce these outputs?"*
+
+### Cross-Entropy vs. MSE
+When doing classification, we do not use Mean Squared Error (MSE). We use **Cross-Entropy**. Why?
+Because MSE assumes the outputs follow a Gaussian (Normal) distribution. Classification outputs (like probability % of a dog vs cat) follow a Bernoulli or Multinoulli distribution.
+
+Cross-Entropy measures the distance between two probability distributions (the model's prediction vs the true label) using **Kullback-Leibler (KL) Divergence**. 
+Crucially, minimizing Cross-Entropy ensures that if the model is confidently wrong (e.g., predicting 99% Dog when it's a Cat), the error gradient penalizes the network logarithmically, delivering a massive gradient update to fix the weights. MSE would produce a very flat gradient in this situation, causing learning to stall.
+
+---
+
+## 4. Step-by-Step Code Breakdown: The NumPy Calculus
 
 Let's break down exactly what the Python code above is doing, using a simple visual analogy.
 
