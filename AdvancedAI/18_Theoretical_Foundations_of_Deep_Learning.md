@@ -160,6 +160,28 @@ To run this:
 
 ---
 
+## 3. Step-by-Step Code Breakdown: Analyzing Momentum Math
+
+Let's break down exactly how the Adam Optimization logic works in the Python code above.
+
+<p align="center">
+  <img src="images/adv_ai_optimizer_momentum.png" alt="Optimization Momentum Physics" width="800"/>
+</p>
+
+1. **Calculating the Raw Gradients (`grad_x, grad_y = gradients(x, y)`)**
+   * **Analogy:** Checking the altimeter to see exactly which direction is "Down" right now at the agent's exact footprint.
+   * **Technical Detail:** Standard SGD would use this `grad_x` immediately to take a tiny step. But in flat valleys, `grad_x` becomes `0.0001`, so the step size shrinks to almost zero (causing SGD to get permanently stuck).
+
+2. **Accumulating Velocity (`m_x = beta1 * m_x + (1 - beta1) * grad_x`)**
+   * **Analogy:** This is rolling ball physics. If a bowling ball rolls down a hill, it gains speed. If it hits a tiny 2-inch bump, it doesn't instantly stop. It uses its built-up kinetic energy to smash through it.
+   * **Technical Detail:** This is the **Momentum** formula. `beta1` is usually `0.9`. It means: "Keep 90% of my previous trajectory speed, and add just 10% of the new gradient." This allows Adam to smoothly carve straight lines through noisy, jagged loss curves.
+
+3. **Applying RMSProp Scaling (`v_x = beta2 * v_x + (1 - beta2) * (grad_x ** 2)`)**
+   * **Analogy:** Adjusting the brakes based on the terrain. If the hill to the right is a massive cliff, we want to hit the brakes. If the path straight ahead is a long gentle slope, we want to gently press the gas.
+   * **Technical Detail:** By squaring the gradient (`grad_x ** 2`), we punish dimensions that have massive erratic swings, automatically shrinking their individual learning rate.
+
+---
+
 ## 🤔 Reflection Questions
 
 1. **You are training a very deep ResNet image classifier. You plot the Loss chart over time. The Loss suddenly spikes upwards to infinity (`NaN`), and the model breaks. What happened?**

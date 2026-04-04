@@ -160,6 +160,28 @@ To run this:
 
 ---
 
+## 3. Step-by-Step Code Breakdown: The NumPy Calculus
+
+Let's break down exactly what the Python code above is doing, using a simple visual analogy.
+
+<p align="center">
+  <img src="images/adv_ai_matrix_multiplication.png" alt="Matrix Multiplication" width="800"/>
+</p>
+
+1. **The Forward Pass (`Z1 = np.dot(X, W1) + b1`)**
+   * **Analogy:** Imagine grading a multiple-choice test. `X` is the student's answers (0s and 1s). `W1` is the Answer Key.
+   * **Technical Detail:** `np.dot` physically multiplies the rows of `X` against the columns of `W1`. If `X` has shape `[4, 2]` (4 rows of data, 2 features) and `W1` has shape `[2, 4]`, the output `Z1` becomes `[4, 4]`. The inner dimensions completely collapse mathematically to produce our weighted sum.
+
+2. **The Chain Rule Backward (`dW2 = np.dot(A1.T, dZ2)`)**
+   * **Analogy:** After grading the test, we find the student failed (`error = y - A2`). We need to figure out *which specific question* confused them the most so we can fix the teacher's lesson.
+   * **Technical Detail:** We transpose the Activation matrix (`A1.T`) to flip its dimensions so they mathematically align with our error gradient dimensions (`dZ2`). By multiplying them, we calculate exactly how much *every single weight* inside `W2` was responsible for the final error.
+
+3. **Optimization Step (`W2 += dW2 * learning_rate`)**
+   * **Analogy:** We rewrite the teacher's lesson slightly (`learning_rate = 0.5`) so the student doesn't get whiplash by learning too much at once.
+   * **Technical Detail:** We simply add the calculated gradients (`dW2`) to our original weights (`W2`), adjusting them infinitesimally in the correct direction.
+
+---
+
 ## 🤔 Reflection Questions
 
 1. **Why do we need an Activation Function like Sigmoid or ReLU? Why not just chain together matrix multiplications?**

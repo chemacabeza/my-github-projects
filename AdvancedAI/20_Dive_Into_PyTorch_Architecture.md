@@ -141,6 +141,32 @@ To run this:
 
 ---
 
+## 5. Step-by-Step Code Breakdown: The Training Epoch Loop
+
+Because PyTorch doesn't have a high-level `.fit()` wrapper like Keras, you are responsible for the 4-step physics of the Autograd engine loop.
+
+<p align="center">
+  <img src="images/adv_ai_pytorch_training_loop.png" alt="PyTorch Autograd Training Loop" width="800"/>
+</p>
+
+1. **Erasing the Blackboard (`optimizer.zero_grad()`)**
+   * **Analogy:** Before starting a complex math problem, you must wipe the teacher's blackboard clean.
+   * **Technical Detail:** The `.backward()` engine *adds* new gradients to whatever already exists in memory. If you don't zero it out, Epoch 2 will accidentally add its gradients on top of Epoch 1, causing a mathematical explosion.
+
+2. **The Forward Pass (`predictions = model(X)`)**
+   * **Analogy:** Pushing water through a complex series of pipes until it leaks out the end.
+   * **Technical Detail:** This explicitly calls the `forward()` method of your `AdvancedClassifier` class. As it runs line-by-line, Autograd builds the dynamic computational graph on the fly, remembering exactly which equations were used.
+
+3. **Propagating the Error (`loss.backward()`)**
+   * **Analogy:** Realizing the water leaked out the wrong pipe, and sending a red dye backwards through the plumbing to see which specific valves were open.
+   * **Technical Detail:** This is the Multivariable Chain Rule (from Chapter 17). It traverses the dynamic graph instantly in reverse, calculating the exact `grad` value for every single tensor that requires gradients in your `nn.Module`.
+
+4. **Locking the Adjustments (`optimizer.step()`)**
+   * **Analogy:** A mechanic grabbing a wrench and actually tightening the specific valves identified by the red dye.
+   * **Technical Detail:** The optimizer (like Adam or SGD) looks at the `.grad` attributes calculated in the previous step, applies its momentum physics, and actually updates the raw float parameters in your model.
+
+---
+
 ## 🤔 Reflection Questions
 
 1. **In the handmade PyTorch training loop above, why is the specific command `optimizer.zero_grad()` absolutely critical? What happens if you delete that line?**

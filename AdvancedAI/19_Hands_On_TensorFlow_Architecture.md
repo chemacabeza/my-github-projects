@@ -127,6 +127,28 @@ To run this:
 
 ---
 
+## 5. Step-by-Step Code Breakdown: Keras Compilation
+
+Let's demystify exactly what the high-level Keras wrapper is doing under the hood to your images.
+
+<p align="center">
+  <img src="images/adv_ai_keras_dense_layer.png" alt="Keras Dense Architecture" width="800"/>
+</p>
+
+1. **The Flatten Layer (`keras.layers.Flatten(input_shape=(28, 28))`)**
+   * **Analogy:** Taking a Rubik's cube and smashing it with a hammer so all the colored cubes lay out in a single straight line on the floor.
+   * **Technical Detail:** A neural network requires a 1D vector of numbers. You cannot feed a 2D image directly into a standard dense network. This layer physically restructures the data array from `[28, 28]` (a square grid of 784 pixels) into a perfectly flat `[784]` dimension string.
+
+2. **The Dense Layer (`keras.layers.Dense(128, activation='relu')`)**
+   * **Analogy:** Every single one of those 784 pixels is now wired to 128 different lightbulbs. If a pixel is bright, it sends electricity down its unique wire. That electricity passes through a valve (the `weight`). If enough electricity hits the bulb, it turns on.
+   * **Technical Detail:** This performs the exact $Z = X \cdot W + B$ matrix math we learned in Chapter 17. The `128` simply defines the width of the destination weight matrix. The `relu` activation stops vanishing gradients.
+
+3. **The Compilation Phase (`model.compile(...)`)**
+   * **Analogy:** Translating your blueprint from English into robotic machine-code.
+   * **Technical Detail:** In standard Graph execution, Keras locks the architecture down. It assigns the `adam` algorithms we learned in Chapter 18 to manage the backward pass, and assigns the heavy C++ CUDA libraries to manage the data flow. Once compiled, the structure cannot be altered during the `.fit()` loop.
+
+---
+
 ## 🤔 Reflection Questions
 
 1. **In the Keras code above, we added a `keras.layers.Dropout(0.2)` layer. What exactly does this do during training, and what does it do during the final testing/inference phase?**
