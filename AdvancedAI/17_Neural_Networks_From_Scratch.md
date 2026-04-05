@@ -14,7 +14,44 @@ In this chapter, we strip away all libraries. We will build a Neural Network usi
 
 ---
 
-## 1. The Forward Pass (Inference)
+## 1. A Brief History: From Perceptron to Deep Learning
+
+Before diving into code, Tariq Rashid (*Make Your Own Neural Network*) reminds us that understanding the history of neural networks is essential for understanding why modern architectures look the way they do.
+
+<p align="center">
+  <img src="images/adv_ai_perceptron_history.png" alt="History of Neural Networks" width="800"/>
+</p>
+
+*   **1958 — The Perceptron:** Frank Rosenblatt built the first hardware neural network. It was a single neuron that could learn to classify two categories by adjusting weights. It was a media sensation.
+*   **1969 — The AI Winter:** Minsky and Papert mathematically proved that a single Perceptron cannot solve the XOR problem (a non-linearly separable function). This killed neural network funding for 15 years.
+*   **1986 — Backpropagation:** Rumelhart, Hinton, and Williams published the efficient backpropagation algorithm, proving you could train multi-layer networks. This is exactly the Chain Rule math we implement in this chapter.
+*   **2012 — The GPU Revolution:** Krizhevsky's AlexNet won ImageNet using a deep CNN trained on GPUs, beating all traditional methods by a massive margin. This ignited the modern deep learning era.
+*   **2017 — Transformers:** Vaswani et al. published "Attention Is All You Need," replacing recurrence with self-attention and enabling the massive parallelization that powers ChatGPT and modern LLMs.
+
+---
+
+## 2. The Activation Function Zoo
+
+Michael Nielsen (*Neural Networks and Deep Learning*) and Kelleher (*Deep Learning*) both emphasize that the choice of activation function profoundly impacts training dynamics. Here is the complete reference:
+
+<p align="center">
+  <img src="images/adv_ai_activation_functions.png" alt="Activation Functions Comparison" width="800"/>
+</p>
+
+| Function | Formula | Range | Derivative | Best For |
+|----------|---------|-------|-----------|----------|
+| **Sigmoid** | `1/(1+e^(-x))` | (0, 1) | Max 0.25 | Output probabilities |
+| **Tanh** | `(e^x - e^(-x))/(e^x + e^(-x))` | (-1, 1) | Max 1.0 | Zero-centered hidden layers |
+| **ReLU** | `max(0, x)` | [0, ∞) | 0 or 1 | Default for hidden layers |
+| **Leaky ReLU** | `max(0.01x, x)` | (-∞, ∞) | 0.01 or 1 | Prevents dead neurons |
+| **ELU** | `x if x>0, α(e^x-1) otherwise` | (-α, ∞) | Smooth | Reduces bias shift |
+| **Swish/SiLU** | `x · sigmoid(x)` | (-0.28, ∞) | Smooth | State-of-the-art (EfficientNet) |
+
+> **The Dead Neuron Problem (Nielsen):** With standard ReLU, if a neuron's weighted sum is always negative, the gradient is permanently zero and the neuron never updates again. It is "dead." Leaky ReLU solves this by allowing a small negative slope (0.01x) so the gradient is never exactly zero.
+
+---
+
+## 3. The Forward Pass (Inference)
 
 A neural network is fundamentally just a sequence of matrix multiplications interwoven with non-linear activation functions.
 

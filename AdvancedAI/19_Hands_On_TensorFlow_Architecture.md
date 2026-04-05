@@ -362,6 +362,67 @@ class MyDenseLayer(keras.layers.Layer):
 
 ---
 
+## 11. Recurrent Neural Networks (RNNs) & LSTMs in Keras
+
+Aston Zhang (*Dive into Deep Learning*) covers sequence models extensively. While CNNs excel at spatial data (images), **Recurrent Neural Networks** are designed for sequential data (text, time series, audio).
+
+<p align="center">
+  <img src="images/adv_ai_rnn_sequence.png" alt="RNN and LSTM Architecture" width="800"/>
+</p>
+
+An RNN processes data one time step at a time, maintaining a **hidden state** that carries information from previous steps — like short-term memory. However, standard RNNs suffer from the same Vanishing Gradient problem (Chapter 18): they cannot remember information from more than ~10-20 steps ago.
+
+**LSTMs (Long Short-Term Memory)** solve this with a **gated memory cell**:
+*   **Forget Gate:** Decides what old information to discard
+*   **Input Gate:** Decides what new information to store
+*   **Output Gate:** Decides what to reveal from memory
+
+```python
+# Keras LSTM for text classification (e.g., sentiment analysis):
+model = keras.Sequential([
+    keras.layers.Embedding(input_dim=10000, output_dim=128),  # Word → Vector
+    keras.layers.LSTM(64, return_sequences=True),              # First LSTM layer
+    keras.layers.LSTM(32),                                     # Second LSTM layer
+    keras.layers.Dense(1, activation='sigmoid')                # Binary output
+])
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+```
+
+> **Zhang's Note:** For most modern NLP tasks, Transformers (Section 12) have largely replaced LSTMs. However, LSTMs remain extremely valuable for time-series forecasting, audio processing, and any task where you need to process variable-length sequences with limited compute.
+
+---
+
+## 12. The Keras Functional API: Beyond Sequential
+
+The `keras.Sequential` API chains layers in a straight line. But real-world architectures often have:
+*   Multiple inputs (e.g., image + text)
+*   Multiple outputs (e.g., classify + locate)
+*   Skip connections (ResNets)
+*   Shared layers across branches
+
+The **Functional API** handles all of these:
+
+```python
+# A multi-input model: combine image features with metadata
+image_input = keras.Input(shape=(224, 224, 3), name='image')
+metadata_input = keras.Input(shape=(10,), name='metadata')
+
+# Image branch
+x = keras.layers.Conv2D(32, 3, activation='relu')(image_input)
+x = keras.layers.GlobalAveragePooling2D()(x)
+
+# Metadata branch
+y = keras.layers.Dense(32, activation='relu')(metadata_input)
+
+# Merge branches
+combined = keras.layers.concatenate([x, y])
+output = keras.layers.Dense(1, activation='sigmoid')(combined)
+
+model = keras.Model(inputs=[image_input, metadata_input], outputs=output)
+```
+
+---
+
 ## 🤔 Reflection Questions
 
 1. **In the Keras code above, we added a `keras.layers.Dropout(0.2)` layer. What exactly does this do during training, and what does it do during the final testing/inference phase?**

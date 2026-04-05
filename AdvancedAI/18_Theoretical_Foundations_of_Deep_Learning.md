@@ -216,7 +216,45 @@ Simply stopping the training when Validation Error hits its lowest point (Early 
 
 ---
 
-## 4. Step-by-Step Code Breakdown: Analyzing Momentum Math
+## 5. The Bias-Variance Tradeoff (Kelleher)
+
+John D. Kelleher (*Deep Learning*) provides the clearest formalization of why models fail. Every prediction error can be mathematically decomposed into three components:
+
+<p align="center">
+  <img src="images/adv_ai_bias_variance.png" alt="Bias-Variance Tradeoff" width="800"/>
+</p>
+
+```
+Total Error = Bias² + Variance + Irreducible Noise
+```
+
+*   **High Bias (Underfitting):** The model is too simple. A linear model trying to fit curved data will always miss the pattern, no matter how much data you provide. It has strong assumptions that don't match reality.
+*   **High Variance (Overfitting):** The model is too complex. It fits the training data perfectly — including noise — but performs terribly on new data. Small changes in the training set cause wild changes in predictions.
+*   **The Sweet Spot:** The goal is to find the model complexity where the sum of Bias² + Variance is minimized.
+
+> **Kelleher's Practical Insight:** Deep neural networks have extremely low bias (they can fit anything) but extremely high variance (they memorize everything). This is why every regularization technique in this chapter — L1/L2, Dropout, Early Stopping, Data Augmentation — is an anti-variance weapon.
+
+---
+
+## 6. Dropout as Ensemble Learning (Nielsen)
+
+Michael Nielsen (*Neural Networks and Deep Learning*) provides a beautiful theoretical interpretation of Dropout that goes far beyond "randomly turning off neurons."
+
+<p align="center">
+  <img src="images/adv_ai_dropout_ensemble.png" alt="Dropout as Ensemble" width="800"/>
+</p>
+
+**Dropout is actually training an exponential ensemble of neural networks simultaneously.**
+
+Consider a network with `n` neurons and Dropout rate 0.5. Each training batch randomly selects which neurons are active, creating a unique sub-network. With `n` neurons, there are `2ⁿ` possible sub-networks. Over thousands of batches, you are effectively training thousands of different architectures.
+
+At test time, all neurons are active, but their weights are scaled by the Dropout probability `p`. This is mathematically equivalent to averaging the predictions of all `2ⁿ` sub-networks — a technique called **Model Averaging** that is known to dramatically reduce variance.
+
+> **Nielsen's Insight:** Dropout provides the regularization benefit of training an ensemble of `2ⁿ` different models — for the computational cost of training just one model. This is why Dropout is one of the most effective and widely-used regularization techniques in practice.
+
+---
+
+## 7. Step-by-Step Code Breakdown: Analyzing Momentum Math
 
 Let's break down exactly how the Adam Optimization logic works in the Python code above.
 

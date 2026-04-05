@@ -369,6 +369,75 @@ Combining all the techniques from Chapters 17–20, a real-world PyTorch project
 
 ---
 
+## 11. Sequence Models in PyTorch: RNN & LSTM
+
+Just as Keras provides `keras.layers.LSTM` (Chapter 19), PyTorch provides the equivalent with explicit control over the hidden state. Zhang (*Dive into Deep Learning*) covers these extensively.
+
+```python
+import torch.nn as nn
+
+class SentimentClassifier(nn.Module):
+    def __init__(self, vocab_size, embed_dim, hidden_dim):
+        super().__init__()
+        self.embedding = nn.Embedding(vocab_size, embed_dim)
+        self.lstm = nn.LSTM(embed_dim, hidden_dim, num_layers=2, 
+                           batch_first=True, dropout=0.3)
+        self.fc = nn.Linear(hidden_dim, 1)
+        self.sigmoid = nn.Sigmoid()
+    
+    def forward(self, x):
+        embedded = self.embedding(x)           # [batch, seq_len, embed_dim]
+        lstm_out, (hidden, cell) = self.lstm(embedded)  # hidden: final state
+        out = self.fc(hidden[-1])              # Use last layer's hidden state
+        return self.sigmoid(out)
+```
+
+> **PyTorch Advantage:** Unlike Keras, PyTorch gives you direct access to the hidden state `(hidden, cell)` at every time step. This is critical for attention mechanisms, beam search, and teacher forcing in sequence-to-sequence models.
+
+---
+
+## 12. The Transformer & Self-Attention: The Architecture Behind LLMs
+
+Aston Zhang (*Dive into Deep Learning*) provides the definitive treatment of the **Transformer** architecture — the foundation of GPT, BERT, LLaMA, and every modern LLM.
+
+<p align="center">
+  <img src="images/adv_ai_attention_mechanism.png" alt="Self-Attention Mechanism" width="800"/>
+</p>
+
+The breakthrough insight: instead of processing words one-at-a-time (like RNNs), the Transformer processes all words **simultaneously** using **Self-Attention**.
+
+### How Self-Attention Works
+For each word in a sentence, the model creates three vectors:
+*   **Query (Q):** "What am I looking for?"
+*   **Key (K):** "What do I contain?"
+*   **Value (V):** "What information should I pass on?"
+
+The attention score between word `i` and word `j` is computed as:
+```
+Attention(Q, K, V) = softmax(Q · Kᵀ / √d_k) · V
+```
+
+The division by `√d_k` is critical: without it, the dot products become too large, pushing the softmax into regions with near-zero gradients (the same vanishing gradient problem from Chapter 18, but in attention space).
+
+### Multi-Head Attention
+Instead of computing one set of attention scores, the Transformer runs `h` parallel attention heads, each learning to attend to different aspects of the input (syntax, semantics, co-reference). The outputs are concatenated and projected.
+
+```python
+# PyTorch Transformer Encoder:
+encoder_layer = nn.TransformerEncoderLayer(
+    d_model=512,      # Embedding dimension
+    nhead=8,           # Number of attention heads
+    dim_feedforward=2048,
+    dropout=0.1,
+    batch_first=True
+)
+transformer_encoder = nn.TransformerEncoder(encoder_layer, num_layers=6)
+```
+
+> **Zhang's Insight:** The Transformer's key advantage over RNNs is not just performance — it's **parallelization**. An RNN must process word 5 before word 6 (sequential). A Transformer computes attention for all words simultaneously on the GPU. This is why training GPT-4 on trillions of tokens became feasible.
+
+---
+
 ## 🤔 Reflection Questions
 
 1. **In the handmade PyTorch training loop above, why is the specific command `optimizer.zero_grad()` absolutely critical? What happens if you delete that line?**
