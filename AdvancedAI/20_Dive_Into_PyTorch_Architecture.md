@@ -39,6 +39,60 @@ You don't string together long functional pipelines. You create a Python Class t
 
 ---
 
+## 3. The Dataset & DataLoader Pipeline
+
+In the Dockerized example below, we use simple synthetic data. But in production, your data lives on disk (images, CSVs, databases). Martinez-Ramon emphasizes that the **Dataset + DataLoader** pattern is the standard engineering solution for feeding data to a PyTorch model.
+
+<p align="center">
+  <img src="images/adv_ai_pytorch_dataloader.png" alt="PyTorch DataLoader Pipeline" width="800"/>
+</p>
+
+*   **`torch.utils.data.Dataset`:** You create a custom Python class that defines two methods:
+    *   `__len__()`: Returns the total number of samples.
+    *   `__getitem__(index)`: Given an integer index, loads and returns a single sample (e.g., reads an image from disk, applies transformations, returns a tensor).
+*   **`torch.utils.data.DataLoader`:** Wraps a Dataset and provides:
+    *   **Automatic Batching:** Groups individual samples into mini-batches of a specified size.
+    *   **Shuffling:** Randomizes the order of data each epoch to prevent the model from learning the sequence.
+    *   **Parallel Loading (`num_workers`):** Spawns multiple background processes to load data from disk simultaneously, completely eliminating I/O bottlenecks.
+
+```python
+# Example custom Dataset:
+class ImageDataset(torch.utils.data.Dataset):
+    def __init__(self, image_paths, labels):
+        self.image_paths = image_paths
+        self.labels = labels
+
+    def __len__(self):
+        return len(self.image_paths)
+
+    def __getitem__(self, idx):
+        image = load_and_transform(self.image_paths[idx])
+        return image, self.labels[idx]
+
+# Wrap it in a DataLoader:
+train_loader = DataLoader(dataset, batch_size=32, shuffle=True, num_workers=4)
+```
+
+---
+
+## 4. Model Saving & Loading (`state_dict`)
+
+Martinez-Ramon highlights that PyTorch does **not** save the entire model object. Instead, it saves only the dictionary of learned parameters (the `state_dict`). This is critical for production deployment:
+
+```python
+# Save only the learned weights:
+torch.save(model.state_dict(), 'model_weights.pth')
+
+# Load them back into an identical architecture:
+new_model = AdvancedClassifier()  # Must define the same class structure
+new_model.load_state_dict(torch.load('model_weights.pth'))
+new_model.eval()  # Switch to inference mode (disables Dropout, etc.)
+```
+
+The `.eval()` call is essential: it switches the model from Training mode to Inference mode, which disables Dropout and changes BatchNorm to use stored running statistics instead of per-batch statistics.
+
+---
+
 ## 🐳 Dockerized Application: PyTorch Custom Class & Training Loop
 
 We will build a PyTorch application using the official CPU environment. Instead of the high-level `.fit()` we used in Keras, we will explicitly write a custom OOP class and handcraft the training loop so you can see exactly how the Autograd Engine works.

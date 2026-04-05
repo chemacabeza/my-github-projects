@@ -55,6 +55,44 @@ By the time the error signal reaches the very first layer, the gradient is `0.00
 
 ---
 
+## 3. Batch Normalization: Taming Internal Distributions
+
+Martinez-Ramon identifies **Internal Covariate Shift** as one of the most insidious practical problems in deep network training. As the network trains, the distribution of inputs to each layer changes constantly because the previous layer's weights are constantly updating. This forces each layer to continuously re-adapt to a moving target.
+
+<p align="center">
+  <img src="images/adv_ai_batch_norm.png" alt="Batch Normalization" width="800"/>
+</p>
+
+**Batch Normalization** (Ioffe & Szegedy, 2015) solves this by inserting a normalization step between each layer:
+
+1.  **Normalize:** For each mini-batch, compute the mean and variance of the activations. Normalize them to mean=0, variance=1.
+2.  **Scale and Shift:** Introduce two *learnable* parameters (γ and β) that allow the network to undo the normalization if it wants to. This ensures BatchNorm never reduces the network's representational power.
+
+**Practical Benefits:**
+*   Allows much higher learning rates (training is 5-10x faster)
+*   Acts as a mild regularizer (reducing the need for Dropout)
+*   Significantly reduces sensitivity to weight initialization
+*   Prevents activations from saturating in Sigmoid/Tanh networks
+
+> **Production Rule:** In modern practice, Batch Normalization layers are inserted after every linear/convolutional layer and *before* the activation function. This is the default in most production architectures (ResNet, EfficientNet, etc.).
+
+---
+
+## 4. Learning Rate Scheduling
+
+The learning rate is arguably the single most important hyperparameter in deep learning. Martinez-Ramon emphasizes that a fixed learning rate throughout training is almost never optimal.
+
+*   **Too high:** The optimizer will overshoot minima, oscillating wildly and potentially diverging to NaN.
+*   **Too low:** The optimizer will converge painfully slowly and get trapped in shallow local minima.
+
+Modern practice uses **Learning Rate Schedules** that adapt the rate during training:
+
+*   **Step Decay:** Reduce the learning rate by a factor (e.g., ×0.1) every N epochs. Simple and effective.
+*   **Cosine Annealing:** Smoothly decreases the learning rate following a cosine curve, potentially with warm restarts.
+*   **1cycle Policy:** Rapidly increases the learning rate to a maximum, then slowly decreases it. Discovered by Leslie Smith, this counter-intuitive approach often finds better minima and converges faster.
+
+---
+
 ## 🐳 Dockerized Application: Visualizing Optimizers
 
 Let's use `matplotlib` to visualize the difference between SGD and Adam. We will mathematically define a massive "Saddle Point" and watch how SGD gets stuck while Adam accelerates past it.

@@ -54,6 +54,33 @@ This looks intimidating, but programmatically, it means we calculate the error a
 
 ---
 
+## 3. The Universal Approximation Theorem
+
+Before we write any code, it is important to understand *why* neural networks can learn almost anything. The **Universal Approximation Theorem** (proven by Cybenko in 1989) states that a feedforward network with a single hidden layer containing a finite number of neurons can approximate any continuous function on a compact subset of ℝⁿ, to any desired degree of accuracy.
+
+In practical terms: if you give a neural network enough neurons and enough training data, it can theoretically learn *any* mathematical relationship. The question is never "Can a neural network learn this?" but rather "How many neurons, how much data, and how long will it take?"
+
+---
+
+## 4. Weight Initialization: Why Starting Conditions Matter
+
+In the code below, we initialize weights with `np.random.uniform(-1, 1, ...)`. Martinez-Ramon emphasizes that this choice is not trivial — it is one of the most critical practical decisions in deep learning engineering.
+
+<p align="center">
+  <img src="images/adv_ai_weight_init.png" alt="Weight Initialization Strategies" width="800"/>
+</p>
+
+If all weights start at the same value (e.g., zero), every neuron in a layer computes the exact same output, receives the exact same gradient, and updates identically. The network never breaks symmetry and cannot learn anything useful. This is called the **Symmetry Breaking Problem**.
+
+Modern frameworks solve this with mathematically calibrated initialization:
+
+*   **Xavier/Glorot Initialization:** Draws weights from a distribution scaled by: `Var(W) = 2 / (fan_in + fan_out)`. This keeps the variance of activations stable across layers when using **Sigmoid** or **Tanh** activations. It prevents the outputs from either saturating (all near 0 or 1) or exploding.
+*   **He Initialization:** Draws weights from: `Var(W) = 2 / fan_in`. Designed specifically for **ReLU** activations. Because ReLU kills half the neurons (those with negative inputs), He initialization compensates by using a wider spread to keep the surviving neurons' signal strong.
+
+> **Practical Rule of Thumb:** Use **He initialization** with ReLU networks (the modern default). Use **Xavier** only if you are using Sigmoid or Tanh activations.
+
+---
+
 ## 🐳 Dockerized Application: Raw Numpy Neural Network
 
 Let's build a simple 2-layer Neural Network that learns the XOR logic gate, utilizing ONLY raw Python and NumPy. We explicitly write out the Forward pass and the Backpropagation Chain Rule.

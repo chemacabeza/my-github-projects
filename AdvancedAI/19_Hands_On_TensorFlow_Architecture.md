@@ -46,6 +46,55 @@ The `tf.data` API solves this by moving data loading entirely into the C++ backe
 
 ---
 
+## 3. Production Callbacks: Automating Training Decisions
+
+Martinez-Ramon emphasizes that in production, you never sit and watch your model train for 8 hours. Instead, you use **Callbacks** — automated hooks that execute logic at the end of each epoch.
+
+<p align="center">
+  <img src="images/adv_ai_keras_callbacks.png" alt="Keras Callbacks in Production" width="800"/>
+</p>
+
+The three most critical production callbacks are:
+
+*   **`EarlyStopping`:** Monitors the Validation Loss. If it stops improving for a set number of epochs (called `patience`), training is automatically halted. This prevents overfitting and saves hours of wasted GPU compute.
+*   **`ModelCheckpoint`:** Saves the model weights to disk every time the Validation Loss reaches a new minimum. Even if the model later overfits, you always have the best-performing snapshot saved.
+*   **`ReduceLROnPlateau`:** If the loss plateaus (stops improving) for several epochs, automatically reduces the learning rate by a factor (e.g., ×0.1). This allows the optimizer to make finer adjustments when it's close to a minimum.
+
+```python
+# Example Keras callback configuration:
+callbacks = [
+    keras.callbacks.EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True),
+    keras.callbacks.ModelCheckpoint('best_model.keras', save_best_only=True),
+    keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5)
+]
+model.fit(x_train, y_train, epochs=100, validation_split=0.2, callbacks=callbacks)
+```
+
+> **Production Rule:** You should almost never call `model.fit()` without at least `EarlyStopping` and `ModelCheckpoint`. Training without these callbacks is like driving without brakes — you will eventually crash.
+
+---
+
+## 4. Data Augmentation: Free Training Data
+
+One of the most practical techniques Martinez-Ramon highlights is **Data Augmentation**. Instead of collecting more data (which is expensive), you can synthetically multiply your existing dataset by applying random transformations:
+
+*   **For images:** Random flips, rotations, crops, brightness/contrast adjustments, color jitter
+*   **For text:** Synonym replacement, random insertion, back-translation
+*   **For audio:** Time stretching, pitch shifting, noise injection
+
+In Keras, this is built directly into the pipeline:
+```python
+data_augmentation = keras.Sequential([
+    keras.layers.RandomFlip("horizontal"),
+    keras.layers.RandomRotation(0.1),
+    keras.layers.RandomZoom(0.1),
+])
+```
+
+Augmentation acts as a powerful regularizer: because the model never sees the exact same image twice, it is forced to learn generalized features rather than memorizing specific pixel patterns.
+
+---
+
 ## 🐳 Dockerized Application: Keras CNN Classification
 
 Let's build a functional, scalable TensorFlow prototype. We will use the `tensorflow/tensorflow:latest` Docker image. We'll use the intuitive Keras API to build a Convolutional Neural Network (CNN) to classify images (MNIST dataset) using a standard sequential approach.
