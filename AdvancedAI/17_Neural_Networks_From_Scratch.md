@@ -224,6 +224,286 @@ To run this:
 
 ---
 
+## 🐳 Dockerized Application: Java Neural Network (Maven)
+
+The neural network math above is entirely language-agnostic. To prove it, let's implement the **exact same XOR network** in pure Java — no ML libraries, just raw matrix math. This demonstrates that the concepts you learned in the Python version translate directly to the JVM ecosystem.
+
+<p align="center">
+  <img src="images/adv_ai_java_nn.png" alt="Java Neural Network Implementation" width="800"/>
+</p>
+
+### Project Structure
+```
+java-neural-network/
+├── docker-compose.yml
+├── Dockerfile
+├── pom.xml
+└── src/
+    └── main/
+        └── java/
+            └── com/
+                └── neuralnet/
+                    ├── NeuralNetwork.java
+                    └── App.java
+```
+
+### `docker-compose.yml`
+```yaml
+version: '3.8'
+services:
+  java_nn:
+    build: .
+    container_name: java_neural_network
+```
+
+### `Dockerfile`
+```dockerfile
+# Stage 1: Build with Maven
+FROM maven:3.9-eclipse-temurin-21 AS build
+WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package -q
+
+# Stage 2: Run with lightweight JRE
+FROM eclipse-temurin:21-jre-alpine
+WORKDIR /app
+COPY --from=build /app/target/neural-network-1.0.jar app.jar
+CMD ["java", "-jar", "app.jar"]
+```
+
+### `pom.xml`
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.neuralnet</groupId>
+    <artifactId>neural-network</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.neuralnet.App</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+```
+
+### `src/main/java/com/neuralnet/NeuralNetwork.java`
+```java
+package com.neuralnet;
+
+import java.util.Random;
+
+/**
+ * A 2-layer Neural Network built from scratch in pure Java.
+ * No ML libraries — just raw matrix math identical to the NumPy version above.
+ *
+ * Architecture: [2 inputs] -> [4 hidden neurons] -> [1 output]
+ * Activation: Sigmoid
+ * Task: Learn the XOR logic gate
+ */
+public class NeuralNetwork {
+
+    private final double[][] weightsIH;  // Input -> Hidden [2x4]
+    private final double[] biasH;        // Hidden biases [4]
+    private final double[][] weightsHO;  // Hidden -> Output [4x1]
+    private final double[] biasO;        // Output biases [1]
+    private final double learningRate;
+
+    // Cached activations for backpropagation
+    private double[] hiddenActivations;
+    private double[] outputActivations;
+
+    public NeuralNetwork(double learningRate) {
+        this.learningRate = learningRate;
+        Random rng = new Random(42);
+
+        // Initialize weights randomly between -1 and 1 (same as NumPy version)
+        weightsIH = new double[2][4];
+        biasH = new double[4];
+        weightsHO = new double[4][1];
+        biasO = new double[1];
+
+        for (int i = 0; i < 2; i++)
+            for (int j = 0; j < 4; j++)
+                weightsIH[i][j] = rng.nextDouble() * 2 - 1;
+
+        for (int j = 0; j < 4; j++)
+            biasH[j] = rng.nextDouble() * 2 - 1;
+
+        for (int i = 0; i < 4; i++)
+            weightsHO[i][0] = rng.nextDouble() * 2 - 1;
+
+        biasO[0] = rng.nextDouble() * 2 - 1;
+    }
+
+    // --- Activation Function ---
+    private double sigmoid(double x) {
+        return 1.0 / (1.0 + Math.exp(-x));
+    }
+
+    private double sigmoidDerivative(double activated) {
+        return activated * (1.0 - activated);  // Assumes input is already activated
+    }
+
+    // --- Forward Pass: Z = X · W + b, A = sigmoid(Z) ---
+    public double[] forwardPass(double[] inputs) {
+        // Layer 1: Input -> Hidden
+        hiddenActivations = new double[4];
+        for (int j = 0; j < 4; j++) {
+            double sum = biasH[j];
+            for (int i = 0; i < inputs.length; i++) {
+                sum += inputs[i] * weightsIH[i][j];  // This IS np.dot(X, W1)
+            }
+            hiddenActivations[j] = sigmoid(sum);
+        }
+
+        // Layer 2: Hidden -> Output
+        outputActivations = new double[1];
+        double sum = biasO[0];
+        for (int i = 0; i < 4; i++) {
+            sum += hiddenActivations[i] * weightsHO[i][0];  // np.dot(A1, W2)
+        }
+        outputActivations[0] = sigmoid(sum);
+
+        return outputActivations;
+    }
+
+    // --- Backward Pass: The Chain Rule (identical math to NumPy version) ---
+    public void backpropagate(double[] inputs, double[] targets) {
+        // Step 1: Output error gradient
+        // dZ2 = error * sigmoid_derivative(A2)
+        double outputError = targets[0] - outputActivations[0];
+        double deltaOutput = outputError * sigmoidDerivative(outputActivations[0]);
+
+        // Step 2: Hidden layer error gradient
+        // hidden_error = np.dot(dZ2, W2.T)
+        double[] deltaHidden = new double[4];
+        for (int i = 0; i < 4; i++) {
+            double hiddenError = deltaOutput * weightsHO[i][0];
+            deltaHidden[i] = hiddenError * sigmoidDerivative(hiddenActivations[i]);
+        }
+
+        // Step 3: Update Hidden->Output weights
+        // W2 += np.dot(A1.T, dZ2) * learning_rate
+        for (int i = 0; i < 4; i++) {
+            weightsHO[i][0] += learningRate * deltaOutput * hiddenActivations[i];
+        }
+        biasO[0] += learningRate * deltaOutput;
+
+        // Step 4: Update Input->Hidden weights
+        // W1 += np.dot(X.T, dZ1) * learning_rate
+        for (int i = 0; i < inputs.length; i++) {
+            for (int j = 0; j < 4; j++) {
+                weightsIH[i][j] += learningRate * deltaHidden[j] * inputs[i];
+            }
+        }
+        for (int j = 0; j < 4; j++) {
+            biasH[j] += learningRate * deltaHidden[j];
+        }
+    }
+}
+```
+
+### `src/main/java/com/neuralnet/App.java`
+```java
+package com.neuralnet;
+
+public class App {
+
+    public static void main(String[] args) {
+        System.out.println("\uD83E\uDDE0 Java Neural Network — Learning XOR from Scratch");
+        System.out.println("============================================");
+
+        // XOR Training Data (same as the NumPy version)
+        double[][] inputs = {
+            {0, 0},
+            {0, 1},
+            {1, 0},
+            {1, 1}
+        };
+        double[][] targets = {
+            {0},
+            {1},
+            {1},
+            {0}
+        };
+
+        NeuralNetwork nn = new NeuralNetwork(0.5);
+        int epochs = 10000;
+
+        System.out.println("\n\uD83D\uDD25 Commencing Training Loop...");
+        long startTime = System.currentTimeMillis();
+
+        for (int epoch = 0; epoch < epochs; epoch++) {
+            double totalError = 0;
+
+            for (int sample = 0; sample < inputs.length; sample++) {
+                // Forward Pass
+                double[] output = nn.forwardPass(inputs[sample]);
+
+                // Calculate error for logging
+                totalError += Math.abs(targets[sample][0] - output[0]);
+
+                // Backward Pass + Weight Update
+                nn.backpropagate(inputs[sample], targets[sample]);
+            }
+
+            if (epoch % 2000 == 0) {
+                System.out.printf("Epoch %5d | Mean Absolute Error: %.4f%n",
+                    epoch, totalError / inputs.length);
+            }
+        }
+
+        long elapsed = System.currentTimeMillis() - startTime;
+        System.out.printf("%n\u2705 Training Complete in %d ms.%n", elapsed);
+
+        // Final Predictions
+        System.out.println("\n\uD83C\uDFAF Final Predictions:");
+        System.out.println("----------------------------");
+        for (int i = 0; i < inputs.length; i++) {
+            double[] prediction = nn.forwardPass(inputs[i]);
+            System.out.printf("  Input: [%.0f, %.0f] -> Predicted: %.4f | Expected: %.0f%n",
+                inputs[i][0], inputs[i][1], prediction[0], targets[i][0]);
+        }
+        System.out.println("----------------------------");
+        System.out.println("Notice how the network correctly predicts ~0, ~1, ~1, ~0!");
+    }
+}
+```
+
+To run this:
+1. Create the project structure as shown above.
+2. Run `docker-compose up --build`.
+3. The multi-stage Docker build compiles with Maven and runs with a minimal JRE Alpine image (~200MB instead of ~800MB).
+
+> **Java vs Python comparison:** The Java version performs the **exact same mathematics** (matrix multiply, sigmoid, chain rule backpropagation). The key differences are syntactic: Python's `np.dot(X, W1)` becomes explicit nested `for` loops in Java, and NumPy broadcasting becomes manual array indexing. The underlying linear algebra is identical.
+
+---
+
 ## 3. Theoretical Deep Dive: Maximum Likelihood Estimation
 
 In basic tutorials, the Loss Function is often glossed over as a simple "error calculation" (like Mean Squared Error). However, modern deep learning (as formulated by Ian Goodfellow and Yoshua Bengio) roots neural networks strictly in **Information Theory** and **Probability**.
