@@ -221,6 +221,154 @@ Because PyTorch doesn't have a high-level `.fit()` wrapper like Keras, you are r
 
 ---
 
+## 6. Transfer Learning in PyTorch
+
+Just as Géron covers Transfer Learning extensively for Keras (Chapter 19), the same powerful technique is equally critical in PyTorch. The `torchvision.models` module provides dozens of pretrained architectures.
+
+<p align="center">
+  <img src="images/adv_ai_transfer_learning.png" alt="Transfer Learning" width="800"/>
+</p>
+
+The PyTorch approach follows the same three-step pattern, but uses explicit OOP manipulation:
+
+```python
+import torchvision.models as models
+import torch.nn as nn
+
+# Step 1: Load a pretrained ResNet18 (trained on 14M ImageNet images)
+model = models.resnet18(pretrained=True)
+
+# Step 2: Freeze ALL existing layers
+for param in model.parameters():
+    param.requires_grad = False  # Gradients won't flow here during backward()
+
+# Step 3: Replace the final classification layer with our own
+# ResNet18's final layer is 'model.fc' with 512 inputs and 1000 outputs
+# We replace it with our own 2-class classifier
+model.fc = nn.Sequential(
+    nn.Linear(512, 256),
+    nn.ReLU(),
+    nn.Dropout(0.5),
+    nn.Linear(256, 2)  # Binary classification
+)
+
+# Only the new 'model.fc' parameters are trainable!
+optimizer = optim.Adam(model.fc.parameters(), lr=0.001)
+```
+
+> **Key Difference from TensorFlow:** In PyTorch, you freeze layers by setting `param.requires_grad = False` on individual parameters, giving you fine-grained control over exactly which weights to freeze or unfreeze. In Keras, you typically freeze entire layers via `layer.trainable = False`.
+
+### Fine-Tuning: Unfreezing Gradually
+After the new head has learned your task, you can optionally unfreeze some of the deeper pretrained layers and train at a very low learning rate. This allows the pretrained features to slightly adapt to your specific domain:
+
+```python
+# Unfreeze the last residual block for fine-tuning
+for param in model.layer4.parameters():
+    param.requires_grad = True
+
+# Use a much smaller learning rate for pretrained layers
+optimizer = optim.Adam([
+    {'params': model.fc.parameters(), 'lr': 1e-3},       # New layers: higher LR
+    {'params': model.layer4.parameters(), 'lr': 1e-5},    # Pretrained: very low LR
+])
+```
+
+---
+
+## 7. TorchScript: Production Deployment
+
+Géron covers TensorFlow's SavedModel and TF Serving for deployment. The PyTorch equivalent is **TorchScript** — a way to serialize your model into a format that can run outside of Python entirely.
+
+There are two approaches:
+
+### Tracing
+```python
+# Feed an example input through the model; TorchScript records all operations
+example_input = torch.randn(1, 10)
+traced_model = torch.jit.trace(model, example_input)
+traced_model.save('model_traced.pt')
+
+# Load and run in ANY environment (C++, mobile, no Python needed):
+loaded = torch.jit.load('model_traced.pt')
+output = loaded(example_input)
+```
+
+### Scripting (for models with control flow)
+```python
+# If your forward() has if/else branches, tracing won't capture all paths.
+# Use scripting instead:
+scripted_model = torch.jit.script(model)
+scripted_model.save('model_scripted.pt')
+```
+
+> **When to use which:** Use **Tracing** for simple, linear models. Use **Scripting** for models with `if/else`, `for` loops, or dynamic behavior in `forward()`. Scripting preserves the full Python control flow.
+
+---
+
+## 8. Mixed Precision Training
+
+Modern NVIDIA GPUs (Volta architecture and newer) have specialized **Tensor Cores** that can perform half-precision (FP16) matrix multiplications 2-8× faster than full-precision (FP32). Géron covers this for TensorFlow; here is the PyTorch equivalent:
+
+```python
+from torch.cuda.amp import autocast, GradScaler
+
+scaler = GradScaler()  # Prevents underflow in FP16
+
+for epoch in range(epochs):
+    optimizer.zero_grad()
+    
+    with autocast():  # Automatically uses FP16 where safe, FP32 where needed
+        predictions = model(X)
+        loss = criterion(predictions, y)
+    
+    # Scale loss to prevent gradient underflow, then backward
+    scaler.scale(loss).backward()
+    scaler.step(optimizer)
+    scaler.update()
+```
+
+**Why this matters:** Mixed precision training can cut your training time nearly in half while using 30-50% less GPU memory, allowing you to train larger models or use bigger batch sizes on the same hardware.
+
+---
+
+## 9. Gradient Accumulation: Training with Limited Memory
+
+When your GPU doesn't have enough memory to process a large batch (e.g., batch_size=256 for a ResNet50), you can simulate large batches by accumulating gradients over multiple small forward passes:
+
+```python
+accumulation_steps = 4  # Simulate batch_size = 4 * 32 = 128
+
+for i, (x_batch, y_batch) in enumerate(train_loader):
+    predictions = model(x_batch)  # batch_size=32
+    loss = criterion(predictions, y_batch) / accumulation_steps
+    loss.backward()  # Gradients accumulate (no zero_grad yet!)
+    
+    if (i + 1) % accumulation_steps == 0:
+        optimizer.step()    # Apply accumulated gradients
+        optimizer.zero_grad()  # NOW clear them
+```
+
+> **Why this works:** Remember from Section 5 that `loss.backward()` *adds* gradients to `.grad`. By deliberately skipping `zero_grad()` for 4 iterations and then calling `optimizer.step()`, we get the mathematical equivalent of training on a batch 4× larger — without ever loading 4× the data into GPU memory.
+
+---
+
+## 10. Putting It All Together: The Complete Production Pipeline
+
+Combining all the techniques from Chapters 17–20, a real-world PyTorch project follows this structure:
+
+```
+1. Data Pipeline:       Dataset + DataLoader (num_workers, prefetching)
+2. Architecture:        Pretrained model via Transfer Learning
+3. Training Loop:       Mixed Precision + Gradient Accumulation
+4. Regularization:      Dropout + BatchNorm + Data Augmentation
+5. Optimization:        Adam + Learning Rate Scheduling
+6. Monitoring:          Track train/val loss, early stopping logic
+7. Saving:              state_dict checkpoints at best validation score
+8. Deployment:          TorchScript export for production inference
+```
+
+---
+
 ## 🤔 Reflection Questions
 
 1. **In the handmade PyTorch training loop above, why is the specific command `optimizer.zero_grad()` absolutely critical? What happens if you delete that line?**

@@ -198,6 +198,170 @@ Let's demystify exactly what the high-level Keras wrapper is doing under the hoo
 
 ---
 
+## 6. Convolutional Neural Networks (CNNs): How Machines See
+
+Géron dedicates extensive coverage to **Convolutional Neural Networks**, the architecture that powers all modern computer vision. Unlike the Dense (fully connected) layers we used above, CNNs exploit the spatial structure of images.
+
+<p align="center">
+  <img src="images/adv_ai_cnn_architecture.png" alt="CNN Architecture" width="800"/>
+</p>
+
+A CNN works by sliding small **filters** (typically 3×3 or 5×5 grids of weights) across the input image:
+
+1.  **Convolutional Layer:** A 3×3 filter slides across every position of the image, performing element-wise multiplication and summing the results. Each filter learns to detect one specific feature (edges, corners, textures). Multiple filters stack together to create a **Feature Map**.
+2.  **Pooling Layer (MaxPool):** Reduces the spatial dimensions by taking only the maximum value in each small region (e.g., 2×2). This makes the network **translation-invariant** — it doesn't matter if the cat is in the top-left or bottom-right of the image.
+3.  **Progressive Depth:** Multiple Conv+Pool stages progressively reduce spatial resolution while increasing the number of feature channels. Early layers detect edges; deep layers detect complex shapes like eyes and faces.
+4.  **Classification Head:** After the final pooling layer, the 3D tensor is flattened into a 1D vector and fed into standard Dense layers for classification.
+
+```python
+# Géron-style CNN in Keras:
+model = keras.Sequential([
+    keras.layers.Conv2D(32, (3,3), activation='relu', input_shape=(28,28,1)),
+    keras.layers.MaxPooling2D((2,2)),
+    keras.layers.Conv2D(64, (3,3), activation='relu'),
+    keras.layers.MaxPooling2D((2,2)),
+    keras.layers.Conv2D(64, (3,3), activation='relu'),
+    keras.layers.Flatten(),
+    keras.layers.Dense(64, activation='relu'),
+    keras.layers.Dense(10, activation='softmax')
+])
+```
+
+> **Key Insight from Géron:** The parameter count in CNNs is dramatically lower than Dense networks because the same small filter is reused ("shared") across the entire image. A 3×3 filter has only 9 weights, but a Dense layer connecting 784 inputs to 128 neurons has 100,352 weights.
+
+---
+
+## 7. Transfer Learning: Standing on the Shoulders of Giants
+
+Géron argues that **Transfer Learning** is the single most important practical technique in modern deep learning. Instead of training a model from scratch on your small dataset, you take a model that was already trained on millions of images and fine-tune it for your specific task.
+
+<p align="center">
+  <img src="images/adv_ai_transfer_learning.png" alt="Transfer Learning" width="800"/>
+</p>
+
+The process has three steps:
+
+1.  **Load a Pretrained Base Model:** Download a model like ResNet50, EfficientNet, or MobileNet that was trained on ImageNet (14 million images, 1000 classes). These models have already learned universal visual features: edges, textures, shapes, object parts.
+2.  **Freeze the Base Layers:** Lock all the pretrained weights so they do not change during training. These layers are your free, pre-learned feature extractors.
+3.  **Add and Train New Layers:** Replace the original classification head with your own Dense layers specific to your task (e.g., "Dog vs Cat" or "Malignant vs Benign tumor").
+
+```python
+# Transfer Learning in Keras (Géron's approach):
+base_model = keras.applications.ResNet50(weights='imagenet', include_top=False, input_shape=(224,224,3))
+base_model.trainable = False  # Freeze all 23 million pretrained parameters
+
+model = keras.Sequential([
+    base_model,
+    keras.layers.GlobalAveragePooling2D(),
+    keras.layers.Dense(256, activation='relu'),
+    keras.layers.Dropout(0.5),
+    keras.layers.Dense(2, activation='softmax')  # Your 2-class problem
+])
+```
+
+> **Géron's Rule:** With Transfer Learning, you can achieve 95%+ accuracy on custom image classification tasks with as few as **500 training images**. Training from scratch would require 50,000+ images to achieve similar results.
+
+---
+
+## 8. Custom Training Loops with `tf.GradientTape`
+
+Géron covers the `tf.GradientTape` API extensively for cases where `model.fit()` is too restrictive. This is the TensorFlow equivalent to the manual PyTorch training loop in Chapter 20.
+
+<p align="center">
+  <img src="images/adv_ai_custom_training.png" alt="GradientTape vs model.fit" width="800"/>
+</p>
+
+You need `GradientTape` when you need:
+*   **Custom loss functions** that combine multiple terms
+*   **Gradient clipping** to prevent exploding gradients
+*   **Multi-model training** (e.g., GANs where two models train adversarially)
+*   **Custom metrics** computed during training
+
+```python
+@tf.function  # Compile to static graph for speed
+def train_step(x_batch, y_batch):
+    with tf.GradientTape() as tape:
+        predictions = model(x_batch, training=True)
+        loss = loss_fn(y_batch, predictions)
+    
+    # Calculate gradients
+    gradients = tape.gradient(loss, model.trainable_variables)
+    
+    # Optional: Clip gradients to prevent explosion
+    gradients = [tf.clip_by_norm(g, 1.0) for g in gradients]
+    
+    # Apply gradients
+    optimizer.apply_gradients(zip(gradients, model.trainable_variables))
+    return loss
+```
+
+---
+
+## 9. Deploying TensorFlow Models to Production
+
+Géron dedicates an entire chapter to model deployment. A model that only runs in a Jupyter notebook is worthless. TensorFlow provides a complete deployment ecosystem:
+
+<p align="center">
+  <img src="images/adv_ai_tf_deployment.png" alt="TensorFlow Deployment Pipeline" width="800"/>
+</p>
+
+### SavedModel Format
+The universal export format that captures everything: the computation graph, the weights, and the preprocessing logic.
+```python
+model.save('my_model')  # Exports a SavedModel directory
+loaded_model = tf.keras.models.load_model('my_model')  # Loads it back perfectly
+```
+
+### TF Serving (Cloud/Server)
+A high-performance Docker-based serving system that exposes your model as a REST API or gRPC endpoint. It handles batching, model versioning, and hot-swapping new model versions with zero downtime.
+```bash
+docker run -p 8501:8501 --mount type=bind,source=/models/my_model,target=/models/my_model \
+  -e MODEL_NAME=my_model tensorflow/serving
+```
+
+### TF Lite (Mobile/Edge)
+Converts and quantizes your model for mobile phones and embedded devices. Reduces model size by 4× and inference latency by 3× through techniques like **post-training quantization** (converting 32-bit floats to 8-bit integers).
+
+### TensorFlow.js (Browser)
+Runs your model directly in the user's browser via WebGL acceleration. No server needed — the inference happens entirely on the client device.
+
+---
+
+## 10. Custom Layers and Custom Loss Functions
+
+Géron emphasizes that real-world projects almost always require custom components. Keras makes it straightforward to create your own:
+
+### Custom Loss Function
+```python
+def huber_loss(y_true, y_pred, delta=1.0):
+    error = y_true - y_pred
+    is_small_error = tf.abs(error) < delta
+    small_error_loss = 0.5 * tf.square(error)
+    big_error_loss = delta * (tf.abs(error) - 0.5 * delta)
+    return tf.where(is_small_error, small_error_loss, big_error_loss)
+
+model.compile(loss=huber_loss, optimizer='adam')
+```
+
+### Custom Layer
+```python
+class MyDenseLayer(keras.layers.Layer):
+    def __init__(self, units, **kwargs):
+        super().__init__(**kwargs)
+        self.units = units
+
+    def build(self, input_shape):
+        self.kernel = self.add_weight("kernel", shape=[input_shape[-1], self.units])
+        self.bias = self.add_weight("bias", shape=[self.units])
+
+    def call(self, inputs):
+        return tf.matmul(inputs, self.kernel) + self.bias  # The Z = X·W + b from Ch.17!
+```
+
+> **Géron's Insight:** The `build()` method uses **lazy initialization** — the weight matrices are not created until the layer first receives data. This allows the same layer class to work with any input size without hardcoding dimensions.
+
+---
+
 ## 🤔 Reflection Questions
 
 1. **In the Keras code above, we added a `keras.layers.Dropout(0.2)` layer. What exactly does this do during training, and what does it do during the final testing/inference phase?**
@@ -213,6 +377,20 @@ During **Testing/Inference**, Keras automatically turns Dropout OFF. You want yo
 <summary>💡 View Answer</summary>
 
 You caused a **Context Switch**. TensorFlow is trying to run optimized graph code on the GPU. But because you injected raw standard Python code (or raw `numpy` arrays) into the pipeline, the GPU has to halt execution, transfer that specific matrix *back over the PCIe bus into the CPU's memory*, ask Python to run the slow calculation natively, and transfer it back to the GPU. You must use native TensorFlow mathematical operators (e.g., `tf.math.reduce_sum`) so it stays inside the compiled static graph on the accelerator.
+</details>
+
+3. **You want to build a classifier that identifies 5 species of flowers, but you only have 200 images total. What approach from this chapter would you use, and why?**
+<details>
+<summary>💡 View Answer</summary>
+
+**Transfer Learning.** With only 200 images, training a CNN from scratch would massively overfit — the model would memorize every training image. Instead, load a pretrained ResNet or EfficientNet (trained on 14M ImageNet images), freeze all convolutional layers, and only train a new classification head. The pretrained layers already know how to detect edges, shapes, and textures. You just need to teach the final layer what "a daisy" vs "a sunflower" looks like using your 200 examples. Combine with aggressive Data Augmentation to artificially expand your dataset.
+</details>
+
+4. **Explain the difference between `model.save('my_model')` using SavedModel format vs `model.save('my_model.h5')` using HDF5 format. When would you use each?**
+<details>
+<summary>💡 View Answer</summary>
+
+**SavedModel** is TensorFlow's native format that saves the full computation graph, weights, optimizer state, and custom objects. It is required for TF Serving deployment and supports `@tf.function` traced functions. **HDF5 (.h5)** is the older Keras format that saves weights and architecture but cannot serialize arbitrary TensorFlow operations or custom `@tf.function` code. Géron recommends using SavedModel for all production workflows and HDF5 only for quick prototyping or legacy compatibility.
 </details>
 
 ---
