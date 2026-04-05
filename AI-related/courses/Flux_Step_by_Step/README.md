@@ -16,7 +16,7 @@ The value provided is remarkable, far exceeding expectations for an online cours
 
 Overall, this is a truly exceptional course that provides immense value and equips learners with the tools needed to succeed. Highly recommended for anyone looking to gain both knowledge and confidence in this fast-growing field.
 
-## Intructor
+## Instructor
 
 The instructor of this course in Udemy is <a href="https://www.linkedin.com/in/dominik-felber-32b71812a/">Dominik Felber</a>.
 

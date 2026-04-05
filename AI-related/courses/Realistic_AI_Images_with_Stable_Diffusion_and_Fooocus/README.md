@@ -16,7 +16,7 @@ The value provided is remarkable: this course delivers premium content with prof
 
 In summary, this is an exceptional course that empowers creators, designers, and AI enthusiasts alike to master realistic image generation. Highly recommended for anyone serious about pushing creative boundaries with modern tools.
 
-## Intructor
+## Instructor
 
 The instructor of this course in Udemy is <a href="https://www.linkedin.com/in/dominik-felber-32b71812a/">Dominik Felber</a>.
 
