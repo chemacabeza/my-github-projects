@@ -1,5 +1,9 @@
 # Expert Tips & Advanced Workflows
 
+<p align="center">
+    <img src="images/cover.png" width="600"/>
+</p>
+
 > [!NOTE]
 > This section contains supplementary expert tips and advanced workflows to supercharge your AI creation process using custom tools.
 

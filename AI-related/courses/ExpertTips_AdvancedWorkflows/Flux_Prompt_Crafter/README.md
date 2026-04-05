@@ -1,5 +1,9 @@
 # Creating a Custom GPT for Flux Prompts
 
+<p align="center">
+    <img src="images/cover.png" width="600"/>
+</p>
+
 You can automate the creation of high-quality Flux prompts by building a specific **Custom GPT** in ChatGPT (Plus subscription required). This ensures every prompt follows best practices for photorealism and style.
 
 ---

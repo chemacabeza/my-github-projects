@@ -1,5 +1,9 @@
 # Creating LoRAs on CivitAI
 
+<p align="center">
+    <img src="images/cover.png" width="600"/>
+</p>
+
 You can train and publish your own custom **LoRA** (Low-Rank Adaptation) models directly inside [CivitAI](https://civitai.green/) using their built-in **Onsite Training** feature — no local GPU required.
 
 ---

@@ -1,5 +1,9 @@
 # Kling AI Video Prompt Generator
 
+<p align="center">
+    <img src="images/cover.png" width="600"/>
+</p>
+
 ## Overview
 
 This guide shows you how to create a Custom GPT that generates professional video prompts for Kling AI's **VIDEO 2.1 Master** model. 
