@@ -1,4 +1,4 @@
-4# 17: Neural Networks From Scratch
+## 17: Neural Networks From Scratch
 
 <p align="center">
   <img src="images/adv_ai_nn_scratch_cover.png" alt="Neural Networks From Scratch" width="900"/>
