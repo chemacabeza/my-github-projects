@@ -4,7 +4,9 @@
   <img src="images/sd_cdn_cover.png" alt="CDN Global Infrastructure" width="900"/>
 </p>
 
-## 🎯 The Big Goal
+> 🧠 **The Feynman Hook:** A CDN is a global franchise chain with local warehouses. If a book publisher in New York ships every book order directly to every customer worldwide, a Tokyo reader waits 2 weeks. Instead, the publisher ships a pallet of books to their Tokyo warehouse (CDN edge), and Tokyo customers receive their order in 1 day from the local warehouse. The Tokyo warehouse only stocks what Tokyo people actually order (Pull CDN), unless you know in advance a new Harry Potter book will be in massive demand globally — in which case you ship the pallets to all warehouses before demand hits (Push CDN).
+
+## 🎯 What You'll Learn
 
 > **After this chapter, you will understand the critical role Content Delivery Networks (CDNs) play in serving massive global traffic. You will master the differences between Pull vs Push strategies, understand the Cache Hierarchy, and learn how edge networks invalidate stale data to ensure users always receive the fastest, most up-to-date web experience possible.**
 
@@ -43,6 +45,8 @@ In a Push model, you (the engineer) write a script that proactively uploads data
 
 ## 2. Understanding the Cache Hierarchy
 
+> **Feynman Insight:** Cache tiers work like a Michelin-star restaurant's supply chain. The chef's counter (browser cache) has today's mise-en-place ready instantly. The kitchen larder (Edge PoP) has this week's ingredients. The regional distribution centre (Shield) has this month's seasonal produce from the region. The central farm (Origin) has everything, but it's the slowest to deliver. Each tier protects the one below it from being overwhelmed by direct requests.
+
 Caching is not just a single layer. Modern CDN architectures employ a deeply layered hierarchy to maximize **Cache Hit Ratios** and protect the Origin Server from collapsing under heavy load.
 
 <p align="center">
@@ -58,6 +62,8 @@ Caching is not just a single layer. Modern CDN architectures employ a deeply lay
 ---
 
 ## 3. The Hardest Problem: Cache Invalidation
+
+> **Feynman Insight:** Cache invalidation is changing the price tag on every copy of a product sitting in 200 warehouses worldwide. TTL (time-based) is putting a "best before" date on the price tag — the warehouse will automatically check for a new price when the date expires. API Purge is sending an urgent recall notice to all warehouses to bin the old tags immediately. Versioned URLs (Content Fingerprinting) is the cleverest: simply rename the product so every warehouse orders fresh stock automatically — the old product gathers dust harmlessly while the new named product fills its own shelves.
 
 As the famous engineering quote goes: *"There are only two hard things in Computer Science: cache invalidation and naming things."*
 

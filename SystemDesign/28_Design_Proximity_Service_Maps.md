@@ -4,7 +4,9 @@
   <img src="images/sys_proximity_service.png" alt="Proximity Service Design" width="100%"/>
 </p>
 
-## 🎯 The Big Goal
+> 🧠 **The Feynman Hook:** Finding "coffee shops near me" is trivial when there are 10 shops. It's an engineering challenge when there are 10 million. Scanning every shop's latitude/longitude for every query would be like calling every person in the country to ask if they live near a specific address. Geospatial indexing is the postal code system: instead of scanning everywhere, you divide the world into zones (geohash boxes) and only search within your zone and its 8 neighbours. The longer the postcode, the smaller and more precise the zone.
+
+## 🎯 What You'll Learn
 
 > **After this chapter, you will understand how apps like Uber, Tinder, and Yelp find things near you.**
 
@@ -15,6 +17,8 @@ You cannot scan millions of restaurants every time a user opens map. You must di
 ---
 
 ## 1. 🌍 Geospatial Indexing
+
+> **Feynman Insight:** Latitude and longitude are two-dimensional coordinates. Traditional databases are great at filtering a single column (fast), but terrible at filtering two columns simultaneously (slow, requires scanning everything). Geohashing converts two dimensions (latitude, longitude) into one dimension (a string like `9q8yy`). Now the database just does a prefix string match — the same fast operation it does for any index — and finds all locations in the same geographic box.
 
 If your database only stores Latitude (X) and Longitude (Y), searching for nearby items requires complex math.
 
@@ -38,6 +42,8 @@ You slice the world into smaller and smaller boxes.
 ---
 
 ## 2. 🗄️ API Design & Database Sharding
+
+> **Feynman Insight:** Sharding by geohash prefix is like a library that physically stores books by their Dewey Decimal prefix on specific shelves. All books starting with "530" (Physics) are on shelves 1-3. You never have to search the whole library — you go directly to shelves 1-3. All nearby locations share a geohash prefix, so they physically live on the same database shard — making proximity queries a single-shard lookup instead of a full cluster scan.
 
 Now that you have Geohashes, how do you handle scale?
 

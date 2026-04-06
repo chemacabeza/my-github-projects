@@ -4,7 +4,9 @@
   <img src="images/sys_interview_framework.jpg" alt="System Design Interview Framework" width="100%"/>
 </p>
 
-## 🎯 The Big Goal
+> 🧠 **The Feynman Hook:** A system design interview is like a chess match where your opponent wants to see how you think, not just if you win. A random player makes moves impulsively — no structure, no strategy. A master follows a systematic opening, evaluates positions methodically, and communicates their plan clearly. The 4-step framework is your chess opening: Requirements (understand the board), High-Level Design (place your major pieces), Deep Dive (tactical manoeuvers), and Wrap-Up (assess the position honestly). The interviewer is not looking for the perfect system. They're watching how you navigate the complexity.
+
+## 🎯 What You'll Learn
 
 > **After this chapter, you will understand the exact step-by-step framework to confidently tackle any system design interview, using the "4-Step Framework" popularized by Alex Xu.**
 
@@ -47,6 +49,8 @@ Summarize your architecture and proactively discuss its limitations.
 
 ## 2. 🧮 Back-of-the-Envelope Estimation
 
+> **Feynman Insight:** Back-of-envelope estimation is pub quiz mental arithmetic: you don't know the exact population of Brazil, but you can estimate "South American country, probably 150-250 million". In system design, knowing that RAM access takes ~100ns and disk access takes ~10ms (100,000x slower) lets you instantly justify a caching layer without any formal data. These numbers are the "mental constants" that senior engineers store in their heads and use instantly to evaluate design options.
+
 Interviewers often ask for quick math to justify your design decisions. You must know these baseline numbers by heart.
 
 <p align="center">
@@ -67,6 +71,8 @@ Always assume a **10:1 Read-to-Write ratio** for most consumer applications unle
 ---
 
 ## 3. ⚖️ Navigating Architecture Trade-Offs
+
+> **Feynman Insight:** Architecture trade-offs are like choosing between two imperfect medicines. Consistency (SQL, synchronous) is like a precise antibiotic: it kills the infection exactly, but you must wait for lab results (higher latency). Availability (NoSQL, eventual consistency) is like a broad-spectrum antibiotic: starts working immediately without waiting, but might not be perfectly targeted. The doctor (architect) chooses based on the patient's condition (system requirements) — not based on which medicine is "better."
 
 The most important part of the interview is acknowledging that every choice has a cost. There is no right answer, only appropriate compromises.
 

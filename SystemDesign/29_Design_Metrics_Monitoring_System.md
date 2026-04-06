@@ -4,7 +4,9 @@
   <img src="images/sys_metrics_monitoring.png" alt="Metrics Monitoring System Design" width="100%"/>
 </p>
 
-## 🎯 The Big Goal
+> 🧠 **The Feynman Hook:** A metrics monitoring system is an ICU vital signs monitor at scale. One patient's heart rate is trivial to track. Monitoring 50,000 patients simultaneously — all of them generating heartbeats every second — requires specialised hardware and storage that a regular hospital clipboard cannot handle. That's why metrics monitoring systems use Time-Series Databases (TSDBs) instead of regular SQL: just as an EKG machine records time-stamped waveforms on a continuous roll of paper rather than a spreadsheet, TSDBs are purpose-built for append-only, time-indexed data.
+
+## 🎯 What You'll Learn
 
 > **After this chapter, you will know how to design massive systems that monitor system health, like Datadog or Prometheus.**
 
@@ -27,6 +29,8 @@ You must build the system entirely around a **Time-Series Database (TSDB)**, lik
 ---
 
 ## 2. 🧲 Push vs Pull Data Models
+
+> **Feynman Insight:** Pull model (Prometheus) is like a nurse doing rounds: every 10 seconds, the nurse walks to each patient's room and records their vitals. If the patient discharged (server died), the nurse's empty clipboard tells you immediately. Push model (Datadog) is like patients pressing a nurse button: they self-report when something changes. Perfect for patients who may be discharged mid-round (ephemeral containers, Lambda functions) — they push their readings before they disappear.
 
 How does the telemetry data actually get completely into your central TSDB? 
 

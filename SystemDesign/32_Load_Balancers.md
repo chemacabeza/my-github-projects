@@ -4,7 +4,9 @@
   <img src="images/sd_load_balancers.png" alt="Load Balancers" width="800"/>
 </p>
 
-## 🎯 The Big Goal
+> 🧠 **The Feynman Hook:** A load balancer is an airport runway controller. Without one, every pilot would choose the same runway — all traffic queues on Runway 1 while Runways 2 and 3 sit empty. The controller distributes landings across all available runways based on traffic and runway conditions. A Layer 4 controller sees only "aircraft inbound" (IP + port). A Layer 7 controller knows "this is a cargo jet that needs a reinforced runway" (HTTP content inspection) and routes accordingly.
+
+## 🎯 What You'll Learn
 
 > **After this chapter, you'll understand how Load Balancers act as traffic cops for your distributed systems, preventing any single server from becoming overwhelmed. You will learn the difference between Layer 4 and Layer 7 load balancing, master common routing algorithms, and be able to deploy a fully functional load balancing cluster locally using Docker and NGINX.**
 
@@ -26,6 +28,8 @@ A typical highly available architecture places load balancers in multiple layers
 
 ## 2. Layer 4 vs Layer 7 Load Balancing
 
+> **Feynman Insight:** Layer 4 is a motorway toll booth — it sees the vehicle type (car, truck) and lets it through. It has no idea what's in the cargo. Layer 7 is a customs officer — they open the boot, check the contents, and send different cargo to different inspection areas (pasta to Italy, alcohol to the duty-free warehouse). The customs search is thorough but takes longer. The toll booth is fast. Choose based on whether you need content-based routing (customs) or raw throughput (toll booth).
+
 Load balancers operate at different layers of the OSI model:
 
 ### Layer 4 (Transport Layer - TCP/UDP)
@@ -42,6 +46,8 @@ Load balancers operate at different layers of the OSI model:
 
 ## 3. Routing Algorithms
 
+> **Feynman Insight:** Round Robin is a taxi dispatcher assigning cabs in sequence without thought — fair but ignoring that Cab 3 is stuck in traffic (slow server). Weighted Round Robin fixes this by giving Cab 1 (faster server) two fares for every one fare that slow Cab 3 gets. Least Connections picks the cab with fewest current passengers. IP Hash is assigning each regular customer to "their" dedicated cab driver for personalised service (sticky sessions).
+
 How does the load balancer choose the next server?
 
 1. **Round Robin:** The simplest algorithm. Requests are distributed sequentially (Server 1, Server 2, Server 3, Server 1, Server 2...).
@@ -52,6 +58,8 @@ How does the load balancer choose the next server?
 ---
 
 ## 4. Health Checks
+
+> **Feynman Insight:** Health checks are a pool lifeguard. Every 5 seconds, the lifeguard scans each swimmer (server). If a swimmer doesn't respond to three wave signals in a row, they're pulled from the pool immediately — other swimmers don't get redirected to a drowning swimmer. The load balancer does the same: a server that fails three consecutive `/health` checks is removed from the routing pool instantly, with traffic redistributing to healthy servers automatically.
 
 A load balancer is useless if it sends traffic to a server that has crashed. 
 
