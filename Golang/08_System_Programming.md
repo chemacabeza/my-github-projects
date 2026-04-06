@@ -1,16 +1,20 @@
 # 08: System Programming in Go
 
-Go sits in the unique territory right above C and C++, providing high-level networking/API design while possessing direct, massive access to low-level POSIX System Calls. 
+<p align="center">
+  <img src="images/go_ch08_system.png" alt="Go System Programming" width="100%"/>
+</p>
 
-Based on *Hands-On System Programming with Go*, we explore how Go interacts directly with the Linux kernel seamlessly, managing process signals (`SIGINT`, `SIGTERM`), standard I/O streams, and file descriptors.
+> 🧠 **The Feynman Hook:** System programming is writing code that talks directly to the operating system — not just through a framework's HTTP abstraction. Go sits perfectly between C's raw power and Python's convenience. It gives you direct access to POSIX signals (the OS's way to say "please stop"), raw file descriptors, and `os.Args` — the exact command-line tokens the user typed. But unlike C, you don't wrestle with null-terminated strings and manual memory allocation. Go wraps these system calls in a clean, safe API that feels as natural as calling any other function.
+
+Go sits in the unique territory right above C and C++, providing high-level networking/API design while possessing direct access to low-level POSIX System Calls.
 
 ---
 
 ## 1. Process Signal Handling (Graceful Shutdowns)
 
-When running inside Docker or Kubernetes, your app receives a `SIGTERM` signal when scaling down or deploying. If you instantly kill the program (`exit(status 137)`), you drop active database connections and leave users stranded.
+> **Feynman Insight:** When Docker runs `docker stop my-container`, it sends a `SIGTERM` signal to your process. If you don't handle it, the OS kills you hard after a timeout — active database connections are orphaned, in-flight requests are dropped, and customers see errors. Handling `SIGTERM` is like being a responsible tenant when given an eviction notice: you don't just walk out and leave the oven on — you turn everything off, inform the relevant parties, and then leave. A buffered signal channel (`make(chan os.Signal, 1)`) is critical because if the channel isn't ready when the OS delivers the signal, the signal is **dropped**.
 
-We must build a **Graceful Shutdown** handler.
+When running inside Docker or Kubernetes, your app receives a `SIGTERM` signal when scaling down or deploying. We must build a **Graceful Shutdown** handler.
 
 ### `main.go`
 ```go
@@ -57,18 +61,20 @@ func main() {
     time.Sleep(1 * time.Second)
 
     fmt.Println("[SYSTEM] All jobs gracefully terminated. Halting Process.")
-    
+
     // We exit gracefully (OS exit code 0)
     os.Exit(0)
 }
 ```
 
 ### Try it with Docker
-If you use `docker compose up`, and then press `CTRL+C`, Docker sends `SIGTERM`. Your app will intercept the signal, announce the shutdown, close the mock database, and cleanly exit!
+Run `docker compose up`, then press `CTRL+C`. Docker sends `SIGTERM`. Your app intercepts it, announces the shutdown, simulates cleanup, and cleanly exits.
 
 ---
 
 ## 2. Reading POSIX Command Line Arguments
+
+> **Feynman Insight:** `os.Args` is a slice of strings — exactly what the user typed, split on spaces. `os.Args[0]` is always the name of the binary itself (`./myapp`), so user-provided arguments start at index 1. This is identical to C's `argc`/`argv` — Go just wraps it in a slice instead of raw pointer arithmetic. CLI programs are the backbone of Linux tooling: every command you run in a terminal is a process reading `os.Args`. Understanding this is understanding Linux itself.
 
 Instead of a bulky UI, system programs act as CLI utilities reading `os.Args` (the equivalent of C++'s `int argc, char** argv`).
 
@@ -91,7 +97,7 @@ func main() {
 
     // args[0] is perpetually the name of the executable itself (e.g. "./myapp")
     // The user's input begins at args[1]
-    username := args[1] 
+    username := args[1]
 
     fmt.Printf("Authenticating user POSIX shell context: %s\n", username)
 }
@@ -99,9 +105,11 @@ func main() {
 
 ---
 
-## 3. High-Performance File I/O (`os` and `io` packages)
+## 3. High-Performance File I/O (`bufio`)
 
-Go’s standard library provides incredibly fast file interactions. Reading massive log files entirely into RAM causes Out-Of-Memory (OOM) Kubernetes crashes. We must stream files using `bufio` buffers.
+> **Feynman Insight:** Reading a 10GB log file with `os.ReadFile()` loads all 10GB into RAM simultaneously — guaranteed to crash a container with a 4GB memory limit. `bufio.Scanner` is a **streaming reader**: it reads one line at a time, holds only one line in memory at any moment, and discards each line after processing. This is the difference between reading a book by carrying all 400 pages in both hands, and reading it one page at a time by turning pages. The `defer file.Close()` immediately after `os.Open()` is Go's insurance policy: the file descriptor is returned to the OS no matter what happens next — even if a panic erupts 300 lines later.
+
+Go's standard library provides incredibly fast file interactions. Reading massive log files entirely into RAM causes Out-Of-Memory (OOM) Kubernetes crashes. We must stream files using `bufio` buffers.
 
 ### `main.go`
 ```go
@@ -116,14 +124,14 @@ import (
 func main() {
     const filename = "/etc/hosts"
 
-    // 1. Open the file 
+    // 1. Open the file
     // This executes a Linux `open()` syscall behind the scenes yielding a hardware file descriptor
     file, err := os.Open(filename)
     if err != nil {
         fmt.Printf("Fatal: Could not open %s\n", filename)
         os.Exit(1)
     }
-    
+
     // 2. DEFER the close operation!
     // Never forget to close raw OS resources, or you'll run out of file descriptors ('Too many open files').
     // Wrapping it in defer guarantees execution no matter how the function exits!
@@ -146,14 +154,9 @@ func main() {
 }
 ```
 
-### Summary of System Programming
-Go’s simplicity abstracts away C pointers while leaving direct POSIX capabilities untouched. By using the `os` and `os/signal` packages, you write bulletproof microservices that cooperate natively with modern generic supervisors like Docker and Kubernetes.
-
 ---
 
 ## 4. Dockerizing System Programs
-
-To safely test POSIX signal handling in an isolated environment without killing your host machine processes, run the code via Docker multi-stage builds.
 
 **`Dockerfile`**
 ```dockerfile
@@ -176,8 +179,35 @@ services:
     container_name: golang_system
 ```
 
-Execute the system daemon:
 ```bash
 docker compose up --build
 ```
-*Note: Press `CTRL+C` while it is running to watch Docker send `SIGTERM` and verify that your Graceful Shutdown handler intercepts it successfully!*
+*Note: Press `CTRL+C` while running to watch Docker send `SIGTERM` and verify your Graceful Shutdown handler intercepts it!*
+
+---
+
+## 🤔 Reflection Questions
+
+1. **Why must the signal channel be buffered with capacity 1?**
+<details>
+<summary>💡 View Answer</summary>
+
+The Go runtime delivers signals to channels asynchronously. If the channel is unbuffered (capacity 0), the sender (the OS signal delivery goroutine) blocks until a receiver is ready. If the main goroutine is briefly busy at the exact moment the `SIGTERM` arrives, the signal goroutine cannot send it into the channel — and the signal is **dropped**. A buffered channel of capacity 1 allows the signal to be deposited immediately without a receiver being ready, ensuring the signal is never lost. The main goroutine then picks it up when it reaches `<-sigChan`.
+</details>
+
+2. **Why is `defer file.Close()` placed immediately after `os.Open()`?**
+<details>
+<summary>💡 View Answer</summary>
+
+Go's `defer` executes in LIFO order at function exit. Placing the `Close()` immediately after `Open()` is a defensive coding pattern: you declare the cleanup obligation the moment you acquire the resource. If you place it 50 lines later, a developer reading the code must mentally track "did we open a file? Is it still open here?" More critically, if any code between `Open()` and a later `Close()` returns early via an error, you can leak the file descriptor. `defer` is immune to early returns — it always runs.
+</details>
+
+---
+
+## 📝 Key Interview Talking Points
+
+- **`SIGTERM` vs `SIGKILL`**: `SIGTERM` is a polite request — your program can handle it. `SIGKILL` is a hard kill — no handler possible. Kubernetes sends `SIGTERM`, waits `terminationGracePeriodSeconds` (default 30s), then sends `SIGKILL`.
+- **Buffered signal channels** (`make(chan os.Signal, 1)`) prevent signal loss during handler setup.
+- **`defer file.Close()`** immediately after `os.Open()` is idiomatic Go for guaranteed resource cleanup.
+- **`bufio.Scanner`** streams line-by-line — essential for large files. `os.ReadFile()` loads the whole file into memory (useful only for small files).
+- **`os.Exit(0)`** vs simply returning from `main`: `os.Exit` skips running deferred functions. Prefer returning from `main` naturally so deferred cleanup runs.
