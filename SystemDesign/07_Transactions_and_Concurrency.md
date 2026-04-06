@@ -4,7 +4,9 @@
   <img src="images/sd_transactions.png" alt="Transactions and Concurrency" width="800"/>
 </p>
 
-## 🎯 The Big Goal
+> 🧠 **The Feynman Hook:** Two people try to buy the last concert ticket at the exact same second. Without careful coordination, both succeed — the venue is now oversold. Transactions are the database's mechanism for ensuring that only ONE of them wins, and the other sees "sold out." When this coordination spans multiple services in different cities, you need entirely different tools — Sagas — because locking across a network is as unreliable as playing telephone.
+
+## 🎯 What You'll Learn
 
 > **After this chapter, you'll understand how databases ensure correctness when multiple operations happen simultaneously — isolation levels, distributed transactions, and the Saga pattern.**
 
@@ -12,7 +14,7 @@
 
 ## 1. Why Transactions Matter
 
-Without transactions, concurrent operations can corrupt data:
+> **Feynman Insight:** Imagine two cashiers sharing the same stock list. Both check: "Is there 1 item left?" Both say yes. Both sell it. Now you've sold the same item twice. Transactions wrap multiple steps — check stock, reserve it, confirm sale — into a single, atomic operation. Either all steps succeed together, or none of them do, as if the whole operation never happened.
 
 ```
 PROBLEM: Two users buy the last item simultaneously
@@ -26,6 +28,8 @@ A transaction wraps multiple operations into an atomic unit: **all succeed or al
 ---
 
 ## 2. Isolation Levels
+
+> **Feynman Insight:** Isolation determines how much two concurrent transactions can "see" each other's work in progress. At the lowest isolation, it's like cheating on an exam — you can read your neighbour's answers before they've finished, even if they change them later (dirty read). At the highest, Serializable, each transaction acts as if it were the only one running, like taking the exam in a private room.
 
 | Level | Dirty Read | Non-Repeatable Read | Phantom Read | Performance |
 | :--- | :--- | :--- | :--- | :--- |
@@ -45,6 +49,8 @@ A transaction wraps multiple operations into an atomic unit: **all succeed or al
 
 ## 3. Distributed Transactions: Two-Phase Commit (2PC)
 
+> **Feynman Insight:** 2PC is like a committee vote requiring unanimous agreement before a decision is final. Phase 1: the chair (coordinator) asks every member "Are you ready to commit?" and waits. Phase 2: if all say YES, the chair declares "Commit!" The fatal flaw: if the chair faints between phases, every member is frozen, waiting forever, unable to decide on their own.
+
 <p align="center">
   <img src="images/sd_two_phase_commit.png" alt="Two-Phase Commit Protocol" width="700"/>
 </p>
@@ -58,6 +64,8 @@ A transaction wraps multiple operations into an atomic unit: **all succeed or al
 ---
 
 ## 4. The Saga Pattern
+
+> **Feynman Insight:** A Saga is like booking a holiday: you book the flight, hotel, and car separately. If the hotel is full, you don't need to "undo" money from your account — you just cancel the flight booking (compensating transaction). Each step in a Saga has a corresponding "undo" step for when things go wrong, enabling long-running business processes without holding database locks across service boundaries.
 
 For long-running transactions across microservices, use **Sagas** instead of 2PC:
 
@@ -84,6 +92,8 @@ Service        Service         Service           Service
 ---
 
 ## 5. Optimistic vs Pessimistic Locking
+
+> **Feynman Insight:** Pessimistic locking is like putting a "Bathroom Occupied" sign before you go in — you block everyone else immediately, just in case. Optimistic locking is like working on a shared document and checking at save time whether anyone else edits the same paragraph. Pessimistic works when conflicts are frequent; optimistic works when conflicts are rare and you'd rather not block everyone unnecessarily.
 
 | Strategy | How | Best For |
 | :--- | :--- | :--- |

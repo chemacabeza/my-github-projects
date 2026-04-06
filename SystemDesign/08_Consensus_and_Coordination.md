@@ -4,7 +4,9 @@
   <img src="images/sd_consensus.png" alt="Consensus and Coordination" width="800"/>
 </p>
 
-## 🎯 The Big Goal
+> 🧠 **The Feynman Hook:** Imagine 5 people stuck in a room who must elect a spokesperson, but some of them might be unconscious and messages between them can get lost. How do they reach a decision that everyone agrees on without any outside help? This is the consensus problem — the hardest unsolved problem in distributed computing that you encounter every day in databases, Kubernetes, and Kafka. Raft is the understandable answer to this puzzle.
+
+## 🎯 What You'll Learn
 
 > **After this chapter, you'll understand how distributed nodes agree on a single truth — leader election, distributed locks, and consensus algorithms like Raft and Paxos.**
 
@@ -12,7 +14,7 @@
 
 ## 1. The Consensus Problem
 
-In a distributed system, nodes must agree on a value even when some nodes fail or messages are delayed. This is **consensus** — the most fundamental problem in distributed computing.
+> **Feynman Insight:** In a distributed system, nodes must agree on a value even when some fail. Think of it like a UN Security Council vote: you need a supermajority to make a binding decision. If some members walk out (fail), the remaining must still be able to reach agreement. The danger of disagreement: split-brain, where two nodes both think they're the leader and simultaneously accept conflicting data.
 
 ```
 Node 1: "The leader is A"
@@ -27,6 +29,8 @@ Node 3: "The leader is A"
 ---
 
 ## 2. Raft Consensus Algorithm
+
+> **Feynman Insight:** Raft is like an office with a manager (leader). The manager sends weekly status emails (heartbeats) to prove they're still active. If an employee doesn't hear from the manager for too long, they nominate themselves («I'll manage!») and ask colleagues to vote. If a majority vote for them, they become the new manager. Every decision by the new manager is logged and distributed to all employees before it takes effect.
 
 Raft is the most understandable consensus algorithm (designed as a simpler alternative to Paxos):
 
@@ -60,6 +64,8 @@ Leader ──→ Respond to client: "OK"
 
 ## 3. Quorum — The Majority Rule
 
+> **Feynman Insight:** A quorum is like a jury — you don't need all 12 jurors to agree, just a supermajority. In a 5-node cluster, you need 3 (the quorum) to commit a write and 3 to read. Since W+R > N, any read set must overlap with any write set — guaranteeing you'll always read at least one node that saw the latest write.
+
 A quorum ensures at least one node has the latest data:
 
 ```
@@ -83,6 +89,8 @@ Read must query 3 nodes             ├── Overlap guarantees freshness
 
 ## 4. Distributed Coordination Services
 
+> **Feynman Insight:** ZooKeeper and etcd are like air traffic control towers for microservices. Individual planes (services) don't decide on their own landing sequence — the tower (coordination service) dictates it, maintains the schedule (configuration), announces which runway is the leader, and detects when a plane has gone dark (service failure). Without coordination, services would crash into each other.
+
 ### ZooKeeper
 | Feature | Purpose |
 | :--- | :--- |
@@ -101,6 +109,8 @@ Read must query 3 nodes             ├── Overlap guarantees freshness
 
 ## 5. Distributed Locks
 
+> **Feynman Insight:** A distributed lock is like a physical key to a shared bathroom: only one person can have it at a time. The problem in distributed systems: if the person holding the key falls asleep (GC pause or network delay), the key never gets returned. That's why locks have TTLs — they auto-expire like a parking ticket, so a crashed holder doesn't block everyone else forever.
+
 ### Requirements:
 1. **Mutual Exclusion:** Only one client holds the lock
 2. **Deadlock-Free:** Locks auto-expire (TTL)
@@ -117,6 +127,8 @@ Read must query 3 nodes             ├── Overlap guarantees freshness
 ---
 
 ## 6. Heartbeats and Failure Detection
+
+> **Feynman Insight:** Heartbeats are radio check-ins between nodes: "Node A to Node B — still alive." If Node B stops hearing from A for 3 consecutive check-ins, it declares A dead and triggers failover. Set the interval too short and a brief network blip causes a false alarm (unnecessary failover). Set it too long and genuine failures take forever to detect.
 
 ```
 Node A ──heartbeat──→ Node B (every 1 second)

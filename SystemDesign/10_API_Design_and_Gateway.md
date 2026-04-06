@@ -4,13 +4,17 @@
   <img src="images/sd_api_design.png" alt="API Design and Gateway" width="800"/>
 </p>
 
-## 🎯 The Big Goal
+> 🧠 **The Feynman Hook:** Imagine a 5-star hotel. You don't walk directly into the kitchen, laundry, or housekeeping to get what you want — you talk to the concierge (API Gateway), who routes your request to the right department, verifies you're a guest (auth), and ensures one demanding guest doesn't monopolize all staff (rate limiting). The API gateway is that concierge — the single, elegant entry point that handles all the messy cross-cutting concerns so the departments behind it can focus on their specialized work.
+
+## 🎯 What You'll Learn
 
 > **After this chapter, you'll know how to design clean, scalable APIs and how an API gateway centralizes cross-cutting concerns like authentication, rate limiting, and routing.**
 
 ---
 
 ## 1. API Gateway
+
+> **Feynman Insight:** Without an API gateway, every microservice must implement its own authentication, rate limiting, and logging — 100 services, 100 duplicated implementations. The gateway centralizes all of this: one place to enforce auth, one place to monitor traffic, one place to route requests. It's the difference between every department in the hotel having its own security guard vs. one professional front desk that handles access for everyone.
 
 An API gateway is the **single entry point** for all client requests:
 
@@ -41,6 +45,8 @@ It is crucial to distinguish between an **API Gateway** and a **Service Mesh** (
 
 ## 2. Rate Limiting Algorithms
 
+> **Feynman Insight:** Rate limiting is like a restaurant with limited seating. The Token Bucket is a bucket that refills slowly — you can burst through the door with a group (spend multiple tokens at once), but once the bucket's empty, you wait. The Leaky Bucket is a queue outside the door — smooth, predictable flow, no bursts allowed. Fixed Window is last-call at a bar: 10 drinks per hour, but if you order 10 in the last minute of an hour and 10 in the first minute of the next, you slip 20 through in 2 minutes.
+
 | Algorithm | How | Pros | Cons |
 | :--- | :--- | :--- | :--- |
 | **Token Bucket** | Tokens added at fixed rate; each request costs 1 token | Allows bursts | Slightly complex |
@@ -67,6 +73,8 @@ If User A has 1 token left, and two requests hit Server 1 and Server 2 at the ex
 
 ## 3. API Versioning
 
+> **Feynman Insight:** Versioning APIs is like publishing a new edition of a book. Old readers still have their v1 copies; new readers get v2. The question is: do you put "/v2" in the title (URL versioning — obvious but messy), print a version number on the inside cover (header versioning — clean but invisible), or put it in the barcode (query param — flexible but forgettable)?
+
 | Strategy | URL Example | Pros | Cons |
 | :--- | :--- | :--- | :--- |
 | **URL Path** | `/api/v1/users` | Simple, visible | URL changes |
@@ -77,6 +85,8 @@ If User A has 1 token left, and two requests hit Server 1 and Server 2 at the ex
 
 ## 4. Pagination
 
+> **Feynman Insight:** Pagination is like reading a very long book. Offset pagination is "skip to chapter 50" — you can jump anywhere but the book gets heavier as it gets longer. Cursor pagination is a bookmark — you can only go to the next page from where you left off, but it's instant regardless of how long the book is. Keyset pagination is the ultra-fast version: "give me everything after item #500."
+
 | Strategy | How | Pros | Cons |
 | :--- | :--- | :--- | :--- |
 | **Offset** | `?page=3&limit=20` | Simple | Slow for large offsets |
@@ -86,6 +96,8 @@ If User A has 1 token left, and two requests hit Server 1 and Server 2 at the ex
 ---
 
 ## 5. Idempotency
+
+> **Feynman Insight:** Pressing a lift button multiple times doesn't summon multiple lifts — the button is idempotent. GET, PUT, and DELETE are idempotent HTTP methods. But POST is like a vending machine button: every press dispenses a new snack. Idempotency keys are how you make the vending machine smart enough to recognize "this is the same button press from before" and not dispense twice.
 
 An operation is idempotent if calling it multiple times has the same effect:
 
