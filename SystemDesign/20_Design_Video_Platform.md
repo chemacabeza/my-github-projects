@@ -4,13 +4,17 @@
   <img src="images/sd_video_platform.jpg" alt="Video Platform Design" width="800"/>
 </p>
 
-## 🎯 The Big Goal
+> 🧠 **The Feynman Hook:** Building a video platform is like running a global cinema chain that also lets anyone in the world submit films. Every uploaded video must be converted into 6 different quality levels (transcoding), stored in geographically distributed vaults (CDN), and served seamlessly to viewers whose internet speeds change second-by-second (adaptive bitrate). The moment a video goes viral, your system must serve the same content to millions of simultaneous viewers without the CDN collapsing — which is why YouTube serves 1 billion hours of video per day.
+
+## 🎯 What You'll Learn
 
 > **Design a video streaming platform like YouTube — handling video upload, transcoding, storage, CDN delivery, and recommendations at massive scale.**
 
 ---
 
 ## 1. Requirements
+
+> **Feynman Insight:** Notice that streaming (reads) is 1 billion views per day vs. 100K concurrent uploads (writes). This is an overwhelmingly read-heavy system, which means CDN caching and adaptive streaming are the most critical architectural components. Every design decision should optimise for the 99.99% of users watching, not the 0.01% uploading.
 
 | Functional | Non-Functional |
 | :--- | :--- |
@@ -31,6 +35,8 @@
 ---
 
 ## 3. Video Upload Pipeline
+
+> **Feynman Insight:** The upload pipeline is like a film processing lab. You drop off your film (raw upload to S3). The lab develops it in multiple formats (transcoding: 240p, 480p, 1080p, 4K). The prints are distributed to cinema chains worldwide (CDN edge servers). You never wait at the lab — everything happens asynchronously in the background while you get on with your day. Pre-signed URLs mean you drop the film directly at the lab, bypassing the reception desk (app server).
 
 ```
 1. Client uploads video → pre-signed URL to S3
@@ -61,6 +67,8 @@ Pre-signed:   Client → S3 directly           (scale unlimited)
 ---
 
 ## 4. Video Streaming (Adaptive Bitrate)
+
+> **Feynman Insight:** Adaptive bitrate streaming is like a water tank with an auto-adjusting tap. The player fills the tank (buffer) with video data. On fast connections, the tap opens wide (1080p, large files). If the tank starts emptying (buffer dropping), the tap switches to a smaller pipe (480p, smaller files) that can keep up with the drain. The Buffer-Based Approach (BBA) is smarter: instead of measuring the tap pressure (network speed), it just watches the tank level — if the tank is full, go high quality; if it's draining, go low quality.
 
 ```
 Player checks bandwidth continuously:
@@ -111,6 +119,8 @@ This produces a vastly smoother viewing experience without rapid oscillation.
 ---
 
 ## 6. Recommendations Engine
+
+> **Feynman Insight:** A recommendation engine is like a Pandora music analyst who has listened to every song and catalogued its DNA (genre, tempo, mood, instruments). When you like a song, Pandora finds songs with similar DNA. Collaborative filtering is a group of friends who all like the same shows as you — whatever else they've watched that you haven't is a recommendation. The hybrid approach combines both: DNA similarity AND friend-group similarity.
 
 <p align="center">
   <img src="images/sd_video_recommend.jpg" alt="Recommendations Engine Pipeline" width="700"/>

@@ -4,13 +4,17 @@
   <img src="images/sd_news_feed.png" alt="News Feed Design" width="800"/>
 </p>
 
-## 🎯 The Big Goal
+> 🧠 **The Feynman Hook:** A news feed is like a personalised newspaper. Every morning, your paper is assembled with articles from only the authors you've subscribed to, ranked by what you're most likely to enjoy reading. The system design challenge: assembling 500 million personalised newspapers every morning, with each one updating in real-time as new articles are published throughout the day. The moment a journalist (user) publishes an article, it must appear in the feeds of all their subscribers within seconds.
+
+## 🎯 What You'll Learn
 
 > **Design a social media news feed like Twitter or Facebook — where users see posts from people they follow, ranked by relevance.**
 
 ---
 
 ## 1. Requirements
+
+> **Feynman Insight:** The non-functional requirements define the hardest design constraint: 1 billion posts/day, feeds loading in under 200ms. That's 11,500 posts/second being published, and every single one potentially needs to be distributed to millions of subscribers instantly. This is the "fan-out" problem — one event triggering millions of downstream updates — and it's the central architectural challenge of every social media company.
 
 | Functional | Non-Functional |
 | :--- | :--- |
@@ -60,6 +64,8 @@ Bob opens app → Compute feed on-the-fly
 
 ## 4. Feed Ranking
 
+> **Feynman Insight:** Feed ranking is like a newspaper editor deciding what goes on the front page. Pure chronological order is like printing news in the order it arrived in the newsroom — fast but often irrelevant. A ranking algorithm is the editor who looks at the story's importance (engagement), timeliness (recency), and relevance to the reader (affinity). The challenge: the editor has 500 milliseconds to make this decision for a billion readers simultaneously.
+
 Instead of pure chronological order, rank by **engagement signals**:
 
 ```
@@ -78,6 +84,8 @@ Score = w₁(recency) + w₂(likes) + w₃(comments) + w₄(shares)
 ---
 
 ## 5. Storage Design
+
+> **Feynman Insight:** Each type of data needs different storage because different questions are being asked of it. Posts need relational SQL ("who wrote this, when, what tags?"). Feed caches need Redis sorted sets ("give me the top 20 posts for user X, sorted by rank score, instantly"). Social graphs need specialised graph traversal ("who are the friends-of-friends of user X?"). Media needs object storage + CDN ("serve this 4K image to 50,000 simultaneous viewers globally"). One type of database cannot serve all four needs efficiently.
 
 | Data | Storage | Reason |
 | :--- | :--- | :--- |

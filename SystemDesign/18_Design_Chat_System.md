@@ -4,13 +4,17 @@
   <img src="images/sd_chat_system.png" alt="Chat System Design" width="800"/>
 </p>
 
-## 🎯 The Big Goal
+> 🧠 **The Feynman Hook:** A chat system is a real-time dispatch network operating at internet scale. Unlike email (where you send a letter and wait days), a chat system is more like a two-way radio: when you press send, the other person hears it in under a second, even if they're on the other side of the planet. Building this requires an entirely different communication model (WebSockets instead of HTTP), an entirely different storage engine (Cassandra instead of SQL), and a presence system that tracks 50 million simultaneous radio operators.
+
+## 🎯 What You'll Learn
 
 > **Design a real-time messaging system like WhatsApp or Facebook Messenger — handling 1-on-1 chat, group chat, presence, and message delivery guarantees.**
 
 ---
 
 ## 1. Requirements
+
+> **Feynman Insight:** The non-functional requirements here are unusually demanding: 50 million concurrent users, sub-100ms latency, and exactly-once delivery. These three constraints together eliminate HTTP polling (too slow), standard SQL databases (can't handle write throughput), and traditional message queues (don't guarantee exactly-once). Each requirement eliminates categories of solutions before you've designed a single component.
 
 | Functional | Non-Functional |
 | :--- | :--- |
@@ -32,6 +36,8 @@
 ---
 
 ## 3. WebSocket Connection
+
+> **Feynman Insight:** HTTP is one-way: you ask, the server answers, the connection closes. Like sending a letter and waiting for a reply letter. WebSocket transforms this into a telephone call: one setup handshake (the HTTP upgrade), and then a permanent open line where either party can speak at any time. This permanent connection is what makes sub-100ms chat possible — there's no new connection overhead per message.
 
 ```
 HTTP Upgrade (one-time):
@@ -81,6 +87,8 @@ Alice sends to Group (100 members):
 
 ## 5. Message Storage
 
+> **Feynman Insight:** Chat message storage is like a newspaper archive: chronological, append-only, and read mostly by channel (newspaper edition) rather than by searching for individual articles. Cassandra is the perfect fit: partition key = channel_id (put all messages in the same conversation on the same node), clustering key = message_id (sorted by time within the partition). Each query is "give me the last 50 messages for conversation X" — lightning fast on Cassandra, terrifyingly slow on a traditional SQL database.
+
 ```
 ┌──────────────────────────────────────────────┐
 │ messages                                      │
@@ -108,6 +116,8 @@ You cannot rely on `created_at` timestamps to order messages correctly! Server c
 ---
 
 ## 6. Presence (Online Status)
+
+> **Feynman Insight:** Online presence tracking is like a lighthouse beacon. Every 10 seconds, a connected user sends a heartbeat: "I'm still here." Redis stores this with a 30-second TTL. If the heartbeat stops (user lost connection), the lighthouse goes dark 30 seconds later — the system marks them offline. The 30-second window is deliberate: brief network blips don't cause false "offline" status, only genuine disconnections do.
 
 ```
 User connects:    → Set status ONLINE in Redis (TTL: 30s)

@@ -4,13 +4,17 @@
   <img src="images/sd_url_shortener.png" alt="URL Shortener Design" width="800"/>
 </p>
 
-## 🎯 The Big Goal
+> 🧠 **The Feynman Hook:** A URL shortener is like having a junk-mail forwarding address. Instead of giving everyone your real home address (a 200-character URL), you give them a short PO Box number (`bit.ly/x7Kp2`). They send mail to the PO Box; it gets redirected to your real address automatically. The challenge: managing billions of PO Box numbers without ever having two people share the same one, and doing the redirect in under 10 milliseconds.
+
+## 🎯 What You'll Learn
 
 > **Design a system like TinyURL or bit.ly that converts long URLs into short, shareable links and redirects users efficiently.**
 
 ---
 
 ## 1. Requirements
+
+> **Feynman Insight:** Before writing a single line of code, ask: what does this system actually do (functional) and how well must it do it (non-functional)? 100M URLs/day = 1,150 writes/second and 11,500 reads/second (10:1 ratio). This math immediately tells you reads dominate, caching is essential, and you need a system optimized for speed over write volume.
 
 | Functional | Non-Functional |
 | :--- | :--- |
@@ -35,6 +39,8 @@ Client ──→ [API Gateway] ──→ [URL Service] ──→ [Database]
 ---
 
 ## 3. URL Shortening — The Core Algorithm
+
+> **Feynman Insight:** Choosing a short code is like assigning vanity number plates. Sequential plates (1, 2, 3...) are predictable — anyone can guess what plate comes next. Random plates (X7KP) aren't guessable but might collide. Pre-generated plates from a registry guarantee uniqueness but require someone to manage the registry. Base62 with 7 characters gives you 3.5 trillion unique combinations — enough for 95 years at current scale.
 
 ### Option A: Base62 Encoding
 ```
@@ -86,6 +92,8 @@ If we generate 100 million URLs a day: `3.5 trillion / (100 million * 365) = ~95
 ---
 
 ## 5. Redirect Flow
+
+> **Feynman Insight:** 301 vs 302 is the difference between permanent mail forwarding and temporary mail forwarding. A 301 (permanent) tells the browser: "memorise this new address, never ask me again" — great for latency, terrible for analytics. A 302 (temporary) says: "ask me every time" — every redirect hits your servers, which is expensive but gives you precise click counting. Choose based on whether analytics or performance is your priority.
 
 ```
 1. Client: GET https://short.url/8M0kX
