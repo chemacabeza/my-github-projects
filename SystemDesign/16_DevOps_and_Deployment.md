@@ -4,13 +4,17 @@
   <img src="images/sd_devops.png" alt="DevOps and Deployment" width="800"/>
 </p>
 
-## 🎯 The Big Goal
+> 🧠 **The Feynman Hook:** Before DevOps, deploying software was like building a car by hand — craftsmen assembled it slowly, tested it manually, and hoped it worked. CI/CD is the factory assembly line: every code change automatically triggers building, testing, and packaging — just like every car frame automatically goes through welding, painting, and quality control. Kubernetes is the logistics system that decides how many cars to produce, which factory to use, and automatically reroutes production if one factory breaks down.
+
+## 🎯 What You'll Learn
 
 > **After this chapter, you'll understand CI/CD pipelines, containerization with Docker, orchestration with Kubernetes, and deployment strategies like blue-green and canary.**
 
 ---
 
 ## 1. CI/CD Pipeline
+
+> **Feynman Insight:** CI/CD is a factory assembly line for software. Raw material (code) enters at one end. Every station (build, test, release, deploy) automatically processes it and passes it to the next. If any station detects a defect, the line stops and alerts the team before the defective product reaches the customer. The goal: a developer commits code, and hours later (or minutes) it's in production without any human touching it.
 
 ```
 CODE ──→ BUILD ──→ TEST ──→ RELEASE ──→ DEPLOY ──→ MONITOR
@@ -33,6 +37,8 @@ CODE ──→ BUILD ──→ TEST ──→ RELEASE ──→ DEPLOY ──→
 
 ## 2. Docker
 
+> **Feynman Insight:** Before Docker, deploying an app was like moving house and hoping all your furniture would fit in the new house (the production server). Docker is a shipping container: you pack everything (app, runtime, dependencies, config) into a standard-sized container. It doesn't matter if the ship is AWS, Azure, or your laptop — the container is guaranteed to work identically on any ship that has a crane (Docker runtime).
+
 ```
 Dockerfile ──build──→ Image ──run──→ Container
                         │
@@ -52,6 +58,8 @@ Dockerfile ──build──→ Image ──run──→ Container
 
 ## 3. Kubernetes
 
+> **Feynman Insight:** Kubernetes is an airline dispatch system for containers. Without it, you'd manually decide which server (gate) runs which container (plane). With Kubernetes, you declare: "I need 10 copies of the payment service running." Kubernetes figures out which servers have space, deploys them, restarts any that crash, and automatically spins up more if traffic spikes — like an airline automatically assigning overflow passengers to new gates.
+
 <p align="center">
   <img src="images/sd_kubernetes.png" alt="Kubernetes Cluster Architecture" width="700"/>
 </p>
@@ -67,6 +75,8 @@ Dockerfile ──build──→ Image ──run──→ Container
 ---
 
 ## 4. Deployment Strategies
+
+> **Feynman Insight:** Blue-green deployment is like an aircraft test pilot: you have a backup plane (Blue v1) and a test plane (Green v2). The test pilot flies the new plane while passengers stay on the backup. If the new plane checks out, all passengers switch. If it fails, the backup is still ready instantly. Canary deployment is the same idea but you let 5% of passengers try the new plane first while 95% stay safe on the old one.
 
 | Strategy | How | Risk | Rollback |
 | :--- | :--- | :--- | :--- |

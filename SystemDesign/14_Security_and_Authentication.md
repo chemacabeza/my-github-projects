@@ -4,13 +4,17 @@
   <img src="images/sd_security.png" alt="Security and Authentication" width="800"/>
 </p>
 
-## 🎯 The Big Goal
+> 🧠 **The Feynman Hook:** Security in systems is like a nightclub with a bouncer, a wristband system, and a safe. Authentication is the bouncer checking your ID at the door — proving who you are. Authorization is the wristband determining which areas you can access (VIP lounge vs general floor). Encryption is the safe — even if someone steals the cash, they can't use it without the combination. Getting any of these three wrong, and the whole system fails.
+
+## 🎯 What You'll Learn
 
 > **After this chapter, you'll understand how to secure distributed systems — OAuth 2.0, JWT, encryption, and API security best practices.**
 
 ---
 
 ## 1. Authentication vs Authorization
+
+> **Feynman Insight:** Authentication is a passport check — it proves you are who you say you are. Authorization is the visa — it determines where you're allowed to go once your identity is confirmed. You can be authenticated ("Yes, this is Alice") but not authorized ("But Alice doesn't have admin access to this resource"). Both checks must happen independently.
 
 | Concept | Question | Example |
 | :--- | :--- | :--- |
@@ -39,6 +43,8 @@ The industry standard for **delegated authorization**:
 
 ## 3. JWT (JSON Web Token)
 
+> **Feynman Insight:** A JWT is like a signed wristband at a theme park. You queue at the entrance (login), the staff check your ticket (credentials), and stamp your wrist with a special ink (JWT) that contains your permissions. Every ride (service) can validate the stamp instantly by checking its authenticity — no need to call the entrance booth for every ride. The stamp expires at park closing time (token expiry).
+
 A self-contained token with three parts:
 
 ```
@@ -59,6 +65,8 @@ Signature: HMAC-SHA256(header + "." + payload, secret)
 
 ## 4. Encryption
 
+> **Feynman Insight:** Symmetric encryption is a shared padlock: both you and your friend have the same key. Fast to lock/unlock, but how do you share the key safely at first? Asymmetric encryption is a mailbox: anyone can put a letter in (encrypt with your public key), but only you have the key to open it (decrypt with your private key). TLS uses asymmetric encryption just to exchange a symmetric key — because once you've safely shared the key, symmetric is much faster for bulk data.
+
 | Type | How | Use Case |
 | :--- | :--- | :--- |
 | **Symmetric** | Same key encrypts and decrypts (AES) | Data at rest, fast |
@@ -74,6 +82,8 @@ HASHING:      "password123" ──hash──→ "$2b$12$..." (irreversible)
 ---
 
 ## 5. API Security Best Practices
+
+> **Feynman Insight:** Securing an API is like securing a bank branch. HTTPS is the locked glass door (no eavesdropping). Rate limiting is the security guard who limits how many times someone can try the ATM PIN. Input validation is the teller who refuses to process obviously fraudulent documents. WAF is the CCTV system that detects and blocks suspicious patterns. Each layer addresses a different attack vector — remove any one and you create a gap an attacker will find.
 
 | Practice | Description |
 | :--- | :--- |

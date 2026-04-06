@@ -4,13 +4,17 @@
   <img src="images/sd_observability.png" alt="Observability and Reliability" width="800"/>
 </p>
 
-## 🎯 The Big Goal
+> 🧠 **The Feynman Hook:** Flying a plane blind — without instruments — is how most software systems are run. Observability is the cockpit dashboard that tells you everything you need to know about your system's health while it's in flight: logs (the black box, telling you exactly what happened), metrics (the gauges showing altitude and speed), and traces (the flight path showing exactly which route was taken and where it slowed down). Without all three, you're flying blind, hoping nothing goes wrong.
+
+## 🎯 What You'll Learn
 
 > **After this chapter, you'll understand the three pillars of observability — logs, metrics, and traces — and how to measure and improve system reliability.**
 
 ---
 
 ## 1. The Three Pillars of Observability
+
+> **Feynman Insight:** Logs are your system's diary: "At 10:30 AM, user Alice logged in. At 10:32, her payment failed." Metrics are your system's vital signs: heart rate (requests/sec), blood pressure (latency), temperature (CPU). Traces are a GPS journey replay: the user's request entered at Service A, then went to B (15ms), then C (200ms), then D — you can see exactly where the traffic jam was.
 
 ```
        LOGS                METRICS              TRACES
@@ -29,6 +33,8 @@
 ---
 
 ## 2. Logs
+
+> **Feynman Insight:** A log is your system talking in the past tense: "This happened. Then this happened. Then this went wrong." Without structured logging, it's like reading a friend's diary versus a hospital patient record. The diary is human and readable but impossible to search. The patient record (structured JSON) is machine-searchable: filter all ERROR logs from the payment-service in the last 24 hours, sorted by user_id.
 
 | Level | When | Example |
 | :--- | :--- | :--- |
@@ -56,6 +62,8 @@
 
 ## 3. Metrics
 
+> **Feynman Insight:** Metrics are the dials on your cockpit. A counter only goes up (like an odometer — total miles driven). A gauge goes up and down (like a speedometer — current speed). A histogram shows the distribution (like a petrol station's fuel purchase history: most people buy 30-50 litres, but a few buy 80). You set alerts when a dial goes into the red zone.
+
 | Type | Description | Example |
 | :--- | :--- | :--- |
 | **Counter** | Only goes up | Total requests, errors |
@@ -74,6 +82,8 @@
 
 ## 4. Distributed Tracing
 
+> **Feynman Insight:** Distributed tracing is like a GPS replay of a road trip through multiple cities. Your request (the car) starts in City A (API Gateway), drives through City B (Order Service), makes a detour through City C (Payment Service). The trace shows every city visited, every traffic jam encountered (slow spans), and the total journey time. Without a trace ID connecting all spans, you'd have separate city maps with no idea they were the same journey.
+
 ```
 Request: GET /checkout
 
@@ -88,6 +98,8 @@ Each service adds a **span** with timing. The entire request path = a **trace** 
 ---
 
 ## 5. Reliability: SLI, SLO, SLA
+
+> **Feynman Insight:** An SLA is a legal speed limit contract: "We guarantee 99.95% uptime." An SLO is your internal speedometer target: "We aim for 99.99% to give ourselves buffer." An SLI is the actual GPS reading of how fast you're going right now. The error budget is the margin between your contract and your target — it's how much "speeding below the limit" you're allowed before you're in breach. When the budget runs out, you stop adding new features and fix the road.
 
 | Term | Definition | Example |
 | :--- | :--- | :--- |

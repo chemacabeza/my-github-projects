@@ -4,13 +4,17 @@
   <img src="images/sd_arch_patterns.png" alt="Architectural Patterns" width="800"/>
 </p>
 
-## 🎯 The Big Goal
+> 🧠 **The Feynman Hook:** Architecture patterns are like city planning blueprints. A monolith is one giant shopping centre — everything under one roof, easy to navigate, but if the roof leaks, everyone gets wet. Microservices are a high street with specialist shops — each one independent. Serverless is a vending machine: no shop needed, just a machine that dispenses exactly what's requested and bills per use. The pattern you choose shapes every team, deployment, and failure mode in your system — change it later and you're rebuilding the city.
+
+## 🎯 What You'll Learn
 
 > **After this chapter, you'll know the major software architecture patterns — monolith, microservices, serverless, event-driven, CQRS — and when to use each one.**
 
 ---
 
 ## 1. Architecture Styles Overview
+
+> **Feynman Insight:** Choosing an architecture is like choosing a transport system for your city. A monolith is a single bus that serves everyone — cheap and simple for a small town. Microservices is a metro network: more infrastructure, but scales perfectly for a metropolis. Serverless is an on-demand taxi: zero idle cost, you only pay per trip, perfect for occasional travel.
 
 ```
 ┌────────────────┬─────────────────┬──────────────────┐
@@ -29,6 +33,8 @@
 ---
 
 ## 2. Event-Driven Architecture
+
+> **Feynman Insight:** Event-driven architecture is like a domino chain in a museum. One domino falls ("Order Placed"), and it triggers a perfectly choreographed sequence: the payment board collapses, the inventory board collapses, the shipping board collapses — all without any central coordinator pulling strings. The magic: adding a new "Email Notification" domino doesn't require touching any existing dominos.
 
 ```
 Event Producer ──→ [Event Bus / Broker] ──→ Event Consumer A
@@ -51,6 +57,8 @@ Event Producer ──→ [Event Bus / Broker] ──→ Event Consumer A
 
 ## 3. CQRS (Command Query Responsibility Segregation)
 
+> **Feynman Insight:** CQRS is like having two notebooks in a classroom. The Write notebook (blackboard) is where the teacher updates information — structured for accuracy. The Read notebook (handout) is pre-formatted exactly how students need to consume it: denormalized, pre-joined, optimized for fast scanning. When the blackboard changes, the handout is updated asynchronously. You would never use the blackboard as a handout — it's optimized for different purposes.
+
 Separate the **write model** from the **read model**:
 
 <p align="center">
@@ -67,6 +75,8 @@ Separate the **write model** from the **read model**:
 ---
 
 ## 4. Event Sourcing
+
+> **Feynman Insight:** Traditional databases store only the current bank balance: $750. Event sourcing stores the entire transaction history: deposit $1000, withdraw $250. The current balance is always *calculated* from the ledger, never stored directly. This is how banks have kept records for centuries — not "your balance is $750" but "here is every transaction that led to $750." You can thus reconstruct your account at any point in time, detect fraud retrospectively, and replay history as if rewinding a tape.
 
 Instead of storing **current state**, store the **sequence of events** that led to it:
 
@@ -90,6 +100,8 @@ Event Sourced:
 ---
 
 ## 5. The C4 Model
+
+> **Feynman Insight:** The C4 model is like Google Maps zoom levels. Zoomed all the way out (System Context), you see your system as one dot on a map of cities (external systems). Zoom in (Container), you see motorways between districts. Zoom in more (Component), you see individual streets. At maximum zoom (Code): individual buildings. The key principle: show stakeholders the zoom level they need, not the one you find interesting.
 
 A hierarchical way to visualize architecture at four zoom levels:
 

@@ -4,13 +4,17 @@
   <img src="images/sd_data_pipelines.png" alt="Data Processing Pipelines" width="800"/>
 </p>
 
-## 🎯 The Big Goal
+> 🧠 **The Feynman Hook:** There are two ways to process data: batch (collect all the day's orders, process them overnight in one big run) and stream (process each order the instant it arrives). It's the difference between a weekly laundry day and a dry cleaner that cleans each item as it comes in. Batch is efficient for large volumes; stream is essential when the result needs to be available instantly. The art is knowing which one fits your problem.
+
+## 🎯 What You'll Learn
 
 > **After this chapter, you'll understand how to process massive datasets using batch and stream processing — MapReduce, Spark, Kafka Streams, and the Lambda Architecture.**
 
 ---
 
 ## 1. Batch vs Stream Processing
+
+> **Feynman Insight:** Batch processing is like a bank that processes all ATM transactions at midnight. Fast during the day (no overhead per transaction), but you can't check your real-time balance. Stream processing is like a bank that updates your balance the instant you swipe your card. More complex machinery, but the result is always current.
 
 | Aspect | Batch Processing | Stream Processing |
 | :--- | :--- | :--- |
@@ -38,6 +42,8 @@ The foundational batch processing model:
 
 ## 3. ETL (Extract-Transform-Load)
 
+> **Feynman Insight:** ETL is like moving house. Extract = pack all your belongings into boxes. Transform = sort items from mixed boxes into labelled ones ("kitchen", "bedroom"). Load = unpack them into their proper rooms in the new house. The new house (data warehouse) has a completely different layout from the old one (source systems), so items must be reorganized to make sense in their new context.
+
 <p align="center">
   <img src="images/sd_etl_pipeline.png" alt="ETL Pipeline" width="700"/>
 </p>
@@ -45,6 +51,8 @@ The foundational batch processing model:
 ---
 
 ## 4. Stream Processing Concepts
+
+> **Feynman Insight:** A stream is an infinite river — you can't process "all the river"; you must process it in manageable sections. Windowing is cutting the river into defined time chunks: a 5-minute tumbling window is like measuring the river's flow every 5 minutes. A watermark is how far behind reality you're willing to accept — if a heavy rain event (late arriving data) occurs 30 seconds ago, do you include it in today's measurements or not?
 
 | Concept | Description |
 | :--- | :--- |
@@ -65,6 +73,8 @@ SESSION:              [───user active───][gap][───active──
 ---
 
 ## 5. Lambda Architecture
+
+> **Feynman Insight:** Lambda Architecture is like having two chefs: one who makes a slow-cooked perfect roast (the batch layer, accurate but takes hours), and one who makes instant microwave meals (the speed layer, fast but approximate). Customers get the microwave meal while waiting, then swap it for the roast when it's ready. The serving layer is the waiter who combines both.
 
 Combines batch and stream for completeness AND speed:
 
