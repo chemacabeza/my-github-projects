@@ -4,7 +4,9 @@
   <img src="images/sys_distributed_transactions.png" alt="Distributed Transactions and Sagas" width="100%"/>
 </p>
 
-## 🎯 The Big Goal
+> 🧠 **The Feynman Hook:** In a monolith, performing a transaction across multiple tables is like one chef preparing an entire meal in one kitchen: they can plate everything together or throw it all away. Microservices are three separate restaurants trying to serve one meal: Restaurant A handles the starter, B the main, C the dessert. If Restaurant C burns the dessert, does the customer still pay Restaurant A for the starter? The Saga pattern is your refund and compensation plan for this cross-restaurant meal.
+
+## 🎯 What You'll Learn
 
 > **After this chapter, you will understand how to safely handle failures across multiple databases. You will learn the complex world of Distributed Transactions.**
 
@@ -15,6 +17,8 @@ But what if you split those tables into two different microservices? Transaction
 ---
 
 ## 1. 🪤 The Fallacy of Two-Phase Commits (2PC)
+
+> **Feynman Insight:** 2PC is like a jury that requires unanimous agreement. Phase 1: the judge asks each juror to raise their hand if ready to decide. All 12 hands go up — rows are locked. Phase 2: judge says "Verdict?" But juror #7 collapses (database crash). Now 11 jurors are frozen in the deliberation room — hands raised, unable to leave, indefinitely waiting for juror #7 to return. That's the 2PC deadlock: the whole system freezes.
 
 A **Two-Phase Commit (2PC)** is a traditional way to coordinate multiple databases.
 
@@ -30,6 +34,8 @@ If Database B goes offline during Phase 1, Database A keeps its rows locked inde
 ---
 
 ## 2. 🔄 The Saga Pattern
+
+> **Feynman Insight:** A Saga is like a wedding day checklist. Step 1: Book the venue (deposit paid). Step 2: Book the catering (deposit paid). Step 3: Book the band — but they've gone bankrupt. Now you trigger compensating transactions: cancel catering (refund), cancel venue (refund). Each step either completes and moves forward, or fails and triggers "undo" steps backward. No single coordinator is holding everyone frozen — each participant handles their own refund.
 
 Modern microservices abandon 2PC and use **Sagas**. A Saga is a sequence of local transactions. Each microservice updates its own database and publishes an event to trigger the next step.
 

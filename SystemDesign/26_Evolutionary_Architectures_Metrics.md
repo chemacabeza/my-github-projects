@@ -4,7 +4,9 @@
   <img src="images/sys_evolutionary_architecture.png" alt="Evolutionary Architecture" width="100%"/>
 </p>
 
-## 🎯 The Big Goal
+> 🧠 **The Feynman Hook:** A bridge is designed not just for today's load, but to evolve — it has expansion joints to flex in heat, reinforced piers for heavier trucks, and load sensors to detect stress before failure. Evolutionary Architecture applies the same thinking to code: build automated "fitness functions" that continuously measure architectural health, just like bridge sensors measure structural stress. Without these guardrails, the bridge (codebase) slowly degrades under load until it fails catastrophically.
+
+## 🎯 What You'll Learn
 
 > **After this chapter, you will understand how to design systems that safely adapt to change. You will learn how to measure code health and prevent slow decay.**
 
@@ -15,6 +17,8 @@ An **Evolutionary Architecture** expects change and builds automated ways to pro
 ---
 
 ## 1. 🛡️ Fitness Functions
+
+> **Feynman Insight:** Without fitness functions, architectural rules exist only in a README that nobody reads. A fitness function is a building inspector who runs automated checks every time a new wall is added: "Does this wall meet fire code? Does it add weight beyond the foundation limit?" If it violates the rules, construction stops immediately — not six months later after 100 bad walls have been added.
 
 How do you make sure junior developers don't destroy your beautiful architecture? You write **Fitness Functions**.
 
@@ -34,6 +38,8 @@ def check_circular_dependencies(architecture_model):
 ---
 
 ## 2. ⏱️ Technical Debt and Cycle Time
+
+> **Feynman Insight:** Cycle Time is like measuring how long it takes a car factory to build a car: from raw steel in to finished car out. A new, well-organised factory does it in 1 day. A factory that has accumulated years of ad-hoc workarounds takes 3 weeks because each car has to navigate around all the legacy machinery. When Cycle Time grows, it's a measurement of accumulated architectural debt — not developer slowness. MTTR is the fire drill practice time: how fast can the firefighters respond when the alarm sounds?
 
 Architects must prove their design works by measuring it. 
 

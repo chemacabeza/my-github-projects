@@ -4,7 +4,9 @@
   <img src="images/sys_micro_frontends.png" alt="Micro-Frontends Architecture" width="100%"/>
 </p>
 
-## 🎯 The Big Goal
+> 🧠 **The Feynman Hook:** Micro-frontends apply the same thinking as microservices, but to the web browser. Imagine a department store: the electronics floor, fashion floor, and food hall all exist within one building (one URL), but each floor is managed and restocked completely independently. If the food hall catches fire, the electronics floor is unaffected. Module Federation is the building's central entrance that helps customers navigate between independently managed floors — seamlessly, as if it were all one store.
+
+## 🎯 What You'll Learn
 
 > **After this chapter, you will know how to scale heavy web applications efficiently. You will understand how multiple teams can build a single website without stepping on each other's toes.**
 
@@ -15,6 +17,8 @@ If 50 developers all edit the same massive React app, things break. Deployments 
 ---
 
 ## 1. 🍰 Vertical vs Horizontal Slicing
+
+> **Feynman Insight:** Horizontal slicing is a factory where one team operates only the welding machines across every car model. To add a feature to Model X, the welding team, painting team, and trim team all need to coordinate. Vertical slicing is assigning one complete team to Model X: they handle welding, painting, AND trim for their car. They ship independently without waiting for cross-team coordination.
 
 How do you break a website into independent pieces?
 
@@ -33,6 +37,8 @@ How do you break a website into independent pieces?
 ---
 
 ## 2. 🧩 How Do They Fit Together?
+
+> **Feynman Insight:** Module Federation is like an international phone exchange from the 1950s. Each country has its own independent phone network (each micro-frontend team owns their app). When you make an international call (the Shell App loads Search or Checkout), an operator (Module Federation runtime) connects the two networks seamlessly. The caller and receiver don't need to know about each other's internal phone infrastructure.
 
 If the "Search" and "Checkout" features are built separately, how does the user see just ONE unified website?
 

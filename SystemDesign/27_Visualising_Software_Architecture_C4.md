@@ -4,7 +4,9 @@
   <img src="images/sys_c4_model.png" alt="C4 Model" width="100%"/>
 </p>
 
-## 🎯 The Big Goal
+> 🧠 **The Feynman Hook:** Most architecture diagrams are like hand-drawn maps with no scale, no legend, and no consistent symbols — everyone draws differently and no one understands anyone else's map. The C4 Model is an Ordnance Survey standard for software: four agreed zoom levels, consistent notation, and a clear rule about what belongs on each level. With C4, a new developer can navigate an unfamiliar system the same way a tourist can navigate a new city with a standardised street map.
+
+## 🎯 What You'll Learn
 
 > **After this chapter, you will finally know how to draw diagrams that make sense. You will be able to communicate complex ideas to anyone using the C4 Model.**
 
@@ -15,6 +17,8 @@ The **C4 Model** fixes this. It is like Google Maps for your code. You can zoom 
 ---
 
 ## 1. 🔍 The 4 Levels of Zoom (C4)
+
+> **Feynman Insight:** C4 is four zoom levels on a single map. Level 1 (Context) is the satellite view: you can see countries but not streets. Level 2 (Container) is the city view: you can see motorways and districts. Level 3 (Component) is the street view: individual buildings and their entrances. Level 4 (Code) is the floor plan: specific rooms inside one building. A tourist needs Level 2. A courier needs Level 3. An interior designer needs Level 4. The CEO is still on the satellite.
 
 C4 stands for Context, Containers, Components, and Code.
 

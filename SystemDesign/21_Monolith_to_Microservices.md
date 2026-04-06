@@ -4,7 +4,9 @@
   <img src="images/sys_monolith_microservices.png" alt="Monolith to Microservices" width="100%"/>
 </p>
 
-## 🎯 The Big Goal
+> 🧠 **The Feynman Hook:** Migrating a monolith to microservices is like renovating a skyscraper while tenants are still living in it. You can't close the building for 2 years (Big Bang rewrite). Instead, you renovate one floor at a time: block off floor 12, rebuild it, open it, then move to floor 13. The tenants (users) never notice the renovation because the building never closes. This is the Strangler Fig pattern — and it's the only safe way to migrate large production systems.
+
+## 🎯 What You'll Learn
 
 > **After this chapter, you will know how to safely break down massive legacy systems into smaller, scalable microservices.**
 
@@ -16,6 +18,8 @@ A pure "big bang" rewrite almost always fails. You must safely extract features,
 
 ## 1. 🏗️ Domain-Driven Design (DDD)
 
+> **Feynman Insight:** In a hospital, "patient" means different things to different departments. To the billing team, a patient is an invoice. To surgery, a patient is a procedure schedule. To pharmacy, a patient is a prescription list. These are separate Bounded Contexts: each department has its own model of "patient" that only makes sense within their domain. Forcing everyone to share one universal "patient" model creates a model that serves no one well.
+
 You cannot just cut code randomly. Architects use **Domain-Driven Design (DDD)** to find logical boundaries.
 
 * 🗣️ **Ubiquitous Language**: Different teams use words differently. An `Account` means billing history to the Finance team. But it means a username and password to the Security team.
@@ -24,6 +28,8 @@ You cannot just cut code randomly. Architects use **Domain-Driven Design (DDD)**
 ---
 
 ## 2. 🌿 The Strangler Fig Pattern
+
+> **Feynman Insight:** A strangler fig tree grows around a host tree in the rainforest. The fig wraps the host gradually — not cutting it down, not killing it overnight — until eventually the original tree has been completely replaced without ever falling over. Your API Gateway is the fig: it wraps the monolith, and each new microservice quietly takes over one more route. One day, the monolith routes list is empty and it can be decommissioned.
 
 Do not replace the old system overnight. Instead, strangle it slowly. 
 
@@ -47,6 +53,8 @@ graph TD
 
 ## 3. 🛡️ Anti-Corruption Layers (ACL)
 
+> **Feynman Insight:** An ACL is a diplomatic translator at the United Nations. The new microservice speaks modern JSON; the old monolith speaks 1998 XML with its own proprietary field names. Without the ACL, the new service would have to learn to "speak legacy" — importing its data structures and coupling itself to the old system's oddities. The ACL translates at the boundary so the new service stays clean.
+
 Sometimes, your shiny new microservice needs to talk to the ugly old monolith. 
 
 Don't let legacy data structures pollute your new code!
@@ -64,6 +72,8 @@ graph LR
 ---
 
 ## 4. 🗄️ Distributing the Database
+
+> **Feynman Insight:** A shared database between a monolith and a new microservice is like two businesses sharing one bank account. It seems convenient at first, but if one business changes the account format (schema change), it breaks the other's accounting. Database-per-service is two separate bank accounts with one business calling the other's public API to transfer funds. More conversations required, but total independence.
 
 Splitting the code is easy. Splitting the database is hard.
 

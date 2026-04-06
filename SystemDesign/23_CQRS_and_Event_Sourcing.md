@@ -4,7 +4,9 @@
   <img src="images/sys_cqrs_eventsourcing.png" alt="CQRS and Event Sourcing Architecture" width="100%"/>
 </p>
 
-## 🎯 The Big Goal
+> 🧠 **The Feynman Hook:** In a hospital, doctors write patient notes in one format (clinical, precise, abbreviated) and nurses display patient information in a completely different format (clear, visual, prioritised). Using the same document for both would be a disaster. CQRS is the architectural principle that writes data in its most correct form and reads data in its most useful form — with a translation layer between. Event Sourcing takes this further: instead of storing the current state, you store every single medical decision ever made, and derive the patient's current status by replaying them.
+
+## 🎯 What You'll Learn
 
 > **After this chapter, you will understand how to fundamentally redesign data flows. You will learn to cleanly separate read traffic from write traffic for extreme performance.**
 
@@ -13,6 +15,8 @@ Traditional databases use the exact same data model for reading and writing (CRU
 ---
 
 ## 1. 🔀 Command Query Responsibility Segregation (CQRS)
+
+> **Feynman Insight:** Think of a restaurant kitchen. The order pad (Command side) is optimised for writing: fast, structured, validated. The menu board (Query side) is optimised for reading: large, visual, denormalized so guests can scan it instantly. The chef (sync event) connects them: when an order is cooked, the board updates. They are the same truth expressed in different formats for different audiences.
 
 **CQRS** splits the system into two entirely separate sides.
 
@@ -31,6 +35,8 @@ Traditional databases use the exact same data model for reading and writing (CRU
 ---
 
 ## 2. 📜 Event Sourcing
+
+> **Feynman Insight:** A traditional database stores the current score on the scoreboard: 3-1. Event Sourcing stores the entire match recording: Minute 12: Goal by Alice. Minute 34: Goal by Bob. Minute 67: Red card. Minute 81: Goal by Carol. The final score (3-1) is computed by replaying the match. You can fast-forward to any minute and see the exact score at that point — this is time-travel debugging. You can try alternative rule-sets against the same game log. You lose nothing because nothing is ever overwritten.
 
 Usually, databases only store the **current** state. (e.g., Balance = $100). If you change the balance, the old value is lost forever.
 

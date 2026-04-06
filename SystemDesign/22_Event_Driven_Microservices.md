@@ -4,7 +4,9 @@
   <img src="images/sys_event_driven.png" alt="Event-Driven Architecture" width="100%"/>
 </p>
 
-## 🎯 The Big Goal
+> 🧠 **The Feynman Hook:** Synchronous service calls are like a chain of dominos: if one falls the wrong way, the whole chain breaks. Event-driven architecture is like a breaking-news newsroom: the reporter (producer) shouts the headline (event) into the bullpen, and every desk that cares about that story (consumer) picks it up independently. The reporter doesn't wait for the photo editor to finish before moving on — they publish, and the newsroom self-organises. This decoupling is what makes systems resilient at scale.
+
+## 🎯 What You'll Learn
 
 > **After this chapter, you will confidently design complex data streams using events. You will understand how microservices communicate safely and asynchronously.**
 
@@ -15,6 +17,8 @@ Event-Driven Architecture (EDA) solves this. Services broadcast "events" (things
 ---
 
 ## 1. 🎼 Orchestration vs Choreography
+
+> **Feynman Insight:** Orchestration is an air traffic controller telling each plane exactly when to take off, land, and which runway to use. There's one person in charge — clear status visibility, but one human is a bottleneck. Choreography is a flash mob: no central coordinator, each dancer knows the routine and performs their part when the music starts. Beautiful at scale, but if one dancer goes wrong, debugging is hard because no one is "in charge."
 
 How do you manage complex workflows across many microservices? You have two choices.
 
@@ -34,6 +38,8 @@ There is no central boss. Each service listens for events and reacts independent
 
 ## 2. 📬 Broker-centric vs Log-centric Messaging
 
+> **Feynman Insight:** A broker-centric queue (RabbitMQ) is a smart post office that reads addresses and routes packages. Once delivered, the package is destroyed. A log-centric queue (Kafka) is an immutable diary: every event is written in order, and readers can look back at any page at any time. Multiple readers can read the same page independently. Choose the post office for routing tasks; choose the diary when you need a replayable history.
+
 When you send events, where do they go? They sit in a queue waiting to be read.
 
 ### 🐰 Broker-Centric (e.g., RabbitMQ)
@@ -52,6 +58,8 @@ When you send events, where do they go? They sit in a queue waiting to be read.
 ---
 
 ## 3. 🧩 Dealing with Eventual Consistency
+
+> **Feynman Insight:** Eventual consistency is like a bank cheque. You deposit a cheque on Monday; the bank tells you it's accepted. But the money doesn't actually appear in your account until Wednesday after clearing. For two days, your balance is "wrong" — but eventually it becomes correct. This is fine for most situations. It is NOT fine if you withdraw cash on Tuesday expecting the deposit to already be there.
 
 Because events happen asynchronously, data is not updated instantly everywhere.
 
