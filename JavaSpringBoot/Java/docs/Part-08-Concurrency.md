@@ -1,394 +1,274 @@
-# Part 8: Concurrency & Multithreading
+# Part 8: Concurrency
 
-> **Sources:** *Thinking in Java* (Ch. 13) · *OCP Java SE 8 Programmer II* (Ch. 7) · *Java Coding Problems* (Ch. 10–11) · *Java 8 Lambdas* (Ch. 9)
+<p align="center">
+<img src="../images/part08_cover.png" alt="Concurrency" width="800"/>
+</p>
+
+> **Sources:** *Java Concurrency in Practice* (Goetz) · *Effective Java* (Bloch, Items 78–84) · *Core Java, Vol. I* (Horstmann) · *Modern Java in Action* (Urma, Fusco)
 
 ---
 
 ## 🎯 Learning Objectives
 
-- Create and manage threads using `Thread`, `Runnable`, and `ExecutorService`
-- Understand synchronization, locks, and atomic operations
-- Use the `java.util.concurrent` utilities (`CountDownLatch`, `CyclicBarrier`, `Semaphore`)
-- Master **Virtual Threads** (Project Loom) and **Structured Concurrency**
-- Avoid deadlocks, race conditions, and common concurrency bugs
+By the end of this part, you will:
+- Understand threads, synchronization, and the Java Memory Model
+- Use `synchronized`, `volatile`, and `java.util.concurrent` utilities
+- Work with `ExecutorService`, `Future`, and `CompletableFuture`
+- Understand thread-safe collections and atomic operations
+- Know when and how to use Virtual Threads (Java 21+)
 
 ---
 
-## 1. Threads Fundamentals
+## 1. Threads — The Basics
 
-### Creating Threads
+> **Feynman Insight:** Imagine a restaurant kitchen. A single chef (single thread) can only do one thing at a time — chop onions, THEN heat the pan, THEN cook. With multiple chefs (multiple threads), one chops while another heats — tasks happen simultaneously. But if two chefs reach for the same knife at the same time, chaos ensues. **Concurrency is the art of coordinating multiple workers to share resources safely.**
+
+### 1.1 Creating Threads
 
 ```java
-// Method 1: Extend Thread
+// Method 1: Implement Runnable (preferred — separation of concerns)
+Runnable task = () -> System.out.println("Running in: " + Thread.currentThread().getName());
+Thread thread = new Thread(task);
+thread.start();  // Starts a NEW thread — never call run() directly!
+
+// Method 2: Extend Thread (less flexible — can't extend anything else)
 class MyThread extends Thread {
     @Override
     public void run() {
-        System.out.println("Running in: " + Thread.currentThread().getName());
+        System.out.println("Running in: " + getName());
     }
 }
 new MyThread().start();
-
-// Method 2: Implement Runnable (preferred)
-Runnable task = () -> System.out.println("Running in: " + Thread.currentThread().getName());
-new Thread(task).start();
-
-// Method 3: Callable — returns a value
-Callable<Integer> computation = () -> {
-    Thread.sleep(1000);
-    return 42;
-};
 ```
 
-### Thread Lifecycle
+> **Bloch, Item 80:** *"Prefer executors, tasks, and streams to threads."* Creating raw threads is the assembly language of concurrency — powerful but error-prone. Use `ExecutorService` instead.
+
+### 1.2 Thread Lifecycle
 
 ```
-NEW → RUNNABLE → RUNNING → BLOCKED/WAITING/TIMED_WAITING → TERMINATED
-```
-
-```java
-Thread t = new Thread(() -> {
-    try {
-        Thread.sleep(2000);
-    } catch (InterruptedException e) {
-        Thread.currentThread().interrupt();
-    }
-});
-t.start();                     // NEW → RUNNABLE
-t.join();                      // Wait for t to finish
-System.out.println(t.getState()); // TERMINATED
+NEW  →  RUNNABLE  →  RUNNING  →  TERMINATED
+              ↕
+         BLOCKED / WAITING / TIMED_WAITING
 ```
 
 ---
 
-## 2. Synchronization
+## 2. Thread Safety — The Core Problem
 
-### The Problem — Race Condition
+<p align="center">
+<img src="../images/part08_thread_safety.png" alt="Thread Safety" width="800"/>
+</p>
 
-```java
-class Counter {
-    private int count = 0;
-    public void increment() { count++; }  // NOT thread-safe! (read-modify-write)
-    public int getCount() { return count; }
-}
-```
+### 2.1 Race Conditions
 
-### synchronized Keyword
+Goetz (*Java Concurrency in Practice*) defines a race condition as: "Getting the wrong answer because of unlucky timing."
 
 ```java
-class SafeCounter {
+// UNSAFE — race condition!
+public class UnsafeCounter {
     private int count = 0;
 
-    public synchronized void increment() { count++; }
-    public synchronized int getCount() { return count; }
-
-    // Or synchronized block
-    public void incrementBlock() {
-        synchronized (this) {
-            count++;
-        }
+    public void increment() {
+        count++;  // NOT atomic! Read → increment → write = 3 steps
     }
 }
 ```
 
-### Atomic Classes
+> **Feynman Insight:** `count++` looks like one step, but it's actually three: (1) read the current value, (2) add 1, (3) write the new value. If Thread A reads `count = 5` and Thread B also reads `count = 5` before A writes, both write `6` — losing one increment entirely.
+
+### 2.2 Synchronized — The Lock
 
 ```java
-import java.util.concurrent.atomic.*;
+public class SafeCounter {
+    private int count = 0;
 
+    public synchronized void increment() {  // Only one thread can enter at a time
+        count++;
+    }
+
+    public synchronized int getCount() {
+        return count;
+    }
+}
+```
+
+### 2.3 The `volatile` Keyword
+
+```java
+// volatile guarantees visibility across threads — but NOT atomicity
+private volatile boolean running = true;
+
+// Thread 1
+public void run() {
+    while (running) {  // Without volatile, this might loop forever
+        doWork();       // due to CPU caching
+    }
+}
+
+// Thread 2
+public void stop() {
+    running = false;  // volatile ensures Thread 1 sees this change
+}
+```
+
+> **Goetz's Rule:** `volatile` is sufficient when a variable is written by one thread and read by others. For compound operations (read-modify-write), you need synchronization or atomics.
+
+---
+
+## 3. java.util.concurrent — The Modern Toolkit
+
+### 3.1 Atomic Classes
+
+```java
+// AtomicInteger — lock-free thread safety using CAS (Compare-And-Swap)
 AtomicInteger counter = new AtomicInteger(0);
-counter.incrementAndGet();        // thread-safe ++
-counter.addAndGet(5);             // thread-safe +=
-counter.compareAndSet(6, 10);     // CAS operation
+counter.incrementAndGet();    // Thread-safe increment → 1
+counter.addAndGet(5);         // Thread-safe add → 6
+counter.compareAndSet(6, 10); // Only sets to 10 if current value is 6
 
-AtomicLong longCounter = new AtomicLong(0);
-AtomicBoolean flag = new AtomicBoolean(false);
-AtomicReference<String> ref = new AtomicReference<>("initial");
+// Other atomics: AtomicLong, AtomicBoolean, AtomicReference<T>
 ```
 
----
-
-## 3. ExecutorService
-
-### Thread Pool Basics
+### 3.2 ExecutorService — The Thread Pool
 
 ```java
 // Fixed thread pool — reuses a fixed number of threads
 ExecutorService executor = Executors.newFixedThreadPool(4);
 
 // Submit tasks
-executor.submit(() -> System.out.println("Task 1"));
-executor.submit(() -> System.out.println("Task 2"));
-
-// Submit Callable — returns Future
-Future<Integer> future = executor.submit(() -> {
+Future<String> future = executor.submit(() -> {
     Thread.sleep(1000);
-    return 42;
+    return "Result from background thread";
 });
 
-int result = future.get();           // Blocks until result is ready
-int result2 = future.get(5, TimeUnit.SECONDS); // With timeout
+// Get result (blocks until ready)
+String result = future.get();  // Blocks here until the task completes
 
-// Shutdown
-executor.shutdown();                 // Finish current tasks
-executor.awaitTermination(10, TimeUnit.SECONDS);
-
-// Other pool types
-ExecutorService cached = Executors.newCachedThreadPool();     // Grows as needed
-ExecutorService single = Executors.newSingleThreadExecutor(); // One thread
-ScheduledExecutorService scheduled = Executors.newScheduledThreadPool(2);
+// ALWAYS shut down when done!
+executor.shutdown();
+executor.awaitTermination(5, TimeUnit.SECONDS);
 ```
 
-### invokeAll & invokeAny
-
-```java
-List<Callable<String>> tasks = List.of(
-    () -> { Thread.sleep(100); return "Fast"; },
-    () -> { Thread.sleep(500); return "Medium"; },
-    () -> { Thread.sleep(1000); return "Slow"; }
-);
-
-// Wait for ALL to complete
-List<Future<String>> futures = executor.invokeAll(tasks);
-
-// Return FIRST completed result
-String fastest = executor.invokeAny(tasks);  // "Fast"
-```
-
----
-
-## 4. Concurrent Collections
-
-```java
-// Thread-safe Map — segments-based locking
-ConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<>();
-map.put("key", 1);
-map.computeIfAbsent("key2", k -> 42);
-map.merge("key", 1, Integer::sum);  // Atomic increment
-
-// Thread-safe Queue
-BlockingQueue<String> queue = new LinkedBlockingQueue<>(100);
-queue.put("item");                    // Blocks if full
-String item = queue.take();           // Blocks if empty
-
-// CopyOnWriteArrayList — for read-heavy scenarios
-CopyOnWriteArrayList<String> list = new CopyOnWriteArrayList<>();
-```
-
----
-
-## 5. Synchronization Utilities
-
-### CountDownLatch — Wait for N events
-
-```java
-CountDownLatch latch = new CountDownLatch(3);
-
-for (int i = 0; i < 3; i++) {
-    executor.submit(() -> {
-        doWork();
-        latch.countDown();  // Signal completion
-    });
-}
-
-latch.await();  // Block until count reaches 0
-System.out.println("All tasks complete!");
-```
-
-### CyclicBarrier — Sync N threads at a point
-
-```java
-CyclicBarrier barrier = new CyclicBarrier(3, () -> 
-    System.out.println("All threads arrived at barrier!"));
-
-for (int i = 0; i < 3; i++) {
-    executor.submit(() -> {
-        phase1();
-        barrier.await();  // Wait for all threads
-        phase2();
-    });
-}
-```
-
-### Semaphore — Limit concurrent access
-
-```java
-Semaphore semaphore = new Semaphore(3);  // 3 permits
-
-executor.submit(() -> {
-    semaphore.acquire();  // Get permit (blocks if none available)
-    try {
-        accessSharedResource();
-    } finally {
-        semaphore.release();  // Return permit
-    }
-});
-```
-
----
-
-## 6. CompletableFuture
+### 3.3 CompletableFuture — Async Pipelines
 
 ```java
 CompletableFuture<String> future = CompletableFuture
-    .supplyAsync(() -> fetchData("url"))              // Async
-    .thenApply(String::toUpperCase)                   // Transform
-    .thenApply(s -> "Result: " + s)                   // Chain
-    .exceptionally(ex -> "Error: " + ex.getMessage()); // Handle error
-
-String result = future.get();
+    .supplyAsync(() -> fetchDataFromAPI())        // Run async
+    .thenApply(data -> parseJSON(data))            // Transform result
+    .thenApply(parsed -> enrichWithMetadata(parsed))
+    .exceptionally(ex -> "Fallback: " + ex.getMessage());  // Handle errors
 
 // Combining futures
-CompletableFuture<String> f1 = CompletableFuture.supplyAsync(() -> "Hello");
-CompletableFuture<String> f2 = CompletableFuture.supplyAsync(() -> "World");
+CompletableFuture<String> user = CompletableFuture.supplyAsync(() -> fetchUser());
+CompletableFuture<String> order = CompletableFuture.supplyAsync(() -> fetchOrder());
 
-CompletableFuture<String> combined = f1.thenCombine(f2, (a, b) -> a + " " + b);
-// "Hello World"
+CompletableFuture<String> combined = user.thenCombine(order,
+    (u, o) -> "User: " + u + ", Order: " + o);
+```
 
-// Wait for all
-CompletableFuture.allOf(f1, f2).join();
+### 3.4 Thread-Safe Collections
 
-// Wait for any
-CompletableFuture.anyOf(f1, f2).join();
+```java
+// ConcurrentHashMap — high-performance concurrent map
+ConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<>();
+map.put("key", 1);
+map.computeIfAbsent("key2", k -> 42);  // Atomic compute
+
+// CopyOnWriteArrayList — for read-heavy, write-rare scenarios
+CopyOnWriteArrayList<String> list = new CopyOnWriteArrayList<>();
+
+// BlockingQueue — producer-consumer pattern
+BlockingQueue<String> queue = new LinkedBlockingQueue<>(100);
+queue.put("item");          // Blocks if full
+String item = queue.take(); // Blocks if empty
 ```
 
 ---
 
-## 7. Virtual Threads (Java 21+, Project Loom)
+## 4. Synchronization Utilities
 
-### What Are Virtual Threads?
+```java
+// CountDownLatch — wait for N tasks to complete
+CountDownLatch latch = new CountDownLatch(3);
+// Each worker calls latch.countDown() when done
+latch.await();  // Main thread blocks until count reaches 0
 
-Virtual threads are **lightweight threads** managed by the JVM rather than the OS. You can create millions of them.
+// Semaphore — limit concurrent access
+Semaphore semaphore = new Semaphore(3);  // Max 3 concurrent permits
+semaphore.acquire();  // Block if all permits taken
+try {
+    accessResource();
+} finally {
+    semaphore.release();
+}
+
+// ReentrantLock — more flexible than synchronized
+ReentrantLock lock = new ReentrantLock();
+lock.lock();
+try {
+    criticalSection();
+} finally {
+    lock.unlock();  // ALWAYS in finally!
+}
+```
+
+---
+
+## 5. Virtual Threads (Java 21+)
+
+<p align="center">
+<img src="../images/part08_virtual_threads.png" alt="Virtual Threads" width="800"/>
+</p>
+
+> **Feynman Insight:** Platform threads are like hiring full-time employees — each one costs ~1MB of memory and is limited by OS resources (thousands). Virtual threads are like hiring freelancers — the JVM can create millions of them, each weighing just a few KB. When a virtual thread blocks (waiting for I/O), the JVM detaches it from the carrier thread and puts another virtual thread on, maximizing efficiency.
 
 ```java
 // Creating virtual threads
-Thread vThread = Thread.ofVirtual().start(() -> {
-    System.out.println("Running on: " + Thread.currentThread());
+Thread.startVirtualThread(() -> {
+    System.out.println("Running in virtual thread");
 });
 
-// With name
-Thread named = Thread.ofVirtual()
-    .name("my-virtual-thread")
-    .start(() -> doWork());
-
-// Virtual thread executor — creates a new virtual thread per task
+// Virtual thread executor — one virtual thread per task
 try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+    // Launch 100,000 concurrent tasks — no problem with virtual threads!
     for (int i = 0; i < 100_000; i++) {
         executor.submit(() -> {
             Thread.sleep(Duration.ofSeconds(1));
             return "Done";
         });
     }
-}  // Waits for all to complete (AutoCloseable)
-```
-
-### Platform vs. Virtual Threads
-
-| Feature | Platform Thread | Virtual Thread |
-|---------|----------------|----------------|
-| Managed by | OS | JVM |
-| Memory | ~1 MB stack | ~few KB |
-| Max count | ~thousands | ~millions |
-| Cost of creation | High | Negligible |
-| Best for | CPU-bound | I/O-bound |
-| Pooling needed | Yes | No |
-
-### When to Use Virtual Threads
-
-✅ **I/O-bound tasks:** HTTP requests, database calls, file I/O
-✅ **High concurrency servers:** Handle millions of connections
-✅ **Replace thread pools** for I/O workloads
-
-❌ **Not for CPU-bound work** — they share the same carrier threads
-❌ **Avoid `synchronized` blocks** — prefer `ReentrantLock` (prevents pinning)
-
----
-
-## 8. Structured Concurrency (Preview, Java 21+)
-
-```java
-try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
-    Subtask<String> user = scope.fork(() -> fetchUser(userId));
-    Subtask<String> order = scope.fork(() -> fetchOrder(orderId));
-
-    scope.join();            // Wait for all
-    scope.throwIfFailed();   // Propagate exceptions
-
-    String result = user.get() + " - " + order.get();
-}
-// If any subtask fails, all others are cancelled automatically
-```
-
-### ShutdownOnSuccess — Return first result
-
-```java
-try (var scope = new StructuredTaskScope.ShutdownOnSuccess<String>()) {
-    scope.fork(() -> fetchFromServerA());
-    scope.fork(() -> fetchFromServerB());
-    scope.fork(() -> fetchFromServerC());
-
-    scope.join();
-    String fastest = scope.result();  // First successful result
 }
 ```
 
 ---
 
-## 9. Deadlock Prevention
+## 6. Best Practices
 
-```java
-// DEADLOCK example:
-// Thread 1: lock(A) → lock(B)
-// Thread 2: lock(B) → lock(A)  ← Deadlock!
-
-// Prevention strategies:
-// 1. Lock ordering — always acquire locks in the same order
-// 2. Timeout — use tryLock with timeout
-// 3. Avoid nested locks when possible
-
-ReentrantLock lock = new ReentrantLock();
-if (lock.tryLock(5, TimeUnit.SECONDS)) {
-    try {
-        // critical section
-    } finally {
-        lock.unlock();
-    }
-} else {
-    // Handle timeout — couldn't acquire lock
-}
-```
+1. **Prefer executors over raw threads** (Bloch, Item 80)
+2. **Prefer concurrency utilities** (`AtomicInteger`, `ConcurrentHashMap`) over `synchronized` (Bloch, Item 81)
+3. **Make objects immutable** — immutable objects are automatically thread-safe (Bloch, Item 17)
+4. **Minimize shared mutable state** — the root of all concurrency evil (Goetz)
+5. **Use `CompletableFuture`** for async pipelines instead of blocking `Future.get()`
+6. **Use virtual threads** for I/O-bound tasks in Java 21+
+7. **Always release locks in `finally`** blocks
 
 ---
 
-## 10. Best Practices
+## 7. Exercises
 
-1. **Prefer `ExecutorService`** over manual `Thread` creation
-2. **Use virtual threads** for I/O-bound workloads (Java 21+)
-3. **Use `ConcurrentHashMap`** instead of `synchronized HashMap`
-4. **Prefer `AtomicInteger`** over `synchronized` for simple counters
-5. **Always handle `InterruptedException`** — restore interrupt status
-6. **Use `CompletableFuture`** for async pipelines
-7. **Avoid shared mutable state** — prefer immutable data
-8. **Always unlock in `finally`** when using `ReentrantLock`
-9. **Profile before parallelizing** — concurrency adds complexity
-
----
-
-## 11. Exercises
-
-1. **Producer-Consumer:** Implement using `BlockingQueue` with multiple producers/consumers
-2. **Parallel Web Scraper:** Use `CompletableFuture` to fetch multiple URLs concurrently
-3. **Thread-Safe Cache:** Implement an LRU cache using `ConcurrentHashMap` and `ReentrantReadWriteLock`
-4. **Virtual Thread Benchmark:** Compare throughput of 10,000 I/O tasks with platform vs virtual threads
-5. **Structured Concurrency:** Implement a service that fetches user profile + orders + recommendations concurrently
+1. **Thread-Safe Counter:** Implement a counter using `synchronized`, `AtomicInteger`, and `ReentrantLock`. Benchmark all three.
+2. **Producer-Consumer:** Implement a producer-consumer pattern with `BlockingQueue`.
+3. **Async Pipeline:** Use `CompletableFuture` to fetch data from multiple "APIs" concurrently and merge results.
+4. **Virtual Threads:** Create 10,000 virtual threads that each sleep for 1 second. Measure total elapsed time.
 
 ---
 
 ## 📖 References
 
-- *Thinking in Java*, Bruce Eckel — Ch. 13 (Concurrency)
-- *OCP Java SE 8 Programmer II Study Guide* — Ch. 7 (Concurrency)
-- *Java Coding Problems*, Anghel Leonard — Ch. 10–11 (Virtual Threads, Structured Concurrency)
-- *Java 8 Lambdas*, Richard Warburton — Ch. 9 (Lambda-Enabled Concurrency)
+- *Java Concurrency in Practice*, Brian Goetz — The definitive guide (all chapters)
+- *Effective Java*, Joshua Bloch — Items 78–84 (Concurrency)
+- *Core Java, Volume I*, Cay S. Horstmann — Chapter 12 (Concurrency)
+- *Modern Java in Action*, Urma, Fusco — Chapter 15 (CompletableFuture)
 
 ---
 

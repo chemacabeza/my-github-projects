@@ -1,185 +1,213 @@
-# Part 4: Exception Handling & Error Management
+# Part 4: Exception Handling
 
-> **Sources:** *Thinking in Java* (Ch. 9) · *OCA Java SE 8 Programmer I* (Ch. 6) · *OCP Java SE 8 Programmer II* (Ch. 6)
+<p align="center">
+<img src="../images/part04_cover.png" alt="Exception Handling" width="800"/>
+</p>
+
+> **Sources:** *Effective Java* (Bloch, Items 69–77) · *Core Java, Vol. I* (Horstmann) · *Java: The Complete Reference* (Schildt) · *Head First Java* (Sierra, Bates, Gee)
 
 ---
 
 ## 🎯 Learning Objectives
 
 By the end of this part, you will:
-- Understand the exception hierarchy and categories
-- Use `try-catch-finally` and `try-with-resources` correctly
-- Create custom exceptions
-- Apply multi-catch and exception chaining
-- Follow best practices for robust error handling
+- Understand Java's exception hierarchy and the distinction between checked and unchecked exceptions
+- Write correct try/catch/finally blocks and understand their execution flow
+- Use try-with-resources for automatic resource management
+- Create custom exception classes
+- Follow Bloch's exception-handling philosophy from *Effective Java*
 
 ---
 
-## 1. Exception Hierarchy
+## 1. What Are Exceptions?
+
+> **Feynman Insight:** Imagine you're a chef following a recipe. Normally, you go step by step — chop onions, heat oil, add onions to pan. But what if the stove is broken? Or the pan is missing? You can't just keep following the recipe blindly — you need to *stop*, *report the problem*, and *decide what to do*. That's exactly what exceptions do in Java. They're the language's built-in mechanism for saying "something unexpected happened, and we need to deal with it."
+
+An exception is an **object** that represents an error condition. When something goes wrong, Java:
+1. **Creates** an exception object containing information about the error
+2. **Throws** it — execution stops at the point of failure
+3. **Propagates** it up the call stack until someone **catches** it
+4. If nobody catches it, the program **crashes**
+
+---
+
+## 2. The Exception Hierarchy
+
+Understanding this hierarchy is the key to using exceptions correctly.
 
 <p align="center">
-<img src="../images/ExceptionHierarchy.png" width="600"/>
+<img src="../images/part04_hierarchy.png" alt="Java Exception Hierarchy" width="800"/>
 </p>
 
-### Categories
+```
+java.lang.Throwable
+├── java.lang.Error                    ☠️ DON'T catch these
+│   ├── OutOfMemoryError
+│   ├── StackOverflowError
+│   └── VirtualMachineError
+└── java.lang.Exception                
+    ├── RuntimeException               ⚠️ Unchecked — bugs in YOUR code
+    │   ├── NullPointerException
+    │   ├── ArrayIndexOutOfBoundsException
+    │   ├── IllegalArgumentException
+    │   ├── ClassCastException
+    │   └── ArithmeticException
+    └── (Checked Exceptions)           ✅ MUST handle — compiler enforces
+        ├── IOException
+        ├── SQLException
+        ├── FileNotFoundException
+        └── ClassNotFoundException
+```
 
-| Category | Examples | Must Catch? | Recoverable? |
-|----------|---------|-------------|-------------|
-| **Checked Exceptions** | `IOException`, `SQLException`, `ClassNotFoundException` | ✅ Yes (or declare) | Usually yes |
-| **Unchecked Exceptions** (`RuntimeException`) | `NullPointerException`, `IllegalArgumentException` | ❌ No | Often indicates bugs |
-| **Errors** | `OutOfMemoryError`, `StackOverflowError` | ❌ No | Usually not |
+> **Feynman Insight — The Three Categories:**
+>
+> 🔴 **Errors** — The building is on fire. There's nothing you can do. (`OutOfMemoryError`, `StackOverflowError`). These mean the JVM itself is in trouble. Don't try to catch them — just let the program die gracefully.
+>
+> 🟠 **Runtime Exceptions (Unchecked)** — You made a mistake. Fix your code. (`NullPointerException`, `ArrayIndexOutOfBounds`). These are bugs that shouldn't happen if your code is correct. The compiler doesn't force you to handle them.
+>
+> 🔵 **Checked Exceptions** — Something external went wrong that you should plan for. (`IOException`, `SQLException`). The file might not exist. The database might be down. The compiler *forces* you to handle these because they're foreseeable problems.
+
+> **Bloch's Philosophy** (*Effective Java*, Item 70): *"Use checked exceptions for recoverable conditions and runtime exceptions for programming errors."*
 
 ---
 
-## 2. try-catch-finally
+## 3. Try-Catch-Finally — The Safety Net
 
-### 2.1 Basic Structure
+<p align="center">
+<img src="../images/part04_try_catch.png" alt="Try-Catch-Finally Flow" width="800"/>
+</p>
+
+### 3.1 Basic Try-Catch
 
 ```java
 try {
-    // Code that might throw an exception
-    int result = 10 / 0;
+    int result = 10 / 0;  // ArithmeticException!
+    System.out.println("This never executes");
 } catch (ArithmeticException e) {
-    // Handle the exception
-    System.err.println("Cannot divide by zero: " + e.getMessage());
-} finally {
-    // ALWAYS executes (cleanup code)
-    System.out.println("Cleanup done");
+    System.out.println("Cannot divide by zero: " + e.getMessage());
 }
+// Program continues normally here
 ```
 
-### 2.2 Multiple Catch Blocks
-
-Order matters — catch **most specific** first:
+### 3.2 Multiple Catch Blocks
 
 ```java
 try {
-    String s = null;
-    s.length();  // Throws NullPointerException
-} catch (NullPointerException e) {
-    System.err.println("Null reference: " + e.getMessage());
-} catch (RuntimeException e) {
-    System.err.println("Runtime error: " + e.getMessage());
-} catch (Exception e) {
-    System.err.println("General error: " + e.getMessage());
-}
-// Compile error if you put Exception before RuntimeException (unreachable catch)
-```
-
-### 2.3 Multi-Catch (Java 7+)
-
-```java
-try {
-    // Code that might throw different exceptions
-    Object obj = "Hello";
-    Integer num = (Integer) obj;
-} catch (ClassCastException | NumberFormatException | ArithmeticException e) {
-    // Handle multiple exception types in ONE catch block
-    System.err.println("Error: " + e.getMessage());
-    // Note: 'e' is effectively final — cannot reassign
-}
-```
-
-**Rules:** The exception types in multi-catch cannot be related (no parent-child).
-
-### 2.4 The `finally` Block
-
-```java
-FileInputStream fis = null;
-try {
-    fis = new FileInputStream("data.txt");
-    // Process file
+    String text = readFile("data.txt");        // Might throw IOException
+    int number = Integer.parseInt(text.trim()); // Might throw NumberFormatException
+    int result = 100 / number;                 // Might throw ArithmeticException
 } catch (FileNotFoundException e) {
-    System.err.println("File not found");
+    System.out.println("File not found: " + e.getMessage());
+} catch (IOException e) {
+    System.out.println("Error reading file: " + e.getMessage());
+} catch (NumberFormatException e) {
+    System.out.println("File doesn't contain a valid number");
+} catch (ArithmeticException e) {
+    System.out.println("Number in file is zero — can't divide");
+}
+```
+
+**Order matters!** More specific exceptions must come before more general ones:
+
+```java
+// CORRECT — specific first
+try { ... }
+catch (FileNotFoundException e) { ... }  // Specific subclass
+catch (IOException e) { ... }            // General parent class
+
+// COMPILE ERROR — general catches specific before it gets a chance
+// try { ... }
+// catch (IOException e) { ... }            // This catches FileNotFoundException too!
+// catch (FileNotFoundException e) { ... }  // Unreachable — compile error!
+```
+
+### 3.3 Multi-Catch (Java 7+)
+
+```java
+try {
+    // risky code
+} catch (NumberFormatException | ArithmeticException e) {
+    // Handle both the same way — e is effectively final
+    System.out.println("Math error: " + e.getMessage());
+}
+```
+
+### 3.4 The Finally Block
+
+`finally` always executes — whether an exception was thrown or not. It's the cleanup crew.
+
+```java
+FileReader reader = null;
+try {
+    reader = new FileReader("data.txt");
+    // process file...
+} catch (IOException e) {
+    System.out.println("Error: " + e.getMessage());
 } finally {
-    // Always runs — even if exception occurs
-    if (fis != null) {
+    // This runs NO MATTER WHAT — even if catch throws another exception
+    if (reader != null) {
         try {
-            fis.close();
+            reader.close();
         } catch (IOException e) {
-            System.err.println("Error closing file");
+            // Swallowed... ugly but necessary with old-style resource management
         }
     }
 }
 ```
 
-> **Important behaviors:**
-> - `finally` runs even if `try` or `catch` has a `return` statement
-> - `finally` does NOT run if `System.exit()` is called or the JVM crashes
-> - If both `catch` and `finally` throw, the `finally` exception wins (original is lost!)
+> **Feynman Insight:** `finally` is like the "clean up after yourself" rule in a kitchen. Whether you cooked a perfect meal (no exception) or accidentally set something on fire (exception thrown and caught), you STILL have to wash the dishes and turn off the stove. `finally` guarantees the kitchen gets cleaned.
 
 ---
 
-## 3. try-with-resources (Java 7+)
+## 4. Try-With-Resources — The Modern Way
 
-Automatically closes resources that implement `AutoCloseable`:
+Java 7 introduced try-with-resources to eliminate the ugly finally-block pattern. Any object that implements `AutoCloseable` is automatically closed at the end of the try block.
 
 ```java
-// Resource is automatically closed after the try block
-try (FileInputStream fis = new FileInputStream("data.txt");
-     BufferedReader reader = new BufferedReader(new InputStreamReader(fis))) {
+// OLD way (verbose, error-prone)
+BufferedReader reader = null;
+try {
+    reader = new BufferedReader(new FileReader("data.txt"));
+    String line = reader.readLine();
+} catch (IOException e) {
+    e.printStackTrace();
+} finally {
+    if (reader != null) {
+        try { reader.close(); } catch (IOException e) { }
+    }
+}
 
+// NEW way (clean, safe, automatic)
+try (BufferedReader reader = new BufferedReader(new FileReader("data.txt"))) {
+    String line = reader.readLine();
+    System.out.println(line);
+} catch (IOException e) {
+    e.printStackTrace();
+}
+// reader is automatically closed here, even if an exception occurs!
+```
+
+> **Bloch's Rule** (*Effective Java*, Item 9): *"Prefer try-with-resources to try-finally."* It's shorter, cleaner, and produces better diagnostics. There is no reason to use the old pattern anymore.
+
+**Multiple resources:**
+
+```java
+try (FileInputStream fis = new FileInputStream("input.txt");
+     FileOutputStream fos = new FileOutputStream("output.txt");
+     BufferedReader reader = new BufferedReader(new InputStreamReader(fis))) {
+    // All three resources are auto-closed in reverse order
     String line;
     while ((line = reader.readLine()) != null) {
-        System.out.println(line);
-    }
-} catch (IOException e) {
-    System.err.println("I/O Error: " + e.getMessage());
-}
-// No finally needed! Resources are automatically closed in REVERSE declaration order
-```
-
-### 3.1 Implementing AutoCloseable
-
-```java
-public class DatabaseConnection implements AutoCloseable {
-    private final String url;
-
-    public DatabaseConnection(String url) {
-        this.url = url;
-        System.out.println("Opening connection to " + url);
-    }
-
-    public void query(String sql) {
-        System.out.println("Executing: " + sql);
-    }
-
-    @Override
-    public void close() {
-        System.out.println("Closing connection to " + url);
-    }
-}
-
-// Usage:
-try (var db = new DatabaseConnection("jdbc:mysql://localhost/mydb")) {
-    db.query("SELECT * FROM users");
-}  // close() is called automatically
-```
-
-### 3.2 Suppressed Exceptions
-
-When both the primary code and `close()` throw exceptions:
-
-```java
-try (var resource = new MyResource()) {
-    resource.doWork();   // Throws RuntimeException
-}   // close() also throws IOException
-
-// The RuntimeException is the PRIMARY exception
-// The IOException is SUPPRESSED and attached to it
-catch (RuntimeException e) {
-    System.err.println("Primary: " + e.getMessage());
-    for (Throwable suppressed : e.getSuppressed()) {
-        System.err.println("Suppressed: " + suppressed.getMessage());
+        fos.write(line.getBytes());
     }
 }
 ```
 
 ---
 
-## 4. Throwing Exceptions
+## 5. Throwing Exceptions
 
-### 4.1 `throw` Statement
+### 5.1 Using `throw`
 
 ```java
 public void setAge(int age) {
@@ -187,210 +215,183 @@ public void setAge(int age) {
         throw new IllegalArgumentException("Age cannot be negative: " + age);
     }
     if (age > 150) {
-        throw new IllegalArgumentException("Age seems unrealistic: " + age);
+        throw new IllegalArgumentException("Age unrealistic: " + age);
     }
     this.age = age;
 }
 ```
 
-### 4.2 `throws` Declaration
+### 5.2 Using `throws` in Method Signatures
 
-For checked exceptions, declare them in the method signature:
+Checked exceptions must be declared in the method signature:
 
 ```java
+// This method MIGHT throw an IOException — callers must handle it
 public String readFile(String path) throws IOException {
     return Files.readString(Path.of(path));
 }
 
-// Caller MUST handle or propagate:
-public void processFile() {
-    try {
-        String content = readFile("data.txt");
-    } catch (IOException e) {
-        System.err.println("Could not read file: " + e.getMessage());
-    }
-}
-
-// OR propagate further:
-public void processFile() throws IOException {
+// Caller must either:
+// Option 1: Handle it
+try {
     String content = readFile("data.txt");
+} catch (IOException e) {
+    System.out.println("File error: " + e.getMessage());
+}
+
+// Option 2: Propagate it (pass the buck to YOUR caller)
+public void processData() throws IOException {
+    String content = readFile("data.txt");
+    // ...
 }
 ```
 
 ---
 
-## 5. Custom Exceptions
+## 6. Custom Exceptions
 
-### 5.1 Checked Custom Exception
+### 6.1 When to Create Custom Exceptions
+
+Bloch (*Effective Java*, Item 72) says: create custom exceptions when you need to carry domain-specific information or when standard exception classes don't adequately describe the problem.
 
 ```java
+// Custom checked exception — for recoverable business logic errors
 public class InsufficientFundsException extends Exception {
-    private final double deficit;
+    private final double amount;
+    private final double balance;
 
-    public InsufficientFundsException(double deficit) {
-        super("Insufficient funds. Deficit: $" + String.format("%.2f", deficit));
-        this.deficit = deficit;
+    public InsufficientFundsException(double amount, double balance) {
+        super(String.format("Cannot withdraw %.2f — balance is only %.2f", amount, balance));
+        this.amount = amount;
+        this.balance = balance;
     }
 
-    public double getDeficit() {
-        return deficit;
-    }
+    public double getAmount() { return amount; }
+    public double getBalance() { return balance; }
 }
 
-// Usage:
-public void withdraw(double amount) throws InsufficientFundsException {
-    if (amount > balance) {
-        throw new InsufficientFundsException(amount - balance);
+// Custom unchecked exception — for programming errors
+public class InvalidOrderStateException extends RuntimeException {
+    public InvalidOrderStateException(String state, String attemptedAction) {
+        super("Cannot " + attemptedAction + " order in state: " + state);
     }
-    balance -= amount;
 }
 ```
 
-### 5.2 Unchecked Custom Exception
+### 6.2 Using Custom Exceptions
 
 ```java
-public class InvalidConfigException extends RuntimeException {
-    public InvalidConfigException(String key) {
-        super("Invalid configuration key: " + key);
-    }
+public class BankAccount {
+    private double balance;
 
-    public InvalidConfigException(String key, Throwable cause) {
-        super("Invalid configuration key: " + key, cause);
+    public void withdraw(double amount) throws InsufficientFundsException {
+        if (amount > balance) {
+            throw new InsufficientFundsException(amount, balance);
+        }
+        balance -= amount;
     }
+}
+
+// Caller handles the business-specific exception
+try {
+    account.withdraw(1000);
+} catch (InsufficientFundsException e) {
+    System.out.printf("Denied: tried to withdraw %.2f but only have %.2f%n",
+                      e.getAmount(), e.getBalance());
 }
 ```
 
-### 5.3 Exception Chaining
+---
+
+## 7. Exception Chaining
+
+When catching one exception and throwing another, preserve the original cause:
 
 ```java
 try {
-    loadConfiguration();
-} catch (IOException e) {
-    // Wrap the original exception — preserve the root cause
-    throw new InvalidConfigException("config.yml", e);
-}
-
-// Later, to find the root cause:
-catch (InvalidConfigException e) {
-    Throwable rootCause = e.getCause();
-    System.err.println("Root cause: " + rootCause.getMessage());
+    // Low-level database operation
+    connection.execute(query);
+} catch (SQLException e) {
+    // Wrap in a higher-level, more meaningful exception
+    throw new DataAccessException("Failed to execute query: " + query, e);
+    // The original SQLException is preserved as the "cause"
 }
 ```
 
----
-
-## 6. Assertions
-
-```java
-// Enable with: java -ea MyApp
-// or: java -enableassertions MyApp
-
-public double calculateDiscount(double price, double discountPercent) {
-    assert price > 0 : "Price must be positive: " + price;
-    assert discountPercent >= 0 && discountPercent <= 100 : "Invalid discount: " + discountPercent;
-
-    double discount = price * discountPercent / 100;
-    assert discount <= price : "Discount exceeds price";
-
-    return discount;
-}
-```
-
-**Rules:**
-- Assertions are **disabled by default** in production
-- **Never** use assertions for input validation in public methods
-- **Do** use assertions for internal invariants and postconditions
-- Assertion failures throw `AssertionError` (an `Error`, not an `Exception`)
+> **Bloch, Item 73:** *"Throw exceptions appropriate to the abstraction."* Low-level exceptions like `SQLException` shouldn't leak into your business logic. Wrap them in higher-level exceptions that make sense in your domain.
 
 ---
 
-## 7. Exception Handling Patterns
+## 8. Best Practices — Bloch's Exception Rules
 
-### 7.1 The "Catch-Log-Rethrow" Anti-Pattern
+These rules come from Joshua Bloch's *Effective Java*, Items 69–77:
+
+| Rule | Item | Description |
+|------|------|-------------|
+| Use exceptions for exceptional conditions | 69 | Never use exceptions for control flow |
+| Use checked exceptions for recoverable conditions | 70 | Can the caller reasonably recover? Use checked. |
+| Avoid unnecessary checked exceptions | 71 | If callers can't do anything useful, use unchecked. |
+| Favor standard exceptions | 72 | `IllegalArgumentException`, `IllegalStateException`, `NullPointerException`, `UnsupportedOperationException` |
+| Throw exceptions appropriate to the abstraction | 73 | Translate low-level exceptions to high-level ones |
+| Document all exceptions thrown by each method | 74 | Use `@throws` Javadoc tags |
+| Include failure-capture information | 75 | Exception messages should contain the values that caused the failure |
+| Strive for failure atomicity | 76 | Objects should be in a consistent state even after an exception |
+| Don't ignore exceptions | 77 | Empty catch blocks are almost always wrong |
 
 ```java
-// ❌ BAD — logs AND rethrows, causing duplicate logging up the stack
+// TERRIBLE — ignoring exceptions (Bloch, Item 77)
 try {
     riskyOperation();
 } catch (Exception e) {
-    logger.error("Error!", e);
-    throw e;  // Will be logged again by caller
+    // 🔥 Silently ignoring! The bug will haunt you later.
 }
 
-// ✅ BETTER — catch and wrap, OR catch and handle, but not both
+// CORRECT — at minimum, log it
 try {
     riskyOperation();
-} catch (IOException e) {
-    throw new ServiceException("Could not complete operation", e);
-}
-```
-
-### 7.2 The "Pokemon" Anti-Pattern
-
-```java
-// ❌ BAD — catches everything, hides real bugs
-try {
-    complexOperation();
 } catch (Exception e) {
-    // Silently swallowed
+    logger.error("Operation failed", e);  // Preserves the stack trace
 }
 
-// ✅ BETTER — catch specific exceptions, handle appropriately
+// ALSO CORRECT — if you genuinely can ignore it, document WHY
 try {
-    complexOperation();
-} catch (FileNotFoundException e) {
-    return defaultConfig();
-} catch (ParseException e) {
-    throw new IllegalStateException("Corrupt config file", e);
+    riskyOperation();
+} catch (Exception ignored) {
+    // Intentionally ignoring: operation is optional and failure is benign
 }
 ```
-
----
-
-## 8. Best Practices
-
-1. **Catch specific exceptions** — never catch `Exception` or `Throwable` unless at the top level
-2. **Prefer unchecked exceptions** for programming errors (invalid arguments, null references)
-3. **Use checked exceptions** for recoverable conditions (I/O errors, network failures)
-4. **Always use try-with-resources** for `AutoCloseable` objects
-5. **Include context** in exception messages: what operation failed, what values caused it
-6. **Don't use exceptions for control flow** — they're expensive (stack trace creation)
-7. **Log or throw, never both** — avoid duplicate logging
-8. **Preserve the cause chain** — always pass the original exception when wrapping
-9. **Document exceptions** with `@throws` Javadoc for public APIs
-10. **Fail fast** — validate inputs early, throw immediately
 
 ---
 
 ## 9. Common Pitfalls
 
-| Pitfall | Problem | Fix |
+| Pitfall | Example | Fix |
 |---------|---------|-----|
-| Catching `Exception` | Hides bugs | Catch specific types |
-| Empty catch blocks | Silent failures | Log or handle |
-| `finally` return | Overrides try/catch return | Don't return in finally |
-| Lost exception in finally | Finally exception shadows original | Use try-with-resources |
-| Not closing resources | Memory/resource leaks | Use try-with-resources |
-| Throwing `Exception` | Callers can't handle specifically | Throw specific types |
+| Catching `Exception` too broadly | `catch (Exception e)` | Catch specific types |
+| Empty catch blocks | `catch (IOException e) { }` | Log or rethrow |
+| Using exceptions for control flow | Throwing to break loops | Use `return`, `break` |
+| Losing stack trace | `throw new RuntimeException(msg)` | `throw new RuntimeException(msg, cause)` |
+| Not using try-with-resources | Manual `finally` close | Use try-with-resources |
+| Catching `Throwable` | Catching OOM, SOF | Only catch `Exception` subclasses |
 
 ---
 
 ## 10. Exercises
 
-1. **Custom Exception:** Create a `UserNotFoundException` (checked) and an `InvalidInputException` (unchecked). Write a service class that uses both.
-2. **try-with-resources:** Write a file copy utility using `try-with-resources` that properly handles I/O exceptions.
-3. **Exception Chaining:** Write a configuration loader that catches `IOException` from file reading, wraps it in a `ConfigurationException`, and preserves the cause chain.
-4. **Suppressed Exceptions:** Create a custom `AutoCloseable` resource whose `close()` method throws. Demonstrate how to access suppressed exceptions.
-5. **Validation Library:** Build a `Validator` class with methods like `requireNonNull()`, `requirePositive()`, `requireInRange()` that throw descriptive exceptions.
+1. **File Reader:** Write a method that reads a file and returns its contents. Handle `FileNotFoundException` and `IOException` separately with meaningful messages.
+2. **Custom Exception:** Create an `AgeValidationException` with fields for the invalid age and the valid range. Use it in a `Person` class.
+3. **Try-With-Resources:** Open two files, read from one and write to the other, using try-with-resources. Ensure both are closed even if writing fails.
+4. **Exception Translation:** Wrap a `NumberFormatException` in a custom `InvalidInputException` while preserving the original cause chain.
+5. **Retry Logic:** Write a method that attempts an operation up to 3 times, catching exceptions on each attempt, and only throwing after all retries are exhausted.
 
 ---
 
 ## 📖 References
 
-- *Thinking in Java*, Bruce Eckel — Chapter 9 (Error Handling with Exceptions)
-- *OCA: Oracle Certified Associate Java SE 8 Programmer I Study Guide* — Chapter 6 (Exceptions)
-- *OCP: Oracle Certified Professional Java SE 8 Programmer II Study Guide* — Chapter 6 (Exceptions & Assertions)
-- [Java Exception Handling Best Practices](https://docs.oracle.com/javase/tutorial/essential/exceptions/)
+- *Effective Java*, Joshua Bloch — Items 9 (try-with-resources), 69–77 (all exception items)
+- *Core Java, Volume I — Fundamentals*, Cay S. Horstmann — Chapter 7 (Exceptions, Assertions, Logging)
+- *Java: The Complete Reference*, Herbert Schildt — Chapter 10 (Exception Handling)
+- *Head First Java*, Kathy Sierra, Bert Bates — Chapter 11 (Risky Behavior)
 
 ---
 

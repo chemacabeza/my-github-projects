@@ -1,251 +1,291 @@
-# Part 6: Lambda Expressions & Functional Programming
+# Part 6: Lambda Expressions
 
-> **Sources:** *Java 8 Lambdas* (Ch. 1–4) · *OCP Java SE 8 Programmer II* (Ch. 4) · *Java Coding Problems* (Ch. 9)
+<p align="center">
+<img src="../images/part06_cover.png" alt="Lambda Expressions" width="800"/>
+</p>
+
+> **Sources:** *Modern Java in Action* (Urma, Fusco) · *Effective Java* (Bloch, Items 42–44) · *Core Java, Vol. I* (Horstmann) · *Java: The Complete Reference* (Schildt)
 
 ---
 
 ## 🎯 Learning Objectives
 
-- Understand functional interfaces and `@FunctionalInterface`
-- Write lambda expressions and method references fluently
-- Use built-in functional interfaces: `Predicate`, `Function`, `Consumer`, `Supplier`
-- Compose and chain functional operations
+By the end of this part, you will:
+- Understand what lambda expressions are and why they revolutionized Java
+- Master functional interfaces and the key types in `java.util.function`
+- Use method references as shorthand for lambdas
+- Apply behavioral parameterization to write flexible, reusable code
+- Compose functions using `andThen()`, `compose()`, and predicate chaining
 
 ---
 
-## 1. From Anonymous Classes to Lambdas
+## 1. The Big Idea — Behavioral Parameterization
 
-**Before Java 8:**
+### 1.1 The Problem: Code Duplication
+
+Urma and Fusco (*Modern Java in Action*) open with a brilliant example. Imagine you're filtering apples:
+
 ```java
-Collections.sort(names, new Comparator<String>() {
-    @Override
-    public int compare(String a, String b) {
-        return a.compareToIgnoreCase(b);
+// Version 1: Filter green apples
+public static List<Apple> filterGreenApples(List<Apple> apples) {
+    List<Apple> result = new ArrayList<>();
+    for (Apple apple : apples) {
+        if ("green".equals(apple.getColor())) {
+            result.add(apple);
+        }
     }
-});
+    return result;
+}
+
+// Version 2: Filter heavy apples — almost identical code!
+public static List<Apple> filterHeavyApples(List<Apple> apples) {
+    List<Apple> result = new ArrayList<>();
+    for (Apple apple : apples) {
+        if (apple.getWeight() > 150) {  // Only this line changed!
+            result.add(apple);
+        }
+    }
+    return result;
+}
 ```
 
-**With lambdas:**
+90% of the code is identical. The only thing that changes is the **condition**. What if we could pass the condition as a parameter?
+
+<p align="center">
+<img src="../images/part06_behavioral.png" alt="Behavioral Parameterization" width="800"/>
+</p>
+
+### 1.2 The Solution: Pass Behavior as a Parameter
+
+> **Feynman Insight:** Before lambdas, Java could only pass *data* as parameters — numbers, strings, objects. But often, what you want to pass is *behavior* — "filter using this rule" or "sort using this comparison." Lambdas let you treat a block of code like a value that can be passed around, stored in variables, and given to methods. It's like giving someone a recipe card instead of cooking the meal yourself.
+
 ```java
-names.sort((a, b) -> a.compareToIgnoreCase(b));
-
-// Even shorter with method reference:
-names.sort(String::compareToIgnoreCase);
+// With lambdas — ONE method, infinite behaviors:
+List<Apple> greenApples = filter(apples, apple -> "green".equals(apple.getColor()));
+List<Apple> heavyApples = filter(apples, apple -> apple.getWeight() > 150);
+List<Apple> redAndHeavy = filter(apples, apple -> "red".equals(apple.getColor()) && apple.getWeight() > 150);
 ```
 
-### Lambda Syntax Variants
+---
+
+## 2. Lambda Syntax
+
+A lambda expression is an anonymous function — a block of code you can pass around:
 
 ```java
 // Full syntax
-(String a, String b) -> { return a.compareToIgnoreCase(b); }
+(parameters) -> { statement; statement; return result; }
 
-// Type inference
-(a, b) -> a.compareToIgnoreCase(b)
-
-// Single parameter — no parentheses
-name -> name.toUpperCase()
-
-// No parameters
-() -> System.out.println("Hello!")
+// Simplified forms
+(Apple a) -> a.getWeight() > 150                   // Type declared
+a -> a.getWeight() > 150                            // Type inferred (single param)
+() -> System.out.println("Hello")                   // No parameters
+(a, b) -> a.compareTo(b)                           // Multiple parameters
+(String s) -> { System.out.println(s); return s.length(); }  // Multi-line body
 ```
+
+**Simplification rules:**
+1. If there's only **one parameter**, you can drop the parentheses: `a -> a.length()`
+2. If the body is a **single expression**, you can drop the braces and `return`: `a -> a.length()`
+3. **Type inference** — the compiler usually figures out parameter types: `(a, b) -> a + b`
 
 ---
 
-## 2. Functional Interfaces
+## 3. Functional Interfaces
 
-A functional interface has **exactly one abstract method** (SAM).
+A functional interface is any interface with exactly **one abstract method**. Lambdas are the implementation of that one method.
 
-```java
-@FunctionalInterface
-public interface Greeting {
-    String greet(String name);
-    default String greetAll(String... names) {
-        return Arrays.stream(names).map(this::greet).collect(Collectors.joining(", "));
-    }
-}
+### 3.1 The Core Four
 
-Greeting casual = name -> "Hey, " + name + "!";
-```
+Urma (*Modern Java in Action*) calls these the "essential toolkit":
 
-### Built-in Functional Interfaces (`java.util.function`)
-
-| Interface | Method | Signature | Example |
-|-----------|--------|-----------|---------|
-| `Predicate<T>` | `test(T)` | T → boolean | `s -> s.isEmpty()` |
-| `Function<T,R>` | `apply(T)` | T → R | `s -> s.length()` |
-| `Consumer<T>` | `accept(T)` | T → void | `System.out::println` |
-| `Supplier<T>` | `get()` | () → T | `ArrayList::new` |
-| `UnaryOperator<T>` | `apply(T)` | T → T | `String::toUpperCase` |
-| `BinaryOperator<T>` | `apply(T,T)` | (T,T) → T | `Integer::sum` |
-| `BiPredicate<T,U>` | `test(T,U)` | (T,U) → boolean | `(s,n) -> s.length() > n` |
-| `BiFunction<T,U,R>` | `apply(T,U)` | (T,U) → R | `(s,n) -> s.substring(n)` |
-
-**Primitive specializations** (avoid autoboxing): `IntPredicate`, `DoubleFunction`, `ToIntFunction`, etc.
-
----
-
-## 3. Predicate — Filtering Logic
+| Interface | Signature | Description | Example |
+|-----------|-----------|-------------|---------|
+| `Predicate<T>` | `T → boolean` | Tests a condition | `s -> s.isEmpty()` |
+| `Function<T,R>` | `T → R` | Transforms | `s -> s.length()` |
+| `Consumer<T>` | `T → void` | Performs action | `s -> System.out.println(s)` |
+| `Supplier<T>` | `() → T` | Produces value | `() -> new ArrayList<>()` |
 
 ```java
-Predicate<String> isNotEmpty = s -> !s.isEmpty();
+// Predicate — answers yes/no
 Predicate<String> isLong = s -> s.length() > 10;
+boolean result = isLong.test("Hello, World!");  // true
 
-// Composition
-Predicate<String> combined = isNotEmpty.and(isLong);
-Predicate<String> negated = isNotEmpty.negate();
-Predicate<String> either = isNotEmpty.or(isLong);
+// Function — transforms
+Function<String, Integer> toLength = String::length;
+int len = toLength.apply("Hello");  // 5
 
-List<String> filtered = names.stream()
-    .filter(isNotEmpty.and(isLong))
-    .collect(Collectors.toList());
-```
-
----
-
-## 4. Function — Transformation Logic
-
-```java
-Function<String, Integer> length = String::length;
-Function<Integer, String> toString = i -> "Value: " + i;
-
-// andThen: apply length THEN toString
-Function<String, String> pipeline = length.andThen(toString);
-pipeline.apply("Hello");  // "Value: 5"
-
-// compose: apply toString first, THEN length (reverse order)
-// Function.identity() — returns input unchanged
-```
-
----
-
-## 5. Consumer, Supplier, Operator
-
-```java
-// Consumer — performs action, returns nothing
+// Consumer — performs side effects
 Consumer<String> printer = System.out::println;
-Consumer<String> logger = s -> System.err.println("[LOG] " + s);
-Consumer<String> both = printer.andThen(logger);
+printer.accept("Hello!");  // prints "Hello!"
 
-// Supplier — provides values, takes no input
-Supplier<List<String>> listFactory = ArrayList::new;
-Supplier<LocalDateTime> now = LocalDateTime::now;
-
-// UnaryOperator — transforms T → T
-UnaryOperator<String> toUpper = String::toUpperCase;
-UnaryOperator<String> trim = String::trim;
-UnaryOperator<String> process = trim.andThen(toUpper);
-
-// BinaryOperator — combines (T, T) → T
-BinaryOperator<Integer> max = Integer::max;
+// Supplier — produces from nothing
+Supplier<List<String>> listMaker = ArrayList::new;
+List<String> newList = listMaker.get();
 ```
+
+### 3.2 Specialized Variants
+
+```java
+// BiFunction — two inputs
+BiFunction<String, String, String> concat = (a, b) -> a + " " + b;
+concat.apply("Hello", "World");  // "Hello World"
+
+// BiPredicate — two-input test
+BiPredicate<String, Integer> hasLength = (s, len) -> s.length() == len;
+hasLength.test("Hello", 5);  // true
+
+// UnaryOperator — same input and output type
+UnaryOperator<String> toUpper = String::toUpperCase;
+toUpper.apply("hello");  // "HELLO"
+
+// BinaryOperator — two same-type inputs, same-type output
+BinaryOperator<Integer> add = Integer::sum;
+add.apply(3, 4);  // 7
+```
+
+> **Bloch, Item 44:** *"Favor the use of standard functional interfaces."* Don't create your own `StringPredicate` when `Predicate<String>` already exists.
 
 ---
 
-## 6. Method References
+## 4. Method References
 
-| Type | Syntax | Lambda Equivalent |
+Method references are shorthand for lambdas that simply call an existing method:
+
+```java
+// Lambda                         →  Method Reference
+s -> s.toUpperCase()              →  String::toUpperCase
+s -> System.out.println(s)        →  System.out::println
+s -> Integer.parseInt(s)          →  Integer::parseInt
+() -> new ArrayList<>()           →  ArrayList::new
+(a, b) -> a.compareTo(b)         →  String::compareTo
+```
+
+**Four kinds of method references:**
+
+| Kind | Syntax | Lambda Equivalent |
 |------|--------|-------------------|
-| Static | `Integer::parseInt` | `s -> Integer.parseInt(s)` |
-| Instance (bound) | `myStr::concat` | `s -> myStr.concat(s)` |
-| Instance (unbound) | `String::toLowerCase` | `s -> s.toLowerCase()` |
+| Static method | `Integer::parseInt` | `s -> Integer.parseInt(s)` |
+| Instance method (bound) | `System.out::println` | `s -> System.out.println(s)` |
+| Instance method (unbound) | `String::toUpperCase` | `s -> s.toUpperCase()` |
 | Constructor | `ArrayList::new` | `() -> new ArrayList<>()` |
 
+> **Bloch, Item 43:** *"Prefer method references to lambdas."* They're more concise and self-documenting — `String::toUpperCase` immediately tells you what's happening, while `s -> s.toUpperCase()` requires reading a lambda.
+
+---
+
+## 5. Function Composition
+
+Lambdas can be **chained** together:
+
+### 5.1 Predicate Composition
+
 ```java
-// Static method reference
-Function<String, Integer> parser = Integer::parseInt;
+Predicate<String> isLong = s -> s.length() > 5;
+Predicate<String> startsWithA = s -> s.startsWith("A");
 
-// Instance method of a particular object
-String prefix = "Hello, ";
-Function<String, String> greeter = prefix::concat;
+Predicate<String> isLongAndStartsWithA = isLong.and(startsWithA);
+Predicate<String> isLongOrStartsWithA = isLong.or(startsWithA);
+Predicate<String> isShort = isLong.negate();
 
-// Instance method of first parameter
-BiFunction<String, String, Integer> cmp = String::compareToIgnoreCase;
+isLongAndStartsWithA.test("Algorithm");  // true
+isShort.test("Hi");                       // true
+```
 
-// Constructor reference
-Function<String, Person> factory = Person::new;
+### 5.2 Function Composition
+
+```java
+Function<String, String> toUpper = String::toUpperCase;
+Function<String, String> addExclaim = s -> s + "!";
+
+// andThen: apply first, THEN second
+Function<String, String> shout = toUpper.andThen(addExclaim);
+shout.apply("hello");  // "HELLO!"
+
+// compose: apply second FIRST, then first
+Function<String, String> exclaim = toUpper.compose(addExclaim);
+exclaim.apply("hello");  // "HELLO!"  (addExclaim first → "hello!" → toUpper → "HELLO!")
+```
+
+> **Feynman Insight:** Function composition is like an assembly line. `andThen` means "do this step, THEN do the next step." `compose` means "do the other step FIRST, then run the result through me." It's the difference between "cook, then plate" vs. "plate first, then cook" (which makes less sense with food, but is useful in math!).
+
+---
+
+## 6. Comparator Composition
+
+One of the most powerful uses of lambdas — building complex sorting logic:
+
+```java
+List<Person> people = List.of(
+    new Person("Alice", 30),
+    new Person("Bob", 25),
+    new Person("Charlie", 30),
+    new Person("Alice", 28)
+);
+
+// Sort by age
+people.sort(Comparator.comparing(Person::getAge));
+
+// Sort by age, then by name for ties
+people.sort(Comparator
+    .comparing(Person::getAge)
+    .thenComparing(Person::getName));
+
+// Sort by age descending, then by name ascending
+people.sort(Comparator
+    .comparing(Person::getAge).reversed()
+    .thenComparing(Person::getName));
+
+// Null-safe sorting
+people.sort(Comparator.comparing(Person::getName,
+    Comparator.nullsLast(Comparator.naturalOrder())));
 ```
 
 ---
 
-## 7. Effectively Final & Closures
+## 7. Closures and Variable Capture
+
+Lambdas can capture variables from their enclosing scope — but with a restriction:
 
 ```java
-String greeting = "Hello";  // effectively final
-Consumer<String> greet = name -> System.out.println(greeting + ", " + name);
+int multiplier = 3;  // effectively final
+Function<Integer, Integer> multiply = x -> x * multiplier;
+multiply.apply(5);  // 15
 
-// greeting = "Hi";  // COMPILE ERROR — breaks 'effectively final'
+// multiplier = 4;  // COMPILE ERROR — captured variables must be effectively final
 ```
 
----
-
-## 8. Composing Functions (Pipeline Pattern)
-
-```java
-Function<String, String> slugify = 
-    ((Function<String, String>) String::trim)
-    .andThen(String::toLowerCase)
-    .andThen(s -> s.replaceAll("[^a-z0-9\\s]", ""))
-    .andThen(s -> s.replaceAll("\\s+", "-"));
-
-slugify.apply("  Hello, World!  ");  // "hello-world"
-
-// Complex predicate composition
-Predicate<Employee> seniorDev = emp -> emp.getYears() > 5;
-Predicate<Employee> engineering = emp -> "Engineering".equals(emp.getDept());
-Predicate<Employee> target = seniorDev.and(engineering);
-```
+> **Feynman Insight:** When a lambda captures a variable, it takes a *snapshot* of that variable's value — like taking a photo. If you could change the original variable after the lambda captured it, the photo and reality would disagree, causing confusion. Java prevents this by requiring captured variables to be "effectively final" (never changed after assignment).
 
 ---
 
-## 9. Handling Checked Exceptions in Lambdas
+## 8. Best Practices
 
-```java
-// Problem: Function doesn't allow checked exceptions
-@FunctionalInterface
-interface ThrowingFunction<T, R> {
-    R apply(T t) throws Exception;
-}
-
-static <T, R> Function<T, R> unchecked(ThrowingFunction<T, R> f) {
-    return t -> {
-        try { return f.apply(t); }
-        catch (Exception e) { throw new RuntimeException(e); }
-    };
-}
-
-Function<String, String> reader = unchecked(p -> Files.readString(Path.of(p)));
-```
+1. **Prefer lambdas to anonymous classes** for functional interfaces (Bloch, Item 42)
+2. **Prefer method references to lambdas** when they're clearer (Bloch, Item 43)
+3. **Use standard functional interfaces** from `java.util.function` (Bloch, Item 44)
+4. **Keep lambdas short** — if it's more than 3 lines, extract it to a method
+5. **Use descriptive variable names** — `Predicate<String> isActive` not `Predicate<String> p`
+6. **Avoid side effects in lambdas** — pure functions are easier to reason about
 
 ---
 
-## 10. Best Practices
+## 9. Exercises
 
-1. **Keep lambdas short** — if > 3 lines, extract to a named method
-2. **Use method references** when lambda just calls an existing method
-3. **Prefer standard functional interfaces** over custom ones
-4. **Avoid side effects** — prefer pure functions
-5. **Use `@FunctionalInterface`** on custom functional interfaces
-6. **Leverage composition** — `and()`, `or()`, `andThen()`, `compose()`
-7. **Use primitive specializations** to avoid autoboxing overhead
-
----
-
-## 11. Exercises
-
-1. **Functional Calculator:** Build a calculator using `BinaryOperator<Double>` stored in a `Map<String, BinaryOperator<Double>>`
-2. **String Transformer:** Create a `UnaryOperator<String>` pipeline that trims, lowercases, removes punctuation, replaces spaces with hyphens
-3. **Predicate Builder:** Write a `PredicateBuilder<T>` with fluent `and()`, `or()`, `not()` methods
-4. **Lazy<T>:** Implement a `Lazy<T>` using `Supplier<T>` that computes only once
-5. **Method Reference Drill:** Rewrite 10 lambdas ↔ method references
+1. **Filter and Sort:** Given a list of strings, use lambdas to filter strings longer than 3 characters, sort alphabetically, and convert to uppercase.
+2. **Custom Comparator:** Sort a list of products first by price ascending, then by name alphabetically.
+3. **Function Pipeline:** Create a chain of `Function<String, String>` operations: trim → lowercase → replace spaces with hyphens.
+4. **Predicate Builder:** Write a method that takes multiple `Predicate<T>` instances and combines them with AND logic.
 
 ---
 
 ## 📖 References
 
-- *Java 8 Lambdas*, Richard Warburton — Ch. 1–4
-- *OCP Java SE 8 Programmer II Study Guide* — Ch. 4 (Functional Programming)
-- *Java Coding Problems*, Anghel Leonard — Ch. 9 (Functional Style)
+- *Modern Java in Action*, Urma, Fusco — Chapters 1–3 (Lambdas, Behavioral Parameterization)
+- *Effective Java*, Joshua Bloch — Items 42–44 (Lambdas and Method References)
+- *Core Java, Volume I*, Cay S. Horstmann — Chapter 6 (Lambda Expressions)
+- *Java: The Complete Reference*, Herbert Schildt — Chapter 15 (Lambda Expressions)
 
 ---
 
-[← Part 5: Generics](Part-05-Generics-And-Type-Safety.md) | [Back to Course Index](../README.md) | [Next: Part 7 — Streams API →](Part-07-Streams-API.md)
+[← Part 5: Generics & Type Safety](Part-05-Generics-And-Type-Safety.md) | [Back to Course Index](../README.md) | [Next: Part 7 — Streams API →](Part-07-Streams-API.md)

@@ -1,40 +1,141 @@
-# Part 9: I/O, NIO, and File Handling
+# Part 9: I/O & NIO
 
-> **Sources:** *Thinking in Java* (Ch. 12) · *OCP Java SE 8 Programmer II* (Ch. 8–9)
+<p align="center">
+<img src="../images/part09_cover.png" alt="I/O & NIO" width="800"/>
+</p>
+
+> **Sources:** *Core Java, Vol. I* (Horstmann) · *Java: The Complete Reference* (Schildt) · *Effective Java* (Bloch, Item 9)
 
 ---
 
 ## 🎯 Learning Objectives
 
-- Use classic I/O streams (`InputStream`, `OutputStream`, `Reader`, `Writer`)
-- Master NIO.2 with `Path`, `Files`, and `FileSystem`
-- Handle file reading/writing, directory traversal, and watching
-- Understand serialization and deserialization
-- Work with regular expressions
+By the end of this part, you will:
+- Read and write files using modern `java.nio.file` APIs
+- Work with byte streams, character streams, and buffered I/O
+- Navigate the filesystem with `Path` and `Files`
+- Understand serialization and its dangers
+- Use try-with-resources for safe resource management
 
 ---
 
-## 1. Classic I/O Streams
+## 1. The Two I/O Systems
 
-### Stream Hierarchy
+> **Feynman Insight:** Java has two I/O systems. The **old one** (`java.io`) is like sending letters through the postal service — reliable but slow, one letter at a time. The **new one** (`java.nio`) is like a highway system with channels and buffers — faster, more flexible, and designed for modern workloads. For new code, always start with `java.nio.file`.
 
-<p align="center">
-<img src="../images/StreamHierarchy.png" width="600"/>
-</p>
+---
 
-### Reading Files
+## 2. Path & Files — The Modern Way
+
+### 2.1 Creating Paths
 
 ```java
-// Byte stream — raw bytes
-try (FileInputStream fis = new FileInputStream("data.bin")) {
-    byte[] buffer = new byte[1024];
-    int bytesRead;
-    while ((bytesRead = fis.read(buffer)) != -1) {
-        // Process buffer[0..bytesRead-1]
+import java.nio.file.*;
+
+Path path = Path.of("data", "users.txt");            // data/users.txt
+Path path = Path.of("/home/user/documents/file.txt"); // Absolute
+Path path = Paths.get("data", "users.txt");           // Alternative (older API)
+
+// Path operations
+path.getFileName();     // users.txt
+path.getParent();       // data
+path.toAbsolutePath();  // /full/path/to/data/users.txt
+path.resolve("sub");    // data/users.txt/sub
+path.getParent().resolve("other.txt");  // data/other.txt
+```
+
+### 2.2 Reading Files
+
+```java
+// Read entire file as String (small files)
+String content = Files.readString(Path.of("data.txt"));
+
+// Read all lines into a List
+List<String> lines = Files.readAllLines(Path.of("data.txt"));
+
+// Read all bytes
+byte[] bytes = Files.readAllBytes(Path.of("image.png"));
+
+// Stream lines lazily (large files — memory-efficient)
+try (Stream<String> lines = Files.lines(Path.of("huge.txt"))) {
+    lines.filter(line -> line.contains("ERROR"))
+         .forEach(System.out::println);
+}
+```
+
+### 2.3 Writing Files
+
+```java
+// Write string to file
+Files.writeString(Path.of("output.txt"), "Hello, World!");
+
+// Write lines
+Files.write(Path.of("output.txt"), List.of("Line 1", "Line 2", "Line 3"));
+
+// Append to existing file
+Files.writeString(Path.of("log.txt"), "New entry\n",
+    StandardOpenOption.APPEND, StandardOpenOption.CREATE);
+
+// Write bytes
+Files.write(Path.of("output.bin"), byteArray);
+```
+
+### 2.4 File Operations
+
+```java
+// Check existence
+boolean exists = Files.exists(Path.of("data.txt"));
+boolean isDir = Files.isDirectory(Path.of("data"));
+
+// Create directories
+Files.createDirectories(Path.of("a/b/c"));  // Creates all parent dirs
+
+// Copy, move, delete
+Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
+Files.move(source, target, StandardCopyOption.ATOMIC_MOVE);
+Files.delete(path);            // Throws if not exists
+Files.deleteIfExists(path);    // Returns false if not exists
+
+// List directory contents
+try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir, "*.txt")) {
+    for (Path entry : stream) {
+        System.out.println(entry.getFileName());
     }
 }
 
-// Character stream — text
+// Walk directory tree
+try (Stream<Path> walk = Files.walk(Path.of("src"))) {
+    walk.filter(p -> p.toString().endsWith(".java"))
+        .forEach(System.out::println);
+}
+```
+
+---
+
+## 3. Classic I/O Streams
+
+### 3.1 Byte Streams
+
+```java
+// Reading bytes
+try (FileInputStream fis = new FileInputStream("image.png")) {
+    byte[] buffer = new byte[1024];
+    int bytesRead;
+    while ((bytesRead = fis.read(buffer)) != -1) {
+        process(buffer, bytesRead);
+    }
+}
+
+// Buffered for performance
+try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream("large.dat"))) {
+    // Much faster — reads in chunks instead of byte by byte
+}
+```
+
+### 3.2 Character Streams
+
+```java
+// Reading text
 try (BufferedReader reader = new BufferedReader(new FileReader("data.txt"))) {
     String line;
     while ((line = reader.readLine()) != null) {
@@ -42,268 +143,79 @@ try (BufferedReader reader = new BufferedReader(new FileReader("data.txt"))) {
     }
 }
 
-// Modern approach
-String content = Files.readString(Path.of("data.txt"));
-List<String> lines = Files.readAllLines(Path.of("data.txt"));
-```
-
-### Writing Files
-
-```java
-// Character stream
+// Writing text
 try (BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"))) {
     writer.write("Hello, World!");
     writer.newLine();
     writer.write("Second line");
 }
 
-// Modern approach
-Files.writeString(Path.of("output.txt"), "Hello, World!");
-Files.write(Path.of("output.txt"), List.of("Line 1", "Line 2"));
-
-// Append mode
-Files.writeString(Path.of("output.txt"), "Appended text", 
-    StandardOpenOption.APPEND, StandardOpenOption.CREATE);
-```
-
-### PrintWriter & PrintStream
-
-```java
-try (PrintWriter pw = new PrintWriter(new FileWriter("report.txt"))) {
-    pw.println("Report Title");
-    pw.printf("Name: %s, Score: %.2f%n", "Alice", 95.5);
-    pw.println("Done");
+// PrintWriter — more convenient
+try (PrintWriter pw = new PrintWriter(new FileWriter("output.txt"))) {
+    pw.println("Line 1");
+    pw.printf("Name: %s, Age: %d%n", "Alice", 30);
 }
 ```
+
+> **Bloch, Item 9:** *"Prefer try-with-resources to try-finally."* Every example above uses try-with-resources because it guarantees resources are closed even if exceptions occur.
 
 ---
 
-## 2. NIO.2 — Modern File I/O
+## 4. Serialization
 
-### Path — File System Paths
-
-```java
-import java.nio.file.*;
-
-Path p1 = Path.of("data.txt");                    // Relative
-Path p2 = Path.of("/Users/alice/data.txt");        // Absolute
-Path p3 = Path.of("/Users", "alice", "data.txt");  // With segments
-Path p4 = Paths.get("data.txt");                   // Equivalent (legacy)
-
-// Path operations
-p2.getFileName()       // data.txt
-p2.getParent()         // /Users/alice
-p2.getRoot()           // /
-p2.getNameCount()      // 3
-p2.getName(0)          // Users
-p2.subpath(0, 2)       // Users/alice
-p2.toAbsolutePath()    // /Users/alice/data.txt
-p2.normalize()         // Resolves . and ..
-
-// Combining paths
-Path base = Path.of("/Users/alice");
-Path resolved = base.resolve("documents/file.txt");  // /Users/alice/documents/file.txt
-Path relative = base.relativize(Path.of("/Users/alice/documents")); // documents
-```
-
-### Files — File Operations
+> **Bloch's Warning** (*Effective Java*, Items 85–90): Serialization is a "minefield" and the source of many security vulnerabilities. Prefer JSON or Protocol Buffers for data interchange.
 
 ```java
-import java.nio.file.*;
-
-// Check existence
-Files.exists(path);
-Files.notExists(path);
-Files.isRegularFile(path);
-Files.isDirectory(path);
-Files.isReadable(path);
-Files.isWritable(path);
-Files.isExecutable(path);
-
-// Create
-Files.createFile(path);
-Files.createDirectory(path);
-Files.createDirectories(path);  // Includes parent dirs
-Files.createTempFile("prefix", ".suffix");
-
-// Copy, Move, Delete
-Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
-Files.move(source, target, StandardCopyOption.ATOMIC_MOVE);
-Files.delete(path);             // Throws if not exists
-Files.deleteIfExists(path);     // Returns boolean
-
-// Attributes
-Files.size(path);               // File size in bytes
-Files.getLastModifiedTime(path);
-Files.getOwner(path);
-```
-
-### Directory Traversal
-
-```java
-// List directory contents (non-recursive)
-try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir, "*.java")) {
-    for (Path entry : stream) {
-        System.out.println(entry.getFileName());
-    }
-}
-
-// Walk directory tree (recursive)
-try (Stream<Path> tree = Files.walk(dir)) {
-    tree.filter(Files.isRegularFile)
-        .filter(p -> p.toString().endsWith(".java"))
-        .forEach(System.out::println);
-}
-
-// Find files matching a pattern
-try (Stream<Path> found = Files.find(dir, Integer.MAX_VALUE,
-        (path, attrs) -> attrs.isRegularFile() && path.toString().endsWith(".java"))) {
-    found.forEach(System.out::println);
-}
-
-// Stream lines lazily (memory efficient for large files)
-try (Stream<String> lines = Files.lines(Path.of("huge-file.txt"))) {
-    long count = lines.filter(l -> l.contains("ERROR")).count();
-}
-```
-
-### WatchService — File System Events
-
-```java
-WatchService watcher = FileSystems.getDefault().newWatchService();
-Path dir = Path.of("/tmp/watched");
-
-dir.register(watcher, 
-    StandardWatchEventKinds.ENTRY_CREATE,
-    StandardWatchEventKinds.ENTRY_MODIFY,
-    StandardWatchEventKinds.ENTRY_DELETE);
-
-while (true) {
-    WatchKey key = watcher.take();  // Blocks until event
-    for (WatchEvent<?> event : key.pollEvents()) {
-        System.out.println(event.kind() + ": " + event.context());
-    }
-    key.reset();
-}
-```
-
----
-
-## 3. Serialization
-
-```java
-import java.io.*;
-
+// Serializable class
 public class Person implements Serializable {
-    private static final long serialVersionUID = 1L;
+    @Serial
+    private static final long serialVersionUID = 1L;  // Version control
 
     private String name;
+    private transient String password;  // Won't be serialized!
     private int age;
-    private transient String password;  // NOT serialized
-
-    public Person(String name, int age, String password) {
-        this.name = name;
-        this.age = age;
-        this.password = password;
-    }
 }
 
-// Serialize
-try (ObjectOutputStream oos = new ObjectOutputStream(
-        new FileOutputStream("person.dat"))) {
-    oos.writeObject(new Person("Alice", 30, "secret"));
+// Serialize (write object to file)
+try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("person.ser"))) {
+    oos.writeObject(new Person("Alice", "secret", 30));
 }
 
-// Deserialize
-try (ObjectInputStream ois = new ObjectInputStream(
-        new FileInputStream("person.dat"))) {
-    Person p = (Person) ois.readObject();
-    // p.password will be null (transient)
+// Deserialize (read object from file)
+try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("person.ser"))) {
+    Person person = (Person) ois.readObject();
 }
 ```
-
-**Modern alternative:** Prefer JSON/XML serialization (Jackson, Gson) over Java serialization for data exchange.
-
----
-
-## 4. Regular Expressions
-
-```java
-import java.util.regex.*;
-
-// Simple matching
-boolean matches = "hello123".matches("[a-z]+\\d+");  // true
-
-// Pattern & Matcher
-Pattern emailPattern = Pattern.compile(
-    "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
-);
-Matcher matcher = emailPattern.matcher("alice@example.com");
-boolean found = matcher.matches();  // true
-
-// Find all matches
-Pattern wordPattern = Pattern.compile("\\b[A-Z][a-z]+\\b");
-Matcher m = wordPattern.matcher("Hello World Java Programming");
-while (m.find()) {
-    System.out.println(m.group());  // Hello, World, Java, Programming
-}
-
-// Groups
-Pattern datePattern = Pattern.compile("(\\d{4})-(\\d{2})-(\\d{2})");
-Matcher dm = datePattern.matcher("Date: 2026-03-23");
-if (dm.find()) {
-    String year = dm.group(1);   // "2026"
-    String month = dm.group(2);  // "03"
-    String day = dm.group(3);    // "23"
-}
-
-// Replace
-String result = "Hello World".replaceAll("[aeiou]", "*");  // "H*ll* W*rld"
-```
-
-### Common Regex Patterns
-
-| Pattern | Matches |
-|---------|---------|
-| `\\d` | Digit `[0-9]` |
-| `\\w` | Word char `[a-zA-Z0-9_]` |
-| `\\s` | Whitespace |
-| `.` | Any character |
-| `^` / `$` | Start / end |
-| `*` / `+` / `?` | 0+, 1+, 0 or 1 |
-| `{n,m}` | Between n and m |
-| `[abc]` | Character class |
-| `(...)` | Capturing group |
 
 ---
 
 ## 5. Best Practices
 
-1. **Always use try-with-resources** for I/O operations
-2. **Prefer NIO.2** (`Files`, `Path`) over legacy `File` class
-3. **Use `BufferedReader`/`BufferedWriter`** for text I/O performance
-4. **Stream large files lazily** with `Files.lines()` instead of `readAllLines()`
-5. **Specify character encoding** explicitly: `StandardCharsets.UTF_8`
-6. **Avoid Java serialization** for data exchange — use JSON/Protobuf
-7. **Compile regex patterns once** — reuse `Pattern` instances
+1. **Use `java.nio.file`** (`Path`, `Files`) for all new file operations
+2. **Always use try-with-resources** for I/O (Bloch, Item 9)
+3. **Use `Files.readString()`/`Files.writeString()`** for simple file operations
+4. **Use `Files.lines()`** for large files — lazy, memory-efficient
+5. **Buffer your streams** — `BufferedReader`/`BufferedWriter` dramatically improves performance
+6. **Avoid Java serialization** — prefer JSON/Jackson for data interchange (Bloch, Items 85–90)
+7. **Specify character encoding** explicitly — `StandardCharsets.UTF_8`
 
 ---
 
 ## 6. Exercises
 
-1. **File Analyzer:** Count lines, words, and characters in a text file using NIO.2
-2. **Directory Size Calculator:** Walk a directory tree and compute total size recursively
-3. **Log Parser:** Use regex to extract timestamps, log levels, and messages from log files
-4. **CSV Reader:** Build a CSV parser using `BufferedReader` that handles quoted fields
-5. **File Watcher:** Create a utility that watches a directory and logs all file changes
+1. **File Copier:** Copy a file byte-by-byte using `FileInputStream`/`FileOutputStream`, then compare performance with `Files.copy()`.
+2. **Log Analyzer:** Read a large log file using `Files.lines()` and count occurrences of "ERROR", "WARN", and "INFO".
+3. **Directory Tree:** Walk a directory tree and list all files by extension with their total sizes.
+4. **CSV Parser:** Read a CSV file, parse each line, and create a `List<Map<String, String>>`.
 
 ---
 
 ## 📖 References
 
-- *Thinking in Java*, Bruce Eckel — Ch. 12 (The Java I/O System)
-- *OCP Java SE 8 Programmer II Study Guide* — Ch. 8 (IO) & Ch. 9 (NIO.2)
+- *Core Java, Volume I*, Cay S. Horstmann — Chapters 1–2 (Input/Output, NIO)
+- *Java: The Complete Reference*, Herbert Schildt — Chapters 13, 20 (I/O, NIO)
+- *Effective Java*, Joshua Bloch — Item 9 (try-with-resources), Items 85–90 (serialization)
 
 ---
 
-[← Part 8: Concurrency](Part-08-Concurrency.md) | [Back to Course Index](../README.md) | [Next: Part 10 — Advanced OOP →](Part-10-Advanced-OOP.md)
+[← Part 8: Concurrency](Part-08-Concurrency.md) | [Back to Course Index](../README.md) | [Next: Part 10 — JDBC & Databases →](Part-10-JDBC-And-Databases.md)

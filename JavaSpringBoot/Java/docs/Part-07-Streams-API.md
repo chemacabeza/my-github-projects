@@ -1,72 +1,85 @@
-# Part 7: Streams API & Data Processing
+# Part 7: Streams API
 
-> **Sources:** *Java 8 Lambdas* (Ch. 3, 5–6) · *OCP Java SE 8 Programmer II* (Ch. 4) · *Java Coding Problems* (Ch. 9)
+<p align="center">
+<img src="../images/part07_cover.png" alt="Streams API" width="800"/>
+</p>
+
+> **Sources:** *Modern Java in Action* (Urma, Fusco) · *Effective Java* (Bloch, Items 45–48) · *Core Java, Vol. I* (Horstmann) · *Java: The Complete Reference* (Schildt)
 
 ---
 
 ## 🎯 Learning Objectives
 
-- Understand stream pipelines: source → intermediate → terminal operations
-- Master `map`, `filter`, `reduce`, `collect`, `flatMap`
-- Use collectors for grouping, partitioning, and summarizing
-- Apply parallel streams correctly
-- Build real-world data processing pipelines
+By the end of this part, you will:
+- Understand the stream pipeline architecture (source → intermediate → terminal)
+- Master core operations: filter, map, flatMap, reduce, collect
+- Write powerful data processing pipelines in a declarative style
+- Use Collectors for grouping, partitioning, and summarizing data
+- Understand parallel streams — when to use them and when they hurt performance
 
 ---
 
-## 1. What Are Streams?
+## 1. What Is a Stream?
 
-Streams are **lazy, one-pass pipelines** for processing collections of data:
+> **Feynman Insight:** A Stream is like an assembly line in a factory. Raw materials (data) enter on one end, pass through processing stations (filter, map, sort), and finished products come out the other end. The key insight is that **you describe WHAT you want**, not HOW to do it. You say "filter the red apples, sort by weight, return the top 3" — and the stream figures out the mechanics.
+
+A Stream is **not** a data structure. It doesn't store data. It's a **pipeline** for processing data from a source.
+
+<p align="center">
+<img src="../images/part07_pipeline.png" alt="Stream Pipeline" width="800"/>
+</p>
+
+### 1.1 Stream vs Collection
+
+| Feature | Collection | Stream |
+|---------|-----------|--------|
+| Purpose | Store data | Process data |
+| Iteration | External (you write the loop) | Internal (stream manages it) |
+| Traversal | Can traverse multiple times | Can traverse **only once** |
+| Lazy? | No — all elements exist | Yes — computed on demand |
+| Modifies source? | Yes | **No** — produces new results |
 
 ```java
-List<String> names = List.of("Alice", "Bob", "Charlie", "Dave", "Eve");
+// Collection way — HOW to do it (imperative)
+List<String> result = new ArrayList<>();
+for (String name : names) {
+    if (name.startsWith("A")) {
+        result.add(name.toUpperCase());
+    }
+}
+Collections.sort(result);
 
-List<String> result = names.stream()        // Source
-    .filter(n -> n.length() > 3)            // Intermediate
-    .map(String::toUpperCase)               // Intermediate
-    .sorted()                               // Intermediate
-    .collect(Collectors.toList());           // Terminal
-
-// [ALICE, CHARLIE, DAVE]
+// Stream way — WHAT to do (declarative)
+List<String> result = names.stream()
+    .filter(name -> name.startsWith("A"))
+    .map(String::toUpperCase)
+    .sorted()
+    .collect(Collectors.toList());
 ```
-
-**Key properties:**
-- **Lazy:** Intermediate operations aren't executed until a terminal operation is invoked
-- **One-pass:** A stream can only be consumed once
-- **Non-mutating:** Streams don't modify the source collection
-- **Optionally parallel:** `.parallelStream()` or `.parallel()`
 
 ---
 
 ## 2. Creating Streams
 
 ```java
-// From collections
-List<String> list = List.of("a", "b", "c");
-Stream<String> stream1 = list.stream();
-
-// From arrays
-String[] arr = {"x", "y", "z"};
-Stream<String> stream2 = Arrays.stream(arr);
+// From a Collection
+List<String> names = List.of("Alice", "Bob", "Charlie");
+Stream<String> stream = names.stream();
 
 // From values
-Stream<Integer> stream3 = Stream.of(1, 2, 3, 4, 5);
+Stream<String> stream = Stream.of("Alice", "Bob", "Charlie");
 
-// Empty stream
-Stream<String> empty = Stream.empty();
+// From an array
+int[] numbers = {1, 2, 3, 4, 5};
+IntStream intStream = Arrays.stream(numbers);
 
 // Infinite streams
-Stream<Double> randoms = Stream.generate(Math::random);
-Stream<Integer> counting = Stream.iterate(0, n -> n + 1);
-Stream<Integer> bounded = Stream.iterate(0, n -> n < 100, n -> n + 2); // Java 9+
+Stream<Integer> infiniteOdds = Stream.iterate(1, n -> n + 2);  // 1, 3, 5, 7, ...
+Stream<Double> randoms = Stream.generate(Math::random);          // random, random, ...
 
-// Primitive streams
-IntStream ints = IntStream.range(1, 10);        // 1 to 9
-IntStream intsInclusive = IntStream.rangeClosed(1, 10); // 1 to 10
-DoubleStream doubles = DoubleStream.of(1.1, 2.2, 3.3);
-
-// From String
-IntStream chars = "Hello".chars();
+// Range
+IntStream range = IntStream.range(1, 10);      // 1 to 9
+IntStream rangeClosed = IntStream.rangeClosed(1, 10);  // 1 to 10
 
 // From files
 Stream<String> lines = Files.lines(Path.of("data.txt"));
@@ -76,300 +89,267 @@ Stream<String> lines = Files.lines(Path.of("data.txt"));
 
 ## 3. Intermediate Operations (Lazy)
 
-### filter — Keep elements matching a predicate
+These operations are **lazy** — they don't execute until a terminal operation triggers them. They return a new Stream.
+
+### 3.1 filter — Keep What Matches
+
 ```java
-List<Integer> evens = IntStream.rangeClosed(1, 20)
+List<Integer> evens = numbers.stream()
     .filter(n -> n % 2 == 0)
-    .boxed()
     .collect(Collectors.toList());
-// [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
 ```
 
-### map — Transform each element
+### 3.2 map — Transform Each Element
+
 ```java
-List<Integer> lengths = List.of("Hello", "World", "Java")
-    .stream()
+List<String> upperNames = names.stream()
+    .map(String::toUpperCase)
+    .collect(Collectors.toList());
+
+List<Integer> nameLengths = names.stream()
     .map(String::length)
     .collect(Collectors.toList());
-// [5, 5, 4]
 ```
 
-### flatMap — Flatten nested structures
+### 3.3 flatMap — Flatten Nested Structures
+
+> **Feynman Insight:** `map` wraps each element in a new stream. If your elements are themselves collections, you get a "stream of streams" — like a box of boxes. `flatMap` opens all the inner boxes and spreads their contents into one flat stream.
+
 ```java
-List<List<String>> nested = List.of(
-    List.of("a", "b"),
-    List.of("c", "d"),
-    List.of("e")
+List<List<String>> nestedNames = List.of(
+    List.of("Alice", "Bob"),
+    List.of("Charlie", "Diana"),
+    List.of("Eve")
 );
 
-List<String> flat = nested.stream()
-    .flatMap(Collection::stream)
+// map would give: Stream<List<String>> — not what we want!
+// flatMap gives: Stream<String> — perfect!
+List<String> allNames = nestedNames.stream()
+    .flatMap(Collection::stream)    // Flatten each inner list
     .collect(Collectors.toList());
-// [a, b, c, d, e]
-
-// Real-world: extract all words from sentences
-List<String> sentences = List.of("Hello World", "Java Streams");
-List<String> words = sentences.stream()
-    .flatMap(s -> Arrays.stream(s.split(" ")))
-    .collect(Collectors.toList());
-// [Hello, World, Java, Streams]
+// ["Alice", "Bob", "Charlie", "Diana", "Eve"]
 ```
 
-### sorted — Sort elements
+### 3.4 Other Intermediate Operations
+
 ```java
-List<String> sorted = names.stream()
-    .sorted()                                    // Natural order
-    .collect(Collectors.toList());
-
-List<String> customSort = names.stream()
-    .sorted(Comparator.comparingInt(String::length).reversed())
-    .collect(Collectors.toList());
-```
-
-### distinct — Remove duplicates
-```java
-List<Integer> unique = List.of(1, 2, 2, 3, 3, 3)
-    .stream()
-    .distinct()
-    .collect(Collectors.toList());
-// [1, 2, 3]
-```
-
-### peek — Debug without consuming
-```java
-List<String> result = names.stream()
-    .filter(n -> n.length() > 3)
-    .peek(n -> System.out.println("After filter: " + n))
-    .map(String::toUpperCase)
-    .peek(n -> System.out.println("After map: " + n))
-    .collect(Collectors.toList());
-```
-
-### limit & skip — Pagination
-```java
-List<Integer> page = IntStream.rangeClosed(1, 100)
-    .skip(20)       // Skip first 20
-    .limit(10)      // Take next 10
-    .boxed()
-    .collect(Collectors.toList());
-// [21, 22, 23, ..., 30]
-```
-
-### takeWhile & dropWhile (Java 9+)
-```java
-List<Integer> taken = List.of(1, 2, 3, 4, 5, 1, 2)
-    .stream()
-    .takeWhile(n -> n < 4)
-    .collect(Collectors.toList());
-// [1, 2, 3]
-
-List<Integer> dropped = List.of(1, 2, 3, 4, 5, 1, 2)
-    .stream()
-    .dropWhile(n -> n < 4)
-    .collect(Collectors.toList());
-// [4, 5, 1, 2]
+stream.distinct()                          // Remove duplicates
+stream.sorted()                            // Natural order
+stream.sorted(Comparator.reverseOrder())   // Custom order
+stream.peek(System.out::println)           // Debug — see elements as they pass
+stream.limit(5)                            // Take first 5
+stream.skip(3)                             // Skip first 3
+stream.takeWhile(n -> n < 10)              // Take while condition holds (Java 9+)
+stream.dropWhile(n -> n < 10)              // Skip while condition holds (Java 9+)
 ```
 
 ---
 
-## 4. Terminal Operations
+## 4. Terminal Operations (Eager)
 
-### collect — Gather results
+These trigger the pipeline and produce a result. Once a terminal operation runs, the stream is consumed.
+
+### 4.1 collect — Gather Results
+
 ```java
 // To List
 List<String> list = stream.collect(Collectors.toList());
-List<String> list2 = stream.toList();  // Java 16+ (unmodifiable)
+List<String> list = stream.toList();  // Java 16+ (unmodifiable)
 
 // To Set
 Set<String> set = stream.collect(Collectors.toSet());
 
 // To Map
-Map<String, Integer> map = names.stream()
-    .collect(Collectors.toMap(
-        Function.identity(),     // key
-        String::length           // value
-    ));
+Map<String, Integer> nameToAge = people.stream()
+    .collect(Collectors.toMap(Person::getName, Person::getAge));
 
 // Joining strings
-String joined = names.stream()
-    .collect(Collectors.joining(", ", "[", "]"));
-// "[Alice, Bob, Charlie]"
+String csv = names.stream().collect(Collectors.joining(", "));  // "Alice, Bob, Charlie"
 ```
 
-### forEach — Perform action on each element
-```java
-names.stream().forEach(System.out::println);
-names.forEach(System.out::println);  // Collection method (preferred)
-```
+### 4.2 reduce — Combine All Elements
 
-### reduce — Combine elements
+> **Feynman Insight:** `reduce` is like a snowball rolling downhill. It starts with an initial value (identity), picks up each element, and combines them using a function. By the time it reaches the bottom, all elements have been combined into one result.
+
 ```java
 // Sum
-int sum = IntStream.rangeClosed(1, 10).reduce(0, Integer::sum);
-// 55
+int sum = numbers.stream().reduce(0, Integer::sum);
 
-// Max
-Optional<Integer> max = List.of(3, 1, 4, 1, 5, 9).stream()
-    .reduce(Integer::max);
+// Product
+int product = numbers.stream().reduce(1, (a, b) -> a * b);
+
+// Max (returns Optional because list might be empty)
+Optional<Integer> max = numbers.stream().reduce(Integer::max);
 
 // String concatenation
-String result = List.of("Hello", " ", "World").stream()
-    .reduce("", String::concat);
+String combined = words.stream().reduce("", (a, b) -> a + " " + b);
 ```
 
-### count, min, max, findFirst, findAny
+### 4.3 Other Terminal Operations
+
 ```java
-long count = names.stream().filter(n -> n.length() > 3).count();
-
-Optional<String> first = names.stream()
-    .filter(n -> n.startsWith("A"))
-    .findFirst();
-
-Optional<String> any = names.parallelStream()
-    .filter(n -> n.length() > 3)
-    .findAny();  // Non-deterministic in parallel
-
-Optional<String> min = names.stream().min(Comparator.naturalOrder());
-Optional<String> max = names.stream().max(Comparator.naturalOrder());
-```
-
-### anyMatch, allMatch, noneMatch
-```java
-boolean hasLongName = names.stream().anyMatch(n -> n.length() > 10);
-boolean allShort = names.stream().allMatch(n -> n.length() < 20);
-boolean noneEmpty = names.stream().noneMatch(String::isEmpty);
+stream.forEach(System.out::println);   // Perform action on each
+stream.count();                        // Count elements
+stream.min(Comparator.naturalOrder()); // Find minimum (returns Optional)
+stream.max(Comparator.naturalOrder()); // Find maximum (returns Optional)
+stream.findFirst();                    // First element (Optional)
+stream.findAny();                      // Any element (Optional) — useful in parallel
+stream.anyMatch(n -> n > 10);          // true if ANY match
+stream.allMatch(n -> n > 0);           // true if ALL match
+stream.noneMatch(n -> n < 0);          // true if NONE match
+stream.toArray();                      // Convert to array
 ```
 
 ---
 
-## 5. Collectors — Advanced Grouping & Summarizing
+## 5. Collectors — The Power Tools
 
-### groupingBy
+### 5.1 Grouping
+
 ```java
-Map<Integer, List<String>> byLength = names.stream()
-    .collect(Collectors.groupingBy(String::length));
-// {3=[Bob, Eve], 5=[Alice], 7=[Charlie]}
+// Group people by city
+Map<String, List<Person>> byCity = people.stream()
+    .collect(Collectors.groupingBy(Person::getCity));
 
-// Downstream collector — count per group
-Map<Integer, Long> countByLength = names.stream()
-    .collect(Collectors.groupingBy(String::length, Collectors.counting()));
+// Group and count
+Map<String, Long> countByCity = people.stream()
+    .collect(Collectors.groupingBy(Person::getCity, Collectors.counting()));
 
-// Group and transform
-Map<String, List<String>> byFirstLetter = names.stream()
-    .collect(Collectors.groupingBy(
-        n -> n.substring(0, 1),
-        Collectors.mapping(String::toUpperCase, Collectors.toList())
-    ));
+// Group and calculate average age
+Map<String, Double> avgAgeByCity = people.stream()
+    .collect(Collectors.groupingBy(Person::getCity, 
+             Collectors.averagingInt(Person::getAge)));
+
+// Multi-level grouping
+Map<String, Map<String, List<Person>>> byCityAndGender = people.stream()
+    .collect(Collectors.groupingBy(Person::getCity,
+             Collectors.groupingBy(Person::getGender)));
 ```
 
-### partitioningBy
+### 5.2 Partitioning
+
 ```java
-Map<Boolean, List<String>> partitioned = names.stream()
-    .collect(Collectors.partitioningBy(n -> n.length() > 3));
-// {false=[Bob, Eve], true=[Alice, Charlie, Dave]}
+// Split into two groups (true/false)
+Map<Boolean, List<Person>> adults = people.stream()
+    .collect(Collectors.partitioningBy(p -> p.getAge() >= 18));
+
+List<Person> adultList = adults.get(true);
+List<Person> minorList = adults.get(false);
 ```
 
-### Summarizing statistics
-```java
-IntSummaryStatistics stats = names.stream()
-    .collect(Collectors.summarizingInt(String::length));
+### 5.3 Summarizing
 
-stats.getCount();    // 5
-stats.getSum();      // 24
-stats.getMin();      // 3
-stats.getMax();      // 7
-stats.getAverage();  // 4.8
+```java
+IntSummaryStatistics stats = people.stream()
+    .collect(Collectors.summarizingInt(Person::getAge));
+
+stats.getCount();    // 100
+stats.getSum();      // 3500
+stats.getAverage();  // 35.0
+stats.getMin();      // 18
+stats.getMax();      // 65
 ```
 
 ---
 
-## 6. Optional
+## 6. Optional — The Null Killer
+
+Streams return `Optional` for operations that might not have a result:
 
 ```java
-Optional<String> opt = names.stream()
-    .filter(n -> n.startsWith("Z"))
-    .findFirst();
+Optional<String> longest = names.stream()
+    .max(Comparator.comparingInt(String::length));
 
-// Safe operations
-opt.isPresent();                          // false
-opt.isEmpty();                            // true (Java 11+)
-opt.ifPresent(System.out::println);       // Does nothing
-opt.orElse("default");                    // "default"
-opt.orElseGet(() -> computeDefault());    // Lazy default
-opt.orElseThrow();                        // NoSuchElementException
-opt.orElseThrow(() -> new RuntimeException("Not found"));
-
-// Transformation
-Optional<Integer> length = opt.map(String::length);
-Optional<String> flat = opt.flatMap(this::findByName);
-
-// Stream of Optional values (Java 9+)
-List<Optional<String>> optionals = List.of(
-    Optional.of("A"), Optional.empty(), Optional.of("B")
-);
-List<String> values = optionals.stream()
-    .flatMap(Optional::stream)
-    .collect(Collectors.toList());
-// [A, B]
+// Safe ways to use Optional
+longest.ifPresent(System.out::println);           // Only if present
+String value = longest.orElse("default");          // Default value
+String value = longest.orElseThrow();              // Throw if empty
+longest.map(String::toUpperCase).ifPresent(...);   // Transform if present
 ```
+
+> **Bloch, Item 55:** *"Return optionals judiciously."* Use `Optional` as a return type when a method might legitimately have no result. Never use `Optional` for fields, method parameters, or collection elements.
 
 ---
 
 ## 7. Parallel Streams
 
 ```java
-long sum = LongStream.rangeClosed(1, 10_000_000)
-    .parallel()
-    .sum();
+// Sequential
+long count = numbers.stream()
+    .filter(n -> isPrime(n))
+    .count();
 
-List<String> result = names.parallelStream()
-    .filter(n -> n.length() > 3)
-    .map(String::toUpperCase)
-    .collect(Collectors.toList());
+// Parallel — uses all CPU cores via Fork/Join Framework
+long count = numbers.parallelStream()
+    .filter(n -> isPrime(n))
+    .count();
 ```
 
-**When to use parallel streams:**
-- ✅ Large datasets (thousands+ elements)
-- ✅ Computationally expensive per-element operations
-- ✅ Stateless, independent operations
-- ✅ Easily splittable sources (`ArrayList`, arrays)
+> **Bloch, Item 48:** *"Use caution when making streams parallel."* Parallel streams are NOT always faster:
 
-**When NOT to use:**
-- ❌ Small datasets (overhead exceeds benefit)
-- ❌ I/O-bound operations
-- ❌ Order-dependent operations
-- ❌ Shared mutable state
-- ❌ `LinkedList` or `Stream.iterate()` sources (hard to split)
+| ✅ Good for parallel | ❌ Bad for parallel |
+|---------------------|-------------------|
+| Large datasets (>10,000 elements) | Small datasets |
+| CPU-bound operations | I/O-bound operations |
+| `ArrayList`, arrays (good splittability) | `LinkedList`, `Stream.iterate` |
+| Stateless operations | Stateful operations (`sorted`, `distinct`) |
+| Independent elements | Side effects or shared mutable state |
 
 ---
 
-## 8. Best Practices
+## 8. Real-World Pipeline Examples
 
-1. **Prefer method references** over lambdas when possible
-2. **Don't modify external state** in stream operations (side-effect free)
-3. **Use `toList()` (Java 16+)** instead of `Collectors.toList()`
-4. **Handle `Optional` properly** — don't call `get()` without checking
-5. **Profile before parallelizing** — parallel isn't always faster
-6. **Close streams from I/O sources** — use try-with-resources for `Files.lines()`
-7. **Avoid nested streams** — use `flatMap` to flatten
+```java
+// Example 1: Top 3 most expensive products
+List<String> topProducts = products.stream()
+    .sorted(Comparator.comparing(Product::getPrice).reversed())
+    .limit(3)
+    .map(Product::getName)
+    .collect(Collectors.toList());
+
+// Example 2: Total revenue by category
+Map<String, Double> revenueByCategory = orders.stream()
+    .collect(Collectors.groupingBy(
+        Order::getCategory,
+        Collectors.summingDouble(Order::getTotal)));
+
+// Example 3: Find the employee with the highest salary in each department
+Map<String, Optional<Employee>> topEarners = employees.stream()
+    .collect(Collectors.groupingBy(
+        Employee::getDepartment,
+        Collectors.maxBy(Comparator.comparing(Employee::getSalary))));
+```
 
 ---
 
-## 9. Exercises
+## 9. Best Practices
 
-1. **Word Frequency Counter:** Read a text file, split into words, count frequency, display top 10
-2. **Employee Analytics:** Given a list of employees, find average salary by department, highest paid per dept, employees earning above average
-3. **Custom Collector:** Write a collector that collects into a `TreeMap<K, List<V>>`
-4. **Flat Mapping:** Given a list of orders (each with a list of items), extract all unique product names sorted alphabetically
-5. **Parallel Performance:** Compare sequential vs parallel stream performance for computing the sum of squares of the first 100M integers
+1. **Prefer streams over loops** for data processing pipelines (Bloch, Item 45)
+2. **Avoid side effects** in stream operations (Bloch, Item 46)
+3. **Use `collect()` over `reduce()`** for mutable results (Bloch, Item 46)
+4. **Prefer Collection as return type** over Stream (Bloch, Item 47)
+5. **Profile before parallelizing** — parallel is often slower for small datasets (Bloch, Item 48)
+6. **Keep pipelines short and readable** — break complex ones into named steps
+7. **Use method references** when they improve readability
+
+---
+
+## 10. Exercises
+
+1. **Transaction Analysis:** Given a list of transactions, find all transactions from 2024, sort by value, and return the trader names.
+2. **Word Frequency:** Read a text file and produce a `Map<String, Long>` with word frequencies using streams.
+3. **Nested FlatMap:** Given a list of orders (each containing a list of line items), produce a flat list of all product names.
+4. **Custom Collector:** Write a collector that groups strings by their first letter.
+5. **Parallel Benchmark:** Compare sequential vs parallel stream performance for computing prime numbers up to 10 million.
 
 ---
 
 ## 📖 References
 
-- *Java 8 Lambdas*, Richard Warburton — Ch. 3, 5–6 (Streams, Advanced Collections, Parallelism)
-- *OCP Java SE 8 Programmer II Study Guide* — Ch. 4 (Functional Programming)
-- *Java Coding Problems*, Anghel Leonard — Ch. 9 (Functional Style Programming)
+- *Modern Java in Action*, Urma, Fusco — Chapters 4–7 (Streams, Collectors, Parallel)
+- *Effective Java*, Joshua Bloch — Items 45–48 (Streams)
+- *Core Java, Volume I*, Cay S. Horstmann — Chapter 1 (Streams)
+- *Java: The Complete Reference*, Herbert Schildt — Chapter 29 (Stream API)
 
 ---
 

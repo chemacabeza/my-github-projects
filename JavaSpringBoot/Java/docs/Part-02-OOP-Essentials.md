@@ -1,6 +1,10 @@
 # Part 2: OOP Essentials
 
-> **Sources:** *Thinking in Java* (Ch. 4–8) · *OCA Java SE 8 Programmer I* (Ch. 5) · *Java Coding Problems* (Ch. 1)
+<p align="center">
+<img src="../images/part02_cover.png" alt="OOP Essentials" width="800"/>
+</p>
+
+> **Sources:** *Effective Java* (Bloch) · *Core Java, Vol. I* (Horstmann) · *Head First Java* (Sierra, Bates, Gee) · *Java: The Complete Reference* (Schildt) · *Java: A Beginner's Guide* (Schildt)
 
 ---
 
@@ -11,29 +15,35 @@ By the end of this part, you will:
 - Apply inheritance and understand the `extends` / `implements` keywords
 - Master polymorphism, method overriding, and dynamic dispatch
 - Distinguish abstract classes from interfaces and know when to use each
-- Understand composition vs. inheritance trade-offs
+- Understand composition vs. inheritance trade-offs — and why Bloch says "favor composition"
 
 ---
 
-## 1. Classes & Objects
+## 1. Classes & Objects — The Blueprint Analogy
 
-### 1.1 Anatomy of a Java Class
+### 1.1 What Is an Object?
+
+> **Feynman Insight:** Imagine you're building a city. A **class** is the architectural blueprint for a house. An **object** is an actual house built from that blueprint. You can build 100 houses from one blueprint — they all have the same structure (rooms, doors, windows), but each house has its own paint color, furniture, and people living inside.
+
+In Java, a class defines the *structure* (fields) and *behavior* (methods). An object is a specific instance with its own data.
+
+### 1.2 Anatomy of a Java Class
 
 ```java
 package com.example.model;
 
 public class Person {
-    // ─── Fields (state) ───
+    // ─── Fields (state) — what the object KNOWS ───
     private String name;
     private int age;
 
-    // ─── Constructor ───
+    // ─── Constructor — how to BUILD the object ───
     public Person(String name, int age) {
         this.name = name;
         this.age = age;
     }
 
-    // ─── Methods (behavior) ───
+    // ─── Methods (behavior) — what the object DOES ───
     public String getName() {
         return name;
     }
@@ -58,7 +68,7 @@ public class Person {
 }
 ```
 
-### 1.2 Creating Objects
+### 1.3 Creating Objects
 
 ```java
 Person alice = new Person("Alice", 30);
@@ -68,14 +78,17 @@ System.out.println(alice);        // Person{name='Alice', age=30}
 System.out.println(alice.getName()); // Alice
 ```
 
-**What happens with `new`:**
+**What happens with `new`** — Horstmann (*Core Java*) breaks it down into five precise steps:
+
 1. Memory is allocated on the **heap**
 2. Fields are initialized to **default values** (`null`, `0`, `false`)
 3. Instance initializer blocks run (in order of appearance)
 4. The **constructor** body executes
 5. A **reference** to the new object is returned
 
-### 1.3 The `this` Keyword
+### 1.4 The `this` Keyword
+
+`this` is the object's way of referring to itself. Think of it as the object saying "me":
 
 ```java
 public class Point {
@@ -83,7 +96,7 @@ public class Point {
 
     // 'this' disambiguates field from parameter
     public Point(int x, int y) {
-        this.x = x;
+        this.x = x;   // "MY x = the parameter x"
         this.y = y;
     }
 
@@ -92,18 +105,26 @@ public class Point {
         this(0, 0);  // Must be FIRST statement
     }
 
-    // 'this' as a reference to the current object
+    // 'this' as a reference — enables fluent API
     public Point translate(int dx, int dy) {
         this.x += dx;
         this.y += dy;
-        return this;   // Enables fluent API
+        return this;   // Returns "myself" so you can chain: point.translate(1,2).translate(3,4)
     }
 }
 ```
 
 ---
 
-## 2. Encapsulation
+## 2. Encapsulation — The Vault
+
+Encapsulation is the most fundamental principle of OOP. Bloch (*Effective Java*, Item 16) states it firmly: *"In public classes, use accessor methods, not public fields."*
+
+<p align="center">
+<img src="../images/part02_encapsulation.png" alt="Java Encapsulation" width="800"/>
+</p>
+
+> **Feynman Insight:** Imagine a bank vault. You don't let customers walk into the vault and grab cash (public fields). Instead, they go to a teller window (getter/setter methods) where transactions are controlled, validated, and logged. If someone tries to withdraw more than they have, the teller stops them. That's encapsulation — **protecting data by controlling access**.
 
 ### 2.1 Access Modifiers
 
@@ -113,6 +134,8 @@ public class Point {
 | *(default/package-private)* | ✅ | ✅ | ❌ | ❌ |
 | `protected` | ✅ | ✅ | ✅ | ❌ |
 | `public` | ✅ | ✅ | ✅ | ✅ |
+
+> **Bloch's Rule** (*Effective Java*, Item 15): *"Minimize the accessibility of classes and members."* Make everything as private as possible. Start with `private` and only widen access when you have a concrete reason.
 
 ### 2.2 JavaBeans Convention
 
@@ -133,7 +156,9 @@ public class Employee {
 }
 ```
 
-### 2.3 Immutable Classes
+### 2.3 Immutable Classes — The Gold Standard
+
+Joshua Bloch (*Effective Java*, Item 17) dedicates an entire chapter to immutability because it is one of the most powerful tools for writing correct, thread-safe code.
 
 An immutable class cannot be modified after creation:
 
@@ -157,7 +182,9 @@ public final class ImmutablePerson {
 }
 ```
 
-**Rules for immutability:**
+> **Feynman Insight:** An immutable object is like a photograph — once taken, it can never change. You can show it to anyone, copy it, share it between threads, and it will always be the same. A mutable object is like a whiteboard — anyone can erase and rewrite it, which leads to chaos when multiple people are using it simultaneously.
+
+**Rules for immutability** (Bloch):
 1. Class is `final` (cannot be subclassed)
 2. All fields are `private final`
 3. No setters
@@ -174,7 +201,7 @@ public class Rectangle {
     private double width;
     private double height;
 
-    // No-arg constructor
+    // No-arg constructor — delegates to the parameterized one
     public Rectangle() {
         this(1.0, 1.0);
     }
@@ -185,7 +212,7 @@ public class Rectangle {
         this.height = height;
     }
 
-    // Copy constructor
+    // Copy constructor — builds a clone from an existing object
     public Rectangle(Rectangle other) {
         this(other.width, other.height);
     }
@@ -194,7 +221,7 @@ public class Rectangle {
 
 ### 3.2 Initialization Order
 
-The complete initialization sequence:
+This is a classic interview question. Horstmann (*Core Java*) lays out the exact sequence:
 
 1. **Static** content (once per class, in order of appearance):
    - Static fields → default values
@@ -206,20 +233,15 @@ The complete initialization sequence:
 
 ```java
 public class InitOrder {
-    // 3. Instance field
-    private int x = initX();
+    private int x = initX();                    // Step 3: Instance field
 
-    // 1. Static initializer
-    static { System.out.println("Static block"); }
+    static { System.out.println("Static block"); }  // Step 1: Static initializer
 
-    // 4. Instance initializer
-    { System.out.println("Instance block, x=" + x); }
+    { System.out.println("Instance block, x=" + x); }  // Step 4: Instance initializer
 
-    // 2. Static field
-    private static int STATIC_FIELD = initStatic();
+    private static int STATIC_FIELD = initStatic();  // Step 2: Static field
 
-    // 5. Constructor
-    public InitOrder() {
+    public InitOrder() {                         // Step 5: Constructor
         System.out.println("Constructor");
     }
 
@@ -228,9 +250,19 @@ public class InitOrder {
 }
 ```
 
+> **Feynman Insight:** Think of building a house. The **static** stuff happens when the architectural firm is founded (once ever): setting up the company name and logo. The **instance** stuff happens each time you build a new house: pour foundation (default values), install framework (initializer blocks), then do the custom interior work (constructor).
+
 ---
 
-## 4. Inheritance
+## 4. Inheritance — The Family Tree
+
+Inheritance lets you create new classes that reuse, extend, and modify the behavior defined in existing classes. But Bloch warns: it's a powerful tool that's easy to misuse.
+
+<p align="center">
+<img src="../images/part02_inheritance.png" alt="Java Inheritance" width="800"/>
+</p>
+
+> **Feynman Insight:** Inheritance is like a family tree. A child inherits traits from their parent — eye color, height, last name. But the child can also develop their own unique traits and even "override" inherited ones (maybe the child dyes their hair a different color from the parent). In Java, a `Dog` inherits `eat()` and `name` from `Animal`, but can override `speak()` with its own "Bark!" implementation.
 
 ### 4.1 The `extends` Keyword
 
@@ -255,7 +287,7 @@ public class Dog extends Animal {
     private String breed;
 
     public Dog(String name, String breed) {
-        super(name);          // MUST be first statement
+        super(name);          // MUST be first statement — calls parent constructor
         this.breed = breed;
     }
 
@@ -274,6 +306,8 @@ public class Dog extends Animal {
 
 ### 4.2 Rules of Inheritance
 
+Schildt (*Java: The Complete Reference*) and Horstmann (*Core Java*) both emphasize these immutable rules:
+
 - Java supports **single inheritance** only (one parent class)
 - Every class implicitly extends `java.lang.Object`
 - `super()` calls the parent constructor — must be first statement
@@ -289,7 +323,7 @@ For a method in a subclass to **override** a parent method:
 |------|-------------|
 | Same signature | Same method name and parameter types |
 | Covariant return | Return type must be the same or a subtype |
-| Access modifier | Cannot be more restrictive (e.g., can't go from `public` to `private`) |
+| Access modifier | Cannot be more restrictive (e.g., can't go `public` → `private`) |
 | Exceptions | Cannot throw new/broader checked exceptions |
 | Not `final` | The parent method must not be `final` |
 | Not `static` | Static methods are **hidden**, not overridden |
@@ -303,20 +337,26 @@ public class Animal {
 
 public class Dog extends Animal {
     @Override
-    public Dog reproduce() { return new Dog("puppy", "Lab"); }    // Covariant return ✅
+    public Dog reproduce() { return new Dog("puppy", "Lab"); }  // Covariant return ✅
 
     @Override
-    public void rest() { }   // wider access (protected → public OK, public → private NOT OK)
+    public void rest() { }   // Wider access (protected → public) is OK ✅
 }
 ```
 
 ---
 
-## 5. Polymorphism
+## 5. Polymorphism — The Shape-Shifter
 
-### 5.1 What Is Polymorphism?
+Polymorphism is the crown jewel of OOP. It means "many forms" — a single reference type can point to different object types, and the *correct* method is called at runtime.
 
-Polymorphism means "many forms." A reference of a parent type can point to any subclass object:
+<p align="center">
+<img src="../images/part02_polymorphism.png" alt="Java Polymorphism" width="800"/>
+</p>
+
+> **Feynman Insight:** Imagine a universal remote control labeled "Animal." You point it at a Dog and press "speak" — you hear a bark. You point it at a Cat — you hear a meow. Point it at a Bird — you hear a tweet. The remote (reference type) is always "Animal," but the **actual device** (object type) determines what happens. The remote doesn't need to know what specific animal it's controlling — it just presses "speak" and trusts the animal to respond correctly.
+
+### 5.1 Polymorphism in Action
 
 ```java
 Animal myPet = new Dog("Rex", "Shepherd");
@@ -326,7 +366,7 @@ myPet.eat();      // "Rex is eating" — inherited from Animal
 // myPet.fetch();  // COMPILE ERROR — Animal reference doesn't know about fetch()
 ```
 
-**Key insight:** The **compiler** checks the **reference type** (Animal). The **JVM** executes the **object type's** method (Dog) at runtime. This is **dynamic dispatch**.
+**Key insight** (Horstmann, *Core Java*): The **compiler** checks the **reference type** (Animal). The **JVM** executes the **object type's** method (Dog) at runtime. This is **dynamic dispatch**.
 
 ### 5.2 Casting
 
@@ -337,9 +377,9 @@ Animal animal = new Dog("Rex", "Shepherd");
 Dog dog = (Dog) animal;   // OK at runtime because animal IS a Dog
 dog.fetch();              // Now we can call Dog-specific methods
 
-// Safe downcasting with instanceof
-if (animal instanceof Dog d) {            // Pattern matching (Java 16+)
-    d.fetch();
+// Safe downcasting with instanceof (Java 16+ pattern matching)
+if (animal instanceof Dog d) {
+    d.fetch();  // d is automatically cast — no explicit (Dog) needed!
 }
 
 // Unsafe cast — ClassCastException at runtime!
@@ -347,7 +387,7 @@ Animal cat = new Animal("Kitty");
 // Dog notADog = (Dog) cat;  // ClassCastException!
 ```
 
-### 5.3 Virtual Methods
+### 5.3 Virtual Methods — The Default in Java
 
 In Java, **all non-static, non-final, non-private methods are virtual** by default. The JVM determines which method to call based on the actual object type, not the reference type.
 
@@ -372,10 +412,10 @@ public class Rectangle extends Shape {
     public double area() { return width * height; }
 }
 
-// Polymorphic code:
+// Polymorphic code — the magic of OOP:
 Shape[] shapes = { new Circle(5), new Rectangle(3, 4), new Circle(2) };
 for (Shape s : shapes) {
-    System.out.println("Area: " + s.area());  // Calls the correct override
+    System.out.println("Area: " + s.area());  // Calls the correct override automatically!
 }
 // Output:
 // Area: 78.53981633974483
@@ -385,7 +425,9 @@ for (Shape s : shapes) {
 
 ---
 
-## 6. Abstract Classes
+## 6. Abstract Classes — The Partial Blueprint
+
+An abstract class is like a blueprint that's intentionally incomplete. It provides some finished rooms but leaves other rooms for the builder (subclass) to design.
 
 ```java
 public abstract class Vehicle {
@@ -416,23 +458,32 @@ public class ElectricCar extends Vehicle {
 
     @Override
     public double fuelEfficiency() {
-        return batteryCapacity * 3.5;  // miles per kWh * capacity
+        return batteryCapacity * 3.5;  // miles per kWh
     }
 }
 ```
 
-**Rules:**
+**Rules** (Schildt, *Java: The Complete Reference*):
 - Cannot instantiate an abstract class: `new Vehicle(...)` → compile error
 - Can have constructors (called via `super()`)
 - Can have both abstract and concrete methods
-- An abstract class can extend another abstract class without implementing all abstract methods
 - First **concrete** subclass must implement ALL inherited abstract methods
 
 ---
 
-## 7. Interfaces
+## 7. Interfaces — The Capability Contract
 
-### 7.1 Interface Basics
+### 7.1 Abstract Class vs. Interface
+
+This is one of the most important design decisions in Java. Bloch (*Effective Java*, Item 20) says: *"Prefer interfaces to abstract classes."*
+
+<p align="center">
+<img src="../images/part02_abstract_interface.png" alt="Abstract Classes vs Interfaces" width="800"/>
+</p>
+
+> **Feynman Insight:** An **abstract class** is like a partially assembled car at the factory — it has an engine and wheels, but the interior is unfinished. Only vehicles that ARE cars can extend it. An **interface** is like a pilot's license — it certifies that something CAN fly. A plane can have a pilot's license. A drone can have one too. Even a person with a jetpack could have one. They're completely different things, but they all share the **capability** of flying.
+
+### 7.2 Interface Basics
 
 ```java
 public interface Flyable {
@@ -460,7 +511,7 @@ public interface Flyable {
 }
 ```
 
-### 7.2 Implementing Interfaces
+### 7.3 Implementing Interfaces
 
 ```java
 public class Airplane implements Flyable, Serializable {
@@ -483,7 +534,7 @@ public class Airplane implements Flyable, Serializable {
 
 **A class can implement multiple interfaces** — Java's way of supporting multiple inheritance of type.
 
-### 7.3 Abstract Class vs. Interface
+### 7.4 Comparison Table
 
 | Feature | Abstract Class | Interface |
 |---------|---------------|-----------|
@@ -494,11 +545,17 @@ public class Airplane implements Flyable, Serializable {
 | Access modifiers on methods | Any | `public` only (abstract/default) |
 | Use when... | IS-A + shared state/code | CAN-DO capability contract |
 
-**Design guideline:** *"Prefer interfaces for defining types. Use abstract classes when you need to share code among closely related classes."*
+> **Bloch's Design Guideline** (*Effective Java*, Item 20): *"Prefer interfaces for defining types. Use abstract classes only when you need to share code among closely related classes."*
 
 ---
 
-## 8. Composition vs. Inheritance
+## 8. Composition vs. Inheritance — The Critical Decision
+
+This is perhaps the most important lesson in all of OOP, and one that Bloch dedicates significant attention to in *Effective Java* (Items 16–18).
+
+<p align="center">
+<img src="../images/part02_composition.png" alt="Inheritance vs Composition" width="800"/>
+</p>
 
 ### 8.1 The Problem with Deep Inheritance
 
@@ -512,9 +569,11 @@ public class Airplane implements Flyable, Serializable {
      Poodle  Bulldog
 ```
 
-Deep hierarchies become **fragile** — changes to `Animal` can break `Poodle`.
+Deep hierarchies become **fragile** — changes to `Animal` can break `Poodle`. This is called the **Fragile Base Class Problem**.
 
-### 8.2 Favor Composition
+> **Feynman Insight:** Inheritance is like building with Lego towers — each block must sit exactly on the one below it. If you change a block near the bottom, everything above it might fall. Composition is like building with Lego modules — you snap together independent pieces (engine, GPS, logger) that can be swapped, rearranged, or replaced without affecting the others.
+
+### 8.2 Favor Composition (Bloch, Item 18)
 
 ```java
 // Instead of inheriting from Engine, Logger, GPS...
@@ -545,9 +604,9 @@ public class Car {
 
 ---
 
-## 9. The `Object` Class
+## 9. The `Object` Class — The Common Ancestor
 
-Every Java class inherits from `java.lang.Object`. These methods should be understood and often overridden:
+Every Java class inherits from `java.lang.Object`. Bloch (*Effective Java*) dedicates Items 10–14 to getting these methods right:
 
 ### 9.1 `toString()`
 
@@ -557,6 +616,8 @@ public String toString() {
     return "Person{name='" + name + "', age=" + age + "}";
 }
 ```
+
+> **Bloch, Item 12:** *"Always override toString."* A good `toString` makes debugging dramatically easier.
 
 ### 9.2 `equals()` and `hashCode()`
 
@@ -575,7 +636,7 @@ public int hashCode() {
 }
 ```
 
-**Contract:** If `a.equals(b)` then `a.hashCode() == b.hashCode()`. Violating this breaks `HashMap`, `HashSet`, etc.
+> **Bloch's Contract (Item 11):** If `a.equals(b)` then `a.hashCode() == b.hashCode()`. Violating this breaks `HashMap`, `HashSet`, and every collection that uses hashing. This is arguably the most commonly violated contract in all of Java.
 
 ---
 
@@ -615,17 +676,22 @@ public class Outer {
 }
 ```
 
+> **Bloch, Item 24:** *"Favor static member classes over nonstatic."* Non-static inner classes hold a hidden reference to the outer instance, which can cause memory leaks.
+
 ---
 
-## 11. Best Practices
+## 11. Best Practices — The Collected Wisdom
 
-1. **Favor composition over inheritance** — use `has-a` relationships
-2. **Program to an interface, not an implementation** — declare variables as `List`, not `ArrayList`
-3. **Override `toString()`, `equals()`, `hashCode()`** for value objects
-4. **Use `@Override` annotation** — catches typos at compile time
+These come directly from Joshua Bloch (*Effective Java*), Horstmann (*Core Java*), and Sierra/Bates (*Head First Java*):
+
+1. **Favor composition over inheritance** — use `has-a` relationships (Bloch, Item 18)
+2. **Program to an interface, not an implementation** — declare variables as `List`, not `ArrayList` (Bloch, Item 64)
+3. **Override `toString()`, `equals()`, `hashCode()`** for value objects (Bloch, Items 10–12)
+4. **Use `@Override` annotation** — catches typos at compile time (Bloch, Item 40)
 5. **Follow the Liskov Substitution Principle** — subclass behavior must be compatible with parent
 6. **Keep inheritance hierarchies shallow** — max 2–3 levels
-7. **Mark classes as `final`** when not designed for extension
+7. **Mark classes as `final`** when not designed for extension (Bloch, Item 19)
+8. **Minimize mutability** — make classes immutable whenever possible (Bloch, Item 17)
 
 ---
 
@@ -641,10 +707,10 @@ public class Outer {
 
 ## 📖 References
 
-- *Thinking in Java*, Bruce Eckel — Chapters 4–8 (Initialization, Hiding, Reusing, Polymorphism, Interfaces)
-- *OCA: Oracle Certified Associate Java SE 8 Programmer I Study Guide* — Chapter 5 (Class Design)
-- *Java Coding Problems*, Anghel Leonard — Chapter 1 (Objects, Immutability, Switch Expressions)
-- *Effective Java*, Joshua Bloch — Items 10–14, 17–18 (Classics on equals, hashCode, immutability, composition)
+- *Effective Java*, Joshua Bloch — Items 10–20 (equals, hashCode, toString, Comparable, accessibility, immutability, composition, inheritance, interfaces)
+- *Core Java, Volume I — Fundamentals*, Cay S. Horstmann — Chapters 4–6 (Objects, Classes, Inheritance, Interfaces)
+- *Head First Java*, Kathy Sierra, Bert Bates, Trisha Gee — Chapters 5–8 (Classes, OOP, Polymorphism, Interfaces)
+- *Java: The Complete Reference*, Herbert Schildt — Chapters 6–9 (Classes, Inheritance, Packages, Interfaces)
 
 ---
 
