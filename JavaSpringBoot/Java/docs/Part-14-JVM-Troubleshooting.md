@@ -1,6 +1,11 @@
-# Part 13: JVM Troubleshooting & Performance Tuning
+# Part 14: JVM Troubleshooting & Performance Tuning
 
-> **Source:** *JVM Troubleshooting Handbook* — Pierre-Hugues Charbonneau (Java Code Geeks)
+<p align="center">
+<img src="../images/part14_cover.png" alt="JVM Troubleshooting" width="800"/>
+</p>
+
+> **Sources:** *Core Java, Vol. I* (Horstmann) · *Java: The Complete Reference* (Schildt) · *Java Concurrency in Practice* (Goetz)
+
 
 ---
 
@@ -653,4 +658,4 @@ java \
 
 ---
 
-[← Part 12: JNI & Project Panama](Part-12-JNI-And-Panama.md) | [Back to Course Index](../README.md)
+[← Part 13: JDBC & Databases](Part-13-JDBC-And-Databases.md) | [Back to Course Index](../README.md)

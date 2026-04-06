@@ -46,6 +46,7 @@ This course draws on **8 authoritative Java books**:
 | 11 | [Testing](docs/Part-11-Testing.md) | ⭐⭐⭐ Advanced | JUnit 5, Mockito, TDD, Test Pyramid, parameterized tests |
 | 12 | [Modern Java Features](docs/Part-12-Modern-Java-Features.md) | ⭐⭐⭐ Advanced | Records, Sealed Classes, Pattern Matching, Text Blocks |
 | 13 | [JDBC & Databases](docs/Part-13-JDBC-And-Databases.md) | ⭐⭐⭐ Advanced | JDBC, PreparedStatement, transactions, connection pooling |
+| 14 | [JVM Troubleshooting](docs/Part-14-JVM-Troubleshooting.md) | ⭐⭐⭐⭐ Expert | Heap tuning, GC analysis, thread dumps, OOM diagnosis |
 
 ---
 
