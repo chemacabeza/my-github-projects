@@ -1,300 +1,97 @@
+<div align="center">
+  <img src="./images/linux_ch38_kernel_tuning.png" alt="Text Processing Cover" width="800"/>
+</div>
+
 # 38: Text Processing
 
-<p align="center">
-  <img src="images/linux_text_processing.png" alt="Text Processing" width="600"/>
-</p>
+> 🧠 **The Feynman Hook:** The true magic of UNIX is that every command is a tiny robotic factory designed to do exactly one job perfectly. `grep` sorts boxes on an assembly line. `sed` paints the boxes. `awk` places labels on specific boxes. When you connect these tiny factories together using a pipeline (`|`), you build a fully automated, immensely powerful text processing system. This philosophy allows you to parse millions of rows of data without ever writing a giant C program.
 
-The UNIX philosophy is built on text streams. These commands are the backbone of every shell pipeline.
+**🎯 The Big Goal:** Master `grep`, `sed`, and `awk` to parse unstructured log files and extract structured intelligence cleanly and efficiently.
 
 ---
 
-## 1. `grep` — Pattern Matching
+## 1. `grep` — The Pattern Finder
 
-Search for patterns in files or piped input.
-
-```bash
-grep "error" /var/log/syslog             # Find lines containing "error"
-grep -i "warning" /var/log/syslog        # Case-insensitive
-grep -r "TODO" ./src/                    # Recursive search in directory
-grep -n "main" program.c                 # Show line numbers
-grep -c "404" access.log                 # Count matching lines
-grep -v "DEBUG" app.log                  # Invert: show lines WITHOUT "DEBUG"
-grep -E "error|warning|critical" log.txt # Extended regex (OR)
-grep -l "password" /etc/*               # List filenames only
-```
-
-### Regex Examples
+`grep` acts like a sieve. You pour a massive text file into it, and it only lets lines that match your specific pattern fall through to your screen.
 
 ```bash
-grep "^root" /etc/passwd                 # Lines starting with "root"
-grep "bash$" /etc/passwd                 # Lines ending with "bash"
-grep -E "[0-9]{1,3}\.[0-9]{1,3}" log    # Match IP-like patterns
+# Find every line containing the word "error"
+grep "error" /var/log/syslog
+
+# Search case-insensitively for "warning"
+grep -i "warning" /var/log/syslog
+
+# Find all lines that DO NOT contain the word "DEBUG" (Inverted search)
+grep -v "DEBUG" app.log
+
+# Count exactly how many times "404" appears
+grep -c "404" access.log
 ```
 
 ---
 
-## 2. `sed` — Stream Editor
+## 2. `sed` — The Stream Editor
 
-Transform text line by line without opening a file.
+`sed` is a robot that reads a line of text, applies a surgical edit (like search-and-replace), and outputs the new line immediately. It never actually opens the file in an editor.
 
 ```bash
-sed 's/old/new/' file.txt                # Replace first occurrence per line
-sed 's/old/new/g' file.txt               # Replace ALL occurrences per line
-sed -i 's/old/new/g' file.txt            # In-place edit (modifies the file)
-sed -n '5,10p' file.txt                  # Print lines 5–10 only
-sed '3d' file.txt                        # Delete line 3
-sed '/^#/d' config.conf                  # Delete all comment lines
-sed 's/^/    /' file.txt                 # Indent every line by 4 spaces
+# Replace the first occurrence of 'old' with 'new' on every line
+sed 's/old/new/' file.txt
+
+# Replace ALL occurrences globally on every line
+sed 's/old/new/g' file.txt
+
+# Delete any line that starts with a hash '#' (Useful for cleaning config files)
+sed '/^#/d' config.conf
 ```
 
-### Multiple Operations
+> [!CAUTION]
+> By default, `sed` only prints the result to your screen. If you want to permanently overwrite the original file with your changes, you must use the `-i` (in-place) flag: `sed -i 's/old/new/g' file.txt`.
+
+---
+
+## 3. `awk` — The Column Master
+
+While `sed` edits raw text, `awk` understands *columns*. It naturally treats any text separated by spaces (or commas) as an indexed field.
 
 ```bash
-sed -e 's/foo/bar/g' -e 's/baz/qux/g' file.txt
+# Print only the 1st and 3rd columns of a file
+awk '{print $1, $3}' file.txt
+
+# Tell awk that the file is separated by colons (:), then print column 1
+awk -F: '{print $1}' /etc/passwd
+
+# Filtering: Only print the line if the 3rd column is a number greater than 1000
+awk '$3 > 1000' /etc/passwd
 ```
 
 ---
 
-## 3. `awk` — Column Processing
+## 4. The Masterclass: Building a Pipeline
 
-`awk` treats each line as a sequence of fields separated by whitespace (default).
+Individually, these tools are useful. Combined, they are a superpower. 
 
-```bash
-awk '{print $1}' file.txt                # Print first column
-awk '{print $1, $3}' file.txt            # Print columns 1 and 3
-awk -F: '{print $1}' /etc/passwd         # Use ":" as delimiter
-awk '$3 > 1000' /etc/passwd              # Filter: third field > 1000
-awk '{sum += $1} END {print sum}' data   # Sum first column
-awk 'NR==5,NR==10' file.txt             # Print lines 5 to 10
-awk '{print NR": "$0}' file.txt          # Add line numbers
-```
-
-### Real-World Example: Disk Usage
+**Scenario:** Your web server is under attack. You want to extract the top 10 IP addresses making the most requests from your `access.log`.
 
 ```bash
-df -h | awk 'NR>1 {print $5, $6}'       # Print usage% and mount point
-```
-
----
-
-## 4. `cut` — Extract Columns
-
-Faster than `awk` for simple column extraction.
-
-```bash
-cut -d: -f1 /etc/passwd                 # Field 1, delimiter ":"
-cut -d, -f2,4 data.csv                  # Fields 2 and 4 from CSV
-cut -c1-10 file.txt                     # First 10 characters per line
-```
-
----
-
-## 5. `sort` — Order Lines
-
-```bash
-sort file.txt                            # Alphabetical sort
-sort -n numbers.txt                      # Numeric sort
-sort -r file.txt                         # Reverse sort
-sort -t: -k3 -n /etc/passwd             # Sort by 3rd field (numeric), delimiter ":"
-sort -u file.txt                         # Sort and remove duplicates
-```
-
----
-
-## 6. `uniq` — Deduplicate
-
-**Important:** `uniq` only removes *adjacent* duplicates. Always `sort` first!
-
-```bash
-sort access.log | uniq                   # Remove duplicates
-sort access.log | uniq -c               # Count occurrences
-sort access.log | uniq -d               # Show only duplicates
-```
-
----
-
-## 7. `tr` — Translate Characters
-
-```bash
-echo "hello" | tr 'a-z' 'A-Z'           # Convert to uppercase
-echo "hello   world" | tr -s ' '        # Squeeze repeated spaces
-cat file.txt | tr -d '\r'               # Remove Windows carriage returns
-echo "abc123" | tr -d '0-9'             # Delete all digits → "abc"
-```
-
----
-
-## 8. `wc` — Word Count
-
-```bash
-wc file.txt                             # Lines, words, bytes
-wc -l file.txt                          # Line count only
-wc -w file.txt                          # Word count only
-wc -c file.txt                          # Byte count only
-ls /etc | wc -l                         # Count files in /etc
-```
-
----
-
-## 9. Pipeline Masterclass
-
-Combine these tools to solve real problems:
-
-```bash
-# Top 10 most frequent IP addresses in an access log
+# The exact command:
 awk '{print $1}' access.log | sort | uniq -c | sort -rn | head -10
-
-# Find all unique error types
-grep "ERROR" app.log | awk -F: '{print $4}' | sort -u
-
-# Count lines of code in a project (excluding blanks)
-find ./src -name "*.py" | xargs cat | grep -v "^$" | wc -l
-
-# Replace tabs with 4 spaces in all .conf files
-find /etc -name "*.conf" -exec sed -i 's/\t/    /g' {} \;
 ```
+
+1. `awk '{print $1}'`: Extract only the first column (the IP address).
+2. `sort`: Organize all IP addresses alphabetically so identical IPs are grouped together.
+3. `uniq -c`: Collapse identical adjacent IPs into a single line, prepending a count of how many were found.
+4. `sort -rn`: Sort the result numerically in reverse (largest counts at the top).
+5. `head -10`: Print only the top 10 worst offenders.
 
 ---
 
-## 10. Quick Reference Table
+## 🤔 Reflection Questions
 
-| Command | Purpose | Key Flag |
-| :--- | :--- | :--- |
-| `grep` | Pattern search | `-r` (recursive), `-i` (insensitive) |
-| `sed` | Stream substitution | `s/old/new/g`, `-i` (in-place) |
-| `awk` | Column processing | `-F` (delimiter) |
-| `cut` | Extract fields | `-d` (delimiter), `-f` (fields) |
-| `sort` | Order lines | `-n` (numeric), `-r` (reverse) |
-| `uniq` | Remove duplicates | `-c` (count) |
-| `tr` | Character translation | `-d` (delete), `-s` (squeeze) |
-| `wc` | Count lines/words/bytes | `-l` (lines) |
+<details>
+<summary>💡 View Answer: Describe why you must run 'sort' before running 'uniq' in a pipeline.</summary>
+The `uniq` command is highly optimized for memory. It works sequentially by comparing the current line only to the immediately preceding line. It does not remember the entire file. If you have "Apple", then "Banana", then "Apple", `uniq` will not filter the second "Apple" because it is only looking at "Banana". Running `sort` first groups identical items consecutively.
+</details>
 
 ---
-
-## 🧪 Hands-On Lab
-
-### Setup: Docker Sandbox
-
-```bash
-docker run -it --rm ubuntu:latest bash
-```
-
-Create the practice environment:
-
-```bash
-mkdir -p /root/lab38 && cd /root/lab38
-
-# Simulated web server access log
-cat > access.log << 'EOF'
-192.168.1.10 - - [26/Mar/2026:10:00:01] "GET /index.html HTTP/1.1" 200 5120
-10.0.0.5 - - [26/Mar/2026:10:00:02] "GET /api/users HTTP/1.1" 200 1024
-192.168.1.10 - - [26/Mar/2026:10:00:03] "POST /login HTTP/1.1" 401 512
-10.0.0.5 - - [26/Mar/2026:10:00:04] "GET /api/users HTTP/1.1" 200 1024
-172.16.0.1 - - [26/Mar/2026:10:00:05] "GET /admin HTTP/1.1" 403 256
-192.168.1.10 - - [26/Mar/2026:10:00:06] "GET /index.html HTTP/1.1" 200 5120
-10.0.0.5 - - [26/Mar/2026:10:00:07] "DELETE /api/users/42 HTTP/1.1" 500 128
-172.16.0.1 - - [26/Mar/2026:10:00:08] "GET /admin HTTP/1.1" 403 256
-192.168.1.10 - - [26/Mar/2026:10:00:09] "GET /dashboard HTTP/1.1" 200 8192
-10.0.0.5 - - [26/Mar/2026:10:00:10] "GET /api/health HTTP/1.1" 200 64
-EOF
-
-# Employee CSV
-cat > employees.csv << 'EOF'
-name,department,salary,city
-Alice,Engineering,95000,Madrid
-Bob,Marketing,72000,London
-Charlie,Engineering,88000,Berlin
-Diana,Marketing,76000,Madrid
-Eve,Engineering,102000,London
-Frank,Sales,68000,Berlin
-Grace,Engineering,97000,Madrid
-EOF
-```
-
----
-
-### Exercise 1: Find Failed Requests
-> **Goal:** Use `grep` to find all non-200 HTTP responses.
-
-```bash
-grep -v '" 200 ' access.log
-```
-✅ **Expected:** Three lines: a 401, a 403, a 500, and another 403.
-
----
-
-### Exercise 2: Count Requests Per IP
-> **Goal:** Build a pipeline to count hits per IP address.
-
-```bash
-awk '{print $1}' access.log | sort | uniq -c | sort -rn
-```
-✅ **Expected:** `192.168.1.10` has 4 hits, `10.0.0.5` has 4, `172.16.0.1` has 2.
-
----
-
-### Exercise 3: Extract CSV Columns
-> **Goal:** Print only names and salaries from the CSV.
-
-```bash
-cut -d, -f1,3 employees.csv
-```
-✅ **Expected:** Two-column output: `name,salary` header followed by all employees.
-
----
-
-### Exercise 4: Find High Earners
-> **Goal:** Use `awk` to find employees earning above 90,000.
-
-```bash
-awk -F, 'NR>1 && $3 > 90000 {print $1, $3}' employees.csv
-```
-✅ **Expected:** Alice (95000), Eve (102000), Grace (97000).
-
----
-
-### Exercise 5: Replace Text In-Place with `sed`
-> **Goal:** Change the department "Marketing" to "Growth" in the CSV.
-
-```bash
-sed 's/Marketing/Growth/g' employees.csv
-```
-✅ **Expected:** Bob and Diana now show "Growth" instead of "Marketing". The original file is unchanged (no `-i`).
-
----
-
-### Exercise 6: Transform Case with `tr`
-> **Goal:** Convert all department names to uppercase.
-
-```bash
-cut -d, -f2 employees.csv | tr 'a-z' 'A-Z'
-```
-✅ **Expected:** `DEPARTMENT`, `ENGINEERING`, `MARKETING`, etc.
-
----
-
-### Exercise 7: Count Lines of Log
-> **Goal:** How many requests are in the access log?
-
-```bash
-wc -l access.log
-```
-✅ **Expected:** `10 access.log`.
-
----
-
-### Exercise 8: Full Pipeline Challenge
-> **Goal:** Find the total salary of all Engineering employees.
-
-```bash
-grep "Engineering" employees.csv | cut -d, -f3 | paste -sd+ | bc
-```
-Or using `awk`:
-```bash
-awk -F, '$2=="Engineering" {sum+=$3} END {print sum}' employees.csv
-```
-✅ **Expected:** `382000` (95000 + 88000 + 102000 + 97000).
-
----
-
 [<< Previous: File Viewing](./37_File_Viewing.md) | [Home: Curriculum Map](./README.md) | [Next: Permissions >>](./39_Permissions.md)

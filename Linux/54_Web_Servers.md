@@ -1,176 +1,52 @@
-# 54: Web Servers (Apache & Nginx)
+<div align="center">
+  <img src="./images/linux_ch54_web_servers.png" alt="Linux Web Servers Cover" width="800"/>
+</div>
 
-<p align="center">
-  <img src="images/linux_web_servers.png" alt="Web Servers" width="800"/>
-</p>
+# 54: Web Servers
 
-The Linux web server powers over 80% of the internet. Understanding Apache and Nginx — the two dominant HTTP servers — is essential for deploying applications, APIs, and static sites in production.
+> 🧠 **The Feynman Hook:** If a database is a kitchen cooking the food, a Web Server is the Waiter (`Nginx` or `Apache`). The waiter's only job is to stand at the front door (Port 80/443), receive orders from customers (HTTP Requests), walk to the kitchen to grab the assembled plate, and carry it back to the customer. A great waiter can seamlessly balance 10,000 customers simultaneously without breaking a sweat or dropping a dish.
 
----
-
-## 1. Apache vs Nginx
-
-| Feature | Apache (httpd) | Nginx |
-| :--- | :--- | :--- |
-| **Architecture** | Process/Thread per connection | Event-driven, async |
-| **Config Style** | `.htaccess` per directory | Centralized `nginx.conf` |
-| **Best For** | Dynamic content, `.htaccess` flexibility | Reverse proxy, static files, high concurrency |
-| **Module System** | Load at runtime (`a2enmod`) | Compiled-in modules |
-| **Market Share** | ~30% | ~35% |
+**🎯 The Big Goal:** Understand the architecture of HTTP daemons, structure virtual hosts, and contrast the event-driven performance of Nginx against the process-driven legacy of Apache.
 
 ---
 
-## 2. Apache Fundamentals
+## 1. The Legacy Powerhouse (`Apache`)
 
-### Installation & Control:
-```bash
-sudo apt install apache2
-sudo systemctl start apache2
-sudo systemctl enable apache2
-sudo systemctl status apache2
-```
+Apache ruled the early internet. Its core architecture is **Process-Driven**. 
 
-### Key Files:
-| Path | Purpose |
-| :--- | :--- |
-| `/etc/apache2/apache2.conf` | Main configuration |
-| `/etc/apache2/sites-available/` | Virtual host configs |
-| `/etc/apache2/sites-enabled/` | Active virtual hosts (symlinked) |
-| `/etc/apache2/mods-available/` | Available modules |
-| `/var/www/html/` | Default document root |
-| `/var/log/apache2/` | Access and error logs |
+Whenever a new customer connects to the website, Apache spins up a completely new, dedicated process (or thread) strictly for that one customer.
+- **The Pro:** It is incredibly stable. If one customer's connection crashes, it only kills that one isolated thread.
+- **The Con:** Creating a new process for 10,000 simultaneous users requires massive amounts of RAM. Under extreme load, Apache chokes and drops connections.
 
-### Virtual Hosts:
-```apache
-# /etc/apache2/sites-available/mysite.conf
-<VirtualHost *:80>
-    ServerName mysite.com
-    ServerAlias www.mysite.com
-    DocumentRoot /var/www/mysite
-    ErrorLog ${APACHE_LOG_DIR}/mysite-error.log
-    CustomLog ${APACHE_LOG_DIR}/mysite-access.log combined
-</VirtualHost>
-```
-
-```bash
-sudo a2ensite mysite.conf         # Enable the site
-sudo a2dissite 000-default.conf   # Disable default
-sudo apache2ctl configtest        # Validate syntax
-sudo systemctl reload apache2     # Apply changes
-```
+### Configuring Apache
+Apache's superpower is the `.htaccess` file. This allows developers to instantly modify web routing rules on a per-directory basis without ever needing to restart the primary Apache server. 
 
 ---
 
-## 3. Nginx Fundamentals
+## 2. The Modern Asynchronous Champion (`Nginx`)
 
-### Installation & Control:
-```bash
-sudo apt install nginx
-sudo systemctl start nginx
-sudo systemctl enable nginx
-sudo nginx -t                      # Test configuration
-sudo systemctl reload nginx        # Apply changes
-```
+Nginx (pronounced "Engine-X") was built to solve the C10K problem (handling 10,000 concurrent connections). Its architecture is **Event-Driven**.
 
-### Key Files:
-| Path | Purpose |
-| :--- | :--- |
-| `/etc/nginx/nginx.conf` | Main configuration |
-| `/etc/nginx/sites-available/` | Server block configs |
-| `/etc/nginx/sites-enabled/` | Active server blocks |
-| `/var/www/html/` | Default document root |
-| `/var/log/nginx/` | Access and error logs |
-
-### Server Blocks (Virtual Hosts):
-```nginx
-# /etc/nginx/sites-available/mysite
-server {
-    listen 80;
-    server_name mysite.com www.mysite.com;
-    root /var/www/mysite;
-    index index.html;
-
-    location / {
-        try_files $uri $uri/ =404;
-    }
-
-    access_log /var/log/nginx/mysite-access.log;
-    error_log /var/log/nginx/mysite-error.log;
-}
-```
+Instead of assigning one waiter per customer, Nginx uses a single, highly caffeinated waiter running in an infinite asynchronous loop. It takes an order, instantly passes it to the kitchen, and instead of standing there waiting, immediately turns around to take the next customer's order.
+- **The Pro:** It can handle hundreds of thousands of connections while burning almost zero RAM.
+- **The Con:** It does not support `.htaccess`. All rules must be defined centrally by the system administrator.
 
 ---
 
-## 4. Reverse Proxy with Nginx
+## 3. Reverse Proxying
 
-Route traffic from Nginx to a backend application (Node.js, Python, Java, etc.):
+Because Nginx is so fast, developers rarely let users connect directly to backend applications (like Python or Node.js). 
 
-```nginx
-server {
-    listen 80;
-    server_name api.mysite.com;
-
-    location / {
-        proxy_pass http://127.0.0.1:3000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}
-```
+Instead, Nginx sits at the edge of the network as a **Reverse Proxy**. It absorbs the initial HTTPS encryption burden, filters out malicious traffic, and then securely forwards the pure request via local HTTP strictly to the vulnerable internal Python application running on Port 8000.
 
 ---
 
-## 5. TLS/SSL with Let's Encrypt
+## 🤔 Reflection Questions
 
-```bash
-# Install Certbot
-sudo apt install certbot python3-certbot-nginx
-
-# Obtain and auto-configure certificate
-sudo certbot --nginx -d mysite.com -d www.mysite.com
-
-# Auto-renewal (runs via systemd timer)
-sudo certbot renew --dry-run
-```
+<details>
+<summary>💡 View Answer: Describe why serving Static Files (Images, CSS) is vastly different than serving Dynamic content (PHP) for a Web Server.</summary>
+When a user requests an image, the Web Server just grabs the literal file from the hard drive and streams it instantly back to the user. This takes virtually zero CPU. When a user requests a PHP page (like verifying a password), the Web Server cannot answer. It must freeze, hand the request entirely off to the backend PHP engine (the kitchen) to calculate the password hash, wait for the HTML response, and then pass it back. Serving static files is instantaneous; dynamic content requires a backend engine hand-off.
+</details>
 
 ---
-
-## 🧪 Hands-On Lab
-
-### Setup: Docker Sandbox
-```bash
-docker run -it --rm -p 8080:80 ubuntu:latest bash
-apt-get update > /dev/null 2>&1 && apt-get install -y nginx curl > /dev/null 2>&1
-```
-
-### Exercise 1: Start Nginx and Serve a Page
-> **Goal:** Launch Nginx and verify it serves content.
-```bash
-echo "<h1>Hello from Nginx Lab!</h1>" > /var/www/html/index.html
-nginx
-curl -s http://localhost
-```
-✅ **Expected:** Your custom HTML is returned by the local Nginx server.
-
-### Exercise 2: View Access Logs
-> **Goal:** See HTTP requests logged by Nginx.
-```bash
-curl -s http://localhost > /dev/null
-curl -s http://localhost/nonexistent > /dev/null
-cat /var/log/nginx/access.log
-cat /var/log/nginx/error.log
-```
-✅ **Expected:** The access log shows a 200 and a 404. The error log shows the "not found" entry.
-
-### Exercise 3: Test Configuration Syntax
-> **Goal:** Validate Nginx config before applying.
-```bash
-nginx -t
-```
-✅ **Expected:** "syntax is ok" and "test is successful" — always run this before `reload`!
-
----
-
-[<< Previous: DNS & DHCP](./53_DNS_and_DHCP.md) | [Home: Curriculum Map](./README.md) | [Next: SSH Deep Dive >>](./55_SSH_Deep_Dive.md)
+[<< Previous: DNS and DHCP](./53_DNS_and_DHCP.md) | [Home: Curriculum Map](./README.md) | [Next: SSH Deep Dive >>](./55_SSH_Deep_Dive.md)

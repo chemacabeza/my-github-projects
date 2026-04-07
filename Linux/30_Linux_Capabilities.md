@@ -1,153 +1,75 @@
+<div align="center">
+  <img src="./images/linux_ch30_capabilities.png" alt="Capabilities Architecture Cover" width="800"/>
+</div>
+
 # 30: Linux Capabilities - Replacing Root
 
-<p align="center">
-  <img src="images/linux_capabilities.png" alt="Capabilities Architecture" width="800"/>
-</p>
+> 🧠 **The Feynman Hook:** In traditional Linux, security is binary. You are either a normal user or `root`. If a web server needs to open port 80, you historically had to give it `root`. But if the web server is hacked, the hacker now owns the entire server. **Linux Capabilities** break the `root` key into 40 tiny keys. You can now tell the web server: "Here is the exact key to unlock port 80, but you cannot open the server room or look at passwords."
 
-The traditional Unix model is binary: you are either `root` (can do everything) or a normal user (can do very little). This is extremely dangerous because a compromised `root` process has total control.
-
-**Linux Capabilities** split the monolithic `root` power into ~40 discrete permissions. A web server no longer needs `root` — it just needs `CAP_NET_BIND_SERVICE` (the ability to bind to port 80).
+**🎯 The Big Goal:** Understand how modern container architectures drop `root` using granular Linux Capabilities to achieve the Principle of Least Privilege.
 
 ---
 
-## 1. The "Key Ring" Analogy
+## 1. Dissecting the Master Key
 
-Instead of giving someone the **master key** to every room in the building (root), you give them a key ring with only the specific keys they need: "Key to the server room" (`CAP_NET_ADMIN`), "Key to the time-lock vault" (`CAP_SYS_TIME`).
+The Kernel defines about 40 Capabilities. If you grant a capability to a binary file, it gains that specific elevated permission without running as Root.
 
----
+### Core Capabilities:
 
-## 2. The Most Important Capabilities
-
-| Capability | What it Allows |
+| Capability | Purpose |
 | :--- | :--- |
-| `CAP_NET_BIND_SERVICE` | Bind to ports below 1024 (e.g., port 80, 443). |
-| `CAP_NET_ADMIN` | Configure network interfaces, firewalls, routing tables. |
-| `CAP_SYS_PTRACE` | Trace/debug other processes (used by `strace`, `gdb`). |
-| `CAP_SYS_ADMIN` | The "master key" — mount filesystems, change hostname, etc. |
-| `CAP_DAC_OVERRIDE` | Bypass file read/write/execute permission checks. |
-| `CAP_CHOWN` | Change file ownership. |
-| `CAP_KILL` | Send signals to any process. |
-| `CAP_SETUID` | Change your UID (impersonate other users). |
+| `CAP_NET_BIND_SERVICE` | Bind to privileged ports below 1024. |
+| `CAP_NET_ADMIN` | Configure network interfaces and firewalls. |
+| `CAP_SYS_PTRACE` | Trace and debug processes. |
+| `CAP_SYS_TIME` | Change the host hardware clock. |
+| `CAP_DAC_OVERRIDE` | Ignore file read, write, and execute permissions. |
+| `CAP_SYS_ADMIN` | The master capability. Allows mounting hard drives. |
 
 ---
 
-## 3. Hands-on: Running a Web Server Without Root
+## 2. Hands-on: Nginx without Root
 
-Normally, binding to port 80 requires root. Instead:
+Traditionally, you run Nginx with `sudo` because it binds to Port 80.
 
 ```bash
-# Grant ONLY the "bind to low ports" capability to the nginx binary
+# 1. Grant ONLY the specific capability to the Nginx binary
 sudo setcap 'cap_net_bind_service=+ep' /usr/sbin/nginx
 
-# Verify the capability was applied
+# 2. Verify the Kernel stamped the binary
 getcap /usr/sbin/nginx
 # Output: /usr/sbin/nginx cap_net_bind_service=ep
 
-# Now nginx can bind to port 80 WITHOUT being root!
+# 3. Start the server as an unprivileged user
+nginx
 ```
-
-### Understanding the Flags:
-- `e` = **Effective:** The capability is active right now.
-- `p` = **Permitted:** The process is allowed to use this capability.
-- `i` = **Inheritable:** Child processes can inherit this capability.
 
 ---
 
-## 4. Viewing a Process's Capabilities
+## 3. Docker and Capabilities (The Security Secret)
+
+> **Feynman Insight:** When you run a process as `root` inside Docker, it is not the real `root`. Docker inherently drops 26 of the 40 capabilities before the container boots.
+
+If you attempt to load a Kernel Module from inside Docker, the Kernel blocks you. Even though your username says `root`, your Capability Keyring is restricted.
+
+**Best Practice:** Drop all capabilities and only add what is needed.
 
 ```bash
-# See your current shell's capabilities
-cat /proc/self/status | grep Cap
-
-# Decode the hex bitmask to human-readable names
-capsh --decode=000001ffffffffff
+docker run --cap-drop=ALL --cap-add=NET_BIND_SERVICE nginx
 ```
 
 ---
 
-## 5. Docker and Capabilities
+## 🤔 Reflection Questions
 
-By default, Docker drops most capabilities. A container starts with only ~14 out of ~40 possible capabilities.
+<details>
+<summary>💡 View Answer: In 'setcap cap_net_bind_service=+ep', what do 'e' and 'p' mean?</summary>
+Linux Capabilities use three logical flags. `e` stands for **Effective** (The capability is active and ready). `p` stands for **Permitted** (The process is allowed to utilize this capability). `i` stands for **Inheritable** (Child processes inherit the capability).
+</details>
 
-```bash
-# Run a container with NO capabilities at all
-docker run --cap-drop=ALL alpine id
-
-# Run a container with only network admin capability
-docker run --cap-drop=ALL --cap-add=NET_ADMIN alpine ip link
-
-# Run with ALL capabilities (dangerous, never do this in production)
-docker run --cap-add=ALL alpine sh
-```
-
-> [!IMPORTANT]
-> The golden rule: always start with `--cap-drop=ALL` and then add back only what your application actually needs. This is called the **Principle of Least Privilege**.
+<details>
+<summary>💡 View Answer: Why is 'CAP_SYS_ADMIN' considered dangerous?</summary>
+`CAP_SYS_ADMIN` encompasses critical administrative functions. It allows mounting hard drives and bypassing namespaces, which can easily lead to a full container breakout.
+</details>
 
 ---
-
-*Phase 10 Complete. You have mastered the three pillars of Linux Security: MAC policies (SELinux/AppArmor), syscall filtering (Seccomp), and fine-grained root decomposition (Capabilities).*
-
----
----
-
-## 🧪 Sandbox: Experiment with Capabilities
-
-The **Security Sandbox** includes `libcap2-bin` for capability management:
-
-**`docker-compose.yml`** — save this file in a new folder and run from there:
-
-```yaml
-services:
-  # Security sandbox with AppArmor, Seccomp, and Capabilities testing
-  security-node:
-    image: ubuntu:22.04
-    container_name: security-sandbox
-    cap_add:
-      - SYS_ADMIN
-      - NET_ADMIN
-      - NET_BIND_SERVICE
-    security_opt:
-      - apparmor:unconfined
-      - seccomp:unconfined
-    volumes:
-      - ./lab-work:/work
-    working_dir: /work
-    command: >
-      bash -c "apt-get update && apt-get install -y
-      gcc make
-      libseccomp-dev libcap2-bin
-      apparmor-utils apparmor-profiles
-      strace curl
-      && echo '--- SECURITY SANDBOX READY ---'
-      && sleep infinity"
-
-  # An unprivileged target to test restrictions against
-  restricted-app:
-    image: nginx:alpine
-    container_name: restricted-target
-```
-
-```bash
-# Start the sandbox
-docker compose up -d
-
-# Enter the container
-docker exec -it security-sandbox bash
-```
-
-**Experiments:**
-```bash
-# View your current capabilities
-cat /proc/self/status | grep Cap
-capsh --print
-
-# Set a capability on a binary
-cp /usr/bin/ping /work/my_ping
-setcap cap_net_raw=ep /work/my_ping
-getcap /work/my_ping
-
-# Test Docker capability flags:
-# docker run --cap-drop=ALL --cap-add=NET_ADMIN alpine ip link
-```
-
 [<< Previous: Seccomp-BPF](./29_Seccomp_BPF.md) | [Home: Curriculum Map](./README.md) | [Next: Traffic Control & QoS >>](./31_Traffic_Control_QoS.md)

@@ -1,202 +1,192 @@
-# 02: Command Line Survival (Pipes, Grep, SED, AWK)
+<div align="center">
+  <img src="./images/linux_ch02_cli.png" alt="CLI Pipeline Cover" width="800"/>
+</div>
 
-Based on *Learn Enough Developer Tools to Be Dangerous*, this module transitions you from pointing-and-clicking to using the keyboard as an extension of your mind. 
+# 02: Command Line Survival (Pipes, Grep, Sed, Awk)
 
-In Linux, tools are designed to do *one thing* exceptionally well. To perform complex logic, we chain these small tools together using **Pipes**.
+> 🧠 **The Feynman Hook:** Think of a factory assembly line where each workstation performs exactly one specialised task. The first worker sorts raw materials (`grep`), the second extracts specific parts (`awk`), the third re-labels them (`sed`), and the fourth counts the output (`wc`). No worker knows what the next one will do with their output — they just pass the product down the line. In Linux, the **Pipe** (`|`) is the conveyor belt connecting these specialist tools — and the philosophy is that every tool does exactly one thing, perfectly. By composing tiny, focused tools, you can build infinitely powerful data-processing pipelines without ever writing a program.
+
+**🎯 The Big Goal:** Master the Linux pipe — the composable data processing philosophy that turns 20 simple tools into an infinite toolbox.
 
 ---
 
-## 1. Standard Output (stdout), Input (stdin), and Redirection
+## 1. Standard Streams — The Three Data Rivers
 
-Every command in Linux possesses three invisible data streams:
-0. `stdin` (Standard Input) - What goes into the command (usually your keyboard).
-1. `stdout` (Standard Output) - The successful text printed to the terminal.
-2. `stderr` (Standard Error) - The error messages printed to the terminal.
+> **Feynman Insight:** Every Linux process is born with three invisible data pipes already connected. **stdin** is your program's ear — where input comes from (usually the keyboard). **stdout** is its mouth — successful output goes here (usually the terminal). **stderr** is its alarm — error messages go here, separately from normal output. The key insight: these pipes can be **redirected**. You can redirect stdout away from the screen and into a file. You can redirect stderr into the digital void (`/dev/null`) to silence it completely.
 
-We can **redirect** these streams using brackets.
-
-### Writing to Files (`>`)
-Instead of printing to the screen, send it directly into a file.
 ```bash
-# Overwrite the file entirely.
-echo "System initialized." > boot.log 
+# > overwrites a file; >> appends
+echo "Server started" > server.log
+echo "Connection accepted" >> server.log
 
-# Append to the bottom of the file (DO NOT use single '>', or you will delete the file contents!)
-echo "User login successful." >> boot.log 
-```
+# Silencing error noise: send stderr (stream 2) to /dev/null
+find / -name "secrets.txt" 2>/dev/null   # Permission denied errors vanish
 
-### Redirecting Errors (`2>`)
-Sometimes a command prints hundreds of permission errors. We can discard them by throwing `stderr` (stream 2) into the Linux black hole: `/dev/null`.
-```bash
-# Suppresses all "Permission denied" errors completely!
-find / -name "passwords.txt" 2> /dev/null
+# Sending BOTH stdout and stderr to a log file
+./script.sh > all_output.log 2>&1
 ```
 
 ---
 
 ## 2. The Mighty Pipe (`|`)
 
-The Pipe connects the `stdout` of the left command directly into the `stdin` of the right command.
+> **Feynman Insight:** The pipe connects the stdout of one command directly to the stdin of the next — without writing anything to disk. Data flows *in memory*, from left to right, at the speed of the kernel's buffer. This is the fundamental composability principle of UNIX: instead of one giant program that does everything (`showMe --filter --sort --count --format`), you compose small specialists: `cat file | grep ERROR | sort | uniq -c | sort -rn`. Each tool does one thing. The combination does everything.
 
 ```bash
-# Print the entire gigantic system log, but pipe it into 'less', 
-# which transforms it into a scrollable, searchable document.
+# Classic: display syslog entries but make it scrollable
 cat /var/log/syslog | less
+
+# Chain: count occurrences of each log level
+grep "level=" access.log | awk -F'level=' '{print $2}' | awk '{print $1}' | sort | uniq -c | sort -rn
+
+# Find your external IP without a browser
+ip addr | grep "inet " | grep -v "127.0.0.1" | awk '{print $2}' | cut -d'/' -f1
 ```
 
 ---
 
-## 3. Filtering Data: `grep`
+## 3. Filtering Data with `grep`
 
-`grep` stands for *Global Regular Expression Print*. It searches text line-by-line for a specific word or pattern.
+> **Feynman Insight:** `grep` is the bouncer at a club door who checks every visitor against a single rule. Lines that match: **in**. Lines that don't: **rejected**. The `-v` flag inverts the logic — keep everything that *doesn't* match. `-i` makes the matching case-insensitive. `grep -E` enables regex for complex pattern rules. `grep -r` recurses through entire directory trees.
 
 ```bash
-# Find all lines containing "ERROR" in the syslog
+# Find errors in the log
 grep "ERROR" /var/log/syslog
 
-# Find all lines NOT containing "DEBUG" (-v means invert)
+# Find lines NOT containing "DEBUG"
 grep -v "DEBUG" /var/log/syslog
 
-# View active SSH connections by piping the network tool 'ss' into grep
+# Case-insensitive search
+grep -i "warning" /var/log/syslog
+
+# Find all .py files that import subprocess (security audit)
+grep -r "import subprocess" /opt/myapp/ --include="*.py"
+
+# Check what's listening on port 22
 ss -tulpen | grep ":22"
 ```
 
 ---
 
-## 4. Text Transformation: `awk`
+## 4. Column Extraction with `awk`
 
-`awk` is actually an entire programming language, but it is primarily used as a columnar text extractor. By default, it splits lines into columns based on whitespace.
-
-```bash
-# Print just the 1st and 3rd columns from a text file
-awk '{print $1, $3}' server_data.txt
-```
-
-**Real World Example: Finding your IP Address**
-If you run `ip addr`, it outputs a massive block of heavy text. Let's extract just the IP address using Pipes, Grep, and Awk.
+> **Feynman Insight:** `awk` is a line-by-line spreadsheet: it splits each line into **columns** (`$1`, `$2`, `$3`...) using whitespace (or a custom delimiter with `-F`). It's primarily a column extractor, but is actually a complete programming language with conditionals, loops, and associative arrays. `BEGIN{}` runs before processing any lines (setup). `END{}` runs after all lines are processed (report). Between them: the per-line processing rule.
 
 ```bash
-# 1. Get networking data
-# 2. Filter for lines containing "inet " (the IP lines)
-# 3. Filter OUT the internal localhost "127.0.0.1" address
-# 4. Use awk to print just the 2nd column (the actual IP)
-# 5. Use awk again to split that IP using the '/' delimiter and take the first half!
-ip addr | grep "inet " | grep -v "127.0.0.1" | awk '{print $2}' | awk -F'/' '{print $1}'
+# Print columns 1 and 3 from a space-separated file
+awk '{print $1, $3}' data.txt
+
+# Custom delimiter: extract username (field 1) from /etc/passwd
+awk -F':' '{print $1}' /etc/passwd
+
+# Sum column 4 (e.g., file sizes)
+awk '{sum += $4} END {print "Total:", sum}' file_list.txt
+
+# Print lines where column 3 is greater than 100
+awk '$3 > 100 {print $0}' metrics.txt
 ```
 
 ---
 
-## 5. Text Substitution: `sed`
+## 5. Text Substitution with `sed`
 
-`sed` (Stream Editor) performs massive find-and-replace operations instantly across gigabytes of text without ever opening the file in a text editor.
+> **Feynman Insight:** `sed` (Stream Editor) is a find-and-replace that processes a file or stream line by line without ever opening it in a text editor — making it viable for multi-gigabyte files where a text editor would crash. The core operation is `s/FIND/REPLACE/g` — `s` for substitution, `g` for global (all occurrences on each line). The `-i` flag edits **in-place** — the original file is modified immediately. With no `-i`, it just prints the result without touching the file.
 
 ```bash
-# Syntax: s/FIND/REPLACE/g (g means global, otherwise it only replaces the first match per line)
+# Preview the change (no -i = no modification)
+sed 's/apache/nginx/g' webserver.conf
 
-# Replace the word 'apache' with 'nginx' in the config, and output to screen
-sed 's/apache/nginx/g' config.txt
+# In-place substitution: flip a feature flag
+sed -i 's/FEATURE_DARK_MODE=false/FEATURE_DARK_MODE=true/g' .env
 
-# IN-PLACE EDITING (-i): DANGER! This modifies the file permanently and instantly.
-sed -i 's/ENABLE_LOGS=false/ENABLE_LOGS=true/g' myapp.env
+# Delete all blank lines  
+sed '/^$/d' messy.txt
+
+# Print only lines 5-10 of a file  
+sed -n '5,10p' large_file.txt
 ```
 
 ---
 
-## 6. Archiving and Compression (`tar`)
+## 6. Archiving and Compression with `tar`
 
-Linux heavily relies on Tarballs (`.tar.gz`) for packaging source code and backups. 
+> **Feynman Insight:** `tar` is the packer who bundles 10,000 files into one suitcase. `gzip`/`bzip2`/`xz` are the vacuum-seal bags that compress that suitcase. They are almost always used together. The **mnemonic** for `tar`: think of the flags as a recipe: **c**reate/**x**tract, **z**ip, **v**erbose, **f**ile.
 
-- `tar` bundles lots of files together into one big file (an Archive).
-- `gzip` compresses that big file to save space.
-
-You almost always invoke them together.
-
-### Compressing (Creating an Archive)
-*Mnemonic: **C**reate **Z**ip **V**erbose **F**ile*
 ```bash
-# Compress the '/etc' folder into a file named 'backup.tar.gz'
+# Create: pack /etc into a compressed tarball  
 tar -czvf backup.tar.gz /etc
-```
 
-### Extracting
-*Mnemonic: e**X**tract **Z**ip **V**erbose **F**ile*
-```bash
-# Unzip and extract exactly here
+# Extract: unpack the tarball here  
 tar -xzvf backup.tar.gz
-```
 
-### Summary
-The Linux command line is an exercise in composition. You don't learn a massive monolithic tool that does everything. You learn 20 tiny tools (`ls`, `grep`, `awk`, `sed`, `sort`, `uniq`) and pipe them together to achieve infinite programmatic possibilities.
+# View contents without extracting  
+tar -tzvf backup.tar.gz
+```
 
 ---
 
-## 7. Containerized Execution (MacBook / Linux)
-Practice your piping and filtering inside a completely disposable, isolated sandbox. 
+## 🤔 Reflection Questions
 
-**`Dockerfile`**
-```dockerfile
-FROM ubuntu:latest
-RUN apt-get update && apt-get install -y iproute2 net-tools
-WORKDIR /root
-# Create a dummy syslog file for grep practice
-RUN echo "May 14 12:00:00 server NGINX: Connection established\nMay 14 12:01:00 server NGINX: ERROR: Process Out of Memory!\nMay 14 12:02:00 server SSH: User login successful" > /var/log/dummy_syslog.log
-CMD ["/bin/bash"]
-```
+<details>
+<summary>💡 View Answer: Why does 'find / -name "secrets.txt" 2>/dev/null' use 2>/dev/null?</summary>
 
-**`docker-compose.yml`**
-```yaml
-services:
-  cli-sandbox:
-    build: .
-    stdin_open: true
-    tty: true
-```
+The `find` command, when run without root permissions, will encounter thousands of directories it cannot read (`/proc/tty/driver`, `/root`, various system dirs). Each of these generates a `"Permission denied"` error message. These are all **stderr** (stream 2) messages — not the answer you're looking for. Redirecting `2>/dev/null` sends stream 2 to the digital void, killing all error messages, leaving only the actual search results on **stdout** (stream 1). Without it, the terminal floods with thousands of error lines that drown out any actual match found.
+</details>
 
-**To Run:**
-```bash
-docker compose run cli-sandbox
-# Test your sed pipes!
-sed 's/ERROR/WARNING/g' /var/log/dummy_syslog.log
-```
+<details>
+<summary>💡 View Answer: What is the difference between > and >> for file redirection?</summary>
 
+`>` **truncates then writes**: it opens the file, immediately deletes all existing content, then writes the new output. If the file doesn't exist, it creates it. If it does exist, all previous content is lost — irrecoverably, without any prompt. `>>` **appends**: it seeks to the end of the existing file and adds the new content after it, preserving everything already there. If the file doesn't exist, it behaves the same as `>` and creates it. The safe rule: use `>` only when you intentionally want to replace the file. Use `>>` for log-style accumulation.
+</details>
 
-## 🧪 Hands-On Lab: CLI Survival Skills
+---
+
+## 🐳 Hands-On Lab: CLI Pipeline Survival
 
 ### Setup: Docker Sandbox
 ```bash
 docker run -it --rm ubuntu:latest bash
+apt-get update -qq && apt-get install -y -qq iproute2 net-tools curl
 ```
 
-### Exercise 1: Navigation
-> **Goal:** Traverse directories quickly.
-```bash
-cd /var/log
-pwd
-cd -          # Jump back to previous directory
-pwd
-cd ~          # Jump to home directory
-```
-✅ **Expected:** You seamlessly bounce between `/var/log`, your starting directory, and `/root`.
-
-### Exercise 2: Wildcards (Globbing)
-> **Goal:** Use `*` and `?` to match files.
-```bash
-mkdir -p /root/lab02 && cd /root/lab02
-touch file1.txt file2.txt file10.txt image.png script.sh
-ls *.txt
-ls file?.txt
-```
-✅ **Expected:** `*.txt` matches three files. `file?.txt` matches *only* `file1.txt` and `file2.txt` (since `?` is exactly one character).
-
-### Exercise 3: I/O Redirection
-> **Goal:** Save command output to a file and append to it.
+### Exercise 1: I/O Redirection Fundamentals
+> **Goal:** Build a multi-line log file entry by entry.
 ```bash
 echo "Line 1" > output.txt
 echo "Line 2" >> output.txt
 date >> output.txt
 cat output.txt
 ```
-✅ **Expected:** The file contains three lines, demonstrating `>` (overwrite) and `>>` (append).
+✅ **Expected:** Three lines — proving `>` creates and `>>` appends.
+
+### Exercise 2: Grep Pipeline
+> **Goal:** Extract specific lines from a simulated log.
+```bash
+echo -e "INFO: Start\nERROR: Disk full\nINFO: Retrying\nERROR: Connection refused" > app.log
+grep "ERROR" app.log
+grep -v "ERROR" app.log
+grep -c "ERROR" app.log  # Count matching lines
+```
+✅ **Expected:** Error lines only, then info-only lines, then count: 2.
+
+### Exercise 3: Awk Column Extraction
+> **Goal:** Extract fields from structured text.
+```bash
+echo -e "alice 35 developer\nbob 28 manager\ncarol 42 architect" > staff.txt
+awk '{print $1, $3}' staff.txt      # Print name and role
+awk '$2 > 30 {print $1}' staff.txt  # Print names of people over 30
+```
+✅ **Expected:** Names with roles, then just alice and carol.
+
+---
+
+## 📝 Key Interview Talking Points
+
+- **Pipes use in-memory buffers** — no disk I/O between commands. This makes long chains fast.
+- **`awk` BEGIN/END blocks** are the go-to for report generation: `awk 'BEGIN{sum=0} {sum+=$3} END{print sum}'`.
+- **`sed -i` is immediate and irreversible** — always test your sed expression without `-i` first.
+- **`2>&1`** redirects stderr *into* stdout (both go to the same destination). Essential for capturing complete output of commands that print errors separately.
+- **`grep -P`** enables Perl-compatible regular expressions — the most powerful grep mode for complex patterns.
 
 ---
 [<< Previous: The Linux Philosophy](./01_The_Linux_Philosophy.md) | [Home: Curriculum Map](./README.md) | [Next: Package & Service Mgmt >>](./03_Package_and_Service_Mgmt.md)

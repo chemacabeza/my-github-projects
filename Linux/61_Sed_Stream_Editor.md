@@ -1,173 +1,73 @@
-# 61: The Sed Stream Editor
+<div align="center">
+  <img src="./images/linux_ch61_sed.png" alt="Linux Sed Cover" width="800"/>
+</div>
 
-<p align="center">
-  <img src="images/linux_sed_editor.png" alt="Sed Stream Editor" width="800"/>
-</p>
+# 61: Sed Stream Editor
 
-`sed` (Stream EDitor) is a non-interactive text editor that processes text line-by-line. Unlike Vim, you don't open files in sed — you build transformation pipelines that flow from input through pattern matching to output.
+> 🧠 **The Feynman Hook:** If you want to change the word "apple" to "orange" in a text file, you usually open the file in a text editor, press Ctrl+F, type the word, and hit replace. This requires human hands and a graphical interface. `sed` (Stream Editor) is a high-speed, automated industrial conveyor belt. You feed a 10-Gigabyte text file onto the belt, write a mathematical substitution rule, and `sed` instantly slices and replaces the exact words in mid-air as the data streams past, without ever actually "opening" the file.
 
----
-
-## 1. How Sed Works
-
-```
-Input Stream → [Read line into Pattern Space] → [Apply commands] → [Output] → [Next line]
-```
-
-| Buffer | Purpose |
-| :--- | :--- |
-| **Pattern Space** | The "workspace" — holds the current line being processed |
-| **Hold Space** | A secondary buffer for storing/recalling text across lines |
+**🎯 The Big Goal:** Master text substitution architectures using `sed`, chaining regular expressions, and performing in-place file modifications flawlessly.
 
 ---
 
-## 2. Basic Syntax
+## 1. The Core Substitution Syntax
+
+The vast majority of `sed` commands rely on the `s` (Substitute) command. It uses a rigid, mathematical syntax framed by forward slashes `/`.
 
 ```bash
-sed [options] 'COMMAND' file
-sed [options] -e 'CMD1' -e 'CMD2' file
-sed [options] -f script.sed file
+# Syntax: s/FIND/REPLACE/
+echo "I love apples" | sed 's/apples/oranges/'
+# Output: I love oranges
 ```
 
-### Key Options:
-| Option | Effect |
-| :--- | :--- |
-| `-n` | Suppress automatic printing (only print when told) |
-| `-i` | Edit file in-place (modify the original) |
-| `-i.bak` | In-place edit with backup |
-| `-E` / `-r` | Extended regex (ERE) |
+### The Global Flag (`g`)
+By default, `sed` only replaces the **very first** occurrence on a given line and then stops. If a line has three apples, the last two are ignored. You must explicitly activate the `g` (Global) flag at the end of the statement to replace every occurrence on the entire line.
 
----
-
-## 3. Addressing (Selecting Lines)
-
-| Address | Meaning | Example |
-| :--- | :--- | :--- |
-| `3` | Line 3 only | `sed '3d' file` |
-| `$` | Last line | `sed '$d' file` |
-| `1,5` | Lines 1 through 5 | `sed '1,5s/a/b/g' file` |
-| `/pattern/` | Lines matching regex | `sed '/ERROR/d' file` |
-| `1~2` | Every 2nd line starting at 1 (odd lines) | `sed '1~2d' file` |
-| `/start/,/end/` | Range between patterns | `sed '/BEGIN/,/END/d' file` |
-
----
-
-## 4. Essential Commands
-
-### Substitution (`s`):
 ```bash
-sed 's/old/new/'          # Replace first occurrence per line
-sed 's/old/new/g'         # Replace ALL occurrences per line
-sed 's/old/new/3'         # Replace only the 3rd occurrence
-sed 's/old/new/gi'        # Case-insensitive replace all
-sed 's|/usr/bin|/opt/bin|g'   # Use | as delimiter (when / is in the pattern)
-```
-
-### Delete (`d`):
-```bash
-sed '/^#/d'               # Delete comment lines
-sed '/^$/d'               # Delete blank lines
-sed '1,10d'               # Delete first 10 lines
-```
-
-### Print (`p`):
-```bash
-sed -n '/ERROR/p'         # Print only lines containing ERROR
-sed -n '5,10p'            # Print lines 5-10
-```
-
-### Insert/Append/Change:
-```bash
-sed '3i\New line before 3'    # Insert before line 3
-sed '3a\New line after 3'     # Append after line 3
-sed '3c\Replace line 3'       # Change (replace) line 3
+echo "apples are green, apples are red" | sed 's/apples/oranges/g'
+# Output: oranges are green, oranges are red
 ```
 
 ---
 
-## 5. Advanced Sed: The Hold Space
+## 2. In-Place File Editing
 
-The hold space lets you store and recall text across processing cycles:
+Normally, `sed` takes data from a file, edits it on the conveyor belt, and prints it strictly to your monitor. The original file remains completely untouched and safe. 
 
-| Command | Effect |
-| :--- | :--- |
-| `h` | Copy pattern space → hold space |
-| `H` | Append pattern space → hold space |
-| `g` | Copy hold space → pattern space |
-| `G` | Append hold space → pattern space |
-| `x` | Exchange pattern space ↔ hold space |
+If you want `sed` to actually overwrite the physical file on the hard drive permanently, you must pass the `-i` (In-place) flag.
 
-### Example: Reverse Line Order
 ```bash
-sed -n '1!G;h;$p' file    # Reverse all lines (like tac)
+# Physically overwrite the config file, replacing port 8080 with 80
+sed -i 's/8080/80/g' /etc/nginx/nginx.conf
 ```
 
-### Example: Join Every Two Lines
+> **Warning:** Running `-i` is permanent hardware destruction of the previous data. Always test your `sed` command without `-i` first to verify the output on your monitor is absolutely correct.
+
+---
+
+## 3. Advanced Slicing (Deletion & Extraction)
+
+`sed` is not just for replacing words. It can mathematically drop specific lines off the conveyor belt into the trash.
+
 ```bash
-sed 'N;s/\n/ /' file       # Join pairs of lines with a space
+# Delete exactly the 5th line of the document
+sed '5d' manuscript.txt
+
+# Delete lines 10 through 20 inclusively
+sed '10,20d' manuscript.txt
+
+# Delete any line that happens to begin with a hashtag (Removing comments)
+sed '/^#/d' config.ini
 ```
 
 ---
 
-## 6. Multi-Command Scripts
+## 🤔 Reflection Questions
 
-```bash
-# Using a sed script file
-cat > transform.sed << 'EOF'
-/^#/d                      # Delete comments
-/^$/d                      # Delete blank lines
-s/\t/    /g                # Replace tabs with 4 spaces
-s/[[:space:]]*$//          # Strip trailing whitespace
-EOF
-
-sed -f transform.sed messy_file.txt > clean_file.txt
-```
+<details>
+<summary>💡 View Answer: Describe the conflict that occurs when attempting to use 'sed' to replace file paths (e.g., replacing '/var/www' with '/opt/app'), and exactly how to resolve it mathematically.</summary>
+`sed` universally uses the forward slash `/` to demarcate the FIND and REPLACE blocks (`s/FIND/REPLACE/`). File paths in Linux also inherently use forward slashes (e.g., `/var/www`). If you write `s//var/www//opt/app/`, the `sed` parser instantly crashes because it cannot distinguish between the syntactical delimiters and the literal path characters. The solution is that `sed` elegantly allows you to use *any* character as the delimiter. By switching to the pipe character `|`, you perfectly isolate the data: `s|/var/www|/opt/app|g`.
+</details>
 
 ---
-
-## 🧪 Hands-On Lab
-
-### Setup: Docker Sandbox
-```bash
-docker run -it --rm ubuntu:latest bash
-cat > /tmp/data.txt << 'EOF'
-# Configuration File
-server_name = old-server
-port = 8080
-
-# Database settings
-db_host = localhost
-db_port = 5432
-db_name = myapp
-
-# End of config
-EOF
-```
-
-### Exercise 1: Substitution
-> **Goal:** Replace values in a config file.
-```bash
-sed 's/old-server/new-server/' /tmp/data.txt
-sed 's/8080/9090/' /tmp/data.txt
-```
-✅ **Expected:** `server_name` and `port` values are updated in the output.
-
-### Exercise 2: Delete and Filter
-> **Goal:** Remove comments and blank lines.
-```bash
-sed '/^#/d; /^$/d' /tmp/data.txt
-```
-✅ **Expected:** Only the key=value lines remain — clean config output.
-
-### Exercise 3: In-Place Editing
-> **Goal:** Modify a file directly with a backup.
-```bash
-cp /tmp/data.txt /tmp/data_backup.txt
-sed -i 's/localhost/db.production.com/g' /tmp/data.txt
-diff /tmp/data_backup.txt /tmp/data.txt
-```
-✅ **Expected:** `diff` shows `localhost` changed to `db.production.com` in the original file.
-
----
-
 [<< Previous: Troubleshooting](./60_Troubleshooting.md) | [Home: Curriculum Map](./README.md) | [Next: Awk Programming >>](./62_Awk_Programming.md)

@@ -1,74 +1,70 @@
+<div align="center">
+  <img src="./images/linux_ch32_xdp.png" alt="XDP Architecture Cover" width="800"/>
+</div>
+
 # 32: XDP (eXpress Data Path)
 
-<p align="center">
-  <img src="images/xdp_express_datapath.png" alt="XDP Architecture" width="800"/>
-</p>
+> 🧠 **The Feynman Hook:** When a packet hits a standard Linux server, it's like a guest entering a fancy hotel. They have to walk through the doors, check in at the front desk, get their bags tagged (the Kernel building an `sk_buff` data structure), and be escorted to their room (the Application). This takes microseconds. **XDP** puts a bouncer physically *outside* the front door. The bouncer reads their ID the millisecond they step onto the property. If they are on a ban list (a DDoS attack), the bouncer drops them instantly. The front desk (the Kernel) never even knows they were there. 
 
-In Chapter 13, you learned about eBPF — attaching tiny programs to kernel events. **XDP** takes eBPF to the extreme: it processes packets at the **NIC driver level**, *before* the kernel even builds an `sk_buff` structure. This means decisions happen in **nanoseconds**, not microseconds.
+**🎯 The Big Goal:** Learn how Cloudflare and Facebook process tens of millions of packets per second by writing eBPF C programs that execute directly inside the physical Network Interface Card (NIC) driver.
 
 ---
 
-## 1. The "Bouncer at the Door" Analogy
+## 1. The Performance Revolution
 
-Normal packet processing is like a guest entering a hotel, checking in at reception, going through security, and finding their room. XDP is a **bouncer at the front door** who decides in a split second: "You can come in" (`XDP_PASS`), "Go away" (`XDP_DROP`), or "Go to the hotel next door" (`XDP_TX`/`XDP_REDIRECT`).
+A standard `iptables` firewall drops a packet *after* the Kernel has done the heavy lifting of allocating memory and building a Socket Buffer (`sk_buff`). `iptables` maxes out around 2–5 million packets per second.
 
----
+XDP executes your custom eBPF bytecode locally in the NIC driver ring buffer *before* memory allocation. 
+XDP can drop packets at the absolute limit of the physical wire speed: **20-40 million packets per second**.
 
-## 2. XDP vs iptables Performance
-
-| Feature | iptables | XDP |
-| :--- | :--- | :--- |
-| **Processing Point** | After full sk_buff creation. | Before sk_buff — raw NIC driver. |
-| **Speed** | ~1-5 million packets/sec. | ~20-40 million packets/sec. |
-| **Language** | Rule syntax. | C compiled to eBPF bytecode. |
-| **Use Case** | General firewall. | DDoS mitigation, load balancing. |
+### The XDP Action Verbs
+Your tiny C program runs on every single packet and must return one of three simple integers:
+1. `XDP_PASS`: "You're good. Go inside to the normal Kernel Front Desk."
+2. `XDP_DROP`: "You are attacking us. Die instantly."
+3. `XDP_TX`: "Bounce right back out the door you came in from." (Used for ultra-fast load balancing).
 
 ---
 
-## 3. Your First XDP Program
+## 2. A Basic XDP Drop Program in C
 
-This program drops all UDP packets:
+This program inspects the raw ethernet framing. If the protocol is UDP, it drops the packet instantly.
 
 ```c
-// xdp_drop_udp.c
 #include <linux/bpf.h>
 #include <linux/if_ether.h>
 #include <linux/ip.h>
-#include <linux/in.h>
 #include <bpf/bpf_helpers.h>
 
 SEC("xdp")
 int drop_udp(struct xdp_md *ctx) {
+    // 1. Get the raw memory pointers to the start and end of the packet
     void *data     = (void *)(long)ctx->data;
     void *data_end = (void *)(long)ctx->data_end;
     
+    // 2. Cast the raw bytes as an Ethernet Header
     struct ethhdr *eth = data;
     if ((void *)(eth + 1) > data_end) return XDP_PASS;
-    if (eth->h_proto != __constant_htons(ETH_P_IP)) return XDP_PASS;
     
+    // 3. Cast the next bytes as an IP Header
     struct iphdr *ip = (void *)(eth + 1);
     if ((void *)(ip + 1) > data_end) return XDP_PASS;
     
+    // 4. Inspect the protocol. If it's UDP, Drop!
     if (ip->protocol == IPPROTO_UDP) {
-        return XDP_DROP;  // Silently destroy all UDP packets
+        return XDP_DROP; 
     }
+    
     return XDP_PASS;
 }
 
 char _license[] SEC("license") = "GPL";
 ```
 
-### Compile and Attach:
+### Loading the Program
+You use the standard `ip` command to attach the BPF object code to your network card:
 ```bash
-# Compile to BPF bytecode
-clang -O2 -target bpf -c xdp_drop_udp.c -o xdp_drop_udp.o
-
-# Attach to network interface
+# Attach
 sudo ip link set dev eth0 xdpgeneric obj xdp_drop_udp.o sec xdp
-
-# Verify it's running
-ip link show eth0
-# "prog/xdp id 42"
 
 # Detach
 sudo ip link set dev eth0 xdpgeneric off
@@ -76,86 +72,17 @@ sudo ip link set dev eth0 xdpgeneric off
 
 ---
 
-## 4. Real-World XDP Applications
+## 🤔 Reflection Questions
 
-- **Cloudflare:** Mitigates DDoS attacks at 10+ Tbps using XDP.
-- **Facebook/Meta:** Uses XDP for L4 load balancing (`katran`).
-- **Cilium:** Kubernetes networking powered by XDP & eBPF.
+<details>
+<summary>💡 View Answer: If XDP runs in the NIC driver, how is it prevented from crashing the host by memory corruption?</summary>
+XDP code is fundamentally written in eBPF. Before the Linux Kernel allows the XDP code to physically attach to the network card, it pushes the compiled bytecode through the **eBPF Verifier**. This mathematical verifier ensures there are no infinite loops, no unauthorized memory access, and that the program will safely terminate in bounded time. Only mathematically proven code is loaded.
+</details>
+
+<details>
+<summary>💡 View Answer: Describe the architectural difference between XDP 'Native' and XDP 'Generic' modes.</summary>
+`Generic Mode` (xdpgeneric) runs the XDP program inside the Kernel's standard networking stack just after `sk_buff` allocation. It is slower but works on every single network card for testing. `Native Mode` (xdp) requires specific support built into the physical hardware NIC driver itself. In Native mode, the XDP program runs inside the driver's early receive path, achieving maximum possible bare-metal performance.
+</details>
 
 ---
-
-*In Chapter 33, we explore the ultimate performance frontier: bypassing the kernel entirely.*
-
----
----
-
-## 🧪 Sandbox: Compile XDP Programs
-
-The **Networking Sandbox** includes `clang`, `llvm`, and `libbpf-dev`:
-
-**`docker-compose.yml`** — save this file in a new folder and run from there:
-
-```yaml
-services:
-  # Networking sandbox with tc, XDP, and advanced packet tools
-  net-node:
-    image: ubuntu:22.04
-    container_name: networking-sandbox
-    cap_add:
-      - NET_ADMIN           # Required for tc, XDP, iptables
-      - SYS_ADMIN           # Required for BPF programs
-    volumes:
-      - ./lab-work:/work
-    working_dir: /work
-    command: >
-      bash -c "apt-get update && apt-get install -y
-      iproute2 iptables iputils-ping net-tools curl tcpdump
-      clang llvm libbpf-dev
-      gcc make
-      && echo '--- NETWORKING SANDBOX READY ---'
-      && sleep infinity"
-    networks:
-      lab-net:
-        ipv4_address: 172.28.0.10
-
-  # Traffic target for QoS and shaping experiments
-  traffic-target:
-    image: alpine:latest
-    container_name: traffic-target
-    command: >
-      sh -c "apk add --no-cache python3 iperf3 curl &&
-            iperf3 -s &
-            python3 -m http.server 80"
-    networks:
-      lab-net:
-        ipv4_address: 172.28.0.20
-
-networks:
-  lab-net:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.28.0.0/16
-```
-
-```bash
-# Start the sandbox
-docker compose up -d
-
-# Enter the container
-docker exec -it networking-sandbox bash
-```
-
-**Compile an XDP program (requires BPF support on host kernel):**
-```bash
-# Write the XDP C source to /work/xdp_drop.c (from this chapter)
-clang -O2 -target bpf -c /work/xdp_drop.c -o /work/xdp_drop.o
-
-# If BPF is available, attach it:
-# ip link set dev eth0 xdpgeneric obj /work/xdp_drop.o sec xdp
-
-# Test with iptables as a safe alternative:
-iptables -A INPUT -p udp -j DROP
-```
-
-[<< Previous: Traffic Control & QoS](./31_Traffic_Control_QoS.md) | [Home: Curriculum Map](./README.md) | [Next: DPDK & AF_XDP >>](./33_DPDK_AF_XDP.md)
+[<< Previous: Traffic Control](./31_Traffic_Control_QoS.md) | [Home: Curriculum Map](./README.md) | [Next: DPDK & AF_XDP >>](./33_DPDK_AF_XDP.md)

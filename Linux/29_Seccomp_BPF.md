@@ -1,41 +1,43 @@
+<div align="center">
+  <img src="./images/linux_ch29_seccomp.png" alt="Seccomp Architecture Cover" width="800"/>
+</div>
+
 # 29: Seccomp-BPF - Syscall Lockdown
 
-<p align="center">
-  <img src="images/seccomp_bpf.png" alt="Seccomp Architecture" width="800"/>
-</p>
+> 🧠 **The Feynman Hook:** Imagine a high-security bank app. Even if you use Cgroups to limit its memory, Namespaces to isolate its view, and SELinux to block file access, the app can still try to talk to the Kernel by using any of the ~450 native Linux System Calls. If there's a bug in the `reboot` or `kexec` syscall, a hacker could exploit it. 
+> **Seccomp (Secure Computing Mode)** is like presenting the app with a heavily redacted restaurant menu. You tell the Kernel: "This specific process is only legally allowed to use `read()`, `write()`, and `exit()`. If they attempt to order anything else off the menu, shoot them instantly." 
 
-Even with MAC (SELinux/AppArmor) controlling *which files* a process can access, the process can still call ~450 different system calls. A vulnerability could exploit any one of them.
-
-**Seccomp-BPF** restricts *which system calls* a process is allowed to make. If it tries to call something not on the allow-list, the kernel kills it instantly.
+**🎯 The Big Goal:** Understand how Docker and web browsers use eBPF instruction sets to violently terminate processes that attempt unauthorized System Calls.
 
 ---
 
-## 1. The "Restaurant Menu" Analogy
+## 1. The Seccomp Paradigm
 
-Normally, a process can order anything from the kernel's menu (450+ syscalls). Seccomp rips out pages from the menu: "You may only use `read`, `write`, `exit`, and `sigreturn`. Try anything else and you're ejected."
+When a process initiates a syscall, the CPU switches context to the Kernel. Before the Kernel actually executes the requested action, the Seccomp filter intercepts it.
 
----
-
-## 2. Who Uses Seccomp?
-
-- **Docker:** Every container runs with a default seccomp profile that blocks ~44 dangerous syscalls.
-- **Chrome/Firefox:** Each browser tab is sandboxed with seccomp.
-- **systemd:** Services can declare `SystemCallFilter=` to restrict their syscalls.
+### Strict Mode vs. Filter Mode
+- **Strict Mode:** The original implementation. The process can *only* read, write, and exit. Extremely secure, but useless for complex programs like Python or Node.
+- **Filter Mode (Seccomp-BPF):** You write a tiny logical filter (using Berkeley Packet Filter syntax) that inspects the syscall number. If the filter returns `SECCOMP_RET_KILL`, the Kernel immediately sends a `SIGSYS` signal, terminating the process without warning.
 
 ---
 
-## 3. Seccomp Modes
+## 2. Docker's Default Seccomp Profile
 
-| Mode | Behavior |
-| :--- | :--- |
-| **Strict** | Only `read`, `write`, `exit`, and `sigreturn` are allowed. |
-| **Filter (BPF)** | You define a custom BPF program that inspects every syscall and decides: ALLOW, KILL, ERRNO, or LOG. |
+> **Feynman Insight:** When you run `docker run ubuntu`, Docker silently attaches a 20KB JSON Seccomp profile to your container before it starts. This is why containers are safe.
+
+Docker's default profile completely blocks around 44 highly dangerous syscalls. For example:
+- **`reboot`**: A container should never be able to reboot the host.
+- **`unshare`**: A container should not be creating nested namespaces.
+- **`mount`**: A container should not be mounting host hard drives.
+- **`ptrace`**: A container cannot attach a debugger to inspect external memory.
+
+If you test a hacking tool inside a Docker container and it mysteriously crashes with `Bad system call (core dumped)`, it wasn't a bug. Seccomp sniped it.
 
 ---
 
-## 4. Hands-on: Restricting a Process
+## 3. Creating a Custom Seccomp Sandbox in C
 
-Using `libseccomp` (higher-level API):
+Using the high-level `libseccomp` library, we can easily build an indestructible jail around our own code.
 
 ```c
 #include <seccomp.h>
@@ -43,121 +45,43 @@ Using `libseccomp` (higher-level API):
 #include <unistd.h>
 
 int main() {
-    // Start by BLOCKING everything
+    // 1. Initialize the filter: "KILL anything not explicitly allowed"
     scmp_filter_ctx ctx = seccomp_init(SCMP_ACT_KILL);
     
-    // Allow only these syscalls
+    // 2. Safelist the essential syscalls
     seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(write), 0);
     seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(exit_group), 0);
     
-    // Activate the filter
+    // 3. Lock the door. (Cannot be undone once loaded!)
     seccomp_load(ctx);
     
-    // This WORKS (write is allowed)
-    write(1, "I am sandboxed!\n", 16);
+    // This will succeed, because 'write' is safelisted.
+    write(1, "I am operating inside the sandbox!\n", 35);
     
-    // This would KILL the process (open is NOT allowed):
-    // fopen("/etc/passwd", "r");
+    // If you uncomment this line, the process will instantly die. 
+    // 'open' is not on the menu.
+    // fopen("/etc/passwd", "r"); 
     
     seccomp_release(ctx);
     return 0;
 }
 ```
 
-```bash
-gcc -o sandbox sandbox.c -lseccomp
-./sandbox
-# Output: "I am sandboxed!"
-```
-
 ---
 
-## 5. Docker's Default Seccomp Profile
+## 🤔 Reflection Questions
 
-Docker blocks syscalls that could break container isolation:
-```bash
-# View Docker's default profile
-docker info --format '{{ .SecurityOptions }}'
+<details>
+<summary>💡 View Answer: Why does Google Chrome use Seccomp for every single browser tab?</summary>
 
-# Run a container WITHOUT seccomp (dangerous!)
-docker run --security-opt seccomp=unconfined alpine sh
+Chrome executes untrusted JavaScript from random websites constantly. If a malicious website discovers a zero-day vulnerability in the V8 JavaScript engine that allows them to execute arbitrary binary code, their first step is usually to invoke system calls to download malware or read local files. By wrapping the isolated V8 rendering process in a strict Seccomp filter, even if the hacker achieves execution, any attempt to call `open()`, `execve()`, or `socket()` results in the Kernel safely terminating the tab immediately.
+</details>
 
-# Run with a custom profile
-docker run --security-opt seccomp=my-profile.json alpine sh
-```
+<details>
+<summary>💡 View Answer: How does Seccomp complement SELinux? Don't they do the same thing?</summary>
 
-Key blocked syscalls: `mount`, `reboot`, `kexec_load`, `clock_settime`, `ptrace`.
+They operate at different architectural layers. Seccomp blocks the *mechanism* (the syscall itself). SELinux blocks the *resource* (the target file). If you use Seccomp to block the `mount` syscall, a process can't mount anything. If you use SELinux, the process can technically call `mount`, but the Kernel checks the labels and decides if it's allowed on that specific device. Defense-in-depth requires both: Seccomp reduces the attack surface of the Kernel itself, while SELinux protects the file system taxonomy.
+</details>
 
 ---
-
-*In Chapter 30, we explore Capabilities — the fine-grained replacement for the "all-or-nothing" root privilege model.*
-
----
----
-
-## 🧪 Sandbox: Build a Seccomp Jail
-
-The **Security Sandbox** has `libseccomp-dev` ready to go:
-
-**`docker-compose.yml`** — save this file in a new folder and run from there:
-
-```yaml
-services:
-  # Security sandbox with AppArmor, Seccomp, and Capabilities testing
-  security-node:
-    image: ubuntu:22.04
-    container_name: security-sandbox
-    cap_add:
-      - SYS_ADMIN
-      - NET_ADMIN
-      - NET_BIND_SERVICE
-    security_opt:
-      - apparmor:unconfined
-      - seccomp:unconfined
-    volumes:
-      - ./lab-work:/work
-    working_dir: /work
-    command: >
-      bash -c "apt-get update && apt-get install -y
-      gcc make
-      libseccomp-dev libcap2-bin
-      apparmor-utils apparmor-profiles
-      strace curl
-      && echo '--- SECURITY SANDBOX READY ---'
-      && sleep infinity"
-
-  # An unprivileged target to test restrictions against
-  restricted-app:
-    image: nginx:alpine
-    container_name: restricted-target
-```
-
-```bash
-# Start the sandbox
-docker compose up -d
-
-# Enter the container
-docker exec -it security-sandbox bash
-```
-
-**Compile and test the sandbox program from this chapter:**
-```bash
-cat > /work/seccomp_demo.c << 'CEOF'
-#include <seccomp.h>
-#include <stdio.h>
-#include <unistd.h>
-int main() {
-    scmp_filter_ctx ctx = seccomp_init(SCMP_ACT_KILL);
-    seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(write), 0);
-    seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(exit_group), 0);
-    seccomp_load(ctx);
-    write(1, "I am sandboxed!\n", 16);
-    seccomp_release(ctx);
-    return 0;
-}
-CEOF
-gcc -o /work/seccomp_demo /work/seccomp_demo.c -lseccomp
-/work/seccomp_demo
-```
-
 [<< Previous: SELinux & AppArmor](./28_SELinux_AppArmor.md) | [Home: Curriculum Map](./README.md) | [Next: Linux Capabilities >>](./30_Linux_Capabilities.md)

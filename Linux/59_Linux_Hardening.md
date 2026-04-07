@@ -1,193 +1,92 @@
-# 59: Linux Hardening
+<div align="center">
+  <img src="./images/linux_ch59_hardening.png" alt="Linux Security Hardening Cover" width="800"/>
+</div>
 
-<p align="center">
-  <img src="images/linux_hardening.png" alt="Linux Security Hardening" width="800"/>
-</p>
+# 59: Security Hardening
 
-A freshly installed Linux server is **not secure by default**. Hardening transforms a vanilla installation into a fortified production system — reducing the attack surface, enforcing least-privilege access, and enabling intrusion detection.
+> 🧠 **The Feynman Hook:** Installing a Linux server is like dropping a wooden fort into a forest full of wolves. Out of the box, it runs unnecessary services, leaves ports open, and relies on default passwords. Hardening is the process of physically upgrading the fort. You rip out the wooden doors, pour a titanium moat, disable the guest entrances, and station an automated sniper (`fail2ban`) on the roof to instantly eliminate anyone who knocks incorrectly more than three times.
 
----
-
-## 1. The Hardening Philosophy
-
-> **Goal:** Make the system as difficult to compromise as possible, even if an attacker gains initial access.
-
-| Principle | Action |
-| :--- | :--- |
-| **Minimize Attack Surface** | Remove unused services, packages, ports |
-| **Least Privilege** | Users get minimum required permissions |
-| **Defense in Depth** | Multiple overlapping security layers |
-| **Audit Everything** | Log all access, changes, and anomalies |
+**🎯 The Big Goal:** Master defensive architecture: UFW firewall restrictions, automated brute-force bans, disabling root execution, and the principle of Least Privilege.
 
 ---
 
-## 2. System Updates
+## 1. The Titanium Drawbridge (UFW)
 
-The single most important security action:
+A firewall determines who is allowed to talk to the server. By default, Linux accepts traffic from anywhere. The Uncomplicated Firewall (`UFW`) is native software that securely seals the drawbridge.
 
 ```bash
-# Debian/Ubuntu
-sudo apt update && sudo apt upgrade -y
-sudo apt autoremove                # Remove unused packages
-
-# RHEL/Fedora
-sudo dnf upgrade -y
-
-# Enable automatic security updates (Ubuntu)
-sudo apt install unattended-upgrades
-sudo dpkg-reconfigure -plow unattended-upgrades
-```
-
----
-
-## 3. User Account Hardening
-
-```bash
-# Lock unused accounts
-sudo passwd -l unused_user
-
-# Set password expiration policy
-sudo chage -M 90 -W 14 username   # Max 90 days, warn 14 days before
-
-# View password aging info
-sudo chage -l username
-
-# Enforce strong passwords
-sudo apt install libpam-pwquality
-# Edit /etc/security/pwquality.conf:
-# minlen = 12
-# dcredit = -1  (require a digit)
-# ucredit = -1  (require uppercase)
-```
-
----
-
-## 4. SSH Hardening
-
-```bash
-# /etc/ssh/sshd_config
-PermitRootLogin no
-PasswordAuthentication no
-PubkeyAuthentication yes
-MaxAuthTries 3
-ClientAliveInterval 300
-ClientAliveCountMax 2
-AllowUsers deploy admin
-Protocol 2
-```
-
----
-
-## 5. Firewall Configuration
-
-```bash
-# UFW (Ubuntu)
+# The Universal Rule: Deny everything incoming, Allow everything outgoing
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
-sudo ufw allow 22/tcp              # SSH
-sudo ufw allow 443/tcp             # HTTPS
-sudo ufw enable
-sudo ufw status verbose
 
-# Firewalld (RHEL)
-sudo firewall-cmd --set-default-zone=drop
-sudo firewall-cmd --permanent --add-service=ssh
-sudo firewall-cmd --reload
+# Punch exactly two explicit holes through the titanium wall
+sudo ufw allow 22/tcp  # Allow SSH Management
+sudo ufw allow 443/tcp # Allow HTTPS Web Traffic
+
+# Activate the security shield
+sudo ufw enable
 ```
 
 ---
 
-## 6. fail2ban — Brute-Force Protection
+## 2. The Roof Sniper (`fail2ban`)
+
+If you leave Port 22 open for SSH, automated botnets will aggressively guess "root / password" 10,000 times a second forever. `fail2ban` is a daemon that strictly monitors your authentication logs in real time. 
+
+If it detects an IP address failing a password 5 times sequentially, it dynamically re-writes the Kernel's strictly enforced `iptables` drop rule, instantly banishing that IP address from ever reaching the server again for 24 hours.
 
 ```bash
+# Install the security daemon
 sudo apt install fail2ban
 
-# Custom jail for SSH
-cat > /etc/fail2ban/jail.local << 'EOF'
-[sshd]
-enabled = true
-port = ssh
-filter = sshd
-logpath = /var/log/auth.log
-maxretry = 3
-bantime = 3600
-findtime = 600
-EOF
-
-sudo systemctl enable fail2ban
-sudo systemctl start fail2ban
-sudo fail2ban-client status sshd   # View banned IPs
+# Verify which angry bots have been sniped and banished
+sudo fail2ban-client status sshd
 ```
 
 ---
 
-## 7. Security Auditing with Lynis
+## 3. Disabling Default Superusers
+
+If hackers know your username is `root`, they only have to guess your password. Banish root login entirely. 
 
 ```bash
-sudo apt install lynis
+# 1. Create a non-obvious user
+sudo adduser sysadmin_frank
 
-# Run a full system audit
-sudo lynis audit system
+# 2. Grant them the ability to use 'sudo' temporarily
+sudo usermod -aG sudo sysadmin_frank
 
-# View the report
-cat /var/log/lynis-report.dat | grep suggestion
-```
+# 3. Enter the SSH config and mathematically annihilate Root Login
+sudo nano /etc/ssh/sshd_config
+# Change: PermitRootLogin no
 
-Lynis checks: file permissions, kernel parameters, network config, authentication, logging, and more.
-
----
-
-## 8. Kernel Hardening via `sysctl`
-
-```bash
-# /etc/sysctl.d/99-hardening.conf
-net.ipv4.ip_forward = 0                    # Disable IP forwarding
-net.ipv4.conf.all.accept_redirects = 0     # No ICMP redirects
-net.ipv4.conf.all.send_redirects = 0
-net.ipv4.conf.all.rp_filter = 1            # Reverse path filtering
-net.ipv4.tcp_syncookies = 1                # SYN flood protection
-kernel.randomize_va_space = 2              # Full ASLR
-fs.suid_dumpable = 0                       # No core dumps from SUID
-kernel.core_uses_pid = 1
-
-# Apply immediately
-sudo sysctl -p /etc/sysctl.d/99-hardening.conf
+# 4. Restart the daemon
+sudo systemctl restart ssh
 ```
 
 ---
 
-## 🧪 Hands-On Lab
+## 4. Minimum Surface Area
 
-### Setup: Docker Sandbox
-```bash
-docker run -it --rm ubuntu:latest bash
-```
+Every running software package is a potential zero-day vulnerability waiting to be exploited. Hardening explicitly requires you to violently delete anything you do not mathematically require.
 
-### Exercise 1: Check for Open Ports
-> **Goal:** Identify listening services.
 ```bash
-apt-get update > /dev/null 2>&1 && apt-get install -y net-tools > /dev/null 2>&1
-netstat -tulnp 2>/dev/null || ss -tulnp
-```
-✅ **Expected:** A list of services with their ports. In a hardened system, this list should be minimal.
+# List every single port currently open on the network
+sudo ss -tulpn
 
-### Exercise 2: Review Password Policy
-> **Goal:** Inspect account security settings.
-```bash
-cat /etc/login.defs | grep -E "PASS_MAX_DAYS|PASS_MIN_DAYS|PASS_WARN_AGE"
-cat /etc/shadow | head -3
+# Stop and uninstall the legacy FTP server you didn't know was running
+sudo systemctl stop vsftpd
+sudo apt purge vsftpd
 ```
-✅ **Expected:** Default password aging values and the shadow file format (showing hashed passwords).
-
-### Exercise 3: Inspect Kernel Security Parameters
-> **Goal:** Check if key hardening parameters are active.
-```bash
-sysctl net.ipv4.tcp_syncookies
-sysctl kernel.randomize_va_space
-sysctl net.ipv4.conf.all.accept_redirects
-```
-✅ **Expected:** SYN cookies = 1 (enabled), ASLR = 2 (full), ICMP redirects = 0 (disabled).
 
 ---
 
+## 🤔 Reflection Questions
+
+<details>
+<summary>💡 View Answer: Describe the architectural flaw in leaving a database port (e.g., MySQL 3306) open in UFW, even if the password is extremely strong.</summary>
+Cryptographic passwords protect against unauthorized *authentication*, but they do absolutely zero to protect against Kernel *exploits*. If a Zero-Day buffer overflow vulnerability is discovered within the MySQL codebase itself, a hacker simply sends a perfectly formatted malicious packet to Port 3306. The packet bypasses the password prompt entirely and hijacks the CPU. By dropping the port in UFW, the packet physically bounces off the Kernel before the MySQL software even knows it arrived. The architecture must always defend the inner walls.
+</details>
+
+---
 [<< Previous: Regular Expressions](./58_Regular_Expressions.md) | [Home: Curriculum Map](./README.md) | [Next: Troubleshooting >>](./60_Troubleshooting.md)

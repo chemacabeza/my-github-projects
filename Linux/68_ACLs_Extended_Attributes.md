@@ -1,206 +1,77 @@
+<div align="center">
+  <img src="./images/linux_ch68_acls.png" alt="Linux ACLs Cover" width="800"/>
+</div>
+
 # 68: ACLs & Extended Attributes
 
-<p align="center">
-  <img src="images/linux_acls_xattr.png" alt="ACLs and Extended Attributes" width="800"/>
-</p>
+> 🧠 **The Feynman Hook:** Standard Linux file permissions (`rwxr-xr-x`) act like a very basic wooden door. You only have three keys: The Owner, The Group, and Everyone Else. But what if you need exactly Alice and strictly Bob to read a file, but absolutely no one else? The 3-key system fails. Access Control Lists (ACLs) replace the wooden door with a complex biometric laser grid. You can program the laser grid to mathematically identify and explicitly grant exactly 14 different unique individuals varying levels of access to a single file simultaneously.
 
-Standard Unix permissions (`rwx` for owner/group/others) are binary: you either have access or you don't. **POSIX Access Control Lists (ACLs)** add fine-grained, per-user and per-group permissions beyond the traditional model, while **Extended Attributes (xattrs)** let you attach arbitrary metadata to files.
+**🎯 The Big Goal:** Surpass standard User/Group/Other restrictions by deploying granular `setfacl` permissions and rendering files mathematically immutable using `chattr`.
 
 ---
 
-## 1. Why ACLs?
+## 1. Reading the Biometric Grid (`getfacl`)
 
-### The Problem:
-```
--rw-r----- 1 alice engineers report.pdf
-```
-Only `alice` (owner) and `engineers` (group) can access this file. But what if you need:
-- `bob` (from marketing) to read it?
-- The `auditors` group to read it?
-- `carol` to read AND write it?
+If a file has a glowing laser grid attached to it, running a standard `ls -l` will show a subtle `+` sign at the end of the permissions string (e.g., `-rw-r--r--+`).
 
-**Without ACLs:** You'd need to create a new group for every combination — impractical.
-**With ACLs:** You add per-user and per-group entries directly.
-
----
-
-## 2. ACL Commands
-
-### View ACLs:
+To actually read exactly who is on the secret list, you interrogate the ACL directly:
 ```bash
-getfacl file.txt
-```
-Output:
-```
-# file: file.txt
-# owner: alice
-# group: engineers
-user::rw-
-user:bob:r--         # Bob can read
-user:carol:rw-       # Carol can read and write
-group::r--
-group:auditors:r--   # Auditors group can read
-mask::rw-
-other::---
-```
-
-### Set ACLs:
-```bash
-# Grant read to a specific user
-setfacl -m u:bob:r file.txt
-
-# Grant read+write to a specific user
-setfacl -m u:carol:rw file.txt
-
-# Grant read to a specific group
-setfacl -m g:auditors:r file.txt
-
-# Set default ACL on a directory (inherited by new files)
-setfacl -d -m u:bob:rx /shared/docs/
-
-# Remove a specific ACL entry
-setfacl -x u:bob file.txt
-
-# Remove all ACLs
-setfacl -b file.txt
+getfacl secret_report.pdf
 ```
 
 ---
 
-## 3. The ACL Mask
+## 2. Programming the Grid (`setfacl`)
 
-The **mask** limits the maximum effective permissions for named users and groups:
+You use `setfacl` to physically inject a specific user's biometrics into the grid without altering the core Owner or Group of the file.
 
 ```bash
-# Set the mask (caps effective permissions)
-setfacl -m m::r file.txt    # Even if carol has rw, effective is r only
+# Grant the user 'alice' explicit Read and Write access securely
+setfacl -m u:alice:rw secret_report.pdf
 
-# View effective permissions
-getfacl file.txt
-# user:carol:rw-    #effective:r--
+# Grant the user 'bob' explicit Read-Only access securely
+setfacl -m u:bob:r secret_report.pdf
+
+# Violently revoke Bob's access entirely
+setfacl -x u:bob secret_report.pdf
 ```
 
-> [!TIP]
-> The mask is automatically recalculated when you add/modify ACL entries. Use `setfacl -n` to prevent this.
-
----
-
-## 4. Default ACLs (Inheritance)
-
-Directories can have **default ACLs** that are automatically applied to new files created inside:
-
+### The Default ACL (Automating the Future)
+If you apply a "Default ACL" to a directory, any brand new file created entirely natively inside that directory will automatically logically inherit the strict laser grid permissions.
 ```bash
-# Set default ACLs on a shared directory
-mkdir /project
-setfacl -d -m u::rwx /project      # Owner: full access
-setfacl -d -m g::rx /project       # Group: read+execute
-setfacl -d -m u:bob:rwx /project   # Bob: full access on new files
-setfacl -d -m o::--- /project      # Others: no access
-
-# Verify
-getfacl /project
-
-# New files inherit these ACLs
-touch /project/newfile.txt
-getfacl /project/newfile.txt        # Bob has rwx automatically
+setfacl -d -m u:alice:rwx /shared_documents/
 ```
 
 ---
 
-## 5. Extended Attributes (xattr)
+## 3. Extended Attributes (Immutable Files)
 
-Extended attributes store arbitrary key-value metadata on files, in **namespaces**:
+Beyond granular user permissions, Linux filescales have deep Extended Attributes. The most powerful attribute is the Immutable Flag (`+i`). 
 
-| Namespace | Purpose | Access |
-| :--- | :--- | :--- |
-| `user.*` | User-defined metadata | Any user (with write permission) |
-| `security.*` | SELinux labels, capabilities | Root only |
-| `system.*` | ACL data | Kernel-managed |
-| `trusted.*` | Trusted metadata | Root only |
+If you make a file Immutable, you essentially enclose the file in solid titanium. Even the absolute omnipotent `root` user cannot delete it, edit it, or rename it.
 
-### Commands:
 ```bash
-# Set an extended attribute
-setfattr -n user.description -v "Q4 Sales Report" file.txt
-setfattr -n user.author -v "Alice" file.txt
+# Lock the file unconditionally physically.
+sudo chattr +i /etc/resolv.conf
 
-# Get a specific attribute
-getfattr -n user.description file.txt
+# Attempting to delete it as root violently fails:
+sudo rm /etc/resolv.conf
+# Output: rm: cannot remove '/etc/resolv.conf': Operation not permitted
 
-# List all user attributes
-getfattr -d file.txt
-
-# Remove an attribute
-setfattr -x user.description file.txt
+# You must unlock the titanium shell before editing is structurally possible
+sudo chattr -i /etc/resolv.conf
 ```
 
-### Use Cases:
-- **File tagging:** `user.tags="confidential,finance"`
-- **Origin tracking:** `user.source="https://internal-wiki.com/report"`
-- **Custom metadata:** `user.expiry_date="2025-12-31"`
+It is highly recommended to render critical static configuration files immutable to prevent rogue automated bash scripts from accidentally corrupting your network configurations natively.
 
 ---
 
-## 6. Filesystem Requirements
+## 🤔 Reflection Questions
 
-Not all filesystems support ACLs and xattrs. Ensure your filesystem is mounted with the right options:
-
-```bash
-# Check current mount options
-mount | grep acl
-
-# Mount with ACL support
-sudo mount -o acl /dev/sda1 /mnt
-
-# Or add to /etc/fstab:
-# /dev/sda1  /mnt  ext4  defaults,acl  0  2
-
-# Supported filesystems: ext2/3/4, XFS, Btrfs, ZFS
-# XFS and Btrfs enable ACLs by default
-```
+<details>
+<summary>💡 View Answer: Describe the security advantage of using the Immutable flag '+i' on a web server's core 'index.php' file.</summary>
+If a hacker exploits a flaw in your Web Server process (like Nginx), they inherit the standard permissions of the `www-data` user. Typically, a hacker's first move is to forcefully inject malicious redirect code directly into the main `index.php` file physically. If that file possesses the Immutable flag `+i`, the underlying Ext4 filesystem driver categorically rejects the Write system call at the deepest Kernel level natively. Even if the hacker compromises the server application perfectly, they are mathematically blocked from physically modifying the file structurally until they successfully escalate privileges to `root` and execute `chattr -i`.
+</details>
 
 ---
-
-## 🧪 Hands-On Lab
-
-### Setup: Docker Sandbox
-```bash
-docker run -it --rm ubuntu:latest bash
-apt-get update > /dev/null 2>&1 && apt-get install -y acl attr > /dev/null 2>&1
-```
-
-### Exercise 1: Set and View ACLs
-> **Goal:** Grant file access to a specific user.
-```bash
-useradd -m testuser 2>/dev/null
-echo "Confidential data" > /tmp/secret.txt
-chmod 600 /tmp/secret.txt
-setfacl -m u:testuser:r /tmp/secret.txt
-getfacl /tmp/secret.txt
-ls -l /tmp/secret.txt
-```
-✅ **Expected:** `getfacl` shows `testuser` with read permission. `ls -l` shows a `+` at the end of the permission string, indicating ACLs.
-
-### Exercise 2: Default ACLs on a Directory
-> **Goal:** Make new files automatically inherit permissions.
-```bash
-mkdir /tmp/shared
-setfacl -d -m u:testuser:rw /tmp/shared
-touch /tmp/shared/auto_created.txt
-getfacl /tmp/shared/auto_created.txt
-```
-✅ **Expected:** The new file has `testuser:rw-` in its ACL — inherited from the directory default.
-
-### Exercise 3: Extended Attributes
-> **Goal:** Attach custom metadata to a file.
-```bash
-echo "Report contents" > /tmp/report.txt
-setfattr -n user.author -v "Alice Johnson" /tmp/report.txt
-setfattr -n user.department -v "Engineering" /tmp/report.txt
-getfattr -d /tmp/report.txt
-```
-✅ **Expected:** Both `user.author` and `user.department` are listed with their values.
-
----
-
-[<< Previous: inotify & File Monitoring](./67_inotify_File_Monitoring.md) | [Home: Curriculum Map](./README.md)
+[<< Previous: inotify File Monitoring](./67_inotify_File_Monitoring.md) | [Home: Curriculum Map](./README.md) | [Next: IO Multiplexing epoll >>](./69_IO_Multiplexing_epoll.md)

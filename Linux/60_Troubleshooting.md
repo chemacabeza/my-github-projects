@@ -1,219 +1,90 @@
-# 60: Troubleshooting Methodology
+<div align="center">
+  <img src="./images/linux_ch60_troubleshooting.png" alt="Linux Troubleshooting Cover" width="800"/>
+</div>
 
-<p align="center">
-  <img src="images/linux_troubleshooting.png" alt="Linux Troubleshooting" width="800"/>
-</p>
+# 60: Troubleshooting
 
-When a production server goes down, panic is the enemy. This chapter teaches a systematic troubleshooting methodology — a repeatable diagnostic framework for CPU, memory, disk, network, and boot failures.
+> 🧠 **The Feynman Hook:** When a car breaks down, amateur mechanics open the hood and blindly start replacing spark plugs hoping to get lucky. Expert mechanics isolate the problem systematically: Is it fuel? Is it spark? Is it air? Linux troubleshooting requires the exact same surgical methodology. Never guess. Use high-tier diagnostic logging tools to trap the exact moment of failure structurally, transforming a completely broken black box into a mathematically transparent error string.
 
----
-
-## 1. The Troubleshooting Framework
-
-```
-1. Identify the Problem     → What's broken? When did it start?
-2. Establish a Theory       → What could cause this?
-3. Test the Theory          → Gather evidence (logs, metrics)
-4. Establish a Plan         → What's the fix?
-5. Implement & Verify       → Apply and confirm the fix
-6. Document                 → Record what happened and why
-```
+**🎯 The Big Goal:** Master the systematic diagnostic pipeline—using `strace`, `lsof`, `systemctl`, and `dmesg` to intercept hidden system errors and isolate root causes cleanly.
 
 ---
 
-## 2. CPU Troubleshooting
+## 1. The Diagnostic Hierarchy
 
-### Symptoms: System slow, high load average, unresponsive
+Do not restart the server immediately. Restarting destroys the evidence in RAM. Follow the isolation pipeline.
 
+### Step 1: Prove the Service is Actually Running
 ```bash
-# Quick load check
-uptime                             # Load average: 1min, 5min, 15min
+# Is the process actually dead?
+sudo systemctl status nginx
+```
+*If it says "Failed", immediately check the central vault: `journalctl -xeu nginx`.*
 
-# Identify CPU-hungry processes
-top -bn1 | head -20                # Batch mode, sorted by CPU
-ps aux --sort=-%cpu | head -10     # Top CPU consumers
-
-# CPU usage per core
-mpstat -P ALL 1 3                  # Per-core stats, 3 samples
-
-# Is it user-space or kernel?
-vmstat 1 5                         # Check 'us' vs 'sy' columns
+### Step 2: Prove the Port is Binding
+```bash
+# Is it actually listening on the network, or did it bind to the wrong interface?
+sudo ss -tulpn | grep 80
 ```
 
-### Common Fixes:
-- Kill runaway processes: `kill -9 PID`
-- Renice: `renice 10 -p PID`
-- Check for infinite loops in application code
-
----
-
-## 3. Memory Troubleshooting
-
-### Symptoms: OOM killer, swap thrashing, processes killed
-
+### Step 3: Prove the Files exist
 ```bash
-# Memory overview
-free -h                            # Total, used, free, swap
-
-# Who's using the most memory?
-ps aux --sort=-%mem | head -10
-
-# Check for OOM kills
-dmesg | grep -i "out of memory"
-journalctl -k | grep -i oom
-
-# Detailed memory map
-cat /proc/meminfo | head -15
-
-# Check swap usage
-swapon --show
-vmstat 1 5                         # Look at 'si' and 'so' (swap in/out)
-```
-
-### Common Fixes:
-- Identify and restart memory-leaking applications
-- Add swap space temporarily: `fallocate -l 2G /swapfile && mkswap /swapfile && swapon /swapfile`
-- Tune the OOM killer: `echo -1000 > /proc/PID/oom_score_adj`
-
----
-
-## 4. Disk / Storage Troubleshooting
-
-### Symptoms: "No space left on device", I/O errors, slow writes
-
-```bash
-# Check disk space
-df -h                              # Filesystem usage
-df -ih                             # Inode usage (can run out separately!)
-
-# Who's using the space?
-du -sh /* 2>/dev/null | sort -rh | head -10
-du -sh /var/log/*                  # Logs are a common culprit
-
-# Check for deleted but open files (hidden space hog)
-lsof +L1
-
-# I/O performance
-iostat -xz 1 3                     # Per-device I/O stats
-# Look for: %util > 80% or await > 10ms
-
-# Check filesystem health
-sudo fsck -n /dev/sda1             # Dry-run check (unmount first!)
-```
-
-### Common Fixes:
-- Clean logs: `journalctl --vacuum-size=100M`
-- Find large files: `find / -xdev -size +100M -exec ls -lh {} \;`
-- Restart services holding deleted files
-
----
-
-## 5. Network Troubleshooting
-
-### The Bottom-Up Approach:
-```bash
-# Layer 1: Physical — Is the link up?
-ip link show eth0                  # Look for "state UP"
-
-# Layer 2: Data Link — Is there an IP?
-ip addr show eth0
-
-# Layer 3: Network — Can you reach the gateway?
-ip route show                      # Find default gateway
-ping -c 3 <gateway-ip>
-
-# Layer 4: Transport — Can you reach the service?
-ss -tulnp                          # Is the service listening?
-curl -v http://server:port         # Connect test
-
-# DNS: Can you resolve names?
-dig example.com
-cat /etc/resolv.conf
-```
-
-### Useful Network Diagnostics:
-```bash
-traceroute google.com              # Path to destination
-mtr google.com                     # Continuous traceroute
-tcpdump -i eth0 port 80            # Capture traffic
-netstat -s                         # Protocol statistics
+# (l)ist (o)pen (f)iles. What exact files is this process illegally holding onto?
+sudo lsof -p 1234
 ```
 
 ---
 
-## 6. Boot Troubleshooting
+## 2. The X-Ray Machine (`strace`)
 
-### Can't Boot At All:
-1. **GRUB Rescue:** Boot from live USB → `chroot` → `grub-install`
-2. **initramfs drops to shell:** Rebuild with `update-initramfs -u`
-3. **Kernel Panic:** Boot older kernel from GRUB menu, fix, rebuild
+Sometimes an application crashes violently but prints absolutely zero error logs to the screen. It just dies.
 
-### System Boots But Services Fail:
+`strace` (System Call Trace) is an X-Ray. It forcefully intercepts every single command the broken application attempts to send to the Kernel. 
+
 ```bash
-# Check which services failed
-systemctl --failed
-
-# View service logs
-journalctl -u failing-service --no-pager -n 50
-
-# Check boot timeline
-systemd-analyze blame
+# Run the broken python script through the X-Ray machine
+strace python3 broken_script.py
 ```
 
-### Emergency/Rescue Mode:
+Instead of guessing, `strace` prints exactly what happened:
+`open("/etc/secret_config.json", O_RDONLY) = -1 EACCES (Permission denied)`
+
+You instantly know it crashed because it lacked read permissions to a specific JSON file.
+
+---
+
+## 3. The Hardware Doctor (`dmesg`)
+
+If the hard drive is dying, or RAM sticks are failing, the regular applications will crash randomly and inexplicably. You must interrogate the Hardware logs.
+
+`dmesg` (Diagnostic Messages) reads the direct hardware ring buffer.
+
 ```bash
-# From GRUB: edit kernel line, append:
-systemd.unit=rescue.target         # Single-user mode
-# OR
-init=/bin/bash                     # Direct root shell
+# Show critical hardware errors
+dmesg | grep -i error
+
+# Show explicit hard drive detachment failures
+dmesg | grep -i sda
 ```
 
 ---
 
-## 🧪 Hands-On Lab
+## 4. The Scientific Method of Sysadmin
 
-### Setup: Docker Sandbox
-```bash
-docker run -it --rm ubuntu:latest bash
-apt-get update > /dev/null 2>&1 && apt-get install -y procps sysstat net-tools > /dev/null 2>&1
-```
-
-### Exercise 1: Diagnose Resource Usage
-> **Goal:** Build a system health snapshot.
-```bash
-echo "=== CPU Load ==="
-uptime
-echo -e "\n=== Memory ==="
-free -h
-echo -e "\n=== Disk ==="
-df -h
-echo -e "\n=== Top Processes ==="
-ps aux --sort=-%cpu | head -5
-```
-✅ **Expected:** A quick health dashboard showing load, memory, disk, and top CPU consumers.
-
-### Exercise 2: Find Large Files
-> **Goal:** Locate the biggest space consumers.
-```bash
-du -sh /* 2>/dev/null | sort -rh | head -5
-find / -xdev -size +10M -exec ls -lh {} \; 2>/dev/null | head -10
-```
-✅ **Expected:** `/usr` is likely the largest directory. Individual large files are identified.
-
-### Exercise 3: Network Layer Check
-> **Goal:** Systematically verify network connectivity.
-```bash
-echo "=== Interface ==="
-ip addr show eth0 2>/dev/null || ip addr show
-echo -e "\n=== Route ==="
-ip route show
-echo -e "\n=== DNS ==="
-cat /etc/resolv.conf
-echo -e "\n=== Connectivity ==="
-ping -c 1 8.8.8.8 2>/dev/null && echo "Internet: OK" || echo "Internet: FAIL"
-```
-✅ **Expected:** A systematic bottom-up network diagnostic — interface → routing → DNS → connectivity.
+1. **Observe:** "The website is throwing a 502 Bad Gateway Error."
+2. **Formulate Hypothesis:** "Nginx is running, but the backend Python script has died."
+3. **Test Hypothesis Structure:** Run `curl -I localhost:8000` to ping the python script directly.
+4. **Analyze Data:** If it times out, the script is dead. If it responds rapidly, Nginx is misconfigured.
+5. **Implement Fix:** Only change ONE variable at a time. If you alter 3 files and fix the issue, you mathematically cannot know which edit succeeded.
 
 ---
 
+## 🤔 Reflection Questions
+
+<details>
+<summary>💡 View Answer: Describe the critical difference between diagnosing an issue using 'grep' vs diagnosing an issue dynamically using 'tail -f'.</summary>
+When you use `grep` on an old log file, you are performing a post-mortem on a frozen corpse. The event happened 6 hours ago. When you use `tail -f /var/log/syslog` while actively attempting to replicate the crash, you are performing live surgery. You see the literal exact microsecond the Kernel throws the segmentation fault dynamically. Live tailing drastically accelerates the feedback loop of the scientific method inherently.
+</details>
+
+---
 [<< Previous: Linux Hardening](./59_Linux_Hardening.md) | [Home: Curriculum Map](./README.md) | [Next: Sed Stream Editor >>](./61_Sed_Stream_Editor.md)
