@@ -42,12 +42,9 @@ You build the new system AROUND the old system. Slowly, the new system takes ove
 3. **Step 3: Route Traffic**
    Tell the API Gateway to route traffic to the new microservice instead of the monolith.
 
-```mermaid
-graph TD
-    User([User]) --> |Mobile/Web| Gateway{API Gateway}
-    Gateway -.-> |Old Routes| Mono[Legacy Monolith]
-    Gateway ==> |New Routes| Micro[New Microservice]
-```
+<p align="center">
+  <img src="images/sd_strangler_fig_pattern.png" alt="The Strangler Fig Pattern" width="800"/>
+</p>
 
 ---
 
@@ -63,11 +60,9 @@ Don't let legacy data structures pollute your new code!
 * It acts as a translator.
 * It translates modern JSON into whatever legacy format the monolith expects.
 
-```mermaid
-graph LR
-    New[New Service] ==> |Clean Output| ACL(Anti-Corruption Layer)
-    ACL -.-> |Legacy Format| Mono[(Monolith)]
-```
+<p align="center">
+  <img src="images/sd_anti_corruption_layer.png" alt="Anti-Corruption Layer (ACL)" width="800"/>
+</p>
 
 ---
 
