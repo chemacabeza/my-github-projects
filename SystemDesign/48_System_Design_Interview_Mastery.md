@@ -18,6 +18,22 @@ A System Design interview is not about finding the "perfect" architecture. It is
 
 The key to success is structure. Never jump straight into drawing boxes. Follow this proven 4-step framework based on *System Design Interview – An Insider's Guide* (Alex Xu).
 
+### 1.1 ⏱️ Interview Time Allocation (The 45-Minute Blueprint)
+
+<p align="center">
+  <img src="images/sd_interview_time_allocation.png" alt="System Design Interview Time Allocation" width="800"/>
+</p>
+
+Failing a system design interview is rarely due to a lack of technical knowledge; it's almost always due to **poor time management**. If you spend 25 minutes arguing about databases before you've drawn the API Gateway, you have failed the interview. 
+
+Assuming a standard 45-minute technical interview, strictly enforce this pacing blueprint in your mind:
+
+*   **0-5 mins: Scope constraints & Clarification.** Do not write code. Do not draw. Ask rapid-fire questions to lock in the exact boundaries of the problem. What are the read/write ratios? Are we targeting mobile or desktop?
+*   **5-10 mins: Estimations & Math.** Perform back-of-the-envelope capacity planning for storage, bandwidth, and DAU. Get agreement on the scale.
+*   **10-20 mins: High-Level Architecture.** Draw the macroscopic boxes. Client → Load Balancer → Web Server → Database. Do not talk about specific caching algorithms yet. Establish the "happy path" flow.
+*   **20-40 mins: Deep Dive & Bottleneck Resolution.** This is where you pass or fail. The interviewer will point to a box and say, "this breaks at 10M DAU, fix it." Dive deep into partitioning strategies, caching layers, message queues, and consensus algorithms. Defend your trade-offs. 
+*   **40-45 mins: Wrap-up & Future Scope.** Acknowledge any single points of failure remaining. Discuss how the system might evolve if traffic 100x's next year.
+
 ### Step 1: Understand the Problem and Establish Design Scope (3-10 minutes)
 Start by clarifying exactly what you are building. Do not make assumptions.
 *   **Identify core features:** "Is this API for internal users or public?" "Do we need an activity feed or just direct messaging?"
