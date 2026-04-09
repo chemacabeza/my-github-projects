@@ -266,4 +266,4 @@ Create a Mobile BFF that exposes a single endpoint `GET /api/m/home-feed`. The B
 
 ---
 
-[<< Previous: API Lifecycle & Evolution](./39_API_Lifecycle_and_Evolution.md) | [Home: Curriculum Map](./README.md) | [Next: System Design Interview Mastery >>](./41_System_Design_Interview_Mastery.md)
+[<< Previous: API Lifecycle & Evolution](./39_API_Lifecycle_and_Evolution.md) | [Home: Curriculum Map](./README.md) | [Next: Serverless Fundamentals >>](./42_Serverless_Fundamentals.md)

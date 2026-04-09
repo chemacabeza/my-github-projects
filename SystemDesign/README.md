@@ -4,9 +4,9 @@
   <img src="images/sd_cover.png" alt="System Design Mastery" width="800"/>
 </p>
 
-Welcome to the **System Design Mastery Guide**. This repository contains a complete, **41-chapter curriculum** spanning 9 phases, designed to take you from fundamental concepts to designing real-world systems at scale.
+Welcome to the **System Design Mastery Guide**. This repository contains a complete, **48-chapter curriculum** spanning 10 phases, designed to take you from fundamental concepts to designing real-world systems at scale.
 
-This curriculum was synthesized from **over 40 professional-grade textbooks**: *Designing Data-Intensive Applications*, *System Design Interview Volumes 1 & 2*, *ByteByteGo Big Archive*, *AlgoMaster System Design Handbook*, *The C4 Model*, *REST API Design Rulebook*, *Designing APIs with Swagger and OpenAPI*, *Learning GraphQL*, *API Security in Action*, *Kafka: The Definitive Guide*, and *The Clean Coder*.
+This curriculum was synthesized from **over 45 professional-grade textbooks**: *Designing Data-Intensive Applications*, *System Design Interview Volumes 1 & 2*, *ByteByteGo Big Archive*, *AlgoMaster System Design Handbook*, *The C4 Model*, *REST API Design Rulebook*, *Learning Serverless*, *Serverless Architectures on AWS*, *Serverless Development on AWS*, *Kafka: The Definitive Guide*, and *The Clean Coder*.
 
 ---
 
@@ -87,7 +87,17 @@ This curriculum was synthesized from **over 40 professional-grade textbooks**: *
 * [**38: API Security in Depth**](./38_API_Security_in_Depth.md) - OAuth 2.0 PKCE, JWT signature validation, CORS, and defending attack surfaces.
 * [**39: API Lifecycle & Evolution**](./39_API_Lifecycle_and_Evolution.md) - Expand-Contract pattern, sunset headers, and safe breaking changes.
 * [**40: API Patterns & Integration**](./40_API_Patterns_and_Integration.md) - Webhooks, BFFs, idempotent keys, and Circuit Breakers.
-* [**41: System Design Interview Mastery**](./41_System_Design_Interview_Mastery.md) - Systematic 4-step framework, back-of-the-envelope estimation, trade-offs, and tackling API interviews.
+
+### Phase 10: Serverless Architecture & Cloud-Native Patterns
+*Mastering event-driven, instantly scalable compute without managing infrastructure.*
+
+* [**42: Serverless Fundamentals**](./42_Serverless_Fundamentals.md) - FaaS vs BaaS, the execution model, and mitigating cold starts structurally.
+* [**43: AWS Lambda Deep Dive**](./43_AWS_Lambda_Deep_Dive.md) - The INIT/INVOKE lifecycle, memory vs CPU tuning, and managing massive concurrency.
+* [**44: Serverless API & Event Patterns**](./44_Serverless_API_Events.md) - API Gateway shielding, SQS fan-out, EventBridge choreography, and Step Functions.
+* [**45: Serverless Data & Storage**](./45_Serverless_Data_Storage.md) - DynamoDB Single-Table Design, heavy reads caching, and S3 event-driven ETL pipelines.
+* [**46: Serverless Security & Observability**](./46_Serverless_Security_Observability.md) - IAM Least Privilege per function, X-Ray distributed tracing, and structured cloud logging.
+* [**47: Serverless at Scale**](./47_Serverless_At_Scale.md) - Infrastructure as Code (SAM/CDK), CI/CD pipelines, modern testing honeycombs, and cost inflection points.
+* [**48: System Design Interview Mastery**](./48_System_Design_Interview_Mastery.md) - Systematic 4-step framework, estimation math, and acing the Serverless/API deep dive safely.
 
 ---
 

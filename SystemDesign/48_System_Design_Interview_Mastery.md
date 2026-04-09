@@ -1,4 +1,4 @@
-# 41: System Design Interview Mastery
+# 48: System Design Interview Mastery
 
 <p align="center">
   <img src="images/sd_interview_mastery.png" alt="System Design Interview Mastery" width="100%"/>
@@ -8,7 +8,7 @@
 
 ## 🎯 What You'll Learn
 
-> **After this chapter, you will understand the exact step-by-step framework to confidently tackle any system design interview, using the "4-Step Framework," and how to apply your deep knowledge of APIs, architecture, and scaling to ace the deep-dive phase.**
+> **After this chapter, you will understand the exact step-by-step framework to confidently tackle any system design interview, using the "4-Step Framework," and how to apply your deep knowledge of APIs, Serverless, architecture, and scaling to ace the deep-dive phase.**
 
 A System Design interview is not about finding the "perfect" architecture. It is an open-ended conversation designed to evaluate your ability to navigate ambiguity, ask the right questions, estimate constraints, and systematically construct a scalable solution while discussing trade-offs.
 
@@ -125,7 +125,28 @@ Show the interviewer you think about Day-2 operations:
 
 ---
 
-## 6. 🏋️ Practice Exercises
+## 6. 🌩️ Tackling Serverless in Interviews
+
+When proposing Serverless in an interview, you must navigate the tradeoffs. Interviewers will push back on cold starts and connection limits. Use knowledge from **Phase 10: Serverless Architecture** to address them flawlessly.
+
+### 6.1 Defending Serverless Selection
+If you propose AWS Lambda, the interviewer will ask: *"Why Serverless instead of Kubernetes/Containers?"*
+
+**The Strong Answer:** "Serverless is optimal for our usecase because the traffic is highly unpredictable and bursty. Instead of paying for a fleet of containers that idle at 5% utilization at night, Serverless scales from zero to 10,000 instantaneously and scales costs identically. It also offloads all OS patching and infrastructure maintenance to AWS, increasing our developer velocity."
+
+### 6.2 Managing Cold Starts and Traffic Spikes
+If the interviewer asks: *"What if a cold start adds 2 seconds of latency to our critical payment API?"*
+
+**The Strong Answer:** "To mitigate cold starts, we can use **Provisioned Concurrency** to keep a subset of execution environments pre-warmed for expected baseline traffic. Additionally, we would decouple the architecture. The synchronous payment API should merely validate the payload, drop it into an SQS queue, and return a 202 Accepted. A worker Lambda can cold-start asynchronously in the background reading from the queue without blocking the end user."
+
+### 6.3 The Database Connection Problem
+If the interviewer asks: *"If our Lambda scales out to 5,000 concurrent executions, won't it crash our relational database?"*
+
+**The Strong Answer:** "Yes, traditional RDBMS connection pooling breaks under serverless concurrency. To solve this, we would either migrate to a NoSQL serverless store like DynamoDB that relies on HTTP instead of raw TCP connections, OR we would put AWS RDS Proxy in front of our database to actively manage and pool connection limits before traffic hits the database."
+
+---
+
+## 7. 🏋️ Practice Exercises
 
 ### Exercise 1: Design a Global Chat System (WhatsApp/Messenger)
 **The Scenario:** You need to design a 1-on-1 and group chat system for 50 million daily active users. 
@@ -173,7 +194,8 @@ This requires breaking down the bottleneck into Read vs Write paths. First, iden
 *   **Bottlenecks:** "Looking at this high-level design, the clear bottleneck at 10M DAU will be database I/O on the write path."
 *   **Mitigation:** "To mitigate this, I propose introducing a message queue (Kafka) to decouple the ingestion from the slow database writes."
 *   **API Mastery:** "We will use an API Gateway for rate limiting and JWT validation, expose a GraphQL BFF for the mobile SPA to avoid N+1 queries, and utilize Webhooks for internal event notifications to avoid client polling."
+*   **Serverless Scaling:** "We will leverage Lambda combined with API Gateway for unpredictable API requests, but route high-throughput continuous traffic to containerized instances to optimize for cost at scale."
 
 ---
 
-[<< Previous: API Patterns & Integration](./40_API_Patterns_and_Integration.md) | [Home: System Design Curriculum](./README.md)
+[<< Previous: Serverless at Scale](./47_Serverless_At_Scale.md) | [Home: System Design Curriculum](./README.md)
