@@ -4,9 +4,9 @@
   <img src="images/sd_cover.png" alt="System Design Mastery" width="800"/>
 </p>
 
-Welcome to the **System Design Mastery Guide**. This repository contains a complete, **32-chapter curriculum** spanning 8 phases, designed to take you from fundamental concepts to designing real-world systems at scale.
+Welcome to the **System Design Mastery Guide**. This repository contains a complete, **41-chapter curriculum** spanning 9 phases, designed to take you from fundamental concepts to designing real-world systems at scale.
 
-This curriculum was synthesized from **over 30 professional-grade textbooks**: *Designing Data-Intensive Applications* (Kleppmann), *System Design Interview Volumes 1 & 2* (Alex Xu), *ByteByteGo Big Archive 2023*, *AlgoMaster System Design Handbook*, *The C4 Model* (Simon Brown), *CQRS Journey Guide*, *Making Sense of Stream Processing* (Confluent), *Mastering Kafka Streams and ksqlDB*, *Kafka: The Definitive Guide*, and *The Clean Coder*.
+This curriculum was synthesized from **over 40 professional-grade textbooks**: *Designing Data-Intensive Applications*, *System Design Interview Volumes 1 & 2*, *ByteByteGo Big Archive*, *AlgoMaster System Design Handbook*, *The C4 Model*, *REST API Design Rulebook*, *Designing APIs with Swagger and OpenAPI*, *Learning GraphQL*, *API Security in Action*, *Kafka: The Definitive Guide*, and *The Clean Coder*.
 
 ---
 
@@ -76,7 +76,18 @@ This curriculum was synthesized from **over 30 professional-grade textbooks**: *
 * [**31: Apache Kafka Deep Dive**](./31_Apache_Kafka_Deep_Dive.md) - Deep dive into Zero-Copy transfers, OS PageCache exploitation, and immutable distributed commit logs natively.
 * [**32: Load Balancers Deep Dive**](./32_Load_Balancers.md) - Layer 4 vs 7, routing algorithms, health checks, and Docker NGINX implementations.
 * [**33: Content Delivery Networks (CDN)**](./33_Content_Delivery_Networks.md) - Global architecture edge caching, Pull vs Push, Cache invalidation techniques, and TTL configurations.
-* [**34: Tackling System Design Interviews**](./34_Tackling_System_Design_Interviews.md) - Systematic 4-step framework, back-of-the-envelope estimation, and navigating architecture trade-offs.
+
+### Phase 9: API Architecture & Integration Ecosystem
+*The definitive guide to designing, securing, and scaling professional APIs.*
+
+* [**34: API Platform Design Capstone**](./34_API_Platform_Capstone.md) - Designing a complete platform with REST, GraphQL, Auth, and Webhooks.
+* [**35: REST API Design**](./35_REST_API_Design.md) - Resource modeling, HTTP verbs, Idempotency, and HATEOAS pragmatically.
+* [**36: OpenAPI & API Contracts**](./36_OpenAPI_and_API_Contracts.md) - Contract-first development, SDK generation, and schema reusability.
+* [**37: GraphQL Architecture**](./37_GraphQL_Architecture.md) - Declarative fetching, the N+1 problem, DataLoaders, and Subscriptions.
+* [**38: API Security in Depth**](./38_API_Security_in_Depth.md) - OAuth 2.0 PKCE, JWT signature validation, CORS, and defending attack surfaces.
+* [**39: API Lifecycle & Evolution**](./39_API_Lifecycle_and_Evolution.md) - Expand-Contract pattern, sunset headers, and safe breaking changes.
+* [**40: API Patterns & Integration**](./40_API_Patterns_and_Integration.md) - Webhooks, BFFs, idempotent keys, and Circuit Breakers.
+* [**41: System Design Interview Mastery**](./41_System_Design_Interview_Mastery.md) - Systematic 4-step framework, back-of-the-envelope estimation, trade-offs, and tackling API interviews.
 
 ---
 

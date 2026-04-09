@@ -115,6 +115,6 @@ This is **Cache Tiering**. If your London, Paris, and Berlin Edge PoPs all exper
 
 <div align="center">
 
-[<< Previous: Load Balancers Deep Dive](./32_Load_Balancers.md) | [Home: System Design Curriculum](./README.md) | [Next: Tackling System Design Interviews >>](./34_Tackling_System_Design_Interviews.md)
+[<< Previous: Load Balancers Deep Dive](./32_Load_Balancers.md) | [Home: System Design Curriculum](./README.md) | [Next: API Platform Design Capstone >>](./34_API_Platform_Capstone.md)
 
 </div>
