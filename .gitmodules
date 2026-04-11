@@ -19,3 +19,6 @@
 [submodule "CyberSecurity"]
 	path = CyberSecurity
 	url = https://github.com/chemacabeza/CyberSecurity
+[submodule "test-with-llms"]
+	path = test-with-llms
+	url = https://github.com/chemacabeza/test-with-llms
