@@ -515,6 +515,13 @@ The local installation includes the following models by default. Some are standa
     *   **Model ID**: 2805114
     *   **Source**: [Civitai](https://civitai.green/models/2495366?modelVersionId=2805114)
 
+44. `dilnoza_lora.safetensors`
+    *   **Type**: SDXL LoRA
+    *   **Description**: Tajik woman character (25 years old, 1.70m tall)
+    *   **Trigger Word**: `dilnoza`
+    *   **Model ID**: 2854321
+    *   **Source**: [Civitai](https://civitai.green/models/2539762?modelVersionId=2854321)
+
 
 ### 🖼️ LoRA Character Gallery
 
@@ -583,7 +590,7 @@ The local installation includes the following models by default. Some are standa
 </tr>
 <tr>
   <td align="center"><a href="https://civitai.com/models/2495366"><img src="images/loras/charlize.jpg" width="220"/></a><br/><b>Charlize</b><br/><em>South African · 26y · 1.70m</em></td>
-  <td></td>
+  <td align="center"><a href="https://civitai.com/models/2539762"><img src="images/loras/dilnoza.jpg" width="220"/></a><br/><b>Dilnoza</b><br/><em>Tajik · 25y · 1.70m</em></td>
   <td></td>
 </tr>
 </table>
