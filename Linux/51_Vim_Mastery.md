@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./images/linux_ch51_vim.png" alt="Linux Vim Mastery Cover" width="800"/>
+  <img src="./images/linux_vim_mastery.png" alt="Linux Vim Mastery Cover" width="800"/>
 </div>
 
 # 51: Vim Mastery
