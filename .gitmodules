@@ -22,3 +22,6 @@
 [submodule "test-with-llms"]
 	path = test-with-llms
 	url = https://github.com/chemacabeza/test-with-llms
+[submodule "assistant-google"]
+	path = assistant-google
+	url = git@github.com:chemacabeza/assistant-google.git
