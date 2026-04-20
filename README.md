@@ -32,6 +32,7 @@
 
 ## 📊 Portfolio Overview
 
+- 🎩 **Personal AI Assistant** — full-stack AI butler with WhatsApp integration (Spring Boot · React · OpenAI · Android Auto · Docker)
 - 🎬 **AI Video Studio** — full-stack generative video platform (Spring Boot · React · PostgreSQL · 5 fal.ai models · Docker)
 - 🔊 **AI Voice Studio** — full-stack TTS platform (Spring Boot · React · OpenAI TTS API · 11 voices · Docker)
 - 🎧 **AI Audio Listener** — full-stack STT platform (Spring Boot · Next.js · OpenAI Whisper API · PostgreSQL · Docker)
@@ -47,6 +48,19 @@
 ## 🌟 Featured Projects
 
 > 🔍 **Recruiters:** jump straight to the three AI studios below — they showcase the most breadth and depth in the shortest time.
+
+---
+
+### 🎩 Personal AI Assistant — `assistant-google`
+*"At your service, sir!" — A production-ready AI butler connected to your Google Account and WhatsApp.*
+
+A **full-stack AI assistant** that automates your life by connecting directly to Gmail, Calendar, and Maps. Now featuring a seamless, native WhatsApp bridge: simply scan a QR code to link your phone, and the assistant can manage your conversations or send messages on your behalf while you commute via Android Auto.
+
+- **Tech Stack**: Spring Boot 3 · React 18 + Vite · PostgreSQL · Node.js (Wa-Baileys) · Docker Compose
+- **Features**: Native WhatsApp QR linkage, real-time Socket.io message sync, intelligent OAuth 2.0 Google Workspace integration (Inbox & Calendar), Android Auto dashboard
+- **Architecture**: Bilingual LLM intent parsing, high-fidelity React UI mirroring WhatsApp Web, AES-encrypted OAuth token storage at rest
+- **Highlights**: True hands-free public transport and car navigation, built-in email reply automation, one-command fully containerized setup
+- **[Explore Personal AI Assistant →](https://github.com/chemacabeza/assistant-google)**
 
 ---
 
@@ -138,6 +152,7 @@ Full-stack **Spring Boot 3.x** applications demonstrating enterprise patterns an
 
 ## 📚 CONTENTS
 
+* [🎩 PERSONAL AI ASSISTANT](https://github.com/chemacabeza/assistant-google) ← **Start here**
 * [🎬 AI VIDEO STUDIO](https://github.com/chemacabeza/test-for-ai-wan) ← **Start here**
 * [🔊 AI VOICE STUDIO](https://github.com/chemacabeza/test-for-audio-generation) ← **Start here**
 * [🎧 AI AUDIO LISTENER](https://github.com/chemacabeza/test-for-audio-listener) ← **Start here**
@@ -153,6 +168,7 @@ Full-stack **Spring Boot 3.x** applications demonstrating enterprise patterns an
 
 Each section contains its own detailed setup instructions:
 
+- **Personal AI Assistant**: `cd assistant-google && ./build.sh && ./start.sh` → http://localhost:5173
 - **AI Video Studio**: `cd test-for-ai-wan && ./run.sh start` → Frontend: http://localhost:3000 | API: http://localhost:8080
 - **AI Voice Studio**: `cd test-for-audio-generation && ./start.sh start` → http://localhost
 - **AI Audio Listener**: `cd test-for-audio-listener && ./start.sh start` → http://localhost:3000 (React) | http://localhost:8080 (API)
