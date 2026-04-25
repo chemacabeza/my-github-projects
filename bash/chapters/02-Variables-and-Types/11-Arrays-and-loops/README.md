@@ -23,7 +23,7 @@ An **Indexed Array** is a data structure that associates values to indices (0, 1
 Let’s take a look at a visualization for this kind of array.
 
 <p align="center">
-    <img src="images/Indexed-array.png" width="500px"/>
+  <img src="images/Indexed-array.png" alt="Indexed Array Diagram" width="600"/>
 </p>
 
 How do we declare this kind of array? Well there are 2 ways to declare an indexed array.
@@ -57,7 +57,7 @@ Where "`$index`" is a whole number (for example `0`, `1`, `2`, ...).
 An **Associative Array** is a data structure that associates values to “*keys*”. A key can be any random string or number.
 
 <p align="center">
-    <img src="images/Associative-array.png" width="500px"/>
+  <img src="images/Associative-array.png" alt="Associative Array Diagram" width="600"/>
 </p>
 
 So, how do we declare an associative array? We use the option “`-A`” of the “`declare`” builtin command.
@@ -353,8 +353,8 @@ In the next section we are going to see how to add an element to an array.
 In order to add an additional element to an array we can do it by using the following form.
 
 <p align="center">
-    <img src="images/Add-Item-To-Array.png" width="550px"/>
-</div>
+  <img src="images/Add-Item-To-Array.png" alt="Add Item to Array Diagram" width="600"/>
+</p>
 
 As you can see the only difference on adding a new element to an indexed array or an associative array is including the key in the associative array.
 
@@ -430,7 +430,7 @@ In indexed arrays the indices are whole numbers (0, 1, 2, etc) while in associat
 In both types of array we will have to use the following to delete elements.
 
 <p align="center">
-<img src="images/Unset-Item-From-Array.png" width="550px"/>
+  <img src="images/Unset-Item-From-Array.png" alt="Unset Item from Array Diagram" width="600"/>
 </p>
 
 In the following example we are deleting the second element (index “`1`”) of the array.
@@ -484,7 +484,7 @@ In this section we are going to learn how to delete elements based on a “*patt
 The generic form that we will use is as follows.
 
 <p align="center">
-    <img src="images/Generic-Form-Delete-From-Pattern.png" width="450px"/>
+  <img src="images/Generic-Form-Delete-From-Pattern.png" alt="Delete from Pattern Generic Form Diagram" width="600"/>
 </p>
 
 Those 4 dots will be replaced with some syntax that will do pattern matching to find the elements before removing them. There are several ways to remove an element from an array and are the following:
@@ -1157,7 +1157,7 @@ Once we have seen how to declare arrays and what operations we can do on them, w
 The “`for-loop`“ is a kind of loop that is used to perform actions, a priori, to ALL elements of an array. Its syntax is as follows.
 
 <p align="center">
-    <img src="images/For-Loop.png" width="450px"/>
+  <img src="images/For-Loop.png" alt="For Loop Diagram" width="600"/>
 </p>
 
 A priori, this seems to be easy enough, but there are some details that we need to be aware of, which is how the loop is executed. Once the script is running, Bash will execute the loop in two steps:
@@ -1283,9 +1283,9 @@ Now that we have wrapped this topic we will proceed to the next section to learn
 
 In this case, we are going to work mainly with indices (integer numbers) and the length of the array.<a id="footnote-2-ref" href="#footnote-2" style="font-size:x-small">[2]</a> This kind of loop has the following structure.
 
-<div style="text-align:center">
-    <img src="images/For-Loop-C-Style.png" width="700px"/>
-</div>
+<p align="center">
+  <img src="images/For-Loop-C-Style.png" alt="C-Style For Loop Diagram" width="600"/>
+</p>
 
 Notice the double parenthesis `((...))`, which allows us to work with integer numbers as we saw previously in [Chapter 6](https://github.com/chemacabeza/my-github-projects/blob/master/bash/0006-Working-with-Numbers-Integers.md#compound-command-).
 
@@ -1327,7 +1327,7 @@ In the following section we will learn about the “`while`” loop.
 This kind of loop will execute a list of commands as long as a condition evaluates to true. The shape of this loop is as follows.
 
 <p align="center">
-    <img src="images/While-Loop.png" width="550px"/>
+  <img src="images/While-Loop.png" alt="While Loop Diagram" width="600"/>
 </p>
 
 As you can imagine, the “`condition`” is an expression like we saw in the [Chapter dedicated to IF-ELSE](https://github.com/chemacabeza/my-github-projects/blob/master/bash/0010-If-statement.md#how-to-test-stuff), so we can use “`test`”, “`[...]`” or “`[[...]]`”. Let’s see some examples in the following script.
@@ -1390,7 +1390,7 @@ In the following section we will learn about the “`until`” loop.
 This kind of loop will execute a list of commands as long as a condition evaluates to false. The shape of this loop is as follows.
 
 <p align="center">
-    <img src="images/Until-Loop.png" width="550px"/>
+  <img src="images/Until-Loop.png" alt="Until Loop Diagram" width="600"/>
 </p>
 
 This kind of loop is similar to the previous “`while`” loop in the sense that it will execute the commands in its body as long as the condition has a specific value.
