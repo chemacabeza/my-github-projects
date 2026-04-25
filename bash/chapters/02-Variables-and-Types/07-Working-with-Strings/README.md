@@ -227,7 +227,7 @@ Substring: Val
 Same as with the previous example we include the following diagram to give a more visual explanation of what is happening.
 
 <p align="center">
-    <img src="images/substring_with_index_and_length.png"/>
+  <img src="images/substring_with_index_and_length.png" alt="Substring with Index and Length Diagram" width="600"/>
 </p>
 
 In this case it starts as with the previous example, selecting the beginning of the string from the fourth character (character with index 3) and will take a length of 3 characters starting from the character “`V`” included. Resulting in the substring “`Val`”.
@@ -251,7 +251,7 @@ ${myVariable#substring}
 In the following diagram you will see that Bash will search for the shortest substring that matches the pattern provided (from the beginning of the string) and will generate a substring without the part that matches the pattern to be removed.
 
 <p align="center">
-    <img src="images/remove_shortest_substring_starting_from_the_front.png"/>
+  <img src="images/remove_shortest_substring_starting_from_the_front.png" alt="Remove Shortest Substring from Front Diagram" width="600"/>
 </p>
 
 ### Remove longest substring starting from the front
@@ -265,7 +265,7 @@ ${myVariable##substring}
 In the following diagram you will see that Bash will search for the longest substring that matches the pattern provided (from the beginning of the string) and will generate a substring without the part that matches the pattern to be removed.
 
 <p align="center">
-    <img src="images/remove_longest_substring_starting_from_the_front.png" />
+  <img src="images/remove_longest_substring_starting_from_the_front.png" alt="Remove Longest Substring from Front Diagram" width="600"/>
 </p>
 
 Please notice in the previous diagram that between the red letters there are two different `K` characters. As we are using the operator to remove the **longest** sequence of characters that matches the given pattern it will remove the longest sequence of characters.
@@ -280,7 +280,7 @@ ${string%substring}
 In the following diagram you will see that Bash will search for the shortest substring that matches the pattern provided (from the back of the string) and will generate a substring without the part that matches the pattern to be removed.
 
 <p align="center">
-    <img src="images/remove_shortest_substring_starting_from_the_back.png" />
+  <img src="images/remove_shortest_substring_starting_from_the_back.png" alt="Remove Shortest Substring from Back Diagram" width="600"/>
 </p>
 
 ### Remove longest substring starting from the back
@@ -293,7 +293,7 @@ ${string%%substring}
 In the following diagram you will see that Bash will search for the longest substring that matches the pattern provided (from the back of the string) and will generate a substring without the part that matches the pattern to be removed.
 
 <p align="center">
-    <img src="images/remove_longest_substring_starting_from_the_back.png"/>
+  <img src="images/remove_longest_substring_starting_from_the_back.png" alt="Remove Longest Substring from Back Diagram" width="600"/>
 </p>
 
 ### Example
@@ -340,7 +340,7 @@ ${string/pattern/replacement}
 In the following diagram you will see that Bash will search for the longest substring that matches the pattern provided (from the front of the string) and will generate a substring with “`pattern`” replaced by “`replacement`”.
 
 <p align="center">
-    <img src="images/replace_first_instance.png"/>
+  <img src="images/replace_first_instance.png" alt="Replace First Instance Diagram" width="600"/>
 </p>
 
 ### Replace all matches
@@ -353,7 +353,7 @@ ${string//pattern/replacement}
 In the following diagram you will see that Bash will search for the longest substring that matches the pattern provided (from the front of the string) and will generate a substring with “`pattern`” replaced by “`replacement`” in all instances of the match.
 
 <p align="center">
-    <img src="images/replace_all_instances.png"/>
+  <img src="images/replace_all_instances.png" alt="Replace All Instances Diagram" width="600"/>
 </p>
 
 ### Another Example
