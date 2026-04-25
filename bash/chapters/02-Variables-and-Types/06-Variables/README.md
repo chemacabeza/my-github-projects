@@ -277,7 +277,7 @@ In the previous simple script we are declaring a variable named â€œ`VARIABLE_2`â
 In the line 5 of the previous script, the redirection happens. In the following diagram you will see a representation of what is actually happening.
 
 <div style="text-align:center">
-    <img src="chapters/02-Variables-and-Types/06-Variables/Indirect_Variable.png"/>
+    <img src="images/Indirect_Variable.png" alt="Indirect Variables Diagram" width="500"/>
 </div>
 
 ## Summary
