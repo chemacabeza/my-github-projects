@@ -203,7 +203,7 @@ Substring: Value
 In the previous execution the script prints as output the substring “Value”. Why is that? In the following diagram we give a visualization of why this is happening.
 
 <p align="center">
-    <img src="images/substring_with_index.png"/>
+  <img src="images/substring_with_index.png" alt="Substring Indexing Diagram" width="600"/>
 </p>
 
 As you can see in the previous diagram, the operator “`${myVariable:3}`” retrieves the substring starting from the 4th character (the one that has index 3).
