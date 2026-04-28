@@ -94,4 +94,4 @@ Local emulators can never perfectly replicate the nuanced behavior, latency, and
 
 ---
 
-[<< Previous: Serverless Security & Observability](./46_Serverless_Security_Observability.md) | [Home: Curriculum Map](./README.md) | [Next: System Design Interview Mastery >>](./48_System_Design_Interview_Mastery.md)
+[<< Previous: Serverless Security & Observability](./46_Serverless_Security_Observability.md) | [Home: Curriculum Map](./README.md) | [Next: Designing Data-Intensive Applications >>](./49_DDIA_Deep_Dive.md)

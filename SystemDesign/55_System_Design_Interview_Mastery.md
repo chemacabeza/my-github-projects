@@ -1,4 +1,4 @@
-# 48: System Design Interview Mastery
+# 55: System Design Interview Mastery
 
 <p align="center">
   <img src="images/sd_interview_mastery.png" alt="System Design Interview Mastery" width="100%"/>
@@ -8,7 +8,7 @@
 
 ## 🎯 What You'll Learn
 
-> **After this chapter, you will understand the exact step-by-step framework to confidently tackle any system design interview, using the "4-Step Framework," and how to apply your deep knowledge of APIs, Serverless, architecture, and scaling to ace the deep-dive phase.**
+> **After this chapter, you will understand the exact step-by-step framework to confidently tackle any system design interview, using the "4-Step Framework," and how to apply your deep accumulated knowledge from the preceding 54 chapters—spanning APIs, Serverless, architecture, data-intensive systems, and professional discipline—to ace the deep-dive phase.**
 
 A System Design interview is not about finding the "perfect" architecture. It is an open-ended conversation designed to evaluate your ability to navigate ambiguity, ask the right questions, estimate constraints, and systematically construct a scalable solution while discussing trade-offs.
 
@@ -209,9 +209,11 @@ This requires breaking down the bottleneck into Read vs Write paths. First, iden
 *   **Structure:** "Before diving into the architecture, I'd like to spend a few minutes clarifying the functional constraints and scale."
 *   **Bottlenecks:** "Looking at this high-level design, the clear bottleneck at 10M DAU will be database I/O on the write path."
 *   **Mitigation:** "To mitigate this, I propose introducing a message queue (Kafka) to decouple the ingestion from the slow database writes."
-*   **API Mastery:** "We will use an API Gateway for rate limiting and JWT validation, expose a GraphQL BFF for the mobile SPA to avoid N+1 queries, and utilize Webhooks for internal event notifications to avoid client polling."
+*   **Data Intensive Design:** "We should view the primary data store as the immutable system of record, and derive our search indexes and caches asynchronously from its changelog."
+*   **API & Microservice Mastery:** "We will use an API Gateway for rate limiting and JWT validation, utilize an Event Mesh for asynchronous flow integration, and implement sidecar proxies for network resilience."
 *   **Serverless Scaling:** "We will leverage Lambda combined with API Gateway for unpredictable API requests, but route high-throughput continuous traffic to containerized instances to optimize for cost at scale."
+*   **Professionalism:** Always clearly communicate trade-offs, admit what you don't know, and frame estimates as probability distributions rather than hard commitments.
 
 ---
 
-[<< Previous: Serverless at Scale](./47_Serverless_At_Scale.md) | [Home: System Design Curriculum](./README.md)
+[<< Previous: The Clean Coder](./54_Clean_Coder_Professionalism.md) | [Home: System Design Curriculum](./README.md)

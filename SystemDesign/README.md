@@ -4,7 +4,7 @@
   <img src="images/sd_cover.png" alt="System Design Mastery" width="800"/>
 </p>
 
-Welcome to the **System Design Mastery Guide**. This repository contains a complete, **48-chapter curriculum** spanning 10 phases, designed to take you from fundamental concepts to designing real-world systems at scale.
+Welcome to the **System Design Mastery Guide**. This repository contains a complete, **54-chapter curriculum** spanning 12 phases and culminating in a comprehensive capstone, designed to take you from fundamental concepts to designing real-world systems at scale.
 
 This curriculum was synthesized from **over 45 professional-grade textbooks**: *Designing Data-Intensive Applications*, *System Design Interview Volumes 1 & 2*, *ByteByteGo Big Archive*, *AlgoMaster System Design Handbook*, *The C4 Model*, *REST API Design Rulebook*, *Learning Serverless*, *Serverless Architectures on AWS*, *Serverless Development on AWS*, *Kafka: The Definitive Guide*, and *The Clean Coder*.
 
@@ -97,7 +97,25 @@ This curriculum was synthesized from **over 45 professional-grade textbooks**: *
 * [**45: Serverless Data & Storage**](./45_Serverless_Data_Storage.md) - DynamoDB Single-Table Design, heavy reads caching, and S3 event-driven ETL pipelines.
 * [**46: Serverless Security & Observability**](./46_Serverless_Security_Observability.md) - IAM Least Privilege per function, X-Ray distributed tracing, and structured cloud logging.
 * [**47: Serverless at Scale**](./47_Serverless_At_Scale.md) - Infrastructure as Code (SAM/CDK), CI/CD pipelines, modern testing honeycombs, and cost inflection points.
-* [**48: System Design Interview Mastery**](./48_System_Design_Interview_Mastery.md) - Systematic 4-step framework, estimation math, and acing the Serverless/API deep dive safely.
+
+### Phase 11: Data-Intensive Systems & Scalable Foundations
+*Deep dives into the algorithms and storage paradigms behind massive-scale infrastructure.*
+
+* [**49: Designing Data-Intensive Applications Deep Dive**](./49_DDIA_Deep_Dive.md) - B-Trees vs LSM-Trees, Data Encoding (Protobuf/Avro), and the Derived Data philosophy.
+* [**50: Foundations of Scalable Systems**](./50_Foundations_Scalable_Systems.md) - Gossip Protocols, Anti-Entropy (Merkle Trees), Quorum Consensus, and Vector Clocks.
+* [**51: Flow Architectures & Streaming Integration**](./51_Flow_Architectures.md) - Event Meshes, Streaming Integration, and the shift from Request-Response to Data in Motion.
+
+### Phase 12: API Ecosystem & Professional Practice
+*Managing APIs as products and maintaining the human discipline required to engineer safely.*
+
+* [**52: Continuous API Management**](./52_Continuous_API_Management.md) - The API Maturity Model, API-as-a-Product, Developer Portals, and Governance.
+* [**53: Microservices in Practice**](./53_Microservices_Java_Practice.md) - The Service Mesh (Sidecar pattern), Health Probes, and surviving the Fallacies of Distributed Computing.
+* [**54: The Clean Coder: Professionalism**](./54_Clean_Coder_Professionalism.md) - Saying "No", Estimation via PERT, Technical Debt, and TDD as a professional obligation.
+
+### Capstone: System Design Mastery
+*Synthesizing everything you've learned into a structured, real-world interview execution.*
+
+* [**55: System Design Interview Mastery**](./55_System_Design_Interview_Mastery.md) - Systematic 4-step framework, estimation math, and acing the deep dive safely using accumulated knowledge.
 
 ---
 
