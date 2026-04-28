@@ -522,6 +522,13 @@ The local installation includes the following models by default. Some are standa
     *   **Model ID**: 2854321
     *   **Source**: [Civitai](https://civitai.green/models/2539762?modelVersionId=2854321)
 
+45. `elif_lora.safetensors`
+    *   **Type**: SDXL LoRA
+    *   **Description**: Turkish woman character (28 years old, 1.72m tall)
+    *   **Trigger Word**: `elif`
+    *   **Model ID**: 2901249
+    *   **Source**: [Civitai](https://civitai.red/models/2582463?modelVersionId=2901249)
+
 
 ### 🖼️ LoRA Character Gallery
 
@@ -591,7 +598,7 @@ The local installation includes the following models by default. Some are standa
 <tr>
   <td align="center"><a href="https://civitai.com/models/2495366"><img src="images/loras/charlize.jpg" width="220"/></a><br/><b>Charlize</b><br/><em>South African · 26y · 1.70m</em></td>
   <td align="center"><a href="https://civitai.com/models/2539762"><img src="images/loras/dilnoza.jpg" width="220"/></a><br/><b>Dilnoza</b><br/><em>Tajik · 25y · 1.70m</em></td>
-  <td></td>
+  <td align="center"><a href="https://civitai.com/models/2582463"><img src="images/loras/elif.jpg" width="220"/></a><br/><b>Elif</b><br/><em>Turkish · 28y · 1.72m</em></td>
 </tr>
 </table>
 
