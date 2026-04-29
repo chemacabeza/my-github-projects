@@ -1,4 +1,4 @@
-# 55: System Design Interview Mastery
+# 58: System Design Interview Mastery
 
 <p align="center">
   <img src="images/sd_interview_mastery.png" alt="System Design Interview Mastery" width="100%"/>
@@ -8,7 +8,7 @@
 
 ## 🎯 What You'll Learn
 
-> **After this chapter, you will understand the exact step-by-step framework to confidently tackle any system design interview, using the "4-Step Framework," and how to apply your deep accumulated knowledge from the preceding 54 chapters—spanning APIs, Serverless, architecture, data-intensive systems, and professional discipline—to ace the deep-dive phase.**
+> **After this chapter, you will understand the exact step-by-step framework to confidently tackle any system design interview, using the "4-Step Framework," and how to apply your deep accumulated knowledge from the preceding 57 chapters—spanning APIs, Serverless, architecture, data-intensive systems, MCP, AI Agents, and professional discipline—to ace the deep-dive phase.**
 
 A System Design interview is not about finding the "perfect" architecture. It is an open-ended conversation designed to evaluate your ability to navigate ambiguity, ask the right questions, estimate constraints, and systematically construct a scalable solution while discussing trade-offs.
 
@@ -162,7 +162,28 @@ If the interviewer asks: *"If our Lambda scales out to 5,000 concurrent executio
 
 ---
 
-## 7. 🏋️ Practice Exercises
+## 7. 🤖 Tackling MCP & AI Agent Architecture in Interviews
+
+With AI integration becoming standard, interviewers are increasingly asking how to securely connect LLMs to proprietary data. Drawing upon **Phase 13: Model Context Protocol (MCP) & AI Agent Architecture**, you must demonstrate that you understand AI as an *architectural component*, not just a black box.
+
+### 7.1 Defending the MCP Architecture
+If the interviewer asks: *"How do we give our AI chatbot access to our internal customer database and file systems?"*
+
+**The Strong Answer:** "We should not write custom integration code for each data source. Instead, we implement the **Model Context Protocol (MCP)**. We deploy an MCP Server connected to the database and another connected to the file system. Our Host Application runs an MCP Client that standardizes the connection, reducing our integration complexity from N×M to N+M. We'll use the `stdio` transport for local file access to avoid network exposure, and SSE over HTTP for the remote database."
+
+### 7.2 Security and The Confused Deputy
+If the interviewer asks: *"What if a user prompts the AI to drop the production database?"*
+
+**The Strong Answer:** "We must assume the LLM will fall victim to prompt injection; it is a Confused Deputy. Therefore, we never rely on the LLM's system prompt for security. We enforce strict **Role-Based Access Control (RBAC)** at the MCP Server boundary. When the LLM requests the `drop_table` tool execution, the MCP Server validates the authorization token of the *actual human user* sitting at the Host Application. Furthermore, any state-mutating tool requires a Human-in-the-Loop UI confirmation step before the Server executes it."
+
+### 7.3 Multi-Agent Scaling
+If the interviewer asks: *"Our single AI agent has access to 500 different internal APIs, but it keeps hallucinating the wrong tool parameters and crashing. How do we fix this?"*
+
+**The Strong Answer:** "We have overwhelmed the LLM's context window and reasoning capacity. We need to pivot to a **Multi-Agent Orchestration architecture**. We deploy a Router Agent that acts as a gateway, evaluating the user request and routing it to smaller, specialized agents (e.g., a Finance Agent, an HR Agent). Each specialist agent is connected to its own isolated MCP Server that only exposes the 5-10 Tools and Resources strictly necessary for its domain, eliminating tool confusion."
+
+---
+
+## 8. 🏋️ Practice Exercises
 
 ### Exercise 1: Design a Global Chat System (WhatsApp/Messenger)
 **The Scenario:** You need to design a 1-on-1 and group chat system for 50 million daily active users. 
@@ -212,8 +233,9 @@ This requires breaking down the bottleneck into Read vs Write paths. First, iden
 *   **Data Intensive Design:** "We should view the primary data store as the immutable system of record, and derive our search indexes and caches asynchronously from its changelog."
 *   **API & Microservice Mastery:** "We will use an API Gateway for rate limiting and JWT validation, utilize an Event Mesh for asynchronous flow integration, and implement sidecar proxies for network resilience."
 *   **Serverless Scaling:** "We will leverage Lambda combined with API Gateway for unpredictable API requests, but route high-throughput continuous traffic to containerized instances to optimize for cost at scale."
+*   **AI & MCP Integration:** "We will use the Model Context Protocol to standardize tool and resource access, enforcing strict RBAC at the Server boundary to mitigate Confused Deputy attacks in our agentic loops."
 *   **Professionalism:** Always clearly communicate trade-offs, admit what you don't know, and frame estimates as probability distributions rather than hard commitments.
 
 ---
 
-[<< Previous: The Clean Coder](./54_Clean_Coder_Professionalism.md) | [Home: System Design Curriculum](./README.md)
+[<< Previous: MCP in AI Agent Architectures](./57_MCP_AI_Agents_Architecture.md) | [Home: System Design Curriculum](./README.md)

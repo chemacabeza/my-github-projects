@@ -4,9 +4,9 @@
   <img src="images/sd_cover.png" alt="System Design Mastery" width="800"/>
 </p>
 
-Welcome to the **System Design Mastery Guide**. This repository contains a complete, **54-chapter curriculum** spanning 12 phases and culminating in a comprehensive capstone, designed to take you from fundamental concepts to designing real-world systems at scale.
+Welcome to the **System Design Mastery Guide**. This repository contains a complete, **57-chapter curriculum** spanning 13 phases and culminating in a comprehensive capstone, designed to take you from fundamental concepts to designing real-world systems at scale.
 
-This curriculum was synthesized from **over 45 professional-grade textbooks**: *Designing Data-Intensive Applications*, *System Design Interview Volumes 1 & 2*, *ByteByteGo Big Archive*, *AlgoMaster System Design Handbook*, *The C4 Model*, *REST API Design Rulebook*, *Learning Serverless*, *Serverless Architectures on AWS*, *Serverless Development on AWS*, *Kafka: The Definitive Guide*, and *The Clean Coder*.
+This curriculum was synthesized from **over 48 professional-grade textbooks**: *Designing Data-Intensive Applications*, *System Design Interview Volumes 1 & 2*, *ByteByteGo Big Archive*, *AlgoMaster System Design Handbook*, *The C4 Model*, *REST API Design Rulebook*, *Learning Serverless*, *Serverless Architectures on AWS*, *Serverless Development on AWS*, *Kafka: The Definitive Guide*, *The Clean Coder*, and several *Model Context Protocol (MCP)* books.
 
 ---
 
@@ -112,10 +112,17 @@ This curriculum was synthesized from **over 45 professional-grade textbooks**: *
 * [**53: Microservices in Practice**](./53_Microservices_Java_Practice.md) - The Service Mesh (Sidecar pattern), Health Probes, and surviving the Fallacies of Distributed Computing.
 * [**54: The Clean Coder: Professionalism**](./54_Clean_Coder_Professionalism.md) - Saying "No", Estimation via PERT, Technical Debt, and TDD as a professional obligation.
 
+### Phase 13: Model Context Protocol (MCP) & AI Agent Architecture
+*The foundational infrastructure for integrating AI agents securely with external tools and data.*
+
+* [**55: MCP Fundamentals**](./55_MCP_Fundamentals.md) - The Universal USB-C for AI, Client-Host-Server architecture, and transport layers (stdio/SSE).
+* [**56: MCP Tools, Resources & Prompts**](./56_MCP_Tools_Resources_Prompts.md) - The three core primitives, control flows, and security implications of model vs application control.
+* [**57: MCP in AI Agent Architectures**](./57_MCP_AI_Agents_Architecture.md) - Multi-agent orchestration, the Observe-Think-Act loop, rate limiting, and RBAC security at scale.
+
 ### Capstone: System Design Mastery
 *Synthesizing everything you've learned into a structured, real-world interview execution.*
 
-* [**55: System Design Interview Mastery**](./55_System_Design_Interview_Mastery.md) - Systematic 4-step framework, estimation math, and acing the deep dive safely using accumulated knowledge.
+* [**58: System Design Interview Mastery**](./58_System_Design_Interview_Mastery.md) - Systematic 4-step framework, estimation math, and acing the deep dive safely using accumulated knowledge.
 
 ---
 

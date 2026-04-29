@@ -107,4 +107,4 @@ In legacy systems without tests, developers are terrified to touch code because 
 
 ---
 
-[<< Previous: Microservices in Practice](./53_Microservices_Java_Practice.md) | [Home: System Design Curriculum](./README.md) | [Next: System Design Interview Mastery >>](./55_System_Design_Interview_Mastery.md)
+[<< Previous: Microservices in Practice](./53_Microservices_Java_Practice.md) | [Home: System Design Curriculum](./README.md) | [Next: MCP Fundamentals >>](./55_MCP_Fundamentals.md)
