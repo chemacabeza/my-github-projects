@@ -534,7 +534,7 @@ The local installation includes the following models by default. Some are standa
     *   **Description**: French woman character (26 years old, 1.75m tall)
     *   **Trigger Word**: `marie`
     *   **Model ID**: 2903847
-    *   **Source**: [Civitai](https://civitai.com/models/2584829?modelVersionId=2903847)
+    *   **Source**: [Civitai](https://civitai.red/models/2584829?modelVersionId=2903847)
 
 
 ### 🖼️ LoRA Character Gallery
@@ -543,72 +543,72 @@ The local installation includes the following models by default. Some are standa
 
 <table align="center">
 <tr>
-  <td align="center"><a href="https://civitai.com/models/2284175"><img src="images/loras/helga.jpg" width="220"/></a><br/><b>Helga</b><br/><em>Swedish · 26y · 1.85m</em></td>
-  <td align="center"><a href="https://civitai.com/models/2283812"><img src="images/loras/anastasia.jpg" width="220"/></a><br/><b>Anastasia</b><br/><em>Russian · 25y · 1.75m</em></td>
-  <td align="center"><a href="https://civitai.com/models/2284140"><img src="images/loras/hana.jpg" width="220"/></a><br/><b>Hana</b><br/><em>Japanese · 25y · 1.75m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2284175"><img src="images/loras/helga.jpg" width="220"/></a><br/><b>Helga</b><br/><em>Swedish · 26y · 1.85m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2283812"><img src="images/loras/anastasia.jpg" width="220"/></a><br/><b>Anastasia</b><br/><em>Russian · 25y · 1.75m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2284140"><img src="images/loras/hana.jpg" width="220"/></a><br/><b>Hana</b><br/><em>Japanese · 25y · 1.75m</em></td>
 </tr>
 <tr>
-  <td align="center"><a href="https://civitai.com/models/2284072"><img src="images/loras/inga.jpg" width="220"/></a><br/><b>Inga</b><br/><em>German · 26y · 1.75m</em></td>
-  <td align="center"><a href="https://civitai.com/models/2284076"><img src="images/loras/mariam.jpg" width="220"/></a><br/><b>Mariam</b><br/><em>Guinean · 25y · 1.70m</em></td>
-  <td align="center"><a href="https://civitai.com/models/2283817"><img src="images/loras/chen.jpg" width="220"/></a><br/><b>Chen</b><br/><em>Chinese · 25y · 1.70m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2284072"><img src="images/loras/inga.jpg" width="220"/></a><br/><b>Inga</b><br/><em>German · 26y · 1.75m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2284076"><img src="images/loras/mariam.jpg" width="220"/></a><br/><b>Mariam</b><br/><em>Guinean · 25y · 1.70m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2283817"><img src="images/loras/chen.jpg" width="220"/></a><br/><b>Chen</b><br/><em>Chinese · 25y · 1.70m</em></td>
 </tr>
 <tr>
-  <td align="center"><a href="https://civitai.com/models/2283787"><img src="images/loras/iuliia.jpg" width="220"/></a><br/><b>Iuliia</b><br/><em>Ukrainian · 25y · 1.73m</em></td>
-  <td align="center"><a href="https://civitai.com/models/2283809"><img src="images/loras/allison.jpg" width="220"/></a><br/><b>Allison</b><br/><em>Australian · 27y · 1.85m</em></td>
-  <td align="center"><a href="https://civitai.com/models/2284070"><img src="images/loras/emma.jpg" width="220"/></a><br/><b>Emma</b><br/><em>American · 27y · 1.85m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2283787"><img src="images/loras/iuliia.jpg" width="220"/></a><br/><b>Iuliia</b><br/><em>Ukrainian · 25y · 1.73m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2283809"><img src="images/loras/allison.jpg" width="220"/></a><br/><b>Allison</b><br/><em>Australian · 27y · 1.85m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2284070"><img src="images/loras/emma.jpg" width="220"/></a><br/><b>Emma</b><br/><em>American · 27y · 1.85m</em></td>
 </tr>
 <tr>
-  <td align="center"><a href="https://civitai.com/models/2283796"><img src="images/loras/rabab.jpg" width="220"/></a><br/><b>Rabab</b><br/><em>Moroccan · 25y · 1.72m</em></td>
-  <td align="center"><a href="https://civitai.com/models/2296247"><img src="images/loras/fiona.jpg" width="220"/></a><br/><b>Fiona</b><br/><em>Scottish · 28y · 1.85m</em></td>
-  <td align="center"><a href="https://civitai.com/models/2298822"><img src="images/loras/giulia.jpg" width="220"/></a><br/><b>Giulia</b><br/><em>Italian · 26y · 1.80m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2283796"><img src="images/loras/rabab.jpg" width="220"/></a><br/><b>Rabab</b><br/><em>Moroccan · 25y · 1.72m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2296247"><img src="images/loras/fiona.jpg" width="220"/></a><br/><b>Fiona</b><br/><em>Scottish · 28y · 1.85m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2298822"><img src="images/loras/giulia.jpg" width="220"/></a><br/><b>Giulia</b><br/><em>Italian · 26y · 1.80m</em></td>
 </tr>
 <tr>
-  <td align="center"><a href="https://civitai.com/models/2302342"><img src="images/loras/juanita.jpg" width="220"/></a><br/><b>Juanita</b><br/><em>Cuban · 28y · 1.85m</em></td>
-  <td align="center"><a href="https://civitai.com/models/2305233"><img src="images/loras/sofia.jpg" width="220"/></a><br/><b>Sofia</b><br/><em>Finnish · 25y · 1.85m</em></td>
-  <td align="center"><a href="https://civitai.com/models/2310427"><img src="images/loras/svetlana.jpg" width="220"/></a><br/><b>Svetlana</b><br/><em>Russian · 28y · 1.85m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2302342"><img src="images/loras/juanita.jpg" width="220"/></a><br/><b>Juanita</b><br/><em>Cuban · 28y · 1.85m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2305233"><img src="images/loras/sofia.jpg" width="220"/></a><br/><b>Sofia</b><br/><em>Finnish · 25y · 1.85m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2310427"><img src="images/loras/svetlana.jpg" width="220"/></a><br/><b>Svetlana</b><br/><em>Russian · 28y · 1.85m</em></td>
 </tr>
 <tr>
-  <td align="center"><a href="https://civitai.com/models/2313984"><img src="images/loras/kasia.jpg" width="220"/></a><br/><b>Kasia</b><br/><em>Polish · 26y · 1.85m</em></td>
-  <td align="center"><a href="https://civitai.com/models/2318797"><img src="images/loras/lara.jpg" width="220"/></a><br/><b>Lara</b><br/><em>Polish · 30y · 1.70m</em></td>
-  <td align="center"><a href="https://civitai.com/models/2323826"><img src="images/loras/stefi.jpg" width="220"/></a><br/><b>Stefi</b><br/><em>German · 26y · 1.90m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2313984"><img src="images/loras/kasia.jpg" width="220"/></a><br/><b>Kasia</b><br/><em>Polish · 26y · 1.85m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2318797"><img src="images/loras/lara.jpg" width="220"/></a><br/><b>Lara</b><br/><em>Polish · 30y · 1.70m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2323826"><img src="images/loras/stefi.jpg" width="220"/></a><br/><b>Stefi</b><br/><em>German · 26y · 1.90m</em></td>
 </tr>
 <tr>
-  <td align="center"><a href="https://civitai.com/models/2329078"><img src="images/loras/sheila.jpg" width="220"/></a><br/><b>Sheila</b><br/><em>Peruvian · 26y · 1.70m</em></td>
-  <td align="center"><a href="https://civitai.com/models/2331386"><img src="images/loras/amina.jpg" width="220"/></a><br/><b>Amina</b><br/><em>Moroccan · 26y · 1.73m</em></td>
-  <td align="center"><a href="https://civitai.com/models/2335896"><img src="images/loras/milica.jpg" width="220"/></a><br/><b>Milica</b><br/><em>Serbian · 27y · 1.75m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2329078"><img src="images/loras/sheila.jpg" width="220"/></a><br/><b>Sheila</b><br/><em>Peruvian · 26y · 1.70m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2331386"><img src="images/loras/amina.jpg" width="220"/></a><br/><b>Amina</b><br/><em>Moroccan · 26y · 1.73m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2335896"><img src="images/loras/milica.jpg" width="220"/></a><br/><b>Milica</b><br/><em>Serbian · 27y · 1.75m</em></td>
 </tr>
 <tr>
-  <td align="center"><a href="https://civitai.com/models/2369885"><img src="images/loras/anne.jpg" width="220"/></a><br/><b>Anne</b><br/><em>Dutch · 26y · 1.80m</em></td>
-  <td align="center"><a href="https://civitai.com/models/2377884"><img src="images/loras/maria.jpg" width="220"/></a><br/><b>Maria</b><br/><em>Portuguese · 28y · 1.80m</em></td>
-  <td align="center"><a href="https://civitai.com/models/2380507"><img src="images/loras/aaju.jpg" width="220"/></a><br/><b>Aaju</b><br/><em>Greenlandic · 28y · 1.75m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2369885"><img src="images/loras/anne.jpg" width="220"/></a><br/><b>Anne</b><br/><em>Dutch · 26y · 1.80m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2377884"><img src="images/loras/maria.jpg" width="220"/></a><br/><b>Maria</b><br/><em>Portuguese · 28y · 1.80m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2380507"><img src="images/loras/aaju.jpg" width="220"/></a><br/><b>Aaju</b><br/><em>Greenlandic · 28y · 1.75m</em></td>
 </tr>
 <tr>
-  <td align="center"><a href="https://civitai.com/models/2396460"><img src="images/loras/tina.jpg" width="220"/></a><br/><b>Tina</b><br/><em>Slovenian · 26y · 1.75m</em></td>
-  <td align="center"><a href="https://civitai.com/models/2399341"><img src="images/loras/nora.jpg" width="220"/></a><br/><b>Nora</b><br/><em>Estonian · 23y · 1.78m</em></td>
-  <td align="center"><a href="https://civitai.com/models/2402032"><img src="images/loras/anna.jpg" width="220"/></a><br/><b>Anna</b><br/><em>Latvian · 24y · 1.75m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2396460"><img src="images/loras/tina.jpg" width="220"/></a><br/><b>Tina</b><br/><em>Slovenian · 26y · 1.75m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2399341"><img src="images/loras/nora.jpg" width="220"/></a><br/><b>Nora</b><br/><em>Estonian · 23y · 1.78m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2402032"><img src="images/loras/anna.jpg" width="220"/></a><br/><b>Anna</b><br/><em>Latvian · 24y · 1.75m</em></td>
 </tr>
 <tr>
-  <td align="center"><a href="https://civitai.com/models/2404165"><img src="images/loras/dalia.jpg" width="220"/></a><br/><b>Dalia</b><br/><em>Lithuanian · 24y · 1.73m</em></td>
-  <td align="center"><a href="https://civitai.com/models/2406617"><img src="images/loras/zoya.jpg" width="220"/></a><br/><b>Zoya</b><br/><em>Belarusian · 26y · 1.75m</em></td>
-  <td align="center"><a href="https://civitai.com/models/2407082"><img src="images/loras/olena.jpg" width="220"/></a><br/><b>Olena</b><br/><em>Ukrainian · 24y · 1.72m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2404165"><img src="images/loras/dalia.jpg" width="220"/></a><br/><b>Dalia</b><br/><em>Lithuanian · 24y · 1.73m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2406617"><img src="images/loras/zoya.jpg" width="220"/></a><br/><b>Zoya</b><br/><em>Belarusian · 26y · 1.75m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2407082"><img src="images/loras/olena.jpg" width="220"/></a><br/><b>Olena</b><br/><em>Ukrainian · 24y · 1.72m</em></td>
 </tr>
 <tr>
-  <td align="center"><a href="https://civitai.com/models/2409730"><img src="images/loras/priya.jpg" width="220"/></a><br/><b>Priya</b><br/><em>Indian · 26y · 1.75m</em></td>
-  <td align="center"><a href="https://civitai.com/models/2423632"><img src="images/loras/carmen.jpg" width="220"/></a><br/><b>Carmen</b><br/><em>Chilean · 28y · 1.75m</em></td>
-  <td align="center"><a href="https://civitai.com/models/2426080"><img src="images/loras/naran.jpg" width="220"/></a><br/><b>Naran</b><br/><em>Mongolian · 25y · 1.68m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2409730"><img src="images/loras/priya.jpg" width="220"/></a><br/><b>Priya</b><br/><em>Indian · 26y · 1.75m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2423632"><img src="images/loras/carmen.jpg" width="220"/></a><br/><b>Carmen</b><br/><em>Chilean · 28y · 1.75m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2426080"><img src="images/loras/naran.jpg" width="220"/></a><br/><b>Naran</b><br/><em>Mongolian · 25y · 1.68m</em></td>
 </tr>
 <tr>
-  <td align="center"><a href="https://civitai.com/models/2444591"><img src="images/loras/olga.jpg" width="220"/></a><br/><b>Olga</b><br/><em>Belarusian · 25y · 1.70m</em></td>
-  <td align="center"><a href="https://civitai.com/models/2472971"><img src="images/loras/gabriela.jpg" width="220"/></a><br/><b>Gabriela</b><br/><em>Brazilian · 26y · 1.72m</em></td>
-  <td align="center"><a href="https://civitai.com/models/2476986"><img src="images/loras/alina.jpg" width="220"/></a><br/><b>Alina</b><br/><em>Moldovan · 26y · 1.73m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2444591"><img src="images/loras/olga.jpg" width="220"/></a><br/><b>Olga</b><br/><em>Belarusian · 25y · 1.70m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2472971"><img src="images/loras/gabriela.jpg" width="220"/></a><br/><b>Gabriela</b><br/><em>Brazilian · 26y · 1.72m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2476986"><img src="images/loras/alina.jpg" width="220"/></a><br/><b>Alina</b><br/><em>Moldovan · 26y · 1.73m</em></td>
 </tr>
 <tr>
-  <td align="center"><a href="https://civitai.com/models/2495366"><img src="images/loras/charlize.jpg" width="220"/></a><br/><b>Charlize</b><br/><em>South African · 26y · 1.70m</em></td>
-  <td align="center"><a href="https://civitai.com/models/2539762"><img src="images/loras/dilnoza.jpg" width="220"/></a><br/><b>Dilnoza</b><br/><em>Tajik · 25y · 1.70m</em></td>
-  <td align="center"><a href="https://civitai.com/models/2582463"><img src="images/loras/elif.jpg" width="220"/></a><br/><b>Elif</b><br/><em>Turkish · 28y · 1.72m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2495366"><img src="images/loras/charlize.jpg" width="220"/></a><br/><b>Charlize</b><br/><em>South African · 26y · 1.70m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2539762"><img src="images/loras/dilnoza.jpg" width="220"/></a><br/><b>Dilnoza</b><br/><em>Tajik · 25y · 1.70m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2582463"><img src="images/loras/elif.jpg" width="220"/></a><br/><b>Elif</b><br/><em>Turkish · 28y · 1.72m</em></td>
 </tr>
 <tr>
-  <td align="center"><a href="https://civitai.com/models/2584829"><img src="images/loras/marie.jpg" width="220"/></a><br/><b>Marie</b><br/><em>French · 26y · 1.75m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2584829"><img src="images/loras/marie.jpg" width="220"/></a><br/><b>Marie</b><br/><em>French · 26y · 1.75m</em></td>
 </tr>
 </table>
 
