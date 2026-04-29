@@ -529,6 +529,13 @@ The local installation includes the following models by default. Some are standa
     *   **Model ID**: 2901249
     *   **Source**: [Civitai](https://civitai.red/models/2582463?modelVersionId=2901249)
 
+46. `marie_lora.safetensors`
+    *   **Type**: SDXL LoRA
+    *   **Description**: French woman character (26 years old, 1.75m tall)
+    *   **Trigger Word**: `marie`
+    *   **Model ID**: 2903847
+    *   **Source**: [Civitai](https://civitai.com/models/2584829?modelVersionId=2903847)
+
 
 ### 🖼️ LoRA Character Gallery
 
@@ -599,6 +606,9 @@ The local installation includes the following models by default. Some are standa
   <td align="center"><a href="https://civitai.com/models/2495366"><img src="images/loras/charlize.jpg" width="220"/></a><br/><b>Charlize</b><br/><em>South African · 26y · 1.70m</em></td>
   <td align="center"><a href="https://civitai.com/models/2539762"><img src="images/loras/dilnoza.jpg" width="220"/></a><br/><b>Dilnoza</b><br/><em>Tajik · 25y · 1.70m</em></td>
   <td align="center"><a href="https://civitai.com/models/2582463"><img src="images/loras/elif.jpg" width="220"/></a><br/><b>Elif</b><br/><em>Turkish · 28y · 1.72m</em></td>
+</tr>
+<tr>
+  <td align="center"><a href="https://civitai.com/models/2584829"><img src="images/loras/marie.jpg" width="220"/></a><br/><b>Marie</b><br/><em>French · 26y · 1.75m</em></td>
 </tr>
 </table>
 
