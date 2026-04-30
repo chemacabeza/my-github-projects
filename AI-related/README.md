@@ -536,6 +536,13 @@ The local installation includes the following models by default. Some are standa
     *   **Model ID**: 2903847
     *   **Source**: [Civitai](https://civitai.red/models/2584829?modelVersionId=2903847)
 
+47. `hildur_lora.safetensors`
+    *   **Type**: SDXL LoRA
+    *   **Description**: Icelandic woman character (26 years old, 1.75m tall)
+    *   **Trigger Word**: `hildur`
+    *   **Model ID**: 2906595
+    *   **Source**: [Civitai](https://civitai.red/models/2587360?modelVersionId=2906595)
+
 
 ### 🖼️ LoRA Character Gallery
 
@@ -609,6 +616,7 @@ The local installation includes the following models by default. Some are standa
 </tr>
 <tr>
   <td align="center"><a href="https://civitai.red/models/2584829"><img src="images/loras/marie.jpg" width="220"/></a><br/><b>Marie</b><br/><em>French · 26y · 1.75m</em></td>
+  <td align="center"><a href="https://civitai.red/models/2587360"><img src="images/loras/hildur.jpg" width="220"/></a><br/><b>Hildur</b><br/><em>Icelandic · 26y · 1.75m</em></td>
 </tr>
 </table>
 
