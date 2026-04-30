@@ -162,7 +162,7 @@ download_model 'https://civitai.com/api/download/models/2570639' "$LORA_DIR/mari
 download_model 'https://civitai.com/api/download/models/2570349' "$LORA_DIR/chen_lora.safetensors"
 download_model 'https://civitai.com/api/download/models/2570319' "$LORA_DIR/iuliia_lora.safetensors"
 download_model 'https://civitai.com/api/download/models/2570341' "$LORA_DIR/allison_lora.safetensors"
-download_model 'https://civitai.com/api/download/models/2570631' "$LORA_DIR/emma_lora.safetensors"
+download_model 'https://civitai.com/api/download/models/2905941' "$LORA_DIR/emma_lora.safetensors"
 download_model 'https://civitai.com/api/download/models/2570327' "$LORA_DIR/rabab_lora.safetensors"
 download_model 'https://civitai.com/api/download/models/2583873' "$LORA_DIR/fiona_lora.safetensors"
 download_model 'https://civitai.com/api/download/models/2586700' "$LORA_DIR/giulia_lora.safetensors"
