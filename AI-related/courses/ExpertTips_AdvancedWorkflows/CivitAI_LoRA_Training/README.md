@@ -4,7 +4,7 @@
     <img src="images/cover.png" width="600"/>
 </p>
 
-You can train and publish your own custom **LoRA** (Low-Rank Adaptation) models directly inside [CivitAI](https://civitai.green/) using their built-in **Onsite Training** feature — no local GPU required.
+You can train and publish your own custom **LoRA** (Low-Rank Adaptation) models directly inside [CivitAI](https://civitai.red/) using their built-in **Onsite Training** feature — no local GPU required.
 
 ---
 
@@ -18,7 +18,7 @@ A LoRA is a lightweight fine-tuning of an existing AI image model (such as Flux 
 
 | Requirement | Details |
 |-------------|---------|
-| **CivitAI account** | Free account at [civitai.green](https://civitai.green/) |
+| **CivitAI account** | Free account at [civitai.red](https://civitai.red/) |
 | **Buzz credits** | CivitAI's internal currency used to pay for GPU compute time |
 | **Training images** | A curated dataset of images of your subject (see below) |
 
@@ -108,7 +108,7 @@ Each image needs an associated text caption that describes it. CivitAI's trainer
 
 ## Step 2 — Start a New Training Job
 
-1. Log in to [civitai.green](https://civitai.green/).
+1. Log in to [civitai.red](https://civitai.red/).
 2. Click your profile avatar → **Train a Model**. The following screen will appear:
 
 <p align="center">
@@ -209,4 +209,4 @@ Hyper realistic portrait of myperson, natural light, editorial photography, shal
 - **Use consistent lighting.** Training images shot under similar lighting conditions produce more coherent results.
 - **Avoid watermarks and text overlays.** These confuse the captioner and introduce artifacts.
 - **Version your LoRAs.** CivitAI supports multiple versions per model — use this to iterate without losing previous checkpoints.
-- **Check the community.** Browse [civitai.green](https://civitai.green/) for similar LoRAs to understand what training approaches others have used.
+- **Check the community.** Browse [civitai.red](https://civitai.red/) for similar LoRAs to understand what training approaches others have used.
