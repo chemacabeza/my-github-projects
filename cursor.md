@@ -78,7 +78,7 @@ From repo root:
 Notes for agents:
 - Expect large model assets and symlink-based model management.
 - Be careful with GPU-specific steps (CUDA vs Apple Silicon / MPS).
-- The project includes 42 LoRA models (5 standard + 37 custom character LoRAs). The latest addition is **alina** (Moldovan, 26 years old, 1.73m tall, SDXL LoRA, model version ID 2784882).
+- The project includes 47 LoRA models (5 standard + 42 custom character LoRAs). The latest addition is **hildur** (Icelandic, 26 years old, 1.75m tall, SDXL LoRA, model version ID 2906595).
 - When adding a new LoRA: update `AI-related/README.md` (LoRAs list), `AI-related/run_local.sh` (download command), and this file.
 
 ### Bash book + scripts
@@ -166,7 +166,7 @@ If requirements are ambiguous, ask only what unblocks:
 
 ---
 
-## Current state (last updated: 2026-03-18)
+## Current state (last updated: 2026-04-30)
 
 ### test-for-ai-wan (AI Video Studio)
 
@@ -221,7 +221,7 @@ Latest changes (March 2026):
 | `sdxlUnstableDiffusers_nihilmania.safetensors` | SDXL 1.0 | Civitai #395107 |
 | `SDXLRonghua_v45.safetensors` | SDXL 1.0 | Civitai #471038 |
 
-**LoRAs** (`AI-related/LoRAs/`, 42 total — 5 standard + 37 custom character LoRAs):
+**LoRAs** (`AI-related/LoRAs/`, 47 total — 5 standard + 42 custom character LoRAs):
 
 Standard:
 - `sd_xl_offset_example-lora_1.0.safetensors` — contrast/dynamic range
@@ -270,3 +270,8 @@ Character LoRAs (trigger word = filename stem, all SDXL):
 | 35 | `olga_lora.safetensors` | olga | Belarusian | 25 | 1.70m | 2748594 |
 | 36 | `gabriela_lora.safetensors` | gabriela | Brazilian | 26 | 1.72m | 2780416 |
 | 37 | `alina_lora.safetensors` | alina | Moldovan | 26 | 1.73m | 2784882 |
+| 38 | `charlize_lora.safetensors` | charlize | South African | 26 | 1.70m | 2805114 |
+| 39 | `dilnoza_lora.safetensors` | dilnoza | Tajik | 25 | 1.70m | 2854321 |
+| 40 | `elif_lora.safetensors` | elif | Turkish | 28 | 1.72m | 2901249 |
+| 41 | `marie_lora.safetensors` | marie | French | 26 | 1.75m | 2903847 |
+| 42 | `hildur_lora.safetensors` | hildur | Icelandic | 26 | 1.75m | 2906595 |
