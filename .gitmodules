@@ -25,3 +25,6 @@
 [submodule "assistant-google"]
 	path = assistant-google
 	url = git@github.com:chemacabeza/assistant-google.git
+[submodule "coding-algorithm"]
+	path = coding-algorithm
+	url = https://github.com/chemacabeza/coding-algorithm
